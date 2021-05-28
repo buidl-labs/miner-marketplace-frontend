@@ -16,15 +16,19 @@ const Navbar = () => {
 
   return (
     <Flex
-      bg="white"
-      borderBottom="solid 1px #E2E8F0"
+      bg="whiteAlpha.700"
+      borderBottom="solid 1px #EDF2F7 "
       p="4"
       mb="24"
-      px="36"
+      px="28"
       overflow="hidden"
+      position="fixed"
+      zIndex="10"
+      w="full"
+      backdropFilter="blur(16px)"
     >
       <Link onClick={() => router.push("/")}>
-        <Image src="/images/Logo.svg" maxH="16" />
+        <Image src="/images/Logo.svg" maxH="12" />
       </Link>
       <Spacer />
       <HStack spacing="12" color="gray.700">
@@ -38,7 +42,12 @@ const Navbar = () => {
             Miners
           </Text>
         </Link>
-        <Button colorScheme="blue" size="lg" variant="outline">
+        <Button
+          colorScheme="blue"
+          size="md"
+          variant="outline"
+          onClick={() => router.push("/dashboard")}
+        >
           Dashboard
         </Button>
       </HStack>
