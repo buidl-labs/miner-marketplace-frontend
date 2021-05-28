@@ -2,13 +2,18 @@ import {
   Button,
   Flex,
   Link,
+  Image,
   Heading,
   HStack,
   Spacer,
   Text,
 } from "@chakra-ui/react";
 
+import { useRouter } from "next/router";
+
 const Navbar = () => {
+  const router = useRouter();
+
   return (
     <Flex
       bg="white"
@@ -18,19 +23,17 @@ const Navbar = () => {
       px="36"
       overflow="hidden"
     >
-      <Link>
-        <Heading size="md" color="blue.700">
-          Miner Marketplace
-        </Heading>
+      <Link onClick={() => router.push("/")}>
+        <Image src="/images/Logo.svg" maxH="16" />
       </Link>
       <Spacer />
       <HStack spacing="12" color="gray.700">
-        <Link>
+        <Link onClick={() => router.push("/clientLanding")}>
           <Text fontSize="lg" fontWeight="medium">
             Clients
           </Text>
         </Link>
-        <Link>
+        <Link onClick={() => router.push("/minerLanding")}>
           <Text fontSize="lg" fontWeight="medium">
             Miners
           </Text>

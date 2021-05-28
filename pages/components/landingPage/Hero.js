@@ -13,6 +13,7 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import React from "react";
+import { ArrowRight } from "react-feather";
 
 const Hero = (props) => {
   return (
@@ -32,11 +33,11 @@ const Hero = (props) => {
               colorScheme="blue"
               textDecoration="underline"
             >
-              {props.ctaText}
+              {props.ctaText} <ArrowRight />
             </Button>
           </Box>
         </Stack>
-        <Image src="/images/heroGlobe.svg" />
+        <Image src={props.heroImg} />
       </HStack>
     </Stack>
   );

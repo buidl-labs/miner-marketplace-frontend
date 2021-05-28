@@ -5,9 +5,12 @@ import {
   Container,
   Link,
   Heading,
+  Text,
   HStack,
   Stack,
+  WrapItem,
 } from "@chakra-ui/react";
+import React from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/landingPage/Hero";
 import Features from "./components/landingPage/Features";
@@ -16,7 +19,7 @@ import JoinNetwork from "./components/landingPage/JoinNetwork";
 import Footer from "./components/landingPage/Footer";
 import Faq from "./components/Faq";
 
-const IndexPage = () => {
+const clientLanding = () => {
   return (
     <>
       <Navbar />
@@ -24,12 +27,10 @@ const IndexPage = () => {
         <Stack spacing="28">
           {/* Hero Section */}
           <Hero
-            heroImg="/images/heroGlobe.svg"
-            heroHeading="Decentralised Storage Solution for all your needs"
-            heroText="Filecoin is a decentralised storage network designed to store
-            humanity’s most important information. Sounds interesting? head over
-            to link below to learn more."
-            ctaText="Learn more about Filecoin Network"
+            heroImg="/images/clientHero.svg"
+            heroHeading="Powerful Decentralized Storage Network for your Data"
+            heroText="The Filecoin network is made up of a large number of diverse storage providers and developers. This creates a robust and reliable service."
+            ctaText="Explore Storage Providers"
           />
 
           {/* Features Section */}
@@ -45,21 +46,19 @@ const IndexPage = () => {
             alignItems="flex-start"
           >
             <Features
-              featureIcon="/images/secure.svg"
-              featureTitle="Secure"
-              featureDescription="Miners storing data have to encrypt data which makes storing data on Filecoin more secure"
+              featureIcon="/images/selfhealing.svg"
+              featureTitle="Self-healing"
+              featureDescription="The Filecoin blockchain has a built-in self-healing process where if faulty miners are detected, their files are redistributed to reliable miners."
             />
             <Features
-              featureIcon="/images/rewards.svg"
-              featureTitle="Rewards"
-              featureDescription="Rewards are directly proportional to amount of storage you provide,
-            hence more storage means more rewards"
+              featureIcon="/images/prices.svg"
+              featureTitle="Competitive prices"
+              featureDescription="Prices for storage and retrieval are determined by supply and demand, not corporate pricing departments. Filecoin makes reliable storage available at hyper-competitive prices"
             />
             <Features
-              featureIcon="/images/decentralised.svg"
-              featureTitle="Decentralised"
-              featureDescription="It all is decentralised hence, no single point of control, no middle
-            man"
+              featureIcon="/images/tracker.svg"
+              featureTitle="Verifiable traces"
+              featureDescription="Filecoin generates verifiable traces that files have been stored correctly over time. Clients can efficiently scan these traces to confirm that their files have been stored correctly."
             />
           </HStack>
 
@@ -79,7 +78,7 @@ const IndexPage = () => {
                 <FilecoinStats
                   count="2194+"
                   countText=""
-                  subtext="Active Miners and counting"
+                  subtext="Verified Miners and counting"
                 />
                 <FilecoinStats
                   count="5489"
@@ -89,7 +88,7 @@ const IndexPage = () => {
                 <FilecoinStats
                   count="3746"
                   countText="PB"
-                  subtext="Data Stored till now"
+                  subtext="Securely Stored data"
                 />
               </HStack>
             </Stack>
@@ -97,24 +96,27 @@ const IndexPage = () => {
 
           {/*Join Network*/}
           <Stack textAlign="center" spacing="16" my="16">
-            <Heading color="gray.900" size="2xl">
-              Join the Filecoin Network
-            </Heading>
-            <HStack color="gray.700" spacing="12" justifyContent="center">
-              <JoinNetwork
-                cardHeading="Looking to provide Storage Services"
-                cardText="Start your miner journey and become part of global network of
-                fielcoin miners."
-                ctaText="Become a Miner"
-              />
-              <JoinNetwork
-                cardHeading="Looking to Store Data"
-                cardText="Explore miners according to your needs and start storing your data
-            securely on Filecoin Network."
-                ctaText="Explore Miners"
-                ctaVariant="outline"
-              />
-            </HStack>
+            <WrapItem
+              textAlign="left"
+              borderRadius="xl"
+              px="24"
+              py="14"
+              bg="gray.100"
+            >
+              <Stack alignItems="left" spacing="4">
+                <Heading size="lg" color="blue.900">
+                  Start Storing your data on Filecoin
+                </Heading>
+                <Text size="lg" maxW="36rem" color="gray.700">
+                  Filecoin provides the foundation for critically important
+                  public data, such as open access scientific data, creative
+                  commons media, historical archives, preservation, and more.
+                </Text>
+                <Box>
+                  <Button colorScheme="blue">Start Storing Data</Button>
+                </Box>
+              </Stack>
+            </WrapItem>
           </Stack>
 
           {/*FAQ*/}
@@ -135,4 +137,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default clientLanding;

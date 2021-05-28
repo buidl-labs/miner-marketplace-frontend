@@ -13,7 +13,7 @@ import React from "react";
 
 const Faq = (props) => {
   return (
-    <AccordionItem>
+    <AccordionItem p="2">
       <h2>
         <AccordionButton>
           <Box flex="1" textAlign="left">

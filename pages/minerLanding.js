@@ -16,7 +16,7 @@ import JoinNetwork from "./components/landingPage/JoinNetwork";
 import Footer from "./components/landingPage/Footer";
 import Faq from "./components/Faq";
 
-const IndexPage = () => {
+const minerLanding = () => {
   return (
     <>
       <Navbar />
@@ -24,12 +24,10 @@ const IndexPage = () => {
         <Stack spacing="28">
           {/* Hero Section */}
           <Hero
-            heroImg="/images/heroGlobe.svg"
-            heroHeading="Decentralised Storage Solution for all your needs"
-            heroText="Filecoin is a decentralised storage network designed to store
-            humanity’s most important information. Sounds interesting? head over
-            to link below to learn more."
-            ctaText="Learn more about Filecoin Network"
+            heroImg="/images/minerHero.svg"
+            heroHeading="Provide Storage Services & Earn Rewards"
+            heroText="The Filecoin network is designed to reward participants at multiple levels — from large scale data centers to local entrepreneurs with mining rigs that cover the last mile."
+            ctaText="Become a Miner"
           />
 
           {/* Features Section */}
@@ -45,21 +43,19 @@ const IndexPage = () => {
             alignItems="flex-start"
           >
             <Features
-              featureIcon="/images/secure.svg"
-              featureTitle="Secure"
-              featureDescription="Miners storing data have to encrypt data which makes storing data on Filecoin more secure"
+              featureIcon="/images/censorship.svg"
+              featureTitle="Censorship resistance"
+              featureDescription="Filecoin resists censorship because no central provider can be coerced into deleting files or withholding service."
             />
             <Features
-              featureIcon="/images/rewards.svg"
+              featureIcon="/images/minerrewards.svg"
               featureTitle="Rewards"
-              featureDescription="Rewards are directly proportional to amount of storage you provide,
-            hence more storage means more rewards"
+              featureDescription="Storing more files is directly related to winning more block rewards. The more storage you add, the more filecoin you’ll earn."
             />
             <Features
-              featureIcon="/images/decentralised.svg"
-              featureTitle="Decentralised"
-              featureDescription="It all is decentralised hence, no single point of control, no middle
-            man"
+              featureIcon="/images/minercommunity.svg"
+              featureTitle="Active community"
+              featureDescription="Filecoin has an active community of contributors to answer questions and help newcomers get started."
             />
           </HStack>
 
@@ -73,7 +69,7 @@ const IndexPage = () => {
             my="16"
           >
             <Stack textAlign="center" spacing="16" my="16">
-              <Heading size="2xl">Filecoin Network in Numbers</Heading>
+              <Heading size="2xl">Filecoin Miners in Numbers</Heading>
 
               <HStack spacing="52" justifyContent="center">
                 <FilecoinStats
@@ -98,21 +94,19 @@ const IndexPage = () => {
           {/*Join Network*/}
           <Stack textAlign="center" spacing="16" my="16">
             <Heading color="gray.900" size="2xl">
-              Join the Filecoin Network
+              Start your Miner Journey
             </Heading>
             <HStack color="gray.700" spacing="12" justifyContent="center">
               <JoinNetwork
-                cardHeading="Looking to provide Storage Services"
-                cardText="Start your miner journey and become part of global network of
-                fielcoin miners."
+                cardHeading="Become a Miner"
+                cardText="Want to join Filecoin network as a miner, click the link below to get started."
                 ctaText="Become a Miner"
+                ctaVariant="outline"
               />
               <JoinNetwork
-                cardHeading="Looking to Store Data"
-                cardText="Explore miners according to your needs and start storing your data
-            securely on Filecoin Network."
-                ctaText="Explore Miners"
-                ctaVariant="outline"
+                cardHeading="Already a Miner? Claim Profile"
+                cardText="If you are already a registered miner, claim your profile to see your storage stats and earning details in intuitive way."
+                ctaText="Claim Profile"
               />
             </HStack>
           </Stack>
@@ -135,4 +129,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default minerLanding;
