@@ -14,18 +14,16 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const Hero = () => {
+const Hero = (props) => {
   return (
     <Stack>
       <HStack>
         <Stack spacing="4">
           <Heading size="3xl" lineHeight="1.2" color="gray.900">
-            Decentralised Storage Solution for all your needs
+            {props.heroHeading}
           </Heading>
           <Text maxW="30vw" color="gray.700">
-            Filecoin is a decentralised storage network designed to store
-            humanity’s most important information. Sounds interesting? head over
-            to link below to learn more.
+            {props.heroText}
           </Text>
           <Box>
             <Button
@@ -34,7 +32,7 @@ const Hero = () => {
               colorScheme="blue"
               textDecoration="underline"
             >
-              Learn more about Filecoin Network
+              {props.ctaText}
             </Button>
           </Box>
         </Stack>
