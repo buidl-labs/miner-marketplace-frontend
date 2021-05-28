@@ -10,8 +10,11 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import React from "react";
+import { useRouter } from "next/router";
 
 const Footer = () => {
+  const router = useRouter();
+
   return (
     <HStack py="8" px="32" bgColor="gray.100" spacing="10" color="gray.600">
       <Link href="https://filecoin.io" isExternal>
@@ -25,10 +28,12 @@ const Footer = () => {
         </Link>
       </Text>
       <Spacer />
-      <Link>Privacy</Link>
-      <Link>Terms</Link>
-      <Link>Disclaimer</Link>
-      <Link>Contact</Link>
+      <Link onClick={() => router.push("/privacy")}>Privacy</Link>
+      <Link onClick={() => router.push("/terms")}>Terms</Link>
+      <Link onClick={() => router.push("/disclaimer")}>Disclaimer</Link>
+      <Link href="#" isExternal>
+        Contact
+      </Link>
     </HStack>
   );
 };
