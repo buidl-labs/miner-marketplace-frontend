@@ -17,7 +17,7 @@ import { ArrowRight } from "react-feather";
 
 const Hero = (props) => {
   return (
-    <Stack>
+    <Stack pt="36">
       <HStack>
         <Stack spacing="4">
           <Heading size="3xl" lineHeight="1.2" color="gray.900">

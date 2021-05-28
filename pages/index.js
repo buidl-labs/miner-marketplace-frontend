@@ -7,6 +7,13 @@ import {
   Heading,
   HStack,
   Stack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/landingPage/Hero";
@@ -20,6 +27,7 @@ const IndexPage = () => {
   return (
     <>
       <Navbar />
+
       <Container maxW="container.xl" mb="16">
         <Stack spacing="28">
           {/* Hero Section */}
