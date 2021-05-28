@@ -8,13 +8,13 @@ import {
   HStack,
   Stack,
 } from "@chakra-ui/react";
-import Navbar from "./components/Navbar";
-import Hero from "./components/landingPage/Hero";
-import Features from "./components/landingPage/Features";
-import FilecoinStats from "./components/landingPage/FilecoinStats";
-import JoinNetwork from "./components/landingPage/JoinNetwork";
-import Footer from "./components/landingPage/Footer";
-import Faq from "./components/Faq";
+import Navbar from "../components/Navbar";
+import Hero from "../components/landingPage/Hero";
+import Features from "../components/landingPage/Features";
+import FilecoinStats from "../components/landingPage/FilecoinStats";
+import JoinNetwork from "../components/landingPage/JoinNetwork";
+import Footer from "../components/landingPage/Footer";
+import Faq from "../components/Faq";
 
 const minerLanding = () => {
   return (
