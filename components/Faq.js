@@ -1,11 +1,7 @@
 import {
-  Stack,
-  Heading,
-  Text,
   Box,
   AccordionPanel,
   AccordionButton,
-  Accordion,
   AccordionItem,
   AccordionIcon,
 } from "@chakra-ui/react";
