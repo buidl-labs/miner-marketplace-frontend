@@ -31,7 +31,9 @@ const JoinNetwork = (props) => {
             {props.cardText}
           </Text>
           <Box>
-            <Button colorScheme="blue">{props.ctaText}</Button>
+            <Button colorScheme="blue" variant={props.ctaVariant}>
+              {props.ctaText}
+            </Button>
           </Box>
         </Stack>
       </WrapItem>
