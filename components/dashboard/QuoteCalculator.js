@@ -33,7 +33,7 @@ function QuoteCalculator() {
           <Text>($0)</Text>
           <Text>Estimated Quote</Text>
         </Stack>
-        <VStack spacing="2" pt="6" alignItems="left">
+        <VStack spacing="6" pt="6" alignItems="flex-start">
           <FormControl id="storage">
             <FormLabel>Amount of Storage (in Gib)</FormLabel>
             <Input type="number" placeholder="Enter amount of Storage" />
@@ -42,7 +42,10 @@ function QuoteCalculator() {
             <FormLabel>Duration of Storage (in months)</FormLabel>
             <Input type="number" placeholder="Enter duration of Storage" />
           </FormControl>
-          <Button colorScheme="blue"> Calculate Quote</Button>
+          <Button colorScheme="blue" px="8">
+            {" "}
+            Calculate Quote
+          </Button>
         </VStack>
       </Box>
     </>
