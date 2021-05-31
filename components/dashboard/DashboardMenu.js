@@ -23,8 +23,8 @@ const DashboardMenu = () => {
         w="56"
         textAlign="left"
         alignItems="left"
-        position="fixed"
-        h="100%"
+        position="absolute"
+        h="100vh"
       >
         <VStack alignItems="left" spacing="2" textAlign="left">
           <Link _activeLink bg="blue.500" w="full" p="6">
