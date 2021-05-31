@@ -12,11 +12,12 @@ import {
   Wrap,
   WrapItem,
   VStack,
+  Link,
 } from "@chakra-ui/react";
 import React from "react";
 import { Mail, Globe, Slack, Twitter } from "react-feather";
 
-const PersonalDetails = () => {
+const PersonalDetails = (props) => {
   return (
     <>
       <Box
@@ -28,7 +29,7 @@ const PersonalDetails = () => {
       >
         <WrapItem alignItems="center">
           <Avatar
-            name="Bruce Wayne"
+            name={props.minerName}
             src="https://bit.ly/broken-link"
             size="lg"
             bg="gray.100"
@@ -36,9 +37,11 @@ const PersonalDetails = () => {
           ></Avatar>
           <VStack alignItems="baseline" textAlign="left">
             <Heading size="md" color="blue.900">
-              Bruce Wayne
+              {props.minerName}
             </Heading>
-            <Text color="blue.700">f0123456</Text>
+            <Text color="blue.700" fontWeight="medium">
+              {props.minerAddress}
+            </Text>
           </VStack>
           <Spacer />
           <HStack
@@ -47,10 +50,18 @@ const PersonalDetails = () => {
             color="gray.600"
             spacing="4"
           >
-            <Mail />
-            <Globe />
-            <Slack />
-            <Twitter />
+            <Link href={props.minerMail} isExternal>
+              <Mail />
+            </Link>
+            <Link href={props.minerWebsite} isExternal>
+              <Globe />
+            </Link>
+            <Link href={props.minerSlack} isExternal>
+              <Slack />
+            </Link>
+            <Link href={props.minerTwitter} isExternal>
+              <Twitter />
+            </Link>
           </HStack>
         </WrapItem>
         <VStack spacing="3" alignItems="left" pt="4">
@@ -58,19 +69,19 @@ const PersonalDetails = () => {
             <Heading size="sm" color="gray.700" mr="3">
               Worker Address:
             </Heading>
-            <Text color="gray.600">workerAddressProp</Text>
+            <Text color="gray.600">{props.workerAddress}</Text>
           </WrapItem>
           <WrapItem alignItems="baseline">
             <Heading size="sm" color="gray.700" mr="3">
               Owner Address:
             </Heading>
-            <Text color="gray.600">ownerAddressProp</Text>
+            <Text color="gray.600">{props.ownerAddress}</Text>
           </WrapItem>
           <WrapItem alignItems="baseline">
             <Heading size="sm" color="gray.700" mr="3">
               Bio:
             </Heading>
-            <Text color="gray.600">minerBioProp</Text>
+            <Text color="gray.600">{props.minerBio}</Text>
           </WrapItem>
         </VStack>
       </Box>

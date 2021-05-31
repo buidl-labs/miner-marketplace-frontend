@@ -28,7 +28,17 @@ const Dashboard = () => {
           <DashboardMenu />
         </GridItem>
         <GridItem colSpan="2" pt="8">
-          <PersonalDetails />
+          <PersonalDetails
+            minerName="Bruce Wayne"
+            minerAddress="f0123456"
+            minerMail="#"
+            minerWebsite="#"
+            minerSlack="#"
+            minerTwitter="#"
+            workerAddress="1234455"
+            ownerAddress="1234556"
+            minerBio="this is miner's bio"
+          />
         </GridItem>
       </Grid>
     </>
