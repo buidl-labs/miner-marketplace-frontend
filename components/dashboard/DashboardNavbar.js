@@ -3,20 +3,11 @@ import {
   Flex,
   Link,
   Image,
-  Heading,
-  Lorem,
   HStack,
   Spacer,
-  Text,
   Modal,
   ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
-  useOutsideClick,
 } from "@chakra-ui/react";
 import React from "react";
 import { useRouter } from "next/router";
@@ -37,6 +28,8 @@ const DashboardNavbar = () => {
         p="4"
         w="full"
         overflow="hidden"
+        position="fixed"
+        zIndex="20"
       >
         <Link onClick={() => router.push("/")}>
           <Image src="/images/Logo.svg" maxH="12" />

@@ -1,16 +1,4 @@
-import {
-  Button,
-  Box,
-  Container,
-  Center,
-  Link,
-  Text,
-  Heading,
-  HStack,
-  VStack,
-  Stack,
-  Spacer,
-} from "@chakra-ui/react";
+import { Box, Center, Link, Text, Heading, VStack } from "@chakra-ui/react";
 import React from "react";
 import { ChevronRight, Home, Layout, UserCheck } from "react-feather";
 
@@ -23,8 +11,10 @@ const DashboardMenu = () => {
         w="56"
         textAlign="left"
         alignItems="left"
-        position="absolute"
-        h="100vh"
+        position="fixed"
+        z-index="10"
+        h="100%"
+        pt="20"
       >
         <VStack alignItems="left" spacing="2" textAlign="left">
           <Link _activeLink bg="blue.500" w="full" p="6">
