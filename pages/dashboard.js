@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import DashboardMenu from "../components/dashboard/DashboardMenu";
-import DashboardNavbar from "../components/dashboard/DashboardNav";
+import DashboardNavbar from "../components/dashboard/DashboardNavbar";
 import PersonalDetails from "../components/dashboard/PersonalDetails";
 
 const Dashboard = () => {
