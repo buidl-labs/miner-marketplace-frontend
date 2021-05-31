@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useRouter } from "next/router";
-import Authenticate from "../dashboard/ledgerAlert/Authenticate";
+import { isOpen } from "../dashboard/ledgerAlert/Authenticate";
 
 const DashboardNavbar = () => {
   const router = useRouter();
@@ -30,12 +30,11 @@ const DashboardNavbar = () => {
         </Link>
         <Spacer />
         <HStack spacing="12" color="gray.700">
-          <Button colorScheme="blue" size="md" variant="solid">
+          <Button colorScheme="blue" size="md" variant="solid" onClick="">
             Connect Wallet
           </Button>
         </HStack>
       </Flex>
-      <Authenticate />
     </>
   );
 };

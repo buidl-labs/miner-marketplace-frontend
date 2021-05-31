@@ -25,8 +25,7 @@ const disclaimer = () => {
         textAlign="center"
         justifyContent="center"
       >
-        <Stack textAlign="center" alignItems="center" mb="12" mt="-4">
-          {" "}
+        <Stack textAlign="center" alignItems="center" py="32">
           <Heading>Legal Disclaimer</Heading>
           <Text>for Miner marketplace</Text>
         </Stack>
