@@ -8,6 +8,7 @@ import {
   Text,
   HStack,
   Stack,
+  Spacer,
   Wrap,
   WrapItem,
   VStack,
@@ -20,8 +21,8 @@ const PersonalDetails = () => {
     <>
       <Box
         border="solid 2px #E2E8F0"
-        borderRadius="xl"
-        p="12"
+        borderRadius="2xl"
+        p="10"
         textAlign="left"
         alignItems="flex-start"
       >
@@ -39,7 +40,7 @@ const PersonalDetails = () => {
             </Heading>
             <Text color="blue.700">f0123456</Text>
           </VStack>
-
+          <Spacer />
           <HStack
             flexDirection="row"
             alignItems="baseline"
