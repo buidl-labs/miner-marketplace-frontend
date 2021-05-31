@@ -16,7 +16,7 @@ const Authenticate = () => {
       <>
         <Button onClick={onOpen}>Open Modal</Button>
 
-        <Modal isOpen={true} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>this is a heading</ModalHeader>

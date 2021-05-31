@@ -25,7 +25,7 @@ const Error = () => {
         textAlign="center"
         justifyContent="center"
       >
-        <Stack textAlign="center" alignItems="center" mb="12" mt="-4">
+        <Stack textAlign="center" alignItems="center" py="28">
           <Image src="images/Error.svg" maxW="72" />
           <VStack spacing="4">
             <h1
