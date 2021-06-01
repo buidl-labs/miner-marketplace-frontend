@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import React from "react";
-import { Info } from "react-feather";
+import { Icon, IconProps, InfoIcon } from "@chakra-ui/icons";
 
 function Scores(props) {
   return (
@@ -39,7 +39,7 @@ function Scores(props) {
                 label="Reputation scores are based on..."
                 aria-label="Reputation Scores"
               >
-                <Info width="18" />
+                <InfoIcon w={5} h={5} color="gray.500" />
               </Tooltip>
             </WrapItem>
           </VStack>
@@ -61,7 +61,7 @@ function Scores(props) {
                 label="Transparency scores are based on..."
                 aria-label="Transparency Scores"
               >
-                <Info width="18" />
+                <InfoIcon w={5} h={5} color="gray.500" />
               </Tooltip>
             </WrapItem>
           </VStack>

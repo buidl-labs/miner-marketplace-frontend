@@ -10,7 +10,11 @@ import {
   Link,
 } from "@chakra-ui/react";
 import React from "react";
-import { Mail, Globe, Slack, Twitter } from "react-feather";
+// import { Mail, Globe, Slack, Twitter } from "react-feather";
+import { Icon, IconProps } from "@chakra-ui/icons";
+import {} from "react-icons";
+import { FaSlack, FaTwitter, FaGlobe } from "react-icons/fa";
+import { IoMdMail } from "react-icons/io";
 
 const PersonalDetails = (props) => {
   return (
@@ -43,19 +47,19 @@ const PersonalDetails = (props) => {
             flexDirection="row"
             alignItems="baseline"
             color="gray.600"
-            spacing="4"
+            spacing="6"
           >
-            <Link href={props.minerMail} isExternal>
-              <Mail />
+            <Link href={props.minerMail} color="gray.500" isExternal>
+              <Icon as={IoMdMail} h={6} w={6} viewBox="0 0 24 24" />
             </Link>
-            <Link href={props.minerWebsite} isExternal>
-              <Globe />
+            <Link href={props.minerWebsite} color="gray.500" isExternal>
+              <Icon as={FaGlobe} h={6} w={6} viewBox="0 0 24 24" />
             </Link>
-            <Link href={props.minerSlack} isExternal>
-              <Slack />
+            <Link href={props.minerSlack} color="gray.500" isExternal>
+              <Icon as={FaSlack} h={6} w={6} viewBox="0 0 24 24" />
             </Link>
-            <Link href={props.minerTwitter} isExternal>
-              <Twitter />
+            <Link href={props.minerTwitter} color="gray.500" isExternal>
+              <Icon as={FaTwitter} h={6} w={6} viewBox="0 0 24 24" />
             </Link>
           </HStack>
         </WrapItem>

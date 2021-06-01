@@ -43,9 +43,9 @@ const DashboardNavbar = () => {
           <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
             <ModalOverlay />
             <Authenticate />
-            <LedgerConfirm />
+            {/* <LedgerConfirm />
             <AuthSuccess />
-            <AuthFail />
+            <AuthFail /> */}
           </Modal>
         </HStack>
       </Flex>
