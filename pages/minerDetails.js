@@ -15,13 +15,13 @@ import QuoteCalculator from "../components/dashboard/QuoteCalculator";
 import Scores from "../components/dashboard/Scores";
 import ServiceDetails from "../components/dashboard/ServiceDetails";
 
-const Dashboard = () => {
+const minerDetails = () => {
   return (
     <>
       <DashboardNavbar />
       <Grid
         h="200px"
-        // templateRows="repeat(4, 1fr)"
+        templateRows="repeat(4, 1fr)"
         templateColumns="repeat(12, 1fr)"
         gap="0.5"
         pr="8"
@@ -29,6 +29,7 @@ const Dashboard = () => {
         <GridItem rowSpan="8" colSpan="2">
           <DashboardMenu />
         </GridItem>
+
         <GridItem colSpan="5" pt="28">
           <PersonalDetails
             minerName="Bruce Wayne"
@@ -81,4 +82,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default minerDetails;

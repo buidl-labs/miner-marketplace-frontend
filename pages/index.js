@@ -7,13 +7,6 @@ import {
   Heading,
   HStack,
   Stack,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
 } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/landingPage/Hero";

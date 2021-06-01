@@ -1,15 +1,15 @@
 import {
   Button,
   Box,
+  Text,
+  Spacer,
+  Heading,
   ModalContent,
   ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  Text,
-  Spacer,
-  Heading,
 } from "@chakra-ui/react";
 import React from "react";
 

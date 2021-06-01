@@ -13,8 +13,11 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import React from "react";
+import { useRouter } from "next/router";
 
 function AuthFail() {
+  const router = useRouter();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -48,7 +51,7 @@ function AuthFail() {
             Discard
           </Button>
           <Spacer />
-          <Button colorScheme="blue" w="36">
+          <Button colorScheme="blue" w="36" onClick={() => router.push("/")}>
             Retry
           </Button>
         </ModalFooter>

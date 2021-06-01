@@ -46,7 +46,7 @@ const Navbar = () => {
           colorScheme="blue"
           size="md"
           variant="outline"
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/minerDetails")}
         >
           Dashboard
         </Button>
