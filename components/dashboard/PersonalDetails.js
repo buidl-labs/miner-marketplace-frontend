@@ -10,7 +10,7 @@ import {
   Link,
 } from "@chakra-ui/react";
 import React from "react";
-// import { Mail, Globe, Slack, Twitter } from "react-feather";
+
 import { Icon, IconProps } from "@chakra-ui/icons";
 import {} from "react-icons";
 import { FaSlack, FaTwitter, FaGlobe } from "react-icons/fa";
