@@ -13,7 +13,7 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import React from "react";
-import { ArrowRight } from "react-feather";
+import { Icon, IconProps, ArrowForwardIcon } from "@chakra-ui/icons";
 
 const Hero = (props) => {
   return (
@@ -33,7 +33,7 @@ const Hero = (props) => {
               colorScheme="blue"
               textDecoration="underline"
             >
-              {props.ctaText} <ArrowRight />
+              {props.ctaText} <ArrowForwardIcon h={6} w={6} marginLeft={2} />
             </Button>
           </Box>
         </Stack>
