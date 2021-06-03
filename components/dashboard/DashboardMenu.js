@@ -29,7 +29,13 @@ const DashboardMenu = () => {
         pt="20"
       >
         <VStack alignItems="left" spacing="2" textAlign="left">
-          <Link alignItems="center" w="full" p="6" bgColor="blue.600">
+          <Link
+            alignItems="center"
+            w="full"
+            p="6"
+            bgColor="blue.600"
+            onClick={() => router.push("/miners")}
+          >
             <HStack>
               <Icon as={RiDashboardFill} h={5} w={5} />
               <Text fontSize="lg" paddingLeft="2" fontWeight="medium">
@@ -40,7 +46,7 @@ const DashboardMenu = () => {
           <Link
             p="4"
             alignItems="center"
-            onClick={() => router.push("/minerDetails")}
+            onClick={() => router.push("/miners")}
           >
             <HStack>
               <Text size="md" px="2">
@@ -64,7 +70,7 @@ const DashboardMenu = () => {
           <Link
             p="6"
             alignItems="center"
-            onClick={() => router.push("/minerList")}
+            // onClick={() => router.push("/minerList")}
           >
             <HStack>
               <Icon as={RiUserSearchFill} w={5} h={5} />
