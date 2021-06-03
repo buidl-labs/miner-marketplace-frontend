@@ -81,6 +81,9 @@ export default function Miners({ miners, href }) {
     router.push(href);
   };
 
+  const [storageDuration, setStorageDuration] = useState(6);
+  const [storageAmount, setStorageAmount] = useState(10);
+
   const [pagination, setPagination] = useState({});
   // const [filteredInfo, setFilteredInfo] = useState({});
   // const [sortedInfo, setSortedInfo] = useState(null);
@@ -227,13 +230,23 @@ export default function Miners({ miners, href }) {
         country: fd.location.country,
         region: fd.location.region,
       },
-      estimatedQuote: fd.pricing.storageAskPrice,
+      estimatedQuote:
+        storageDuration *
+        30 *
+        2880 *
+        storageAmount *
+        (parseInt(fd.pricing.storageAskPrice) / 10 ** 18),
       qap: fd.qualityAdjustedPower,
     };
   });
 
   const mLocations = [
-    
+    { text: "Asia", value: "Asia" },
+    { text: "North America", value: "North America" },
+    { text: "Europe", value: "Europe" },
+    { text: "Africa", value: "Africa" },
+    { text: "Americas", value: "Americas" },
+    { text: "Oceania", value: "Oceania" },
     // ...new Set(
     //   miners.map((m) => {
     //     return {
@@ -325,17 +338,17 @@ export default function Miners({ miners, href }) {
       filters: mLocations,
       // https://gist.githubusercontent.com/ssskip/5a94bfcd2835bf1dea52/raw/3b2e5355eb49336f0c6bc0060c05d927c2d1e004/ISO3166-1.alpha2.json
       // filters: [
-      //   // { text: "SG", value: "SG" },
-      //   // { text: "IN", value: "IN" },
-      //   // { text: "CN", value: "CN" },
-      //   // { text: "NL", value: "NL" },
-      //   // { text: "CA", value: "CA" },
-      //   { text: "Asia", value: "Asia" },
-      //   { text: "North America", value: "North America" },
-      //   { text: "Europe", value: "Europe" },
+      //   { text: "SG", value: "SG" },
+      //   { text: "IN", value: "IN" },
+      //   { text: "CN", value: "CN" },
+      //   { text: "NL", value: "NL" },
+      //   { text: "CA", value: "CA" },
       // ],
       onFilter: (value, record) => {
-        return record.location.country.includes(value);
+        return (
+          record.location.country.includes(value) ||
+          record.location.region.includes(value)
+        );
       },
       render: (l) => {
         return (
@@ -347,7 +360,7 @@ export default function Miners({ miners, href }) {
       },
     },
     {
-      title: "Estimated Quote",
+      title: "Estimated Quote (FIL)",
       dataIndex: "estimatedQuote",
       key: "estimatedQuote",
       sorter: {
@@ -425,6 +438,34 @@ export default function Miners({ miners, href }) {
             />
           </Stack>
           <br></br>
+          storage duration(months):{" "}
+          <Stack spacing="4">
+            <input
+              type="number"
+              placeholder="Storage duration (in months)"
+              value={storageDuration}
+              onChange={(event) => setStorageDuration(event.target.value)}
+            />
+          </Stack>
+          <br></br>
+          storage amount(in GiB):{" "}
+          <Stack spacing="4">
+            <input
+              type="number"
+              placeholder="Storage amount (in GiB)"
+              value={storageAmount}
+              onChange={(event) => setStorageAmount(event.target.value)}
+            />
+          </Stack>
+          <br></br>
+          <button
+            onClick={(event) => {
+              filterList(event);
+            }}
+          >
+            {" "}
+            update quote
+          </button>
           <Stack spacing="8">
             <Table
               columns={columns}
