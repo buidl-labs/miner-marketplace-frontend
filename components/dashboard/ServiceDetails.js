@@ -83,7 +83,7 @@ function ServiceDetails(props) {
           <Stack spacing="4" textAlign="center">
             <Wrap>
               <Text fontSize="2xl" color="gray.700">
-                {props.storageAskPrice}
+                {props.storageAskPrice / 10 ** 18}
               </Text>
               <Text fontSize="sm" color="gray.500">
                 FIL/GiB/epoch

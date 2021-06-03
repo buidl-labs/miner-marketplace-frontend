@@ -38,11 +38,12 @@ function QuoteCalculator(props) {
         </Heading>
         <HStack spacing="2" alignItems="center">
           <Text fontSize="5xl" color="blue.900">
-            {storageDuration *
+            {(storageDuration *
               30 *
               2880 *
               storageAmount *
-              props.storageAskPrice}
+              props.storageAskPrice) /
+              10 ** 18}
           </Text>
           <Text fontSize="2xl" color="gray.600">
             FIL
@@ -51,12 +52,13 @@ function QuoteCalculator(props) {
         <Stack color="gray.600" size="md">
           <Text>
             (${" "}
-            {storageDuration *
+            {(storageDuration *
               30 *
               2880 *
               storageAmount *
               props.storageAskPrice *
-              filecoinUSDRate}
+              filecoinUSDRate) /
+              10 ** 18}
             )
           </Text>
           <Text>Estimated Quote</Text>
