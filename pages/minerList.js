@@ -126,7 +126,7 @@ function minerList() {
                   </Select>
                   <HStack>
                     <Tag size="lg" borderRadius="full" colorScheme="blue">
-                      1000Gib / 24month
+                      1000GiB / 24month
                     </Tag>
                   </HStack>
                 </VStack>

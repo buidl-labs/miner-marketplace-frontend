@@ -148,7 +148,7 @@ function profileSettings() {
                     </Text>
                   </VStack>
                   <Text size="sm" color="gray.600">
-                    FIL/Gib/epoch
+                    FIL/GiB/epoch
                   </Text>
                 </HStack>
                 <HStack alignItems="baseline" spacing="4">
@@ -163,7 +163,7 @@ function profileSettings() {
                     </Text>
                   </VStack>
                   <Text size="sm" color="gray.600">
-                    FIL/Gib/epoch
+                    FIL/GiB/epoch
                   </Text>
                 </HStack>
                 <HStack alignItems="baseline" spacing="4">
@@ -178,7 +178,7 @@ function profileSettings() {
                     </Text>
                   </VStack>
                   <Text size="sm" color="gray.600">
-                    FIL/Gib/epoch
+                    FIL/GiB/epoch
                   </Text>
                 </HStack>
               </Stack>

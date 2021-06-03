@@ -2,11 +2,45 @@ import { Heading, Stack, Tag, Text, HStack, Wrap } from "@chakra-ui/react";
 import React from "react";
 
 function ServiceDetails(props) {
+  let serviceType = [];
+  if (props.storage)
+    serviceType.push(
+      <Tag key="str" size="lg" borderRadius="full" colorScheme="yellow">
+        Storage
+      </Tag>,
+    );
+  if (props.retrieval)
+    serviceType.push(
+      <Tag key="ret" size="lg" borderRadius="full" colorScheme="purple">
+        Retrieval
+      </Tag>,
+    );
+  if (props.repair)
+    serviceType.push(
+      <Tag key="rep" size="lg" borderRadius="full" colorScheme="pink">
+        Repair
+      </Tag>,
+    );
+
+  let dataTransferMechanism = [];
+  if (props.online)
+    dataTransferMechanism.push(
+      <Tag key="online" size="lg" borderRadius="full" colorScheme="green">
+        Online
+      </Tag>,
+    );
+  if (props.offline)
+    dataTransferMechanism.push(
+      <Tag key="offline" size="lg" borderRadius="full" colorScheme="orange">
+        Offline
+      </Tag>,
+    );
+
   return (
     <>
       <Stack alignItems="flex-start" spacing="8" mt="8">
         <Heading size="lg" color="blue.900">
-          Service Offered
+          Service Offering
         </Heading>
         <HStack spacing="16">
           <Stack spacing="6">
@@ -17,29 +51,12 @@ function ServiceDetails(props) {
               Data Transfer Mechanism
             </Text>
             <Text size="lg" color="blue.900">
-              Type of Service
+              Location
             </Text>
           </Stack>
           <Stack spacing="4">
-            <Wrap>
-              <Tag size="lg" borderRadius="full" colorScheme="green">
-                Online
-              </Tag>
-              <Tag size="lg" borderRadius="full" colorScheme="orange">
-                Offline
-              </Tag>
-            </Wrap>
-            <Wrap>
-              <Tag size="lg" borderRadius="full" colorScheme="yellow">
-                Storage
-              </Tag>
-              <Tag size="lg" borderRadius="full" colorScheme="purple">
-                Retrieval
-              </Tag>
-              <Tag size="lg" borderRadius="full" colorScheme="pink">
-                Repair
-              </Tag>
-            </Wrap>
+            <Wrap>{serviceType}</Wrap>
+            <Wrap>{dataTransferMechanism}</Wrap>
             <Wrap>
               <Text color="blue.600" fontWeight="medium">
                 {props.serviceLocation}
@@ -69,7 +86,7 @@ function ServiceDetails(props) {
                 {props.storageAskPrice}
               </Text>
               <Text fontSize="sm" color="gray.500">
-                FIL/Gib/epoch
+                FIL/GiB/epoch
               </Text>
             </Wrap>
             <Wrap>
@@ -77,7 +94,7 @@ function ServiceDetails(props) {
                 {props.verifiedAskPrice}
               </Text>
               <Text fontSize="sm" color="gray.500">
-                FIL/Gib/epoch
+                FIL/GiB/epoch
               </Text>
             </Wrap>
             <Wrap>
@@ -85,7 +102,7 @@ function ServiceDetails(props) {
                 {props.retrievalAskPrice}
               </Text>
               <Text fontSize="sm" color="gray.500">
-                FIL/Gib/epoch
+                FIL/B
               </Text>
             </Wrap>
           </Stack>

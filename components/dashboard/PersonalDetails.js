@@ -49,18 +49,22 @@ const PersonalDetails = (props) => {
             color="gray.600"
             spacing="6"
           >
-            <Link href={props.minerMail} color="gray.500" isExternal>
+            <a href={"mailto:" + props.minerMail} color="gray.500">
               <Icon as={IoMdMail} h={6} w={6} viewBox="0 0 24 24" />
-            </Link>
-            <Link href={props.minerWebsite} color="gray.500" isExternal>
+            </a>
+            <a href={props.minerWebsite} color="gray.500" target="_blank">
               <Icon as={FaGlobe} h={6} w={6} viewBox="0 0 24 24" />
-            </Link>
-            <Link href={props.minerSlack} color="gray.500" isExternal>
+            </a>
+            <a href={props.minerSlack} color="gray.500" target="_blank">
               <Icon as={FaSlack} h={6} w={6} viewBox="0 0 24 24" />
-            </Link>
-            <Link href={props.minerTwitter} color="gray.500" isExternal>
+            </a>
+            <a
+              href={"https://twitter.com/" + props.minerTwitter}
+              color="gray.500"
+              target="_blank"
+            >
               <Icon as={FaTwitter} h={6} w={6} viewBox="0 0 24 24" />
-            </Link>
+            </a>
           </HStack>
         </WrapItem>
         <VStack spacing="3" alignItems="left" pt="4">

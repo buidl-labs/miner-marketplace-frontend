@@ -14,8 +14,9 @@ import PersonalDetails from "../components/dashboard/PersonalDetails";
 import QuoteCalculator from "../components/dashboard/QuoteCalculator";
 import Scores from "../components/dashboard/Scores";
 import ServiceDetails from "../components/dashboard/ServiceDetails";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
-const minerDetails = () => {
+export default function Miner() {
   return (
     <>
       <DashboardNavbar />
@@ -80,6 +81,55 @@ const minerDetails = () => {
       </Grid>
     </>
   );
-};
+}
 
-export default minerDetails;
+export async function getStaticProps() {
+  const client = new ApolloClient({
+    uri: "https://miner-marketplace-backend.onrender.com/query",
+    cache: new InMemoryCache(),
+  });
+  const { data } = await client.query({
+    query: gql`
+      query {
+        miner(id: "f02770") {
+          id
+          claimed
+          location {
+            region
+            country
+          }
+          transparencyScore
+          reputationScore
+          owner {
+            address
+          }
+          worker {
+            address
+          }
+          personalInfo {
+            name
+            bio
+          }
+          pricing {
+            storageAskPrice
+          }
+          service {
+            serviceTypes {
+              storage
+            }
+            dataTransferMechanism {
+              online
+            }
+          }
+        }
+      }
+    `,
+  });
+
+  return {
+    props: {
+      launches: [],
+      miner: data.miner,
+    },
+  };
+}
