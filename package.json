@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "export":"next export"
+    "start": "next start"
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
@@ -27,6 +26,15 @@
     "react-highlight-words": "^0.17.0",
     "react-icons": "^4.2.0",
     "react-loader-spinner": "^4.0.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "dayjs": "1.8.28",
+    "esm": "^3.2.25",
+    "@next/bundle-analyzer": "^9.1.4",
+    "postcss-preset-env": "^6.7.0"
+  },
+  "browser": {
+    "fs": false,
+    "path": false
   }
 }

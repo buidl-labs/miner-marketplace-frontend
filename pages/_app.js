@@ -2,6 +2,7 @@ import React from "react";
 import ReactDom from "react-dom";
 import { ChakraProvider, extendTheme, ColorModeScript } from "@chakra-ui/react";
 import "@fontsource/inter/variable-full.css";
+import "antd/dist/antd.css";
 
 const config = {
   initialColorMode: "light",
@@ -15,7 +16,7 @@ const theme = extendTheme(
       heading: "Inter",
       body: "Inter",
     },
-  }
+  },
 );
 
 function MyApp({ Component, pageProps }) {
