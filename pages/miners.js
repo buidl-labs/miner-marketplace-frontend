@@ -594,7 +594,7 @@ export default function Miners({ miners, href }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   console.log(process.env.BACKEND_URL);
   const client = new ApolloClient({
     uri: process.env.BACKEND_URL,
