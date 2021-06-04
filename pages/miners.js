@@ -381,7 +381,7 @@ export default function Miners({ miners, href }) {
       },
     },
     {
-      title: "Estimated Quote (FIL)",
+      title: "Estimated Quote",
       dataIndex: "estimatedQuote",
       key: "estimatedQuote",
       sorter: {
@@ -391,8 +391,8 @@ export default function Miners({ miners, href }) {
       render: (l) => {
         return (
           <div>
-            <h1>{l.fil}</h1>
-            <h1>({l.usd})</h1>
+            <h1>{Math.round((l.fil + Number.EPSILON) * 1000) / 1000} FIL</h1>
+            <h1>($ {Math.round((l.usd + Number.EPSILON) * 1000) / 1000})</h1>
           </div>
         );
       },
@@ -502,91 +502,6 @@ export default function Miners({ miners, href }) {
               // onChange={handleTableChange}
               pagination={pagination}
             />
-            <Heading size="lg" color="gray.700">
-              Search Miners
-            </Heading>
-            {/*Search*/}
-            <InputGroup w="50%">
-              <InputRightElement
-                pointerEvents="none"
-                children={<Search2Icon color="gray" />}
-              />
-              <Input type="text" placeholder="Search Miners by Address" />
-            </InputGroup>
-            <Wrap spacing="16">
-              {/*Type of Service*/}
-              <WrapItem>
-                <VStack alignItems="left">
-                  <Select placeholder="Type of Service">
-                    <option value="option1">Storage</option>
-                    <option value="option2">Retrieval</option>
-                    <option value="option2">Repair</option>
-                  </Select>
-                  <HStack>
-                    <Tag size="lg" borderRadius="full" colorScheme="yellow">
-                      Storage
-                    </Tag>
-                    <Tag size="lg" borderRadius="full" colorScheme="purple">
-                      Retrieval
-                    </Tag>
-                    <Tag size="lg" borderRadius="full" colorScheme="pink">
-                      Repair
-                    </Tag>
-                  </HStack>
-                </VStack>
-              </WrapItem>
-
-              {/*Data Transfer Mechanism*/}
-              <WrapItem>
-                <VStack alignItems="left">
-                  <Select placeholder="Data Transfer Mechanism">
-                    <option value="option1">Online</option>
-                    <option value="option2">Offline</option>
-                  </Select>
-                  <HStack>
-                    <Tag size="lg" borderRadius="full" colorScheme="green">
-                      Online
-                    </Tag>
-                    <Tag size="lg" borderRadius="full" colorScheme="orange">
-                      Offline
-                    </Tag>
-                  </HStack>
-                </VStack>
-              </WrapItem>
-
-              {/*Location*/}
-              <WrapItem>
-                <VStack alignItems="left">
-                  <InputGroup>
-                    <InputRightElement
-                      pointerEvents="none"
-                      children={<Search2Icon color="gray" />}
-                    />
-                    <Input type="text" placeholder="Location" color="#4A5568" />
-                  </InputGroup>
-                  <HStack>
-                    <Tag size="lg" borderRadius="full" colorScheme="gray">
-                      Online
-                    </Tag>
-                  </HStack>
-                </VStack>
-              </WrapItem>
-              {/*Estimated Quote */}
-
-              <WrapItem>
-                <VStack alignItems="left">
-                  <Select placeholder="Estimated Quote Price">
-                    <option value="option1">Online</option>
-                    <option value="option2">Offline</option>
-                  </Select>
-                  <HStack>
-                    <Tag size="lg" borderRadius="full" colorScheme="blue">
-                      1000GiB / 24month
-                    </Tag>
-                  </HStack>
-                </VStack>
-              </WrapItem>
-            </Wrap>
           </Stack>
         </GridItem>
       </Grid>
@@ -679,3 +594,89 @@ export async function getStaticProps() {
 //             </Tr> */}
 //   </Tfoot>
 // </Table>;
+
+// <Heading size="lg" color="gray.700">
+//   Search Miners
+// </Heading>
+// {/*Search*/}
+// <InputGroup w="50%">
+//   <InputRightElement
+//     pointerEvents="none"
+//     children={<Search2Icon color="gray" />}
+//   />
+//   <Input type="text" placeholder="Search Miners by Address" />
+// </InputGroup>
+// <Wrap spacing="16">
+//   {/*Type of Service*/}
+//   <WrapItem>
+//     <VStack alignItems="left">
+//       <Select placeholder="Type of Service">
+//         <option value="option1">Storage</option>
+//         <option value="option2">Retrieval</option>
+//         <option value="option2">Repair</option>
+//       </Select>
+//       <HStack>
+//         <Tag size="lg" borderRadius="full" colorScheme="yellow">
+//           Storage
+//         </Tag>
+//         <Tag size="lg" borderRadius="full" colorScheme="purple">
+//           Retrieval
+//         </Tag>
+//         <Tag size="lg" borderRadius="full" colorScheme="pink">
+//           Repair
+//         </Tag>
+//       </HStack>
+//     </VStack>
+//   </WrapItem>
+
+//   {/*Data Transfer Mechanism*/}
+//   <WrapItem>
+//     <VStack alignItems="left">
+//       <Select placeholder="Data Transfer Mechanism">
+//         <option value="option1">Online</option>
+//         <option value="option2">Offline</option>
+//       </Select>
+//       <HStack>
+//         <Tag size="lg" borderRadius="full" colorScheme="green">
+//           Online
+//         </Tag>
+//         <Tag size="lg" borderRadius="full" colorScheme="orange">
+//           Offline
+//         </Tag>
+//       </HStack>
+//     </VStack>
+//   </WrapItem>
+
+//   {/*Location*/}
+//   <WrapItem>
+//     <VStack alignItems="left">
+//       <InputGroup>
+//         <InputRightElement
+//           pointerEvents="none"
+//           children={<Search2Icon color="gray" />}
+//         />
+//         <Input type="text" placeholder="Location" color="#4A5568" />
+//       </InputGroup>
+//       <HStack>
+//         <Tag size="lg" borderRadius="full" colorScheme="gray">
+//           Online
+//         </Tag>
+//       </HStack>
+//     </VStack>
+//   </WrapItem>
+//   {/*Estimated Quote */}
+
+//   <WrapItem>
+//     <VStack alignItems="left">
+//       <Select placeholder="Estimated Quote Price">
+//         <option value="option1">Online</option>
+//         <option value="option2">Offline</option>
+//       </Select>
+//       <HStack>
+//         <Tag size="lg" borderRadius="full" colorScheme="blue">
+//           1000GiB / 24month
+//         </Tag>
+//       </HStack>
+//     </VStack>
+//   </WrapItem>
+// </Wrap>

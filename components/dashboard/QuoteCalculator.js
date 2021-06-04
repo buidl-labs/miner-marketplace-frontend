@@ -15,8 +15,8 @@ import {
 import React, { useState, useEffect } from "react";
 
 function QuoteCalculator(props) {
-  const [storageDuration, setStorageDuration] = useState(1);
-  const [storageAmount, setStorageAmount] = useState(1);
+  const [storageDuration, setStorageDuration] = useState(6);
+  const [storageAmount, setStorageAmount] = useState(10);
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   useEffect(() => {
@@ -38,12 +38,16 @@ function QuoteCalculator(props) {
         </Heading>
         <HStack spacing="2" alignItems="center">
           <Text fontSize="5xl" color="blue.900">
-            {(storageDuration *
-              30 *
-              2880 *
-              storageAmount *
-              props.storageAskPrice) /
-              10 ** 18}
+            {Math.round(
+              ((storageDuration *
+                30 *
+                2880 *
+                storageAmount *
+                props.storageAskPrice) /
+                10 ** 18 +
+                Number.EPSILON) *
+                1000,
+            ) / 1000}
           </Text>
           <Text fontSize="2xl" color="gray.600">
             FIL
@@ -52,13 +56,17 @@ function QuoteCalculator(props) {
         <Stack color="gray.600" size="md">
           <Text>
             (${" "}
-            {(storageDuration *
-              30 *
-              2880 *
-              storageAmount *
-              props.storageAskPrice *
-              filecoinUSDRate) /
-              10 ** 18}
+            {Math.round(
+              ((storageDuration *
+                30 *
+                2880 *
+                storageAmount *
+                props.storageAskPrice *
+                filecoinUSDRate) /
+                10 ** 18 +
+                Number.EPSILON) *
+                1000,
+            ) / 1000}
             )
           </Text>
           <Text>Estimated Quote</Text>
