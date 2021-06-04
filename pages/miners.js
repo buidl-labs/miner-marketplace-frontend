@@ -43,11 +43,11 @@ export default function Miners({ miners, href }) {
   // useEffect(() => {
   //   async function fetchMyAPI() {
   //     const link = createHttpLink({
-  //       uri: "https://miner-marketplace-backend.onrender.com/query",
+  //       uri: process.env.BACKEND_URL,
   //       credentials: "same-origin",
   //     });
   //     const client = new ApolloClient({
-  //       uri: "https://miner-marketplace-backend.onrender.com/query",
+  //       uri: process.env.BACKEND_URL,
   //       cache: new InMemoryCache(),
   //       // link,
   //       // fetchOptions: {
@@ -74,6 +74,18 @@ export default function Miners({ miners, href }) {
   //   }
   //   fetchMyAPI();
   // }, []);
+
+  useEffect(() => {
+    fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+    )
+      .then((res) => res.json())
+      .then((r) => {
+        console.log(r.filecoin.usd);
+        setFilecoinUSDRate(r.filecoin.usd);
+      });
+  }, []);
+  const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   const router = useRouter();
   const handleClick = (e) => {
@@ -230,12 +242,21 @@ export default function Miners({ miners, href }) {
         country: fd.location.country,
         region: fd.location.region,
       },
-      estimatedQuote:
-        storageDuration *
-        30 *
-        2880 *
-        storageAmount *
-        (parseInt(fd.pricing.storageAskPrice) / 10 ** 18),
+      estimatedQuote: {
+        fil:
+          storageDuration *
+          30 *
+          2880 *
+          storageAmount *
+          (parseInt(fd.pricing.storageAskPrice) / 10 ** 18),
+        usd:
+          storageDuration *
+          30 *
+          2880 *
+          storageAmount *
+          (parseInt(fd.pricing.storageAskPrice) / 10 ** 18) *
+          filecoinUSDRate,
+      },
       qap: fd.qualityAdjustedPower,
     };
   });
@@ -365,7 +386,15 @@ export default function Miners({ miners, href }) {
       key: "estimatedQuote",
       sorter: {
         compare: (a, b) =>
-          parseInt(a.estimatedQuote) - parseInt(b.estimatedQuote),
+          parseInt(a.estimatedQuote.fil) - parseInt(b.estimatedQuote.fil),
+      },
+      render: (l) => {
+        return (
+          <div>
+            <h1>{l.fil}</h1>
+            <h1>({l.usd})</h1>
+          </div>
+        );
       },
     },
     {
@@ -566,12 +595,12 @@ export default function Miners({ miners, href }) {
 }
 
 export async function getStaticProps() {
+  console.log(process.env.BACKEND_URL);
   const client = new ApolloClient({
-    uri: "https://miner-marketplace-backend.onrender.com/query",
+    uri: process.env.BACKEND_URL,
     cache: new InMemoryCache(),
   });
-  // fetchedData
-  const { data } = await client.query({
+  const { data: fmmData } = await client.query({
     query: gql`
       query {
         miners {
@@ -605,9 +634,11 @@ export async function getStaticProps() {
       }
     `,
   });
+
   return {
     props: {
-      miners: data.miners,
+      miners: fmmData.miners,
+      // filecoinUSDRate: cgkoJson.filecoin.usd, // cgko.json().filecoin.usd,
     },
   };
 }

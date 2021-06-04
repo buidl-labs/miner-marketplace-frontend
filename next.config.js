@@ -1,3 +1,5 @@
 module.exports = {
-  env: {},
+  env: {
+    BACKEND_URL: process.env.BACKEND_URL,
+  },
 };

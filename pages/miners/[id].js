@@ -94,7 +94,7 @@ export default function Miner({ miner }) {
 
 export async function getStaticProps({ params }) {
   const client = new ApolloClient({
-    uri: "https://miner-marketplace-backend.onrender.com/query",
+    uri: process.env.BACKEND_URL,
     cache: new InMemoryCache(),
   });
   const { data } = await client.query({
@@ -153,7 +153,7 @@ export async function getStaticProps({ params }) {
 
 async function getAllMinerIds() {
   const client = new ApolloClient({
-    uri: "https://miner-marketplace-backend.onrender.com/query",
+    uri: process.env.BACKEND_URL,
     cache: new InMemoryCache(),
   });
 
