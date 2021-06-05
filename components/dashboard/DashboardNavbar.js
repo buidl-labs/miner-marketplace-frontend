@@ -63,7 +63,7 @@ const DashboardNavbar = (props) => {
       //   return addrString;
       // });
       // console.log("addresses", addresses);
-      const res = await ledgerApp.getAddressAndPubKey(`m/44\'/461\'/0/0/${0}`);
+      const res = await ledgerApp.showAddressAndPubKey(`m/44\'/461\'/0/0/${0}`);
       setLedgerAddress(res.addrString);
       console.log("res", res);
     } catch (err) {
