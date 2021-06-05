@@ -43,7 +43,7 @@ const DashboardMenu = () => {
               </Text>
             </HStack>
           </Link>
-          <Link
+          {/*<Link
             p="4"
             alignItems="center"
             onClick={() => router.push("/miners")}
@@ -54,8 +54,8 @@ const DashboardMenu = () => {
               </Text>
               <ChevronRightIcon h={6} w={6} />
             </HStack>
-          </Link>
-          <Link
+          </Link>*/}
+          {/*<Link
             p="4"
             alignItems="center"
             onClick={() => router.push("/profileSettings")}
@@ -66,8 +66,8 @@ const DashboardMenu = () => {
               </Text>
               <ChevronRightIcon h={6} w={6} />
             </HStack>
-          </Link>
-          <Link
+          </Link>*/}
+          {/*<Link
             p="6"
             alignItems="center"
             // onClick={() => router.push("/minerList")}
@@ -78,7 +78,7 @@ const DashboardMenu = () => {
                 Search Miners
               </Text>
             </HStack>
-          </Link>
+          </Link>*/}
         </VStack>
       </Box>
     </>

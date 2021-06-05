@@ -445,7 +445,7 @@ export default function Miners({ miners, href }) {
   };
   return (
     <>
-      <DashboardNavbar />
+      <DashboardNavbar isMinerProfile={false} />
       <Grid
         h="200px"
         templateRows="repeat(4, 1fr)"

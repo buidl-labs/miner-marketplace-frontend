@@ -7,7 +7,8 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+import ProfileSettings from "../profileSettings";
 import DashboardMenu from "../../components/dashboard/DashboardMenu";
 import DashboardNavbar from "../../components/dashboard/DashboardNavbar";
 import PersonalDetails from "../../components/dashboard/PersonalDetails";
@@ -16,11 +17,35 @@ import Scores from "../../components/dashboard/Scores";
 import ServiceDetails from "../../components/dashboard/ServiceDetails";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 // import getAllMinerIds from "../miners";
+// import { createGlobalState } from "react-hooks-global-state";
+
+// const initialState = { isSignedIn: false, isClaimed: false };
+// export default const { useGlobalState } = createGlobalState(initialState);
 
 export default function Miner({ miner }) {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isClaimed, setIsClaimed] = useState(miner.claimed);
+  // const [isSignedIn, setisSignedIn] = useGlobalState("isSignedIn");
+  // const [isClaimed, setIsClaimed] = useGlobalState("isClaimed");
+  // setIsClaimed(miner.claimed);
+
+  function handleIsSignedInChange(newValue) {
+    setIsSignedIn(newValue);
+  }
+  function handleIsClaimedChange(newValue) {
+    setIsClaimed(newValue);
+  }
+
   return (
     <>
-      <DashboardNavbar />
+      <DashboardNavbar
+        minerID={miner.id}
+        isMinerProfile={true}
+        // isSignedIn={isSignedIn}
+        // isClaimed={isClaimed}
+        // onIsSignedInChange={handleIsSignedInChange}
+        // onisClaimedChange={handleIsClaimedChange}
+      />
       <Grid
         h="200px"
         templateRows="repeat(4, 1fr)"
@@ -54,6 +79,7 @@ export default function Miner({ miner }) {
           <Tabs>
             <TabList>
               <Tab>Service Details</Tab>
+              <Tab>Profile Settings</Tab>
               <Tab>Aggregated Earnings</Tab>
               <Tab>Predicted Earnings</Tab>
               <Tab>Transaction History</Tab>
@@ -76,10 +102,34 @@ export default function Miner({ miner }) {
                 />
               </TabPanel>
               <TabPanel>
-                <p>two!</p>
+                <ProfileSettings
+                  minerID={miner.id}
+                  minerName={miner.personalInfo.name}
+                  minerMail={miner.personalInfo.email}
+                  minerWebsite={miner.personalInfo.website}
+                  minerSlack={miner.personalInfo.slack}
+                  minerTwitter={miner.personalInfo.twitter}
+                  minerBio={miner.personalInfo.bio}
+                  country={miner.location.country}
+                  region={miner.location.region}
+                  storageAskPrice={miner.pricing.storageAskPrice}
+                  verifiedAskPrice={miner.pricing.verifiedAskPrice}
+                  retrievalAskPrice={miner.pricing.retrievalAskPrice}
+                  storage={miner.service.serviceTypes.storage}
+                  retrieval={miner.service.serviceTypes.retrieval}
+                  repair={miner.service.serviceTypes.repair}
+                  online={miner.service.dataTransferMechanism.online}
+                  offline={miner.service.dataTransferMechanism.offline}
+                />
               </TabPanel>
               <TabPanel>
-                <p>three!</p>
+                <p>Aggregated Earnings</p>
+              </TabPanel>
+              <TabPanel>
+                <p>Predicted Earnings</p>
+              </TabPanel>
+              <TabPanel>
+                <p>Transaction History</p>
               </TabPanel>
             </TabPanels>
           </Tabs>
