@@ -34,7 +34,7 @@ const PersonalDetails = (props) => {
             bg="gray.100"
             mr="4"
           ></Avatar>
-          <VStack alignItems="baseline" textAlign="left">
+          <VStack alignItems="baseline" textAlign="left" textOverflow="false">
             <Heading size="md" color="blue.900">
               {props.minerName}
             </Heading>
@@ -67,7 +67,7 @@ const PersonalDetails = (props) => {
             </a>
           </HStack>
         </WrapItem>
-        <VStack spacing="3" alignItems="left" pt="4">
+        <VStack spacing="3" alignItems="left" pt="4" isTruncated>
           <WrapItem alignItems="baseline">
             <Heading size="sm" color="gray.700" mr="3">
               Worker Address:

@@ -1,9 +1,10 @@
 import {
+  Button,
   Heading,
   Stack,
-  // Input,
   Grid,
   GridItem,
+  Input,
   InputGroup,
   InputRightElement,
   Select,
@@ -32,7 +33,7 @@ import { createHttpLink } from "apollo-link-http";
 import { TableProps } from "antd/lib/table";
 import "antd/dist/antd.css";
 import NxLink from "next/link";
-import { Table, Input, Button, Space } from "antd";
+import { Table, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
@@ -77,7 +78,7 @@ export default function Miners({ miners, href }) {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
     )
       .then((res) => res.json())
       .then((r) => {
@@ -208,20 +209,20 @@ export default function Miners({ miners, href }) {
   const dataSource = miners.map((fd) => {
     let serviceTypeArr = [];
     if (fd.service.serviceTypes.storage) {
-      serviceTypeArr.push("Storage");
+      serviceTypeArr.push("Storage ");
     }
     if (fd.service.serviceTypes.retrieval) {
-      serviceTypeArr.push("Retrieval");
+      serviceTypeArr.push("Retrieval ");
     }
     if (fd.service.serviceTypes.repair) {
-      serviceTypeArr.push("Repair");
+      serviceTypeArr.push("Repair ");
     }
     let dataTransferMechanismArr = [];
     if (fd.service.dataTransferMechanism.online) {
-      dataTransferMechanismArr.push("Online");
+      dataTransferMechanismArr.push("Online ");
     }
     if (fd.service.dataTransferMechanism.offline) {
-      dataTransferMechanismArr.push("Offline");
+      dataTransferMechanismArr.push("Offline ");
     }
     let minerName = fd.personalInfo.name;
     if (fd.personalInfo.name == "") {
@@ -431,7 +432,7 @@ export default function Miners({ miners, href }) {
       "q",
       event.target.value,
       "qlc",
-      event.target.value.toLowerCase(),
+      event.target.value.toLowerCase()
     );
 
     const q = event.target.value.toLowerCase();
@@ -450,52 +451,63 @@ export default function Miners({ miners, href }) {
         h="200px"
         templateRows="repeat(4, 1fr)"
         templateColumns="repeat(12, 1fr)"
-        gap="0.5"
-        pr="8"
       >
         <GridItem rowSpan="8" colSpan="2">
           <DashboardMenu />
         </GridItem>
 
-        <GridItem colSpan="10" pt="28">
+        <GridItem colSpan="10" pt="28" bg="white">
           <Stack spacing="4">
-            <input
-              type="text"
-              placeholder="Search by miner id"
-              value={minerIdQuery}
-              onChange={onChange}
-            />
+            <Heading color="gray.700" size="lg" mb={4}>
+              Search Miners
+            </Heading>
+            <Stack spacing="4" pb="4">
+              <InputGroup maxW="50%">
+                <InputRightElement
+                  pointerEvents="visible"
+                  children={<Search2Icon color="gray.500" />}
+                />
+                <Input
+                  type="text"
+                  placeholder="Search Miners by ID"
+                  value={minerIdQuery}
+                  onChange={onChange}
+                />
+              </InputGroup>
+            </Stack>
+
+            <Stack maxW="25%" alignItems="left" spacing="4">
+              <Stack spacing="1">
+                <Text>Storage amount (in GiB)</Text>
+                <Input
+                  type="number"
+                  placeholder="ex: 1000"
+                  value={storageAmount}
+                  onChange={(event) => setStorageAmount(event.target.value)}
+                />
+              </Stack>
+              <Stack spacing="1">
+                <Text>Storage Duration (in months)</Text>
+                <Input
+                  type="number"
+                  placeholder="ex: 24"
+                  value={storageDuration}
+                  onChange={(event) => setStorageDuration(event.target.value)}
+                />
+              </Stack>
+              <Button
+                colorScheme="blue"
+                variant="outline"
+                onClick={(event) => {
+                  filterList(event);
+                }}
+              >
+                Update Estimated Quote
+              </Button>
+            </Stack>
           </Stack>
-          <br></br>
-          storage duration(months):{" "}
-          <Stack spacing="4">
-            <input
-              type="number"
-              placeholder="Storage duration (in months)"
-              value={storageDuration}
-              onChange={(event) => setStorageDuration(event.target.value)}
-            />
-          </Stack>
-          <br></br>
-          storage amount(in GiB):{" "}
-          <Stack spacing="4">
-            <input
-              type="number"
-              placeholder="Storage amount (in GiB)"
-              value={storageAmount}
-              onChange={(event) => setStorageAmount(event.target.value)}
-            />
-          </Stack>
-          <br></br>
-          <button
-            onClick={(event) => {
-              filterList(event);
-            }}
-          >
-            {" "}
-            update quote
-          </button>
-          <Stack spacing="8">
+
+          <Stack spacing="8" mt="6">
             <Table
               columns={columns}
               dataSource={filteredMiners}
