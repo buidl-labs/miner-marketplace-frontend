@@ -26,7 +26,7 @@ const Hero = (props) => {
           <Heading size="3xl" lineHeight="1.2" color="gray.900">
             {props.heroHeading}
           </Heading>
-          <Text maxW="30vw" color="gray.700">
+          <Text maxW={{ md: "full", sm: "full" }} color="gray.700">
             {props.heroText}
           </Text>
           <Box>
@@ -40,7 +40,11 @@ const Hero = (props) => {
             </Button>
           </Box>
         </Stack>
-        <Image src={props.heroImg} />
+        <Image
+          src={props.heroImg}
+          w={{ md: "40%" }}
+          display={{ lg: "block", sm: "none" }}
+        />
       </HStack>
     </Stack>
   );

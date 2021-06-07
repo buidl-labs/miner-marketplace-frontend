@@ -4,6 +4,7 @@ import {
   Box,
   Container,
   Link,
+  SimpleGrid,
   Heading,
   HStack,
   Stack,
@@ -36,11 +37,9 @@ const minerLanding = () => {
               Why Filecoin?
             </Heading>
           </Stack>
-          <HStack
-            color="gray.700"
-            spacing="36"
-            justifyContent="center"
-            alignItems="flex-start"
+          <SimpleGrid
+            columns={{ md: 3, lg: 3, sm: 1 }}
+            gap={{ lg: "28", md: "12", sm: "4" }}
           >
             <Features
               featureIcon="/images/censorship.svg"
@@ -57,7 +56,7 @@ const minerLanding = () => {
               featureTitle="Active community"
               featureDescription="Filecoin has an active community of contributors to answer questions and help newcomers get started."
             />
-          </HStack>
+          </SimpleGrid>
 
           {/*Filecoin Stats*/}
           <Box
@@ -73,7 +72,7 @@ const minerLanding = () => {
                 Filecoin Miners in Numbers
               </Heading>
 
-              <HStack spacing="52" justifyContent="center">
+              <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
                 <FilecoinStats
                   count="2194+"
                   countText=""
@@ -89,7 +88,7 @@ const minerLanding = () => {
                   countText="PB"
                   subtext="Data Stored till now"
                 />
-              </HStack>
+              </SimpleGrid>
             </Stack>
           </Box>
 
@@ -98,7 +97,7 @@ const minerLanding = () => {
             <Heading color="gray.900" size="2xl">
               Start your Miner Journey
             </Heading>
-            <HStack color="gray.700" spacing="12" justifyContent="center">
+            <SimpleGrid columns={{ lg: 2, md: 2, sm: 1 }} gap="12">
               <JoinNetwork
                 cardHeading="Become a Miner"
                 cardText="Want to join Filecoin network as a miner, click the link below to get started."
@@ -110,7 +109,7 @@ const minerLanding = () => {
                 cardText="If you are already a registered miner, claim your profile to see your storage stats and earning details in intuitive way."
                 ctaText="Claim Profile"
               />
-            </HStack>
+            </SimpleGrid>
           </Stack>
 
           {/*FAQ*/}
