@@ -81,7 +81,6 @@ const IndexPage = () => {
                 Filecoin Network in Numbers
               </Heading>
               <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
-                {/* <HStack spacing="52" justifyContent="center"> */}
                 <FilecoinStats
                   count="2194+"
                   countText=""
@@ -97,7 +96,6 @@ const IndexPage = () => {
                   countText="PB"
                   subtext="Data Stored till now"
                 />
-                {/* </HStack> */}
               </SimpleGrid>
             </Stack>
           </Box>

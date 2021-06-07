@@ -8,6 +8,7 @@ import {
   Text,
   HStack,
   Stack,
+  SimpleGrid,
   WrapItem,
 } from "@chakra-ui/react";
 import React from "react";
@@ -38,11 +39,9 @@ const clientLanding = () => {
               Why Filecoin?
             </Heading>
           </Stack>
-          <HStack
-            color="gray.700"
-            spacing="36"
-            justifyContent="center"
-            alignItems="flex-start"
+          <SimpleGrid
+            columns={{ md: 3, lg: 3, sm: 1 }}
+            gap={{ lg: "28", md: "12", sm: "4" }}
           >
             <Features
               featureIcon="/images/selfhealing.svg"
@@ -59,7 +58,7 @@ const clientLanding = () => {
               featureTitle="Verifiable traces"
               featureDescription="Filecoin generates verifiable traces that files have been stored correctly over time. Clients can efficiently scan these traces to confirm that their files have been stored correctly."
             />
-          </HStack>
+          </SimpleGrid>
 
           {/*Filecoin Stats*/}
           <Box
@@ -75,7 +74,7 @@ const clientLanding = () => {
                 Filecoin Network in Numbers
               </Heading>
 
-              <HStack spacing="52" justifyContent="center">
+              <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
                 <FilecoinStats
                   count="2194+"
                   countText=""
@@ -91,7 +90,7 @@ const clientLanding = () => {
                   countText="PB"
                   subtext="Securely Stored data"
                 />
-              </HStack>
+              </SimpleGrid>
             </Stack>
           </Box>
 
