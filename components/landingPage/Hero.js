@@ -10,7 +10,10 @@ import {
   Heading,
   Text,
   Spacer,
+  SimpleGrid,
   WrapItem,
+  Center,
+  GridItem,
 } from "@chakra-ui/react";
 import React from "react";
 import { Icon, IconProps, ArrowForwardIcon } from "@chakra-ui/icons";

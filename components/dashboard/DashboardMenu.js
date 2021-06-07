@@ -6,21 +6,28 @@ import {
   Heading,
   VStack,
   HStack,
+  IconButton,
 } from "@chakra-ui/react";
-import React from "react";
-import { ChevronRight, Home, Layout, UserCheck } from "react-feather";
+import { React, useState } from "react";
 import { useRouter } from "next/router";
-import { Icon, IconProps, ChevronRightIcon } from "@chakra-ui/icons";
+import {
+  Icon,
+  IconProps,
+  ChevronRightIcon,
+  HamburgerIcon,
+  CloseIcon,
+} from "@chakra-ui/icons";
 import { RiDashboardFill, RiUserSearchFill } from "react-icons/ri";
 
 const DashboardMenu = () => {
   const router = useRouter();
+
   return (
     <>
       <Box
         bg="blue.700"
         color="white"
-        w="56"
+        w="auto"
         textAlign="left"
         alignItems="left"
         position="fixed"

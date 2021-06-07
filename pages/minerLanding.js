@@ -69,7 +69,9 @@ const minerLanding = () => {
             my="16"
           >
             <Stack textAlign="center" spacing="16" my="16">
-              <Heading size="2xl">Filecoin Miners in Numbers</Heading>
+              <Heading size="2xl" color="white">
+                Filecoin Miners in Numbers
+              </Heading>
 
               <HStack spacing="52" justifyContent="center">
                 <FilecoinStats

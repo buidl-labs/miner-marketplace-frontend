@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   Stack,
   HStack,
@@ -17,8 +18,7 @@ import React from "react";
 const JoinNetwork = (props) => {
   return (
     <>
-      <WrapItem
-        maxW="38rem"
+      <Center
         textAlign="left"
         border="solid 1px #CBD5E0"
         borderRadius="xl"
@@ -36,7 +36,7 @@ const JoinNetwork = (props) => {
             </Button>
           </Box>
         </Stack>
-      </WrapItem>
+      </Center>
     </>
   );
 };

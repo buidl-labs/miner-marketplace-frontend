@@ -1,5 +1,6 @@
 import {
   Image,
+  Center,
   Box,
   Flex,
   Text,
@@ -16,7 +17,14 @@ const Footer = () => {
   const router = useRouter();
 
   return (
-    <HStack py="8" px="32" bgColor="gray.100" spacing="10" color="gray.600">
+    <Center
+      py="8"
+      px="32"
+      bgColor="gray.100"
+      spacing="10"
+      color="gray.600"
+      w="stretch"
+    >
       <Link href="https://filecoin.io" isExternal>
         <Image src="/images/Filecoin-logo.svg" maxW="28" />
       </Link>
@@ -28,13 +36,19 @@ const Footer = () => {
         </Link>
       </Text>
       <Spacer />
-      <Link onClick={() => router.push("/privacy")}>Privacy</Link>
-      <Link onClick={() => router.push("/terms")}>Terms</Link>
-      <Link onClick={() => router.push("/disclaimer")}>Disclaimer</Link>
-      <Link href="#" isExternal>
+      <Link onClick={() => router.push("/privacy")} pl={8}>
+        Privacy
+      </Link>
+      <Link onClick={() => router.push("/terms")} pl={8}>
+        Terms
+      </Link>
+      <Link onClick={() => router.push("/disclaimer")} pl={8}>
+        Disclaimer
+      </Link>
+      <Link href="#" isExternal pl={8}>
         Contact
       </Link>
-    </HStack>
+    </Center>
   );
 };
 

@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Stack,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/landingPage/Hero";
@@ -21,8 +22,11 @@ const IndexPage = () => {
     <>
       <Navbar />
 
-      <Container maxW="container.xl" mb="16">
-        <Stack spacing="28">
+      <Container
+        maxW={{ lg: "container.xl", md: "container.lg", sm: "container.md" }}
+        mb="16"
+      >
+        <SimpleGrid gap="12">
           {/* Hero Section */}
           <Hero
             heroImg="/images/heroGlobe.svg"
@@ -39,11 +43,10 @@ const IndexPage = () => {
               Why Filecoin?
             </Heading>
           </Stack>
-          <HStack
-            color="gray.700"
-            spacing="36"
-            justifyContent="center"
-            alignItems="flex-start"
+
+          <SimpleGrid
+            columns={{ md: 3, lg: 3, sm: 1 }}
+            gap={{ lg: "28", md: "12", sm: "4" }}
           >
             <Features
               featureIcon="/images/secure.svg"
@@ -62,7 +65,7 @@ const IndexPage = () => {
               featureDescription="It all is decentralised hence, no single point of control, no middle
             man"
             />
-          </HStack>
+          </SimpleGrid>
 
           {/*Filecoin Stats*/}
           <Box
@@ -74,9 +77,11 @@ const IndexPage = () => {
             my="16"
           >
             <Stack textAlign="center" spacing="16" my="16">
-              <Heading size="2xl">Filecoin Network in Numbers</Heading>
-
-              <HStack spacing="52" justifyContent="center">
+              <Heading size="2xl" color="white">
+                Filecoin Network in Numbers
+              </Heading>
+              <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
+                {/* <HStack spacing="52" justifyContent="center"> */}
                 <FilecoinStats
                   count="2194+"
                   countText=""
@@ -92,7 +97,8 @@ const IndexPage = () => {
                   countText="PB"
                   subtext="Data Stored till now"
                 />
-              </HStack>
+                {/* </HStack> */}
+              </SimpleGrid>
             </Stack>
           </Box>
 
@@ -101,7 +107,8 @@ const IndexPage = () => {
             <Heading color="gray.900" size="2xl">
               Join the Filecoin Network
             </Heading>
-            <HStack color="gray.700" spacing="12" justifyContent="center">
+
+            <SimpleGrid columns={{ lg: 2, md: 2, sm: 1 }} gap="12">
               <JoinNetwork
                 cardHeading="Looking to provide Storage Services"
                 cardText="Start your miner journey and become part of global network of
@@ -115,13 +122,13 @@ const IndexPage = () => {
                 ctaText="Explore Miners"
                 ctaVariant="outline"
               />
-            </HStack>
+            </SimpleGrid>
           </Stack>
 
           {/*FAQ*/}
           <Stack textAlign="center" alignItems="center" spacing="16">
             <Heading size="lg">Frequently Asked Questions</Heading>
-            <Stack w="48rem" textAlign="left">
+            <Stack w={{ md: "48rem", sm: "36rem" }} textAlign="left">
               <Accordion allowToggle="false">
                 <Faq question="What?" answer="this is what" />
                 <Faq question="What?" answer="this is what" />
@@ -129,7 +136,7 @@ const IndexPage = () => {
               </Accordion>
             </Stack>
           </Stack>
-        </Stack>
+        </SimpleGrid>
       </Container>
       <Footer />
     </>

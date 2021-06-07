@@ -255,7 +255,7 @@ function ProfileSettings(props) {
                   Ask Price
                 </Text>
                 <HStack alignItems="baseline" spacing="4">
-                  <Text color="blue.900" fontWeight="medium">
+                  <Text color="gray.800" fontWeight="medium" fontSize="md">
                     Storage Ask Price
                   </Text>
                   <Spacer />
@@ -271,7 +271,7 @@ function ProfileSettings(props) {
                   </Text>
                 </HStack>
                 <HStack alignItems="baseline" spacing="4">
-                  <Text color="blue.900" fontWeight="medium">
+                  <Text color="gray.800" fontWeight="medium" fontSize="md">
                     Verified Ask Price
                   </Text>
                   <Spacer />
@@ -287,7 +287,7 @@ function ProfileSettings(props) {
                   </Text>
                 </HStack>
                 <HStack alignItems="baseline" spacing="4">
-                  <Text color="blue.900" fontWeight="medium">
+                  <Text color="gray.800" fontWeight="medium" fontSize="md">
                     Retrieval Ask Price
                   </Text>
                   <Spacer />

@@ -71,7 +71,9 @@ const clientLanding = () => {
             my="16"
           >
             <Stack textAlign="center" spacing="16" my="16">
-              <Heading size="2xl">Filecoin Network in Numbers</Heading>
+              <Heading size="2xl" color="white">
+                Filecoin Network in Numbers
+              </Heading>
 
               <HStack spacing="52" justifyContent="center">
                 <FilecoinStats
