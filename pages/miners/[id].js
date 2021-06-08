@@ -58,6 +58,7 @@ export default function Miner({ miner }) {
         </GridItem>
         <GridItem colSpan="5" pt="28">
           <PersonalDetails
+            minerClaimed={miner.claimed}
             minerName={miner.personalInfo.name}
             minerAddress={miner.id}
             minerMail={miner.personalInfo.email}

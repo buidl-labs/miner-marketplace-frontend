@@ -8,6 +8,8 @@ import {
   WrapItem,
   VStack,
   Link,
+  Button,
+  Tooltip,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -15,6 +17,65 @@ import { Icon, IconProps } from "@chakra-ui/icons";
 import {} from "react-icons";
 import { FaSlack, FaTwitter, FaGlobe } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
+
+function ClaimButton(props) {
+  var pStyle = {
+    fontSize: "16px",
+  };
+  return (
+    <Tooltip
+      label={`To claim this profile, click on \"Connect Wallet\"`}
+      aria-label="claim profile"
+    >
+      <p color="grey" style={pStyle}>
+        Own this profile?
+      </p>
+    </Tooltip>
+  );
+}
+
+function ContactInfo(props) {
+  return (
+    <HStack
+      flexDirection="row"
+      alignItems="baseline"
+      color="gray.600"
+      spacing="6"
+    >
+      <a href={"mailto:" + props.minerMail} color="gray.500">
+        <Icon as={IoMdMail} h={6} w={6} viewBox="0 0 24 24" />
+      </a>
+      <a href={props.minerWebsite} color="gray.500" target="_blank">
+        <Icon as={FaGlobe} h={6} w={6} viewBox="0 0 24 24" />
+      </a>
+      <a href={props.minerSlack} color="gray.500" target="_blank">
+        <Icon as={FaSlack} h={6} w={6} viewBox="0 0 24 24" />
+      </a>
+      <a
+        href={"https://twitter.com/" + props.minerTwitter}
+        color="gray.500"
+        target="_blank"
+      >
+        <Icon as={FaTwitter} h={6} w={6} viewBox="0 0 24 24" />
+      </a>
+    </HStack>
+  );
+}
+
+function ConditionalDetails(props) {
+  if (props.minerClaimed) {
+    return (
+      <ContactInfo
+        minerMail={props.minerMail}
+        minerWebsite={props.minerWebsite}
+        minerSlack={props.minerSlack}
+        minerTwitter={props.minerTwitter}
+      />
+    );
+  } else {
+    return <ClaimButton />;
+  }
+}
 
 const PersonalDetails = (props) => {
   return (
@@ -43,29 +104,13 @@ const PersonalDetails = (props) => {
             </Text>
           </VStack>
           <Spacer />
-          <HStack
-            flexDirection="row"
-            alignItems="baseline"
-            color="gray.600"
-            spacing="6"
-          >
-            <a href={"mailto:" + props.minerMail} color="gray.500">
-              <Icon as={IoMdMail} h={6} w={6} viewBox="0 0 24 24" />
-            </a>
-            <a href={props.minerWebsite} color="gray.500" target="_blank">
-              <Icon as={FaGlobe} h={6} w={6} viewBox="0 0 24 24" />
-            </a>
-            <a href={props.minerSlack} color="gray.500" target="_blank">
-              <Icon as={FaSlack} h={6} w={6} viewBox="0 0 24 24" />
-            </a>
-            <a
-              href={"https://twitter.com/" + props.minerTwitter}
-              color="gray.500"
-              target="_blank"
-            >
-              <Icon as={FaTwitter} h={6} w={6} viewBox="0 0 24 24" />
-            </a>
-          </HStack>
+          <ConditionalDetails
+            minerClaimed={props.minerClaimed}
+            minerMail={props.minerMail}
+            minerWebsite={props.minerWebsite}
+            minerSlack={props.minerSlack}
+            minerTwitter={props.minerTwitter}
+          />
         </WrapItem>
         <VStack spacing="3" alignItems="left" pt="4" isTruncated>
           <WrapItem alignItems="baseline">
