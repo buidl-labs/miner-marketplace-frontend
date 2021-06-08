@@ -26,7 +26,7 @@ const minerLanding = (stats) => {
     <>
       <Navbar />
       <Container maxW="container.xl" mb="16">
-        <Stack spacing="28">
+        <SimpleGrid gap="12">
           {/* Hero Section */}
           <Hero
             heroImg="/images/minerHero.svg"
@@ -119,7 +119,7 @@ const minerLanding = (stats) => {
           {/*FAQ*/}
           <Stack textAlign="center" alignItems="center" spacing="16">
             <Heading size="lg">Frequently Asked Questions</Heading>
-            <Stack w="48rem" textAlign="left">
+            <Stack minW={{ base: "80vw", md: "48rem" }} textAlign="left">
               <Accordion allowToggle="false">
                 <Faq question="What?" answer="this is what" />
                 <Faq question="What?" answer="this is what" />
@@ -127,7 +127,7 @@ const minerLanding = (stats) => {
               </Accordion>
             </Stack>
           </Stack>
-        </Stack>
+        </SimpleGrid>
       </Container>
       <Footer />
     </>

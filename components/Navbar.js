@@ -16,11 +16,11 @@ const Navbar = () => {
 
   return (
     <Flex
-      bg="whiteAlpha.700"
+      bg="whiteAlpha.800"
       borderBottom="solid 1px #EDF2F7 "
       p="4"
       mb="24"
-      px="28"
+      px={{ base: "2", md: "2", xl: "28" }}
       overflow="hidden"
       position="fixed"
       zIndex="10"
@@ -28,7 +28,7 @@ const Navbar = () => {
       backdropFilter="blur(16px)"
     >
       <Link onClick={() => router.push("/")}>
-        <Image src="/images/Logo.svg" maxH="12" />
+        <Image src="/images/Logo.svg" maxW="36" />
       </Link>
       <Spacer />
       <HStack spacing="12" color="gray.700">

@@ -14,6 +14,7 @@ import JoinNetwork from "../components/landingPage/JoinNetwork";
 import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 const IndexPage = (stats) => {
   // console.log(stats);
@@ -24,10 +25,7 @@ const IndexPage = (stats) => {
     <>
       <Navbar />
 
-      <Container
-        maxW={{ lg: "container.xl", md: "container.lg", sm: "container.md" }}
-        mb="16"
-      >
+      <Container maxW={{ lg: "container.xl" }} mb="16">
         <SimpleGrid gap="12">
           {/* Hero Section */}
           <Hero
@@ -128,7 +126,7 @@ const IndexPage = (stats) => {
           {/*FAQ*/}
           <Stack textAlign="center" alignItems="center" spacing="16">
             <Heading size="lg">Frequently Asked Questions</Heading>
-            <Stack w={{ md: "48rem", sm: "36rem" }} textAlign="left">
+            <Stack minW={{ base: "80vw", md: "48rem" }} textAlign="left">
               <Accordion allowToggle="false">
                 <Faq question="What?" answer="this is what" />
                 <Faq question="What?" answer="this is what" />
