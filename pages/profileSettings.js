@@ -18,6 +18,7 @@ import {
   Switch,
   Spacer,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
@@ -75,6 +76,7 @@ function ProfileSettings(props) {
 
   const [ledgerAddress, setLedgerAddress] = useGlobalState("ledgerAddr");
 
+  const toast = useToast();
   return (
     <>
       <Grid
@@ -361,6 +363,24 @@ function ProfileSettings(props) {
                     })
                     .then((data) => {
                       console.log("data returned:", data);
+                      if (data.data.editProfile) {
+                        toast({
+                          title: "Changes saved.",
+                          description: "Reload to view changes.",
+                          status: "success",
+                          duration: 9000,
+                          isClosable: true,
+                        });
+                      } else {
+                        toast({
+                          title: "Failed to update profile.",
+                          description:
+                            "There was an issue updating the miner profile.",
+                          status: "error",
+                          duration: 9000,
+                          isClosable: true,
+                        });
+                      }
                       // const reqClaim = data.data.claimProfile;
                       // if (reqClaim) setClval("✅ success");
                       // else setClval("❌ failed");
