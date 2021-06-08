@@ -78,6 +78,11 @@ function ConditionalDetails(props) {
 }
 
 const PersonalDetails = (props) => {
+  const ownerAddressLink =
+    "https://filfox.info/en/address/" + props.ownerAddress.toString();
+  const workerAddressLink =
+    "https://filfox.info/en/address/" + props.workerAddress.toString();
+
   return (
     <>
       <Box
@@ -117,13 +122,17 @@ const PersonalDetails = (props) => {
             <Heading size="sm" color="gray.700" mr="3">
               Worker Address:
             </Heading>
-            <Text color="gray.600">{props.workerAddress}</Text>
+            <Link href={workerAddressLink} isExternal>
+              <Text color="gray.600">{props.workerAddress}</Text>
+            </Link>
           </WrapItem>
           <WrapItem alignItems="baseline">
             <Heading size="sm" color="gray.700" mr="3">
               Owner Address:
             </Heading>
-            <Text color="gray.600">{props.ownerAddress}</Text>
+            <Link href={ownerAddressLink} isExternal>
+              <Text color="gray.600">{props.ownerAddress}</Text>
+            </Link>
           </WrapItem>
           <WrapItem alignItems="baseline">
             <Heading size="sm" color="gray.700" mr="3">

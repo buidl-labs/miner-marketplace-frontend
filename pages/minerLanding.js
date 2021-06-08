@@ -16,8 +16,12 @@ import FilecoinStats from "../components/landingPage/FilecoinStats";
 import JoinNetwork from "../components/landingPage/JoinNetwork";
 import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
+import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
 
-const minerLanding = () => {
+const minerLanding = (stats) => {
+  // console.log(stats);
+  // console.log("active", stats.stats.activeMinersCount);
+  // console.log("dataS", stats.stats.dataStored);
   return (
     <>
       <Navbar />
@@ -74,18 +78,18 @@ const minerLanding = () => {
 
               <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
                 <FilecoinStats
-                  count="2194+"
+                  count={stats.stats.activeMinersCount + "+"}
                   countText=""
                   subtext="Active Miners and counting"
                 />
                 <FilecoinStats
-                  count="5489"
-                  countText="PB"
+                  count={stats.stats.networkStorageCapacity}
+                  countText=""
                   subtext="Network Storage Capacity"
                 />
                 <FilecoinStats
-                  count="3746"
-                  countText="PB"
+                  count={stats.stats.dataStored}
+                  countText=""
                   subtext="Data Stored till now"
                 />
               </SimpleGrid>
@@ -131,3 +135,28 @@ const minerLanding = () => {
 };
 
 export default minerLanding;
+
+export async function getStaticProps() {
+  const client = new ApolloClient({
+    uri: process.env.BACKEND_URL,
+    cache: new InMemoryCache(),
+  });
+
+  const { data } = await client.query({
+    query: gql`
+      query {
+        networkStats {
+          activeMinersCount
+          networkStorageCapacity
+          dataStored
+        }
+      }
+    `,
+  });
+
+  return {
+    props: {
+      stats: data.networkStats,
+    },
+  };
+}
