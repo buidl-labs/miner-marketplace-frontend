@@ -7,9 +7,19 @@ import {
   VStack,
   HStack,
   IconButton,
+  Input,
+  Image,
+  Button,
   useDisclosure,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
-import { React, useState } from "react";
+import { React, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import {
   Icon,
@@ -21,35 +31,43 @@ import {
 import { RiDashboardFill, RiUserSearchFill } from "react-icons/ri";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 
-const DashboardMenu = (props) => {
+const DashboardMenu = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const handleToggle = () => (isOpen ? onClose() : onOpen());
+  const btnRef = useRef();
 
   const router = useRouter();
 
   return (
     <>
-      <Box
-        display={{ base: "block", md: "none" }}
-        onClick={handleToggle}
-        mr={4}
-        zIndex={100}
-      >
-        <Icon
-          as={HiMenuAlt3}
-          color={"blue.800"}
-          w={8}
-          h={8}
-          display={{ base: isOpen ? "none" : "block" }}
-        />
-        <Icon
-          as={HiX}
-          color={"blue.800"}
-          w={8}
-          h={8}
-          display={{ base: isOpen ? "block" : "none" }}
-        />
-      </Box>
+      {/* Drawer
+      <Box pt={16}>
+        <IconButton as={HiX} w={12} h={12} ref={btnRef} onClick={onOpen} />
+        <Drawer
+          isOpen={isOpen}
+          placement="left"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>
+              <Image src="/images/Logo.svg" w={36} />
+            </DrawerHeader>
+
+            <DrawerBody>
+              <Link onClick={() => router.push("/miners")}>
+                <HStack>
+                  <Icon as={RiUserSearchFill} w={5} h={5} />
+                  <Text fontSize="lg" paddingLeft="2" fontWeight="medium">
+                    Search Miners
+                  </Text>
+                </HStack>
+              </Link>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </Box> */}
 
       <Box
         display={{ base: isOpen ? "block" : "none", md: "flex" }}
@@ -78,6 +96,7 @@ const DashboardMenu = (props) => {
               </Text>
             </HStack>
           </Link>
+
           {/*<Link
             p="4"
             alignItems="center"
@@ -89,8 +108,8 @@ const DashboardMenu = (props) => {
               </Text>
               <ChevronRightIcon h={6} w={6} />
             </HStack>
-          </Link>*/}
-          {/*<Link
+          </Link>
+          <Link
             p="4"
             alignItems="center"
             onClick={() => router.push("/profileSettings")}
@@ -101,8 +120,8 @@ const DashboardMenu = (props) => {
               </Text>
               <ChevronRightIcon h={6} w={6} />
             </HStack>
-          </Link>*/}
-          {/*<Link
+          </Link>
+          <Link
             p="6"
             alignItems="center"
             // onClick={() => router.push("/minerList")}
