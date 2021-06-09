@@ -15,7 +15,7 @@ import {
   Collapse,
 } from "@chakra-ui/react";
 
-import { HiMenuAlt3 } from "react-icons/hi";
+import { HiMenuAlt3, HiX, HiXCircle } from "react-icons/hi";
 
 import { useRouter } from "next/router";
 
@@ -57,7 +57,20 @@ const Navbar = (props) => {
           onClick={handleToggle}
           mr={4}
         >
-          <Icon as={HiMenuAlt3} color={"blue.800"} w={8} h={8} />
+          <Icon
+            as={HiMenuAlt3}
+            color={"blue.800"}
+            w={8}
+            h={8}
+            display={{ base: isOpen ? "none" : "block" }}
+          />
+          <Icon
+            as={HiX}
+            color={"blue.800"}
+            w={8}
+            h={8}
+            display={{ base: isOpen ? "block" : "none" }}
+          />
         </Box>
 
         <Stack
