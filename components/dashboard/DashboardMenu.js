@@ -7,6 +7,7 @@ import {
   VStack,
   HStack,
   IconButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { React, useState } from "react";
 import { useRouter } from "next/router";
@@ -18,13 +19,40 @@ import {
   CloseIcon,
 } from "@chakra-ui/icons";
 import { RiDashboardFill, RiUserSearchFill } from "react-icons/ri";
+import { HiMenuAlt3, HiX } from "react-icons/hi";
 
-const DashboardMenu = () => {
+const DashboardMenu = (props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const handleToggle = () => (isOpen ? onClose() : onOpen());
+
   const router = useRouter();
 
   return (
     <>
       <Box
+        display={{ base: "block", md: "none" }}
+        onClick={handleToggle}
+        mr={4}
+        zIndex={100}
+      >
+        <Icon
+          as={HiMenuAlt3}
+          color={"blue.800"}
+          w={8}
+          h={8}
+          display={{ base: isOpen ? "none" : "block" }}
+        />
+        <Icon
+          as={HiX}
+          color={"blue.800"}
+          w={8}
+          h={8}
+          display={{ base: isOpen ? "block" : "none" }}
+        />
+      </Box>
+
+      <Box
+        display={{ base: isOpen ? "block" : "none", md: "flex" }}
         bg="blue.700"
         color="white"
         w="auto"

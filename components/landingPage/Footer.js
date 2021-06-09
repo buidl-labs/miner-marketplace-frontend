@@ -19,48 +19,48 @@ const Footer = () => {
   const router = useRouter();
 
   return (
-    <Center
+    <Flex
       py="8"
-      px={{ lg: 32, md: 8, sm: 4 }}
+      px={{ base: 4, lg: 32, md: 8 }}
       bgColor="gray.100"
       spacing="10"
       color="gray.600"
       width="full"
-      alignItems={{ sm: "flex-start" }}
     >
-      <SimpleGrid columns={{ lg: 3, md: 1, sm: 1 }} gap={4} w="container.xl">
-        <GridItem>
+      <SimpleGrid columns={{ base: 1, lg: 2 }} w="container.xl" mx="auto">
+        <VStack spacing={4} align="flex-start">
           <Link href="https://filecoin.io" isExternal>
             <Image src="/images/Filecoin-logo.svg" maxW="28" />
           </Link>
-        </GridItem>
 
-        <GridItem>
-          <HStack>
-            <Text>
-              Made with ❤ by{" "}
-              <Link href="https://buidllabs.io" isExternal>
-                BUIDL Labs
-              </Link>
-            </Text>
-          </HStack>
-        </GridItem>
-
-        <GridItem>
-          <HStack spacing={4}>
-            <Link onClick={() => router.push("/privacy")}>Privacy</Link>
-
-            <Link onClick={() => router.push("/terms")}>Terms</Link>
-
-            <Link onClick={() => router.push("/disclaimer")}>Disclaimer</Link>
-
-            <Link href="#" isExternal>
-              Contact
+          <Text>
+            Made with ❤ by{" "}
+            <Link href="https://buidllabs.io" isExternal>
+              BUIDL Labs
             </Link>
-          </HStack>
-        </GridItem>
+          </Text>
+        </VStack>
+
+        <HStack
+          spacing="8"
+          mx={{ base: 0, md: "auto" }}
+          pt={{ base: 4, md: 0 }}
+          mr={{ base: 0, md: "0" }}
+          alignItems={{ base: "left", md: "center" }}
+          textAlign="right"
+        >
+          <Link onClick={() => router.push("/privacy")}>Privacy</Link>
+
+          <Link onClick={() => router.push("/terms")}>Terms</Link>
+
+          <Link onClick={() => router.push("/disclaimer")}>Disclaimer</Link>
+
+          <Link href="#" isExternal>
+            Contact
+          </Link>
+        </HStack>
       </SimpleGrid>
-    </Center>
+    </Flex>
   );
 };
 

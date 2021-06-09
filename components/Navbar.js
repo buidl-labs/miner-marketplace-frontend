@@ -4,18 +4,15 @@ import {
   Flex,
   Link,
   Image,
-  Heading,
+  Icon,
   HStack,
   Stack,
   Spacer,
   Text,
   useDisclosure,
-  Icon,
-  Slide,
-  Collapse,
 } from "@chakra-ui/react";
 
-import { HiMenuAlt3, HiX, HiXCircle } from "react-icons/hi";
+import { HiMenuAlt3, HiX } from "react-icons/hi";
 
 import { useRouter } from "next/router";
 
@@ -32,12 +29,11 @@ const Navbar = (props) => {
         align="center"
         justify="space-between"
         wrap="wrap"
-        padding={6}
+        padding={4}
         bg="whiteAlpha.800"
         color="gray.800"
         {...props}
         borderBottom="solid 1px #EDF2F7 "
-        mb="24"
         px={{ base: "2", md: "2", xl: "28" }}
         position="fixed"
         zIndex="10"
