@@ -30,6 +30,7 @@ const minerLanding = (stats) => {
           {/* Hero Section */}
           <Hero
             heroImg="/images/minerHero.svg"
+            heroAlt="rewards for storage service with Filecoin"
             heroHeading="Provide Storage Services & Earn Rewards"
             heroText="The Filecoin network is designed to reward participants at multiple levels — from large scale data centers to local entrepreneurs with mining rigs that cover the last mile."
             ctaText="Become a Miner"
@@ -47,16 +48,19 @@ const minerLanding = (stats) => {
           >
             <Features
               featureIcon="/images/censorship.svg"
+              imgAlt="censorship resistance"
               featureTitle="Censorship resistance"
               featureDescription="Filecoin resists censorship because no central provider can be coerced into deleting files or withholding service."
             />
             <Features
               featureIcon="/images/minerrewards.svg"
+              imgAlt="rewards"
               featureTitle="Rewards"
               featureDescription="Storing more files is directly related to winning more block rewards. The more storage you add, the more filecoin you’ll earn."
             />
             <Features
               featureIcon="/images/minercommunity.svg"
+              imgAlt="active community"
               featureTitle="Active community"
               featureDescription="Filecoin has an active community of contributors to answer questions and help newcomers get started."
             />

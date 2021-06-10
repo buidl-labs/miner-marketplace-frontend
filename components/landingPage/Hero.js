@@ -42,6 +42,7 @@ const Hero = (props) => {
         </Stack>
         <Image
           src={props.heroImg}
+          alt={props.heroAlt}
           width={{ base: "0%", md: "50%" }}
           display={{ base: "none", md: "block" }}
         />

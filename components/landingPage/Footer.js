@@ -11,6 +11,7 @@ import {
   Spacer,
   SimpleGrid,
   GridItem,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import React from "react";
 import { useRouter } from "next/router";
@@ -30,7 +31,12 @@ const Footer = () => {
       <SimpleGrid columns={{ base: 1, lg: 2 }} w="container.xl" mx="auto">
         <VStack spacing={4} align="flex-start">
           <Link href="https://filecoin.io" isExternal>
-            <Image src="/images/Filecoin-logo.svg" maxW="28" />
+            <Image
+              src="/images/Filecoin-logo.svg"
+              maxW="28"
+              alt="filecoin logo"
+            />
+            <VisuallyHidden>Filecoin Network's offical website</VisuallyHidden>
           </Link>
 
           <Text>

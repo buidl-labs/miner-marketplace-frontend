@@ -90,7 +90,11 @@ const DashboardNavbar = (props) => {
         zIndex="20"
       >
         <Link onClick={() => router.push("/")}>
-          <Image src="/images/Logo.svg" maxH="12" />
+          <Image
+            src="/images/Logo.svg"
+            maxH="12"
+            alt="Miner Marketplace Logo"
+          />
         </Link>
         <Spacer />
         <HStack spacing="12" color="gray.700">

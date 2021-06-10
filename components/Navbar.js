@@ -44,7 +44,7 @@ const Navbar = (props) => {
         color="gray.800"
         {...props}
         borderBottom="solid 1px #EDF2F7 "
-        px="2"
+        px={{ base: 2, xl: 32, lg: 4, md: 2 }}
         position="fixed"
         zIndex="10"
         w="full"
@@ -52,7 +52,11 @@ const Navbar = (props) => {
       >
         <Flex align="center">
           <Link onClick={() => router.push("/")}>
-            <Image src="/images/Logo.svg" maxW="36" />
+            <Image
+              src="/images/Logo.svg"
+              maxW="36"
+              alt="Miner Marketplace Logo"
+            />
           </Link>
         </Flex>
 
@@ -82,18 +86,17 @@ const Navbar = (props) => {
             <DrawerBody>
               <Stack spacing="8" mt="8">
                 <Link onClick={() => router.push("/clientLanding")}>
-                  <Text fontSize="2xl" fontWeight="medium">
+                  <Text fontSize="xl" fontWeight="medium">
                     Clients
                   </Text>
                 </Link>
                 <Link onClick={() => router.push("/minerLanding")}>
-                  <Text fontSize="2xl" fontWeight="medium">
+                  <Text fontSize="xl" fontWeight="medium">
                     Miners
                   </Text>
                 </Link>
                 <Box>
                   <Button
-                    fontSize="xl"
                     size="lg"
                     variant="outline"
                     colorScheme="blue"
