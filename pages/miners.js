@@ -28,8 +28,10 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
+
 import DashboardMenu from "../components/dashboard/DashboardMenu";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
+
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { createHttpLink } from "apollo-link-http";
 import { TableProps } from "antd/lib/table";
@@ -38,6 +40,7 @@ import NxLink from "next/link";
 import { Table, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
+
 import { useRouter } from "next/router";
 
 export default function Miners({ miners, href }) {
@@ -293,14 +296,20 @@ export default function Miners({ miners, href }) {
       render: (m) => {
         return (
           <div>
-            <NxLink
-              href={`/miners/${m.id}`}
-              style={{ cursor: "pointer" }}
-              key={m.id}
-              isExternal
-            >
-              {m.id}
-            </NxLink>
+            <Link href={`/miners/${m.id}`} key={m.id} isExternal>
+              <Text fontSize="lg" color="blue.700">
+                {m.name}
+              </Text>
+              <Text
+                color="blue.500"
+                fontWeight="semibold"
+                textDecoration="underline"
+                //borderBottom="solid 1px #3182CE"
+                //w="fit-content"
+              >
+                {m.id}
+              </Text>
+            </Link>
             {/*<a
               onClick={() => {
                 router.push({
@@ -311,7 +320,6 @@ export default function Miners({ miners, href }) {
             >
               <b>{m.id}</b>
             </a>*/}
-            <h1>{m.name}</h1>
           </div>
         );
       },
@@ -376,9 +384,9 @@ export default function Miners({ miners, href }) {
       },
       render: (l) => {
         return (
-          <div>
-            <h1>{l.country}</h1>
-            <h1>({l.region})</h1>
+          <div color="gray.600">
+            <Text>{l.country}</Text>
+            <Text>({l.region})</Text>
           </div>
         );
       },
@@ -394,8 +402,12 @@ export default function Miners({ miners, href }) {
       render: (l) => {
         return (
           <div>
-            <h1>{Math.round((l.fil + Number.EPSILON) * 1000) / 1000} FIL</h1>
-            <h1>($ {Math.round((l.usd + Number.EPSILON) * 1000) / 1000})</h1>
+            <Text fontSize="larger" fontWeight="medium" color="gray.600">
+              {Math.round((l.fil + Number.EPSILON) * 1000) / 1000} FIL
+            </Text>
+            <Text color="gray.500">
+              ($ {Math.round((l.usd + Number.EPSILON) * 1000) / 1000})
+            </Text>
           </div>
         );
       },
@@ -446,6 +458,7 @@ export default function Miners({ miners, href }) {
     filterList(event);
     // }
   };
+
   return (
     <>
       <DashboardNavbar isMinerProfile={false} />
@@ -464,7 +477,7 @@ export default function Miners({ miners, href }) {
               Search Miners
             </Heading>
             <Stack spacing="4" pb="4">
-              <InputGroup maxW="50%">
+              <InputGroup maxW="40%">
                 <InputRightElement
                   pointerEvents="visible"
                   children={<Search2Icon color="blue.600" />}
@@ -477,6 +490,61 @@ export default function Miners({ miners, href }) {
                 />
               </InputGroup>
             </Stack>
+          </Stack>
+
+          <HStack py={8} spacing="16" w="full">
+            <VStack alignItems="left">
+              <Select placeholder="Type of Service">
+                <option value="storage">Storage</option>
+                <option value="retrieval">Retrieval</option>
+                <option value="repair">Repair</option>
+              </Select>
+              <HStack>
+                <Tag size="lg" borderRadius="full" colorScheme="yellow">
+                  Storage
+                </Tag>
+                <Tag size="lg" borderRadius="full" colorScheme="purple">
+                  Retrieval
+                </Tag>
+                <Tag size="lg" borderRadius="full" colorScheme="pink">
+                  Repair
+                </Tag>
+              </HStack>
+            </VStack>
+
+            <VStack alignItems="left">
+              <Select placeholder="Data Transfer Mechanism">
+                <option value="option1">Online</option>
+                <option value="option2">Offline</option>
+                {/*   <CheckboxGroup>
+                  <Checkbox value="online">Online</Checkbox>
+                  <Checkbox value="offline">Offline</Checkbox>
+                </CheckboxGroup> */}
+              </Select>
+              <HStack>
+                <Tag size="lg" borderRadius="full" colorScheme="green">
+                  Online
+                </Tag>
+                <Tag size="lg" borderRadius="full" colorScheme="orange">
+                  Offline
+                </Tag>
+              </HStack>
+            </VStack>
+
+            <VStack alignItems="left">
+              <InputGroup>
+                <InputRightElement
+                  pointerEvents="none"
+                  children={<Search2Icon color="gray" />}
+                />
+                <Input type="text" placeholder="Location" color="#4A5568" />
+              </InputGroup>
+              <HStack>
+                <Tag size="lg" borderRadius="full" colorScheme="gray">
+                  countryName
+                </Tag>
+              </HStack>
+            </VStack>
 
             <Stack maxW="25%" alignItems="left" spacing="4">
               <Stack spacing="1">
@@ -507,48 +575,7 @@ export default function Miners({ miners, href }) {
                 Update Estimated Quote
               </Button>
             </Stack>
-          </Stack>
-
-          {/* <HStack py={8}>
-
-            <VStack alignItems="left">
-              <Select placeholder="Type of Service">
-                <option value="option1">Storage</option>
-                <option value="option2">Retrieval</option>
-                <option value="option2">Repair</option>
-              </Select>
-              <HStack>
-                <Tag size="lg" borderRadius="full" colorScheme="yellow">
-                  Storage
-                </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="purple">
-                  Retrieval
-                </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="pink">
-                  Repair
-                </Tag>
-              </HStack>
-            </VStack>
-
-            
-
-            <VStack alignItems="left">
-              <Select placeholder="Data Transfer Mechanism">
-                <CheckboxGroup>
-                  <Checkbox value="online">Online</Checkbox>
-                  <Checkbox value="offline">Offline</Checkbox>
-                </CheckboxGroup>
-              </Select>
-              <HStack>
-                <Tag size="lg" borderRadius="full" colorScheme="green">
-                  Online
-                </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="orange">
-                  Offline
-                </Tag>
-              </HStack>
-            </VStack>
-          </HStack> */}
+          </HStack>
 
           <Stack spacing="8" mt="6">
             <Table
