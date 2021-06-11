@@ -1,5 +1,8 @@
 import {
+  Button,
+  Link,
   Grid,
+  SimpleGrid,
   GridItem,
   Tabs,
   TabList,
@@ -7,7 +10,11 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
+import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
+
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+
 import ProfileSettings from "../profileSettings";
 import DashboardMenu from "../../components/dashboard/DashboardMenu";
 import DashboardNavbar from "../../components/dashboard/DashboardNavbar";
@@ -29,6 +36,8 @@ export default function Miner({ miner }) {
   // const [isClaimed, setIsClaimed] = useGlobalState("isClaimed");
   // setIsClaimed(miner.claimed);
 
+  const router = useRouter();
+
   function handleIsSignedInChange(newValue) {
     setIsSignedIn(newValue);
   }
@@ -46,17 +55,29 @@ export default function Miner({ miner }) {
         // onIsSignedInChange={handleIsSignedInChange}
         // onisClaimedChange={handleIsClaimedChange}
       />
-      <Grid
-        h="200px"
-        templateRows="repeat(4, 1fr)"
-        templateColumns="repeat(12, 1fr)"
-        gap="0.5"
-        pr="8"
+      <Button
+        mt="28"
+        ml="8"
+        colorScheme="blue"
+        variant="link"
+        textDecoration="underline"
+        onClick={() => router.push("/miners")}
       >
-        <GridItem rowSpan="8" colSpan="2">
+        <ArrowBackIcon w={5} h={5} color="gray.600" mr="1" color="blue.500" />
+        Back to Miner Listings
+      </Button>
+      <SimpleGrid
+        maxH="44rem"
+        templateRows="repeat(4, 1fr)"
+        templateColumns={{ base: "repeat(1,1fr)", lg: "repeat(12, 1fr)" }}
+        gap="12"
+        mx="8"
+        my="8"
+      >
+        {/* <GridItem rowSpan="8" colSpan="2">
           <DashboardMenu />
-        </GridItem>
-        <GridItem colSpan="5" pt="28">
+        </GridItem> */}
+        <GridItem colSpan={{ base: 1, lg: 6 }}>
           <PersonalDetails
             minerClaimed={miner.claimed}
             minerName={miner.personalInfo.name}
@@ -70,13 +91,13 @@ export default function Miner({ miner }) {
             minerBio={miner.personalInfo.bio}
           />
         </GridItem>
-        <GridItem colSpan="5" pt="28">
+        <GridItem colSpan={{ base: 1, md: 6 }}>
           <Scores
             reputationScore={miner.reputationScore}
             transparencyScore={miner.transparencyScore}
           />
         </GridItem>
-        <GridItem colSpan="7" pr="4" pt="8">
+        <GridItem colSpan={{ base: 1, lg: 8 }} mr={{ base: 0, lg: 4 }}>
           <Tabs>
             <TabList>
               <Tab>Service Details</Tab>
@@ -135,10 +156,10 @@ export default function Miner({ miner }) {
             </TabPanels>
           </Tabs>
         </GridItem>
-        <GridItem colSpan="3" pt="24">
+        <GridItem colSpan={{ base: 1, lg: 4 }} mt={{ base: 0, lg: 16 }}>
           <QuoteCalculator storageAskPrice={miner.pricing.storageAskPrice} />
         </GridItem>
-      </Grid>
+      </SimpleGrid>
     </>
   );
 }

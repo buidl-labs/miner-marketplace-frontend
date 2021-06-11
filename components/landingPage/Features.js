@@ -6,7 +6,7 @@ const Features = (props) => {
     <>
       <Center>
         <VStack alignItems="center" textAlign="center">
-          <Image src={props.featureIcon} maxW="128" />
+          <Image src={props.featureIcon} maxW="128" alt={props.imgAlt} />
           <Heading size="md">{props.featureTitle}</Heading>
           <Text size="xs">{props.featureDescription}</Text>
         </VStack>

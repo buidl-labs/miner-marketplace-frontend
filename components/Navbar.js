@@ -4,24 +4,31 @@ import {
   Flex,
   Link,
   Image,
-  Heading,
+  Icon,
   HStack,
   Stack,
   Spacer,
   Text,
   useDisclosure,
-  Icon,
-  Slide,
-  Collapse,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 
-import { HiMenuAlt3, HiX, HiXCircle } from "react-icons/hi";
+import { HiMenuAlt3, HiX } from "react-icons/hi";
 
 import { useRouter } from "next/router";
+
+import { useRef } from "react";
 
 const Navbar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
+  const btnRef = useRef();
 
   const router = useRouter();
 
@@ -32,13 +39,12 @@ const Navbar = (props) => {
         align="center"
         justify="space-between"
         wrap="wrap"
-        padding={6}
+        padding={4}
         bg="whiteAlpha.800"
         color="gray.800"
         {...props}
         borderBottom="solid 1px #EDF2F7 "
-        mb="24"
-        px={{ base: "2", md: "2", xl: "28" }}
+        px={{ base: 2, xl: 32, lg: 4, md: 2 }}
         position="fixed"
         zIndex="10"
         w="full"
@@ -46,7 +52,11 @@ const Navbar = (props) => {
       >
         <Flex align="center">
           <Link onClick={() => router.push("/")}>
-            <Image src="/images/Logo.svg" maxW="36" />
+            <Image
+              src="/images/Logo.svg"
+              maxW="36"
+              alt="Miner Marketplace Logo"
+            />
           </Link>
         </Flex>
 
@@ -57,44 +67,62 @@ const Navbar = (props) => {
           onClick={handleToggle}
           mr={4}
         >
-          <Icon
-            as={HiMenuAlt3}
-            color={"blue.800"}
-            w={8}
-            h={8}
-            display={{ base: isOpen ? "none" : "block" }}
-          />
-          <Icon
-            as={HiX}
-            color={"blue.800"}
-            w={8}
-            h={8}
-            display={{ base: isOpen ? "block" : "none" }}
-          />
+          <Icon as={HiMenuAlt3} color={"blue.800"} w={8} h={8} />
         </Box>
+        <Drawer
+          size="xs"
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>
+              <Image src="/images/Logo.svg" maxW="36" />
+            </DrawerHeader>
+
+            <DrawerBody>
+              <Stack spacing="8" mt="8">
+                <Link onClick={() => router.push("/clientLanding")}>
+                  <Text fontSize="xl" fontWeight="medium">
+                    Clients
+                  </Text>
+                </Link>
+                <Link onClick={() => router.push("/minerLanding")}>
+                  <Text fontSize="xl" fontWeight="medium">
+                    Miners
+                  </Text>
+                </Link>
+                <Box>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    colorScheme="blue"
+                    onClick={() => router.push("/miners")}
+                  >
+                    Dashboard
+                  </Button>
+                </Box>
+              </Stack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
 
         <Stack
-          direction={{ base: "column", md: "row" }}
-          display={{ base: isOpen ? "block" : "none", md: "flex" }}
-          width={{ base: "full", md: "auto" }}
-          justify="end"
-          textAlign="right"
-          mt={{ base: 8, md: 0 }}
-          spacing={{ base: isOpen ? "16" : "12" }}
+          direction="row"
+          display={{ base: "none", md: "flex" }}
+          width="auto"
+          spacing="12"
           mr={12}
         >
-          <Link
-            onClick={() => router.push("/clientLanding")}
-            p={{ base: isOpen ? "4" : "0" }}
-          >
+          <Link onClick={() => router.push("/clientLanding")}>
             <Text fontSize="lg" fontWeight="medium">
               Clients
             </Text>
           </Link>
-          <Link
-            onClick={() => router.push("/minerLanding")}
-            p={{ base: isOpen ? "4" : "0" }}
-          >
+          <Link onClick={() => router.push("/minerLanding")}>
             <Text fontSize="lg" fontWeight="medium">
               Miners
             </Text>
@@ -102,10 +130,9 @@ const Navbar = (props) => {
         </Stack>
 
         <Box
-          display={{ base: isOpen ? "block" : "none", md: "block" }}
-          w={{ base: isOpen ? "full" : "fit-content" }}
           mr={4}
           textAlign="right"
+          display={{ base: isOpen ? "block" : "none", md: "flex" }}
         >
           <Button
             variant="outline"

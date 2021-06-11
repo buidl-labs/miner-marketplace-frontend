@@ -20,7 +20,7 @@ import { Icon, IconProps, ArrowForwardIcon } from "@chakra-ui/icons";
 
 const Hero = (props) => {
   return (
-    <Stack pt="36">
+    <Stack pt="36" pb={{ base: 16, md: 0 }}>
       <HStack>
         <Stack spacing="4">
           <Heading size="3xl" lineHeight="1.2" color="gray.900">
@@ -42,6 +42,7 @@ const Hero = (props) => {
         </Stack>
         <Image
           src={props.heroImg}
+          alt={props.heroAlt}
           width={{ base: "0%", md: "50%" }}
           display={{ base: "none", md: "block" }}
         />
