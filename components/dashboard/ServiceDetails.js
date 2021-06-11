@@ -7,19 +7,19 @@ function ServiceDetails(props) {
     serviceType.push(
       <Tag key="str" size="lg" borderRadius="full" colorScheme="yellow">
         Storage
-      </Tag>,
+      </Tag>
     );
   if (props.retrieval)
     serviceType.push(
       <Tag key="ret" size="lg" borderRadius="full" colorScheme="purple">
         Retrieval
-      </Tag>,
+      </Tag>
     );
   if (props.repair)
     serviceType.push(
       <Tag key="rep" size="lg" borderRadius="full" colorScheme="pink">
         Repair
-      </Tag>,
+      </Tag>
     );
 
   let dataTransferMechanism = [];
@@ -27,19 +27,19 @@ function ServiceDetails(props) {
     dataTransferMechanism.push(
       <Tag key="online" size="lg" borderRadius="full" colorScheme="green">
         Online
-      </Tag>,
+      </Tag>
     );
   if (props.offline)
     dataTransferMechanism.push(
       <Tag key="offline" size="lg" borderRadius="full" colorScheme="orange">
         Offline
-      </Tag>,
+      </Tag>
     );
 
   return (
     <>
       <Stack alignItems="flex-start" spacing="8" mt="8">
-        <Heading size="lg" color="blue.900">
+        <Heading size="lg" color="blue.700">
           Service Offering
         </Heading>
         <HStack spacing="16">
@@ -65,7 +65,7 @@ function ServiceDetails(props) {
           </Stack>
         </HStack>
 
-        <Heading size="lg" color="blue.900" my="8" pt="6">
+        <Heading size="lg" color="blue.700" my="8" pt="6">
           Ask Price
         </Heading>
         <HStack spacing="16">

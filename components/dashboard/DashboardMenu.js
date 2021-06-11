@@ -86,7 +86,7 @@ const DashboardMenu = () => {
             alignItems="center"
             w="full"
             p="6"
-            bgColor="blue.600"
+            bgColor="blue.500"
             onClick={() => router.push("/miners")}
           >
             <HStack>

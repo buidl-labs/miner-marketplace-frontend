@@ -23,6 +23,8 @@ import {
   Wrap,
   WrapItem,
   Text,
+  CheckboxGroup,
+  Checkbox,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
@@ -452,11 +454,11 @@ export default function Miners({ miners, href }) {
         templateRows="repeat(4, 1fr)"
         templateColumns="repeat(12, 1fr)"
       >
-        <GridItem rowSpan="8" colSpan="2">
+        {/* <GridItem rowSpan="8" colSpan="2">
           <DashboardMenu />
-        </GridItem>
+        </GridItem> */}
 
-        <GridItem colSpan="10" pt="28" bg="white">
+        <GridItem colSpan="12" pt="28" bg="white" px="8">
           <Stack spacing="4">
             <Heading color="gray.700" size="lg" mb={4}>
               Search Miners
@@ -465,11 +467,11 @@ export default function Miners({ miners, href }) {
               <InputGroup maxW="50%">
                 <InputRightElement
                   pointerEvents="visible"
-                  children={<Search2Icon color="gray.500" />}
+                  children={<Search2Icon color="blue.600" />}
                 />
                 <Input
                   type="text"
-                  placeholder="Search Miners by ID"
+                  placeholder="Search by Miner Address"
                   value={minerIdQuery}
                   onChange={onChange}
                 />
@@ -481,7 +483,7 @@ export default function Miners({ miners, href }) {
                 <Text>Storage amount (in GiB)</Text>
                 <Input
                   type="number"
-                  placeholder="ex: 1000"
+                  placeholder="Enter amount of storage"
                   value={storageAmount}
                   onChange={(event) => setStorageAmount(event.target.value)}
                 />
@@ -490,7 +492,7 @@ export default function Miners({ miners, href }) {
                 <Text>Storage Duration (in months)</Text>
                 <Input
                   type="number"
-                  placeholder="ex: 24"
+                  placeholder="Enter duration of storage"
                   value={storageDuration}
                   onChange={(event) => setStorageDuration(event.target.value)}
                 />
@@ -506,6 +508,47 @@ export default function Miners({ miners, href }) {
               </Button>
             </Stack>
           </Stack>
+
+          {/* <HStack py={8}>
+
+            <VStack alignItems="left">
+              <Select placeholder="Type of Service">
+                <option value="option1">Storage</option>
+                <option value="option2">Retrieval</option>
+                <option value="option2">Repair</option>
+              </Select>
+              <HStack>
+                <Tag size="lg" borderRadius="full" colorScheme="yellow">
+                  Storage
+                </Tag>
+                <Tag size="lg" borderRadius="full" colorScheme="purple">
+                  Retrieval
+                </Tag>
+                <Tag size="lg" borderRadius="full" colorScheme="pink">
+                  Repair
+                </Tag>
+              </HStack>
+            </VStack>
+
+            
+
+            <VStack alignItems="left">
+              <Select placeholder="Data Transfer Mechanism">
+                <CheckboxGroup>
+                  <Checkbox value="online">Online</Checkbox>
+                  <Checkbox value="offline">Offline</Checkbox>
+                </CheckboxGroup>
+              </Select>
+              <HStack>
+                <Tag size="lg" borderRadius="full" colorScheme="green">
+                  Online
+                </Tag>
+                <Tag size="lg" borderRadius="full" colorScheme="orange">
+                  Offline
+                </Tag>
+              </HStack>
+            </VStack>
+          </HStack> */}
 
           <Stack spacing="8" mt="6">
             <Table

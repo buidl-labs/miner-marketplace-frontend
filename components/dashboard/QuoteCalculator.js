@@ -21,7 +21,7 @@ function QuoteCalculator(props) {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
     )
       .then((res) => res.json())
       .then((r) => {
@@ -32,8 +32,8 @@ function QuoteCalculator(props) {
 
   return (
     <>
-      <Box mt="4">
-        <Heading size="lg" color="blue.900">
+      <Box border="solid 2px #E2E8F0" borderRadius="2xl" p="10">
+        <Heading size="lg" color="blue.700">
           Quote Calculator
         </Heading>
         <HStack spacing="2" alignItems="center">
@@ -46,7 +46,7 @@ function QuoteCalculator(props) {
                 props.storageAskPrice) /
                 10 ** 18 +
                 Number.EPSILON) *
-                1000,
+                1000
             ) / 1000}
           </Text>
           <Text fontSize="2xl" color="gray.600">
@@ -65,7 +65,7 @@ function QuoteCalculator(props) {
                 filecoinUSDRate) /
                 10 ** 18 +
                 Number.EPSILON) *
-                1000,
+                1000
             ) / 1000}
             )
           </Text>
