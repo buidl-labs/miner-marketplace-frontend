@@ -80,7 +80,7 @@ export default function Miners({ miners, href }) {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
@@ -211,20 +211,20 @@ export default function Miners({ miners, href }) {
   const dataSource = miners.map((fd) => {
     let serviceTypeArr = [];
     if (fd.service.serviceTypes.storage) {
-      serviceTypeArr.push("Storage ");
+      serviceTypeArr.push("Storage");
     }
     if (fd.service.serviceTypes.retrieval) {
-      serviceTypeArr.push("Retrieval ");
+      serviceTypeArr.push("Retrieval");
     }
     if (fd.service.serviceTypes.repair) {
-      serviceTypeArr.push("Repair ");
+      serviceTypeArr.push("Repair");
     }
     let dataTransferMechanismArr = [];
     if (fd.service.dataTransferMechanism.online) {
-      dataTransferMechanismArr.push("Online ");
+      dataTransferMechanismArr.push("Online");
     }
     if (fd.service.dataTransferMechanism.offline) {
-      dataTransferMechanismArr.push("Offline ");
+      dataTransferMechanismArr.push("Offline");
     }
     let minerName = fd.personalInfo.name;
     if (fd.personalInfo.name == "") {
@@ -266,11 +266,12 @@ export default function Miners({ miners, href }) {
 
   const mLocations = [
     { text: "Asia", value: "Asia" },
-    { text: "North America", value: "North America" },
     { text: "Europe", value: "Europe" },
     { text: "Africa", value: "Africa" },
-    { text: "Americas", value: "Americas" },
     { text: "Oceania", value: "Oceania" },
+    { text: "South America", value: "South America" },
+    { text: "Central America", value: "Central America" },
+    { text: "North America", value: "North America" },
     // ...new Set(
     //   miners.map((m) => {
     //     return {
@@ -343,7 +344,10 @@ export default function Miners({ miners, href }) {
         { text: "Retrieval", value: "Retrieval" },
         { text: "Repair", value: "Repair" },
       ],
-      onFilter: (value, record) => record.serviceType.includes(value),
+      onFilter: (value, record) => {
+        console.log("VR", value, record);
+        return record.serviceType.includes(value);
+      },
     },
     {
       title: "Data Transfer Mechanism",
@@ -434,7 +438,7 @@ export default function Miners({ miners, href }) {
       "q",
       event.target.value,
       "qlc",
-      event.target.value.toLowerCase()
+      event.target.value.toLowerCase(),
     );
 
     const q = event.target.value.toLowerCase();
