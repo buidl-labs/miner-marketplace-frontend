@@ -109,7 +109,65 @@ export default function Miner({ miner }) {
               <Tab>Service Details</Tab>
               <Tab>Profile Settings</Tab>
               <Tab>Aggregated Earnings</Tab>
+              <Tab
+                onClick={() => {
+                  console.log(
+                    "osccmcmcm",
+                    process.env.BACKEND_URL,
+                    "mid",
+                    miner.id,
+                  );
+                  const BACKEND_URL =
+                    "https://miner-marketplace-backend.onrender.com/query";
+                  const client = new ApolloClient({
+                    uri: BACKEND_URL,
+                    cache: new InMemoryCache(),
+                  });
+
+                  client
+                    .query({
+                      query: gql`
+                      query {
+                        miner(id: "${miner.id}") {
+                          id
+                            aggregateEarnings(
+                              startHeight: 0
+                              endHeight: 1000000
+                              includeGas: true
+                            ) {
+                              income {
+                                total
+                                storageDealPayments
+                                blockRewards
+                              }
+                              expenditure {
+                                total
+                                collateralDeposit
+                                gas
+                                penalty
+                                others
+                              }
+                              netEarnings
+                            }
+                          }
+                        }
+                      `,
+                    })
+                    .then((data) => {
+                      console.log(data.data);
+                      return data.data;
+                    })
+                    .then((g) => {
+                      console.log(g.aggregateEarnings);
+                      setAggregateEarnings(g);
+                      console.log("agge", g);
+                    });
+                }}
+              >
+                Aggregated Earnings
+              </Tab>
               <Tab>Predicted Earnings</Tab>
+              
               <Tab
                 onClick={() => {
                   console.log(
@@ -203,7 +261,40 @@ export default function Miner({ miner }) {
                 />
               </TabPanel>
               <TabPanel>
-                <Heading>Aggregated Earnings</Heading>
+                <VisuallyHidden>Aggregated Earnings</VisuallyHidden>
+                <AggregatedEarnings
+                  totalIncome={
+                    aggregateEarnings.miner.aggregateEarnings.income.total
+                  }
+                  storageDeal={
+                    aggregateEarnings.miner.aggregateEarnings.income
+                      .storageDealPayments
+                  }
+                  blockRewards={
+                    aggregateEarnings.miner.aggregateEarnings.income
+                      .blockRewards.blockRewards
+                  }
+                  totalExpenditure={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure.total
+                  }
+                  deposits={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure
+                      .collateralDeposit
+                  }
+                  gas={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure.gas
+                  }
+                  penalty={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure
+                      .penalty
+                  }
+                  others={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure.others
+                  }
+                  netEarnings={
+                    aggregateEarnings.miner.aggregateEarnings.netEarnings
+                  }
+                />
               </TabPanel>
               <TabPanel>
                 <Heading>Predicted Earnings</Heading>
