@@ -2,6 +2,10 @@ import {
   Button,
   Link,
   Grid,
+  Stack,
+  VStack,
+  HStack,
+  Text,
   Heading,
   SimpleGrid,
   GridItem,
@@ -39,6 +43,56 @@ export default function Miner({ miner }) {
   // const [isSignedIn, setisSignedIn] = useGlobalState("isSignedIn");
   // const [isClaimed, setIsClaimed] = useGlobalState("isClaimed");
   // setIsClaimed(miner.claimed);
+
+  //state for estimated & aggregated earnings' query, keeping initital state as static to avoid errors
+  const [estimatedEarnings, setEstimatedEarnings] = useState({
+    miner: {
+      qualityAdjustedPower: 0,
+      estimatedEarnings: {
+        income: {
+          total: 0,
+          storageDealPayments: {
+            existingDeals: 0,
+            potentialFutureDeals: 0,
+          },
+          blockRewards: {
+            blockRewards: 0,
+            daysUntilEligible: 0,
+          },
+        },
+        expenditure: {
+          total: 0,
+          collateralDeposit: 0,
+          gas: 0,
+          penalty: 0,
+          others: 0,
+        },
+        netEarnings: 0,
+      },
+    },
+  });
+
+  const [aggregateEarnings, setAggregateEarnings] = useState({
+    miner: {
+      id: 0,
+      qualityAdjustedPower: 0,
+      aggregateEarnings: {
+        income: {
+          total: 0,
+          storageDealPayments: 0,
+          blockRewards: 0,
+        },
+        expenditure: {
+          total: 0,
+          collateralDeposit: 0,
+          gas: 0,
+          penalty: 0,
+          others: 0,
+        },
+        netEarnings: "0",
+      },
+    },
+  });
 
   const router = useRouter();
 
@@ -263,6 +317,7 @@ export default function Miner({ miner }) {
               <TabPanel>
                 <VisuallyHidden>Aggregated Earnings</VisuallyHidden>
                 <AggregatedEarnings
+                  qap={aggregateEarnings.miner.qualityAdjustedPower}
                   totalIncome={
                     aggregateEarnings.miner.aggregateEarnings.income.total
                   }
