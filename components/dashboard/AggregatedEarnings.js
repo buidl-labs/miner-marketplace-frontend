@@ -14,7 +14,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-function PredictedEarnings(props) {
+function AggregatedEarnings(props) {
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   useEffect(() => {
@@ -31,48 +31,34 @@ function PredictedEarnings(props) {
   return (
     <>
       <VStack textAlign="left" alignItems="left">
-        <Heading size="lg" color="blue.700" my={4}>
-          Predicted Earnings
-        </Heading>
+        <Heading mb={4}>Aggregated Earnings</Heading>
 
-        <Text fontSize="md" color="gray.800">
-          Quality Adjusted Power
-        </Text>
-        <Text color="blue.700">{props.qap}</Text>
+        <Text>Quality Adjusted Power</Text>
+        <Text>{props.qap}</Text>
 
         <Stack>
           <VStack alignItems="left">
             <Stat alignItems="left">
-              <StatLabel fontSize="lg">Total Estimated Income</StatLabel>
-              <StatNumber color="green.600">{props.totalIncome} FIL</StatNumber>
+              <StatLabel>Total Estimated Income</StatLabel>
+              <StatNumber>{props.totalIncome}FIL</StatNumber>
               <StatHelpText>
                 ($ {Math.round(props.totalIncome * filecoinUSDRate)})
               </StatHelpText>
             </Stat>
             <VStack textAlign="left" alignItems="left">
               <HStack>
-                <Text>Existing Deals</Text>
-                <Text>{props.existing}</Text>
-              </HStack>
-              <HStack>
-                <Text>Potential Deals</Text>
-                <Text>{props.potential}</Text>
+                <Text>Storage Deals Payments</Text>
+                <Text>{props.storageDeal}</Text>
               </HStack>
               <HStack>
                 <Text>Block Rewards</Text>
                 <Text>{props.blockRewards}</Text>
               </HStack>
-              <HStack>
-                <Text>Days until eligible</Text>
-                <Text>{props.days}</Text>
-              </HStack>
             </VStack>
             <hr />
             <Stat>
               <StatLabel>Total Estimated Expenditure</StatLabel>
-              <StatNumber color="red.600">
-                {props.totalExpenditure} FIL
-              </StatNumber>
+              <StatNumber>{props.totalExpenditure} FIL</StatNumber>
               <StatHelpText>
                 ($ {Math.round(props.totalExpenditure * filecoinUSDRate)})
               </StatHelpText>
@@ -98,7 +84,7 @@ function PredictedEarnings(props) {
             <hr />
             <Stat>
               <StatLabel>Net Estimated Income</StatLabel>
-              <StatNumber color="blue.700">{props.netEarnings} FIL</StatNumber>
+              <StatNumber>{props.netEarnings} FIL</StatNumber>
               <StatHelpText>
                 ($ {Math.round(props.netEarnings * filecoinUSDRate)})
               </StatHelpText>
@@ -110,4 +96,4 @@ function PredictedEarnings(props) {
   );
 }
 
-export default PredictedEarnings;
+export default AggregatedEarnings;
