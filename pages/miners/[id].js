@@ -140,7 +140,6 @@ export default function Miner({ miner }) {
                         query {
                           miner(id: "f08403") {
                             id
-                            qualityAdjustedPower
                             aggregateEarnings(
                               startHeight: 0
                               endHeight: 1000000
@@ -168,10 +167,10 @@ export default function Miner({ miner }) {
                       console.log(data.data);
                       return data.data;
                     })
-                    .then((m) => {
-                      console.log(m.aggregateEarnings);
-                      setAggregateEarnings(m);
-                      console.log("agge", m);
+                    .then((g) => {
+                      console.log(g.aggregateEarnings);
+                      setAggregateEarnings(g);
+                      console.log("agge", g);
                     });
                 }}
               >
@@ -282,7 +281,6 @@ export default function Miner({ miner }) {
               <TabPanel>
                 <VisuallyHidden>Aggregated Earnings</VisuallyHidden>
                 <AggregatedEarnings
-                  qap={aggregateEarnings.miner.qualityAdjustedPower}
                   totalIncome={
                     aggregateEarnings.miner.aggregateEarnings.income.total
                   }
