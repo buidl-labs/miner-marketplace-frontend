@@ -119,8 +119,8 @@ export default function TransactionHistory(props) {
         { text: "TerminateSectors", value: "TerminateSectors" },
         { text: "RepayDebt", value: "RepayDebt" },
         {
-          text: "WithdrawBalance (minerActor)",
-          value: "WithdrawBalance (minerActor)",
+          text: "WithdrawBalance (miner)",
+          value: "WithdrawBalance (miner)",
         },
         { text: "ReportConsensusFault", value: "ReportConsensusFault" },
         { text: "DisputeWindowedPoSt", value: "DisputeWindowedPoSt" },
@@ -133,6 +133,10 @@ export default function TransactionHistory(props) {
       title: "From",
       dataIndex: "from",
       key: "from",
+      filters: props.finalFromArr,
+      onFilter: (value, record) => {
+        return record.from.includes(value);
+      },
       render: (m) => {
         return (
           <div>
@@ -153,6 +157,10 @@ export default function TransactionHistory(props) {
       title: "To",
       dataIndex: "to",
       key: "to",
+      filters: props.finalToArr,
+      onFilter: (value, record) => {
+        return record.to.includes(value);
+      },
       render: (m) => {
         return (
           <div>

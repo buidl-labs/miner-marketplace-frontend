@@ -4,6 +4,7 @@ import {
   Text,
   Spacer,
   Heading,
+  Image,
   ModalContent,
   ModalHeader,
   ModalFooter,
@@ -21,9 +22,13 @@ import { useGlobalState } from "../../../state";
 const Authenticate = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [clval, setClval] = useState("");
+  const [clIcon, setClIcon] = useState("");
+  const [clText, setClText] = useState(
+    "Please connect your ledger device of the same address to authenticate"
+  );
   // const [currMinerID, setCurrMinerID] = useState("");
   // const [currLedgerAddress, setCurrLedgerAddress] = useState("");
-  const [isSignedIn, setIsSignedIn]= useGlobalState("isSignedIn")
+  const [isSignedIn, setIsSignedIn] = useGlobalState("isSignedIn");
   return (
     <>
       <ModalContent textAlign="center" p="5">
@@ -34,8 +39,9 @@ const Authenticate = (props) => {
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          <Image src={clIcon} pb="6" mx="auto" w="20" />
           <HStack>
-            <Box
+            {/* <Box
               p="2"
               width="80%"
               borderRadius="full"
@@ -45,22 +51,23 @@ const Authenticate = (props) => {
               mx="auto"
             >
               <Text fontWeight="bold">{props.ledgerAddress}</Text>
-            </Box>
+            </Box> */}
           </HStack>
           <Text justifyContent="justify" color="gray.600">
-            Above address will be used for authentication. Please check that you
-            have ledger device of the above address.
+            {/* Above address will be used for authentication. Please check that you
+            have ledger device of the above address. */}
+            {clText}
           </Text>
         </ModalBody>
 
         <ModalFooter>
-          <Button onClick={onClose} w="36">
+          {/* <Button onClick={onClose} w="36">
             Discard
-          </Button>
-          <Spacer />
+          </Button> 
+          <Spacer />*/}
           <Button
             colorScheme="blue"
-            w="36"
+            w="50vw"
             onClick={() => {
               console.log("props", props, "url", process.env.BACKEND_URL);
               fetch("https://miner-marketplace-backend.onrender.com/query", {
@@ -84,23 +91,32 @@ const Authenticate = (props) => {
                   console.log("data returned:", data.data.claimProfile);
                   const reqClaim = data.data.claimProfile;
                   if (reqClaim) {
-                    setClval("✅ success");
-                    setIsSignedIn(true)
-                  } else setClval("❌ failed");
+                    setClval(" successful");
+                    setClText(
+                      "You Profile with given address hase been authenticated. You may close this popup now."
+                    );
+                    setClIcon("/images/AuthSuccess.svg");
+                    setIsSignedIn(true);
+                  } else setClval(" failed");
                 })
                 .catch((e) => {
                   console.log(e);
-                  setClval("❌ failed");
+                  setClval(" failed");
+                  setClIcon("/images/AuthFail.svg");
+                  setClText(
+                    "Profile with given address could not be authenticated. You may close this popup now"
+                  );
                 });
             }}
             type="submit"
             // onSubmit={submitForClaim}
           >
-            Proceed
+            Continue
           </Button>
         </ModalFooter>
       </ModalContent>
     </>
   );
 };
+
 export default Authenticate;

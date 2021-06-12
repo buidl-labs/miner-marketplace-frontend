@@ -2,6 +2,11 @@ import {
   Button,
   Link,
   Grid,
+  Stack,
+  VStack,
+  HStack,
+  Text,
+  Heading,
   SimpleGrid,
   GridItem,
   Tabs,
@@ -23,6 +28,9 @@ import QuoteCalculator from "../../components/dashboard/QuoteCalculator";
 import Scores from "../../components/dashboard/Scores";
 import ServiceDetails from "../../components/dashboard/ServiceDetails";
 import TransactionHistory from "../../components/TransactionHistory";
+import PredictedEarnings from "../../components/dashboard/PredictedEarnings";
+import AggregatedEarnings from "../../components/dashboard/AggregatedEarnings";
+
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 // import getAllMinerIds from "../miners";
 // import { createGlobalState } from "react-hooks-global-state";
@@ -37,6 +45,56 @@ export default function Miner({ miner }) {
   // const [isClaimed, setIsClaimed] = useGlobalState("isClaimed");
   // setIsClaimed(miner.claimed);
 
+  //state for estimated & aggregated earnings' query, keeping initital state as static to avoid errors
+  const [estimatedEarnings, setEstimatedEarnings] = useState({
+    miner: {
+      qualityAdjustedPower: 0,
+      estimatedEarnings: {
+        income: {
+          total: 0,
+          storageDealPayments: {
+            existingDeals: 0,
+            potentialFutureDeals: 0,
+          },
+          blockRewards: {
+            blockRewards: 0,
+            daysUntilEligible: 0,
+          },
+        },
+        expenditure: {
+          total: 0,
+          collateralDeposit: 0,
+          gas: 0,
+          penalty: 0,
+          others: 0,
+        },
+        netEarnings: 0,
+      },
+    },
+  });
+
+  const [aggregateEarnings, setAggregateEarnings] = useState({
+    miner: {
+      id: 0,
+      qualityAdjustedPower: 0,
+      aggregateEarnings: {
+        income: {
+          total: 0,
+          storageDealPayments: 0,
+          blockRewards: 0,
+        },
+        expenditure: {
+          total: 0,
+          collateralDeposit: 0,
+          gas: 0,
+          penalty: 0,
+          others: 0,
+        },
+        netEarnings: "0",
+      },
+    },
+  });
+
   const router = useRouter();
 
   function handleIsSignedInChange(newValue) {
@@ -47,6 +105,8 @@ export default function Miner({ miner }) {
   }
 
   const [transactions, setTransactions] = useState([]);
+  const [finalFromArr, setFinalFromArr] = useState([]);
+  const [finalToArr, setFinalToArr] = useState([]);
 
   return (
     <>
@@ -105,8 +165,128 @@ export default function Miner({ miner }) {
             <TabList>
               <Tab>Service Details</Tab>
               <Tab>Profile Settings</Tab>
-              <Tab>Aggregated Earnings</Tab>
-              <Tab>Predicted Earnings</Tab>
+              <Tab
+                onClick={() => {
+                  console.log(
+                    "osccmcmcm",
+                    process.env.BACKEND_URL,
+                    "mid",
+                    miner.id,
+                  );
+                  const BACKEND_URL =
+                    "https://miner-marketplace-backend.onrender.com/query";
+                  const client = new ApolloClient({
+                    uri: BACKEND_URL,
+                    cache: new InMemoryCache(),
+                  });
+
+                  client
+                    .query({
+                      query: gql`
+                      query {
+                        miner(id: "${miner.id}") {
+                          id
+                            aggregateEarnings(
+                              startHeight: 0
+                              endHeight: 1000000
+                              includeGas: true
+                            ) {
+                              income {
+                                total
+                                storageDealPayments
+                                blockRewards
+                              }
+                              expenditure {
+                                total
+                                collateralDeposit
+                                gas
+                                penalty
+                                others
+                              }
+                              netEarnings
+                            }
+                          }
+                        }
+                      `,
+                    })
+                    .then((data) => {
+                      console.log(data.data);
+                      return data.data;
+                    })
+                    .then((g) => {
+                      console.log(g.aggregateEarnings);
+                      setAggregateEarnings(g);
+                      console.log("agge", g);
+                    });
+                }}
+              >
+                Aggregated Earnings
+              </Tab>
+              <Tab
+                onClick={() => {
+                  console.log(
+                    "osccmcmcm",
+                    process.env.BACKEND_URL,
+                    "mid",
+                    miner.id,
+                  );
+                  const BACKEND_URL =
+                    "https://miner-marketplace-backend.onrender.com/query";
+                  const client = new ApolloClient({
+                    uri: BACKEND_URL,
+                    cache: new InMemoryCache(),
+                  });
+
+                  client
+                    .query({
+                      query: gql`
+                    query {
+                      miner(id: "${miner.id}") {
+                        id
+                          estimatedEarnings(
+                            days: 60
+                            includeGas: true
+                          ) {
+                            income {
+                              total
+                              storageDealPayments {
+                                existingDeals
+                                potentialFutureDeals
+                              }
+                              blockRewards {
+                                blockRewards
+                                daysUntilEligible
+                              }
+                            }
+                            expenditure {
+                              total
+                              collateralDeposit
+                              gas
+                              penalty
+                              others
+                            }
+                            netEarnings
+                          }
+                        }
+                      }
+                    `,
+                    })
+                    .then((data) => {
+                      console.log(data.data);
+                      return data.data;
+                    })
+                    .then((g) => {
+                      console.log(g.estimatedEarnings);
+                      setEstimatedEarnings(g);
+                      console.log("esti", g);
+                    })
+                    .catch((e) => {
+                      console.log("esti err", e);
+                    });
+                }}
+              >
+                Predicted Earnings
+              </Tab>
               <Tab
                 onClick={() => {
                   console.log(
@@ -153,8 +333,26 @@ export default function Miner({ miner }) {
                       return d.miner;
                     })
                     .then((m) => {
-                      console.log(m.transactions);
+                      console.log("txns", m.transactions);
                       setTransactions(m.transactions);
+                      let fromArr = [];
+                      let toArr = [];
+                      m.transactions.forEach((txn) => {
+                        fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
+                        toArr.push(txn.to); //{ text: txn.to, value: txn.to });
+                      });
+                      fromArr = [...new Set(fromArr)];
+                      toArr = [...new Set(toArr)];
+                      fromArr = fromArr.map((fa) => {
+                        return { text: fa, value: fa };
+                      });
+                      toArr = toArr.map((ta) => {
+                        return { text: ta, value: ta };
+                      });
+                      console.log("lf", fromArr.length, "tl", toArr.length);
+                      console.log(fromArr, toArr);
+                      setFinalFromArr(fromArr);
+                      setFinalToArr(toArr);
                     });
                 }}
               >
@@ -200,15 +398,89 @@ export default function Miner({ miner }) {
                 />
               </TabPanel>
               <TabPanel>
-                <p>Aggregated Earnings</p>
+                <AggregatedEarnings
+                  qap={aggregateEarnings.miner.qualityAdjustedPower}
+                  totalIncome={
+                    aggregateEarnings.miner.aggregateEarnings.income.total
+                  }
+                  storageDeal={
+                    aggregateEarnings.miner.aggregateEarnings.income
+                      .storageDealPayments
+                  }
+                  blockRewards={
+                    aggregateEarnings.miner.aggregateEarnings.income
+                      .blockRewards.blockRewards
+                  }
+                  totalExpenditure={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure.total
+                  }
+                  deposits={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure
+                      .collateralDeposit
+                  }
+                  gas={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure.gas
+                  }
+                  penalty={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure
+                      .penalty
+                  }
+                  others={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure.others
+                  }
+                  netEarnings={
+                    aggregateEarnings.miner.aggregateEarnings.netEarnings
+                  }
+                />
               </TabPanel>
               <TabPanel>
-                <p>Predicted Earnings</p>
+                <PredictedEarnings
+                  totalIncome={
+                    estimatedEarnings.miner.estimatedEarnings.income.total
+                  }
+                  existing={
+                    estimatedEarnings.miner.estimatedEarnings.income
+                      .storageDealPayments.existingDeals
+                  }
+                  potential={
+                    estimatedEarnings.miner.estimatedEarnings.income
+                      .storageDealPayments.potentialFutureDeals
+                  }
+                  blockRewards={
+                    estimatedEarnings.miner.estimatedEarnings.income
+                      .blockRewards.blockRewards
+                  }
+                  totalExpenditure={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure.total
+                  }
+                  deposits={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure
+                      .collateralDeposit
+                  }
+                  gas={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure.gas
+                  }
+                  penalty={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure
+                      .penalty
+                  }
+                  others={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure.others
+                  }
+                  netEarnings={
+                    estimatedEarnings.miner.estimatedEarnings.netEarnings
+                  }
+                  days={
+                    estimatedEarnings.miner.estimatedEarnings.daysUntilEligible
+                  }
+                />
               </TabPanel>
               <TabPanel>
                 <TransactionHistory
                   minerID={miner.id}
                   transactions={transactions}
+                  finalFromArr={finalFromArr}
+                  finalToArr={finalToArr}
                 />
               </TabPanel>
             </TabPanels>
