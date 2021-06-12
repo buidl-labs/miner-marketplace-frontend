@@ -19,7 +19,7 @@ function AggregatedEarnings(props) {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
@@ -31,64 +31,74 @@ function AggregatedEarnings(props) {
   return (
     <>
       <VStack textAlign="left" alignItems="left">
-        <Heading mb={4}>Aggregated Earnings</Heading>
+        <Heading size="lg" color="blue.700" my={4}>
+          Aggregated Earnings
+        </Heading>
 
         {/* <Text>Quality Adjusted Power</Text>
         <Text>{props.qap}</Text> */}
 
         <Stack>
           <VStack alignItems="left">
+            <Stat>
+              <StatLabel fontSize="lg">Net Aggregate Earnings</StatLabel>
+              <StatNumber color="blue.700">
+                {(Number(props.netEarnings) / 10 ** 18).toFixed(3)} FIL
+              </StatNumber>
+              {/*<StatHelpText>
+              ($ {Math.round(props.netEarnings * filecoinUSDRate)})
+            </StatHelpText>*/}
+            </Stat>
+            <hr />
             <Stat alignItems="left">
-              <StatLabel>Total Estimated Income</StatLabel>
-              <StatNumber>{props.totalIncome}FIL</StatNumber>
-              <StatHelpText>
+              <StatLabel fontSize="lg">Aggregate Income</StatLabel>
+              <StatNumber color="green.600">
+                {(Number(props.totalIncome) / 10 ** 18).toFixed(3)} FIL
+              </StatNumber>
+              {/*<StatHelpText>
                 ($ {Math.round(props.totalIncome * filecoinUSDRate)})
-              </StatHelpText>
+              </StatHelpText>*/}
             </Stat>
             <VStack textAlign="left" alignItems="left">
               <HStack>
                 <Text>Storage Deals Payments</Text>
-                <Text>{props.storageDeal}</Text>
+                <Text>{(Number(props.storageDeal) / 10 ** 18).toFixed(3)}</Text>
               </HStack>
               <HStack>
                 <Text>Block Rewards</Text>
-                <Text>{props.blockRewards}</Text>
+                <Text>
+                  {(Number(props.blockRewards) / 10 ** 18).toFixed(3)}
+                </Text>
               </HStack>
             </VStack>
             <hr />
             <Stat>
-              <StatLabel>Total Estimated Expenditure</StatLabel>
-              <StatNumber>{props.totalExpenditure} FIL</StatNumber>
-              <StatHelpText>
+              <StatLabel fontSize="lg">Aggregate Expenditure</StatLabel>
+              <StatNumber color="red.600">
+                {(Number(props.totalExpenditure) / 10 ** 18).toFixed(3)} FIL
+              </StatNumber>
+              {/*<StatHelpText>
                 ($ {Math.round(props.totalExpenditure * filecoinUSDRate)})
-              </StatHelpText>
+              </StatHelpText>*/}
             </Stat>
             <VStack textAlign="left" alignItems="left">
               <HStack>
                 <Text>Collateral Deposit</Text>
-                <Text>{props.deposits}</Text>
+                <Text>{(Number(props.deposits) / 10 ** 18).toFixed(3)}</Text>
               </HStack>
               <HStack>
                 <Text>Gas</Text>
-                <Text>{props.gas}</Text>
+                <Text>{(Number(props.gas) / 10 ** 18).toFixed(3)}</Text>
               </HStack>
               <HStack>
                 <Text>Penalty</Text>
-                <Text>{props.penalty}</Text>
+                <Text>{(Number(props.penalty) / 10 ** 18).toFixed(3)}</Text>
               </HStack>
               <HStack>
                 <Text>Others</Text>
-                <Text>{props.others}</Text>
+                <Text>{(Number(props.others) / 10 ** 18).toFixed(3)}</Text>
               </HStack>
             </VStack>
-            <hr />
-            <Stat>
-              <StatLabel>Net Estimated Income</StatLabel>
-              <StatNumber>{props.netEarnings} FIL</StatNumber>
-              <StatHelpText>
-                ($ {Math.round(props.netEarnings * filecoinUSDRate)})
-              </StatHelpText>
-            </Stat>
           </VStack>
         </Stack>
       </VStack>
