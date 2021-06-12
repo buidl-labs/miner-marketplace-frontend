@@ -9,8 +9,10 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
+
 import Authenticate from "./ledgerAlert/Authenticate";
 import AuthFail from "./ledgerAlert/AuthFail";
 import AuthSuccess from "./ledgerAlert/AuthSuccess";
@@ -88,7 +90,11 @@ const DashboardNavbar = (props) => {
         zIndex="20"
       >
         <Link onClick={() => router.push("/")}>
-          <Image src="/images/Logo.svg" maxH="12" />
+          <Image
+            src="/images/Logo.svg"
+            maxH="12"
+            alt="Miner Marketplace Logo"
+          />
         </Link>
         <Spacer />
         <HStack spacing="12" color="gray.700">

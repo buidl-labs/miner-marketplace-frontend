@@ -30,6 +30,7 @@ const IndexPage = (stats) => {
           {/* Hero Section */}
           <Hero
             heroImg="/images/heroGlobe.svg"
+            heroAlt="Global Filecoin network"
             heroHeading="Decentralised Storage Solution for all your needs"
             heroText="Filecoin is a decentralised storage network designed to store
             humanity’s most important information. Sounds interesting? head over
@@ -50,17 +51,20 @@ const IndexPage = (stats) => {
           >
             <Features
               featureIcon="/images/secure.svg"
+              imgAlt="secure"
               featureTitle="Secure"
               featureDescription="Miners storing data have to encrypt data which makes storing data on Filecoin more secure"
             />
             <Features
               featureIcon="/images/rewards.svg"
+              imgAlt="rewards"
               featureTitle="Rewards"
               featureDescription="Rewards are directly proportional to amount of storage you provide,
             hence more storage means more rewards"
             />
             <Features
               featureIcon="/images/decentralised.svg"
+              imgAlt="decentralised"
               featureTitle="Decentralised"
               featureDescription="It all is decentralised hence, no single point of control, no middle
             man"

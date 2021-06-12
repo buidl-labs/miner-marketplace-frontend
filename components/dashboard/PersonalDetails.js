@@ -10,27 +10,40 @@ import {
   Link,
   Button,
   Tooltip,
+  useClipboard,
+  IconButton,
 } from "@chakra-ui/react";
 import React from "react";
 
-import { Icon, IconProps } from "@chakra-ui/icons";
+import { CopyIcon, Icon, IconProps, QuestionIcon } from "@chakra-ui/icons";
 import {} from "react-icons";
 import { FaSlack, FaTwitter, FaGlobe } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
+import { FiExternalLink } from "react-icons/fi";
 
 function ClaimButton(props) {
-  var pStyle = {
-    fontSize: "16px",
-  };
   return (
-    <Tooltip
-      label={`To claim this profile, click on \"Connect Wallet\"`}
-      aria-label="claim profile"
-    >
-      <p color="grey" style={pStyle}>
-        Own this profile?
-      </p>
-    </Tooltip>
+    <>
+      <Tooltip
+        label={`To claim this profile, click on \"Connect Wallet\"`}
+        aria-label="claim profile"
+        px="4"
+        py="2"
+        borderRadius="lg"
+        bg="gray.700"
+        hasArrow
+      >
+        <Text
+          fontSize="md"
+          fontWeight="medium"
+          alignItems="baseline"
+          color="gray.600"
+        >
+          Own this Profile{" "}
+          <Icon as={QuestionIcon} w={5} h={5} color="gray.500" />
+        </Text>
+      </Tooltip>
+    </>
   );
 }
 
@@ -88,7 +101,8 @@ const PersonalDetails = (props) => {
       <Box
         border="solid 2px #E2E8F0"
         borderRadius="2xl"
-        p="10"
+        px="10"
+        py="8"
         textAlign="left"
         alignItems="flex-start"
       >
@@ -117,13 +131,18 @@ const PersonalDetails = (props) => {
             minerTwitter={props.minerTwitter}
           />
         </WrapItem>
-        <VStack spacing="3" alignItems="left" pt="4" isTruncated>
+        <VStack spacing="4" alignItems="left" pt="4">
           <WrapItem alignItems="baseline">
             <Heading size="sm" color="gray.700" mr="3">
               Worker Address:
             </Heading>
             <Link href={workerAddressLink} isExternal>
-              <Text color="gray.600">{props.workerAddress}</Text>
+              <HStack>
+                <Text color="gray.600" maxW="72" isTruncated>
+                  {props.workerAddress}
+                </Text>
+                <Icon as={FiExternalLink} w={5} h={5} color="gray.600" />
+              </HStack>
             </Link>
           </WrapItem>
           <WrapItem alignItems="baseline">
@@ -131,7 +150,12 @@ const PersonalDetails = (props) => {
               Owner Address:
             </Heading>
             <Link href={ownerAddressLink} isExternal>
-              <Text color="gray.600">{props.ownerAddress}</Text>
+              <HStack>
+                <Text color="gray.600" maxW="72" isTruncated>
+                  {props.ownerAddress}
+                </Text>
+                <Icon as={FiExternalLink} w={5} h={5} color="gray.600" />
+              </HStack>
             </Link>
           </WrapItem>
           <WrapItem alignItems="baseline">
