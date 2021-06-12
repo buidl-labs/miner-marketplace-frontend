@@ -2,6 +2,14 @@ import {
   Button,
   Link,
   Grid,
+  Stack,
+  VStack,
+  HStack,
+  Text,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
   Heading,
   SimpleGrid,
   GridItem,
@@ -10,6 +18,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
 
@@ -26,6 +35,7 @@ import ServiceDetails from "../../components/dashboard/ServiceDetails";
 import PredictedEarnings from "../../components/dashboard/PredictedEarnings";
 
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import AggregatedEarnings from "../../components/dashboard/AggregatedEarnings";
 // import getAllMinerIds from "../miners";
 // import { createGlobalState } from "react-hooks-global-state";
 
@@ -38,6 +48,10 @@ export default function Miner({ miner }) {
   // const [isSignedIn, setisSignedIn] = useGlobalState("isSignedIn");
   // const [isClaimed, setIsClaimed] = useGlobalState("isClaimed");
   // setIsClaimed(miner.claimed);
+
+  //state for estimated & aggregated earnings' query
+  const [estimatedEarnings, setEstimatedEarnings] = useState([]);
+  const [aggregateEarnings, setAggregateEarnings] = useState([]);
 
   const router = useRouter();
 
@@ -105,8 +119,126 @@ export default function Miner({ miner }) {
             <TabList>
               <Tab>Service Details</Tab>
               <Tab>Profile Settings</Tab>
-              <Tab>Aggregated Earnings</Tab>
-              <Tab>Predicted Earnings</Tab>
+              <Tab
+                onClick={() => {
+                  console.log(
+                    "pingpong",
+                    process.env.BACKEND_URL,
+                    "mid",
+                    miner.id
+                  );
+                  const BACKEND_URL =
+                    "https://miner-marketplace-backend.onrender.com/query";
+                  const client = new ApolloClient({
+                    uri: BACKEND_URL,
+                    cache: new InMemoryCache(),
+                  });
+
+                  client
+                    .query({
+                      query: gql`
+                        query {
+                          miner(id: "f08403") {
+                            id
+                            qualityAdjustedPower
+                            aggregateEarnings(
+                              startHeight: 0
+                              endHeight: 1000000
+                              includeGas: true
+                            ) {
+                              income {
+                                total
+                                storageDealPayments
+                                blockRewards
+                              }
+                              expenditure {
+                                total
+                                collateralDeposit
+                                gas
+                                penalty
+                                others
+                              }
+                              netEarnings
+                            }
+                          }
+                        }
+                      `,
+                    })
+                    .then((data) => {
+                      console.log(data.data);
+                      return data.data;
+                    })
+                    .then((m) => {
+                      console.log(m.aggregateEarnings);
+                      setAggregateEarnings(m);
+                      console.log("agge", m);
+                    });
+                }}
+              >
+                Aggregated Earnings
+              </Tab>
+              <Tab
+                onClick={() => {
+                  console.log(
+                    "pingpong",
+                    process.env.BACKEND_URL,
+                    "mid",
+                    miner.id
+                  );
+                  const BACKEND_URL =
+                    "https://miner-marketplace-backend.onrender.com/query";
+                  const client = new ApolloClient({
+                    uri: BACKEND_URL,
+                    cache: new InMemoryCache(),
+                  });
+
+                  client
+                    .query({
+                      query: gql`
+                  query{
+                    miner(id: "${miner.id}"){
+                      id
+                      qualityAdjustedPower
+                      estimatedEarnings(
+                        days: 60
+                        includeGas: true
+                      ) {
+                        income {
+                          total
+                          storageDealPayments {
+                            existingDeals
+                            potentialFutureDeals
+                          }
+                          blockRewards {
+                            blockRewards
+                            daysUntilEligible
+                          }
+                        }
+                        expenditure {
+                          total
+                          collateralDeposit
+                          gas
+                          penalty
+                          others
+                        }
+                        netEarnings
+                      }
+                    }
+                  }
+                  `,
+                    })
+                    .then((data) => {
+                      console.log(data.data);
+                      return data.data;
+                    })
+                    .then((m) => {
+                      console.log(m.estimatedEarnings);
+                      setEstimatedEarnings(m);
+                    });
+                }}
+              >
+                Predicted Earnings
+              </Tab>
               <Tab>Transaction History</Tab>
             </TabList>
 
@@ -148,11 +280,86 @@ export default function Miner({ miner }) {
                 />
               </TabPanel>
               <TabPanel>
-                <Heading>Aggregated Earnings</Heading>
+                <VisuallyHidden>Aggregated Earnings</VisuallyHidden>
+                <AggregatedEarnings
+                  qap={aggregateEarnings.miner.qualityAdjustedPower}
+                  totalIncome={
+                    aggregateEarnings.miner.aggregateEarnings.income.total
+                  }
+                  storageDeal={
+                    aggregateEarnings.miner.aggregateEarnings.income
+                      .storageDealPayments
+                  }
+                  blockRewards={
+                    aggregateEarnings.miner.aggregateEarnings.income
+                      .blockRewards.blockRewards
+                  }
+                  totalExpenditure={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure.total
+                  }
+                  deposits={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure
+                      .collateralDeposit
+                  }
+                  gas={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure.gas
+                  }
+                  penalty={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure
+                      .penalty
+                  }
+                  others={
+                    aggregateEarnings.miner.aggregateEarnings.expenditure.others
+                  }
+                  netEarnings={
+                    aggregateEarnings.miner.aggregateEarnings.netEarnings
+                  }
+                />
               </TabPanel>
               <TabPanel>
-                <Heading>Predicted Earnings</Heading>
-                <PredictedEarnings />
+                <VisuallyHidden>Predicted Earnings</VisuallyHidden>
+                <PredictedEarnings
+                  qap={estimatedEarnings.miner.qualityAdjustedPower}
+                  totalIncome={
+                    estimatedEarnings.miner.estimatedEarnings.income.total
+                  }
+                  existing={
+                    estimatedEarnings.miner.estimatedEarnings.income
+                      .storageDealPayments.existingDeals
+                  }
+                  potential={
+                    estimatedEarnings.miner.estimatedEarnings.income
+                      .storageDealPayments.potentialFutureDeals
+                  }
+                  blockRewards={
+                    estimatedEarnings.miner.estimatedEarnings.income
+                      .blockRewards.blockRewards
+                  }
+                  days={
+                    estimatedEarnings.miner.estimatedEarnings.income
+                      .blockRewards.daysUntilEligible
+                  }
+                  totalExpenditure={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure.total
+                  }
+                  deposits={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure
+                      .collateralDeposit
+                  }
+                  gas={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure.gas
+                  }
+                  penalty={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure
+                      .penalty
+                  }
+                  others={
+                    estimatedEarnings.miner.estimatedEarnings.expenditure.others
+                  }
+                  netEarnings={
+                    estimatedEarnings.miner.estimatedEarnings.netEarnings
+                  }
+                />
               </TabPanel>
               <TabPanel>
                 <Heading>Transaction History</Heading>
