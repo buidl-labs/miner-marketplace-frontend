@@ -22,6 +22,7 @@ import PersonalDetails from "../../components/dashboard/PersonalDetails";
 import QuoteCalculator from "../../components/dashboard/QuoteCalculator";
 import Scores from "../../components/dashboard/Scores";
 import ServiceDetails from "../../components/dashboard/ServiceDetails";
+import TransactionHistory from "../../components/TransactionHistory";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 // import getAllMinerIds from "../miners";
 // import { createGlobalState } from "react-hooks-global-state";
@@ -44,6 +45,8 @@ export default function Miner({ miner }) {
   function handleIsClaimedChange(newValue) {
     setIsClaimed(newValue);
   }
+
+  const [transactions, setTransactions] = useState([]);
 
   return (
     <>
@@ -104,7 +107,59 @@ export default function Miner({ miner }) {
               <Tab>Profile Settings</Tab>
               <Tab>Aggregated Earnings</Tab>
               <Tab>Predicted Earnings</Tab>
-              <Tab>Transaction History</Tab>
+              <Tab
+                onClick={() => {
+                  console.log(
+                    "osccmcmcm",
+                    process.env.BACKEND_URL,
+                    "mid",
+                    miner.id,
+                  );
+                  const BACKEND_URL =
+                    "https://miner-marketplace-backend.onrender.com/query";
+                  const client = new ApolloClient({
+                    uri: BACKEND_URL,
+                    cache: new InMemoryCache(),
+                  });
+
+                  client
+                    .query({
+                      query: gql`
+                      query {
+                        miner(id: "${miner.id}") {
+                          id
+                          transactions {
+                            id
+                            value
+                            methodName
+                            from
+                            to
+                            minerFee
+                            burnFee
+                            transactionType
+                            exitCode
+                            height
+                          }
+                        }
+                      }
+                    `,
+                    })
+                    .then((data) => {
+                      console.log(data.data);
+                      return data.data;
+                    })
+                    .then((d) => {
+                      console.log(d.miner.id);
+                      return d.miner;
+                    })
+                    .then((m) => {
+                      console.log(m.transactions);
+                      setTransactions(m.transactions);
+                    });
+                }}
+              >
+                Transaction History
+              </Tab>
             </TabList>
 
             <TabPanels>
@@ -151,7 +206,10 @@ export default function Miner({ miner }) {
                 <p>Predicted Earnings</p>
               </TabPanel>
               <TabPanel>
-                <p>Transaction History</p>
+                <TransactionHistory
+                  minerID={miner.id}
+                  transactions={transactions}
+                />
               </TabPanel>
             </TabPanels>
           </Tabs>
