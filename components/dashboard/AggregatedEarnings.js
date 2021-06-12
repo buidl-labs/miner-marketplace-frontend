@@ -32,9 +32,8 @@ function AggregatedEarnings(props) {
     <>
       <VStack textAlign="left" alignItems="left">
         <Heading mb={4}>Aggregated Earnings</Heading>
-
-        {/* <Text>Quality Adjusted Power</Text>
-        <Text>{props.qap}</Text> */}
+        <Text>Quality Adjusted Power</Text>
+        <Text>{props.qap}</Text>
 
         <Stack>
           <VStack alignItems="left">

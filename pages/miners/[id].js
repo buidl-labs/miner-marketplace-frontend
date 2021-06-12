@@ -1,5 +1,6 @@
 import {
   Button,
+  Box,
   Link,
   Grid,
   Stack,
@@ -94,6 +95,64 @@ export default function Miner({ miner }) {
       },
     },
   });
+
+  function predcitedEarningVisibility() {
+    if (miner.id == "f08403") {
+      console.log("query working", process.env.BACKEND_URL, "mid", miner.id);
+      const BACKEND_URL =
+        "https://miner-marketplace-backend.onrender.com/query";
+      const client = new ApolloClient({
+        uri: BACKEND_URL,
+        cache: new InMemoryCache(),
+      });
+
+      client
+        .query({
+          query: gql`
+    query{
+      miner(id: "${miner.id}"){
+        id
+        qualityAdjustedPower
+        estimatedEarnings(
+          days: 60
+          includeGas: true
+        ) {
+          income {
+            total
+            storageDealPayments {
+              existingDeals
+              potentialFutureDeals
+            }
+            blockRewards {
+              blockRewards
+              daysUntilEligible
+            }
+          }
+          expenditure {
+            total
+            collateralDeposit
+            gas
+            penalty
+            others
+          }
+          netEarnings
+        }
+      }
+    }
+    `,
+        })
+        .then((data) => {
+          console.log(data.data);
+          return data.data;
+        })
+        .then((m) => {
+          console.log(m.estimatedEarnings);
+          setEstimatedEarnings(m);
+        });
+    } else {
+      console.log("Data not available");
+    }
+  }
 
   const router = useRouter();
 
@@ -219,66 +278,7 @@ export default function Miner({ miner }) {
               >
                 Aggregated Earnings
               </Tab>
-              <Tab
-                onClick={() => {
-                  console.log(
-                    "pingpong",
-                    process.env.BACKEND_URL,
-                    "mid",
-                    miner.id
-                  );
-                  const BACKEND_URL =
-                    "https://miner-marketplace-backend.onrender.com/query";
-                  const client = new ApolloClient({
-                    uri: BACKEND_URL,
-                    cache: new InMemoryCache(),
-                  });
-
-                  client
-                    .query({
-                      query: gql`
-                  query{
-                    miner(id: "${miner.id}"){
-                      id
-                      qualityAdjustedPower
-                      estimatedEarnings(
-                        days: 60
-                        includeGas: true
-                      ) {
-                        income {
-                          total
-                          storageDealPayments {
-                            existingDeals
-                            potentialFutureDeals
-                          }
-                          blockRewards {
-                            blockRewards
-                            daysUntilEligible
-                          }
-                        }
-                        expenditure {
-                          total
-                          collateralDeposit
-                          gas
-                          penalty
-                          others
-                        }
-                        netEarnings
-                      }
-                    }
-                  }
-                  `,
-                    })
-                    .then((data) => {
-                      console.log(data.data);
-                      return data.data;
-                    })
-                    .then((m) => {
-                      console.log(m.estimatedEarnings);
-                      setEstimatedEarnings(m);
-                    });
-                }}
-              >
+              <Tab onClick={predcitedEarningVisibility()}>
                 Predicted Earnings
               </Tab>
               <Tab>Transaction History</Tab>
