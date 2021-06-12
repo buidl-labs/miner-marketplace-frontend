@@ -2,6 +2,7 @@ import {
   Button,
   Link,
   Grid,
+  Heading,
   SimpleGrid,
   GridItem,
   Tabs,
@@ -23,6 +24,8 @@ import QuoteCalculator from "../../components/dashboard/QuoteCalculator";
 import Scores from "../../components/dashboard/Scores";
 import ServiceDetails from "../../components/dashboard/ServiceDetails";
 import TransactionHistory from "../../components/TransactionHistory";
+import PredictedEarnings from "../../components/dashboard/PredictedEarnings";
+
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 // import getAllMinerIds from "../miners";
 // import { createGlobalState } from "react-hooks-global-state";
@@ -200,10 +203,11 @@ export default function Miner({ miner }) {
                 />
               </TabPanel>
               <TabPanel>
-                <p>Aggregated Earnings</p>
+                <Heading>Aggregated Earnings</Heading>
               </TabPanel>
               <TabPanel>
-                <p>Predicted Earnings</p>
+                <Heading>Predicted Earnings</Heading>
+                <PredictedEarnings />
               </TabPanel>
               <TabPanel>
                 <TransactionHistory
