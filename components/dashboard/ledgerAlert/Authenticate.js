@@ -12,6 +12,7 @@ import {
   ModalCloseButton,
   useDisclosure,
   HStack,
+  VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { ApolloClient, InMemoryCache, gql, useMutation } from "@apollo/client";
@@ -24,8 +25,10 @@ const Authenticate = (props) => {
   const [clval, setClval] = useState("");
   const [clIcon, setClIcon] = useState("");
   const [clText, setClText] = useState(
-    "Please connect your ledger device of the same address to authenticate"
+    "Please accept the address displayed on your ledger device",
   );
+  // "Please connect your ledger device of the same address to authenticate",
+
   // const [currMinerID, setCurrMinerID] = useState("");
   // const [currLedgerAddress, setCurrLedgerAddress] = useState("");
   const [isSignedIn, setIsSignedIn] = useGlobalState("isSignedIn");
@@ -39,25 +42,27 @@ const Authenticate = (props) => {
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Image src={clIcon} pb="6" mx="auto" w="20" />
-          <HStack>
-            {/* <Box
-              p="2"
-              width="80%"
-              borderRadius="full"
-              bg="blue.100"
-              color="blue.900"
-              mb="6"
-              mx="auto"
-            >
-              <Text fontWeight="bold">{props.ledgerAddress}</Text>
-            </Box> */}
-          </HStack>
-          <Text justifyContent="justify" color="gray.600">
-            {/* Above address will be used for authentication. Please check that you
+          <VStack>
+            <Image src={clIcon} pb="6" mx="auto" w="20" />
+            <HStack>
+              <Box
+                p="2"
+                width="80%"
+                borderRadius="full"
+                bg="blue.100"
+                color="blue.900"
+                mb="6"
+                mx="auto"
+              >
+                <Text fontWeight="bold">{props.ledgerAddress}</Text>
+              </Box>
+            </HStack>
+            <Text justifyContent="justify" color="gray.600">
+              {/* Above address will be used for authentication. Please check that you
             have ledger device of the above address. */}
-            {clText}
-          </Text>
+              {clText}
+            </Text>
+          </VStack>
         </ModalBody>
 
         <ModalFooter>
@@ -93,18 +98,24 @@ const Authenticate = (props) => {
                   if (reqClaim) {
                     setClval(" successful");
                     setClText(
-                      "You Profile with given address hase been authenticated. You may close this popup now."
+                      "Owner authentication successful!",
                     );
                     setClIcon("/images/AuthSuccess.svg");
                     setIsSignedIn(true);
-                  } else setClval(" failed");
+                  } else {
+                    setClval(" failed");
+                    setClIcon("/images/AuthFail.svg");
+                    setClText(
+                      "Owner authentication failed.",
+                    );
+                  }
                 })
                 .catch((e) => {
                   console.log(e);
                   setClval(" failed");
                   setClIcon("/images/AuthFail.svg");
                   setClText(
-                    "Profile with given address could not be authenticated. You may close this popup now"
+                    "Owner authentication failed.",
                   );
                 });
             }}

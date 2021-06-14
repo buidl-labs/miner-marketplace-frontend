@@ -21,7 +21,7 @@ const AuthSuccess = () => {
       <ModalContent textAlign="center" p="5" w="full">
         <ModalHeader alignItems="center">
           <Heading size="lg" color="gray.900">
-            Authentication Successful
+            Authentication Successful!
           </Heading>
         </ModalHeader>
         <ModalCloseButton />

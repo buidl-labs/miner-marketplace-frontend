@@ -67,9 +67,9 @@ const DashboardNavbar = (props) => {
       // console.log("addresses", addresses);
       const res = await ledgerApp.showAddressAndPubKey(`m/44\'/461\'/0/0/${0}`);
       setLedgerAddress(res.addrString);
-      console.log("res", res);
+      console.log("resd", res);
     } catch (err) {
-      console.log("err", err);
+      console.log("errd", err);
     }
   };
 
@@ -104,6 +104,7 @@ const DashboardNavbar = (props) => {
             variant="solid"
             onClick={() => {
               onOpen();
+              console.log("heyyyy there")
               getAddress();
             }}
           >

@@ -24,7 +24,7 @@ function AuthFail() {
       <ModalContent textAlign="center" p="5">
         <ModalHeader alignItems="center">
           <Heading size="lg" color="gray.900">
-            Authentication Failed
+            Authentication Failed!
           </Heading>
         </ModalHeader>
         <ModalCloseButton />
