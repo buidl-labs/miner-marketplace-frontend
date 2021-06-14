@@ -409,7 +409,7 @@ export default function Miner({ miner }) {
                   }
                   blockRewards={
                     aggregateEarnings.miner.aggregateEarnings.income
-                      .blockRewards.blockRewards
+                      .blockRewards
                   }
                   totalExpenditure={
                     aggregateEarnings.miner.aggregateEarnings.expenditure.total
@@ -471,7 +471,8 @@ export default function Miner({ miner }) {
                     estimatedEarnings.miner.estimatedEarnings.netEarnings
                   }
                   days={
-                    estimatedEarnings.miner.estimatedEarnings.daysUntilEligible
+                    estimatedEarnings.miner.estimatedEarnings.income
+                      .blockRewards.daysUntilEligible
                   }
                 />
               </TabPanel>

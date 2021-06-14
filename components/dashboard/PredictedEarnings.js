@@ -76,8 +76,8 @@ function PredictedEarnings(props) {
                 </Text>
               </HStack>
               <HStack>
-                <Text>Days until eligible</Text>
-                <Text>{(Number(props.days) / 10 ** 18).toFixed(3)}</Text>
+                <Text>Days until eligible for block rewards</Text>
+                <Text>{props.days}</Text>
               </HStack>
             </VStack>
             <hr />
