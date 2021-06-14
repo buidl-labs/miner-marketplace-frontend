@@ -497,7 +497,7 @@ export default function Miners({ miners, href }) {
           </Stack>
 
           <HStack py={8} spacing="16" w="full">
-            <VStack alignItems="left">
+            {/*<VStack alignItems="left">
               <Select placeholder="Type of Service">
                 <option value="storage">Storage</option>
                 <option value="retrieval">Retrieval</option>
@@ -514,16 +514,16 @@ export default function Miners({ miners, href }) {
                   Repair
                 </Tag>
               </HStack>
-            </VStack>
+            </VStack>*/}
 
-            <VStack alignItems="left">
+            {/*<VStack alignItems="left">
               <Select placeholder="Data Transfer Mechanism">
                 <option value="option1">Online</option>
                 <option value="option2">Offline</option>
-                {/*   <CheckboxGroup>
+                {<CheckboxGroup>
                   <Checkbox value="online">Online</Checkbox>
                   <Checkbox value="offline">Offline</Checkbox>
-                </CheckboxGroup> */}
+                </CheckboxGroup>}
               </Select>
               <HStack>
                 <Tag size="lg" borderRadius="full" colorScheme="green">
@@ -533,9 +533,9 @@ export default function Miners({ miners, href }) {
                   Offline
                 </Tag>
               </HStack>
-            </VStack>
+            </VStack>*/}
 
-            <VStack alignItems="left">
+            {/*<VStack alignItems="left">
               <InputGroup>
                 <InputRightElement
                   pointerEvents="none"
@@ -548,7 +548,7 @@ export default function Miners({ miners, href }) {
                   countryName
                 </Tag>
               </HStack>
-            </VStack>
+            </VStack>*/}
 
             <Stack maxW="25%" alignItems="left" spacing="4">
               <Stack spacing="1">
