@@ -48,9 +48,17 @@ export default function TransactionHistory(props) {
     //   console.log("MF", txn.minerFee, Number(txn.minerFee) / 10 ** 18);
     // TODO: convert value, minerFee, burnFee to nanoFIL/attoFIL etc based on their size
     // right now all are in FIL
+
+    let txntype = "message";
+    if (txn.methodName == "ApplyRewards") {
+      txntype = "block";
+    }
     return {
       key: txn.id,
-      id: txn.id,
+      id: {
+        mid: txn.id,
+        txntype: txntype,
+      },
       value: (Number(txn.value) / 10 ** 18).toFixed(3),
       methodName: txn.methodName,
       from: txn.from,
@@ -68,16 +76,16 @@ export default function TransactionHistory(props) {
       title: "ID",
       dataIndex: "id",
       key: "id",
-      render: (m) => {
+      render: (id) => {
         return (
           <div>
             <a
-              href={"https://filfox.info/en/message/" + m}
+              href={"https://filfox.info/en/" + id.txntype + "/" + id.mid}
               style={{ cursor: "pointer" }}
               target="_blank"
             >
               <Text maxW="10" isTruncated>
-                {m}
+                {id.mid}
               </Text>
             </a>
           </div>
