@@ -1,4 +1,4 @@
-const GRAPHQL_ENDPOINT = "https://miner-marketplace-backend.onrender.com/query";
+const GRAPHQL_ENDPOINT = "https://miner-marketplace-backend-2.onrender.com/query";
 
 const headers = { "Content-Type": "application/json" };
 

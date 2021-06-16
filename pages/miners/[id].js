@@ -174,7 +174,7 @@ export default function Miner({ miner }) {
                     miner.id,
                   );
                   const BACKEND_URL =
-                    "https://miner-marketplace-backend.onrender.com/query";
+                    "https://miner-marketplace-backend-2.onrender.com/query";
                   const client = new ApolloClient({
                     uri: BACKEND_URL,
                     cache: new InMemoryCache(),
@@ -231,7 +231,7 @@ export default function Miner({ miner }) {
                     miner.id,
                   );
                   const BACKEND_URL =
-                    "https://miner-marketplace-backend.onrender.com/query";
+                    "https://miner-marketplace-backend-2.onrender.com/query";
                   const client = new ApolloClient({
                     uri: BACKEND_URL,
                     cache: new InMemoryCache(),
@@ -296,7 +296,7 @@ export default function Miner({ miner }) {
                     miner.id,
                   );
                   const BACKEND_URL =
-                    "https://miner-marketplace-backend.onrender.com/query";
+                    "https://miner-marketplace-backend-2.onrender.com/query";
                   const client = new ApolloClient({
                     uri: BACKEND_URL,
                     cache: new InMemoryCache(),

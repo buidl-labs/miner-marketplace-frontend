@@ -323,7 +323,7 @@ function ProfileSettings(props) {
                   );
                   console.log("props", props, "url", process.env.BACKEND_URL);
                   fetch(
-                    "https://miner-marketplace-backend.onrender.com/query",
+                    "https://miner-marketplace-backend-2.onrender.com/query",
                     {
                       method: "POST",
                       headers: {
