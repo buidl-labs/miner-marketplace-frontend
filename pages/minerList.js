@@ -33,7 +33,6 @@ function minerList() {
     <>
       <DashboardNavbar />
       <Grid
-        h="200px"
         templateRows="repeat(4, 1fr)"
         templateColumns="repeat(12, 1fr)"
         gap="0.5"
@@ -50,7 +49,7 @@ function minerList() {
             </Heading>
 
             {/*Search*/}
-            <InputGroup w="50%">
+            <InputGroup w={{ lg: "50vw", md: "full", base: "100vw" }}>
               <InputRightElement
                 pointerEvents="none"
                 children={<Search2Icon color="gray" />}

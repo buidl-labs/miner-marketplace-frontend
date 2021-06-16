@@ -37,10 +37,10 @@ function ProfileSettings(props) {
   const [region, setRegion] = useState(props.region);
   const [storageAskPrice, setStorageAskPrice] = useState(props.storageAskPrice);
   const [verifiedAskPrice, setVerifiedAskPrice] = useState(
-    props.verifiedAskPrice,
+    props.verifiedAskPrice
   );
   const [retrievalAskPrice, setRetrievalAskPrice] = useState(
-    props.retrievalAskPrice,
+    props.retrievalAskPrice
   );
   const [storage, setStorage] = useState(props.storage);
   const [retrieval, setRetrieval] = useState(props.retrieval);
@@ -80,17 +80,16 @@ function ProfileSettings(props) {
   return (
     <>
       <Grid
-        h="200px"
         templateRows="repeat(4, 1fr)"
         templateColumns="repeat(12, 1fr)"
         gap="0.5"
         pr="8"
       >
-        <GridItem colSpan="10" mt="28" pl="12">
+        <GridItem colSpan="10" mt={8}>
           <VStack alignItems="flex-start" spacing="8">
             <VStack alignItems="flex-start">
               <Heading size="lg" color="gray.700">
-                MinerID: {props.minerID}
+                Miner ID: {props.minerID}
               </Heading>
             </VStack>
 
@@ -306,7 +305,7 @@ function ProfileSettings(props) {
                 </HStack>
               </Stack>
             </VStack>
-            <HStack spacing="12" w="100%">
+            <HStack spacing="12" w="100%" py={8}>
               <Button colorScheme="gray">Discard</Button>
               <Button
                 colorScheme="blue"
@@ -319,7 +318,7 @@ function ProfileSettings(props) {
                     minerName,
                     minerBio,
                     retrieval,
-                    minerTwitter,
+                    minerTwitter
                   );
                   console.log("props", props, "url", process.env.BACKEND_URL);
                   fetch(
@@ -355,7 +354,7 @@ function ProfileSettings(props) {
                           )
                         }`,
                       }),
-                    },
+                    }
                   )
                     .then((r) => {
                       console.log("rrrr", r);
