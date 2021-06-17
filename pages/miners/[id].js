@@ -30,6 +30,7 @@ import ServiceDetails from "../../components/dashboard/ServiceDetails";
 import TransactionHistory from "../../components/TransactionHistory";
 import PredictedEarnings from "../../components/dashboard/PredictedEarnings";
 import AggregatedEarnings from "../../components/dashboard/AggregatedEarnings";
+import StorageDealStats from "../../components/dashboard/StorageDealStats";
 
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 // import getAllMinerIds from "../miners";
@@ -45,6 +46,7 @@ export default function Miner({ miner }) {
   // const [isClaimed, setIsClaimed] = useGlobalState("isClaimed");
   // setIsClaimed(miner.claimed);
 
+  const [storageDealStats, setStorageDealStats] = useState({});
   //state for estimated & aggregated earnings' query, keeping initital state as static to avoid errors
   const [estimatedEarnings, setEstimatedEarnings] = useState({
     miner: {
@@ -171,7 +173,59 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id
+                    miner.id,
+                  );
+                  const BACKEND_URL =
+                    "https://miner-marketplace-backend-2.onrender.com/query";
+                  const client = new ApolloClient({
+                    uri: BACKEND_URL,
+                    cache: new InMemoryCache(),
+                  });
+
+                  client
+                    .query({
+                      query: gql`
+                        query {
+                          miner(id: "${miner.id}") {
+                            id
+                            storageDealStats {
+                              averagePrice
+                              dataStored
+                              faultTerminated
+                              noPenalties
+                              slashed
+                              successRate
+                              terminated
+                              total
+                            }
+                          }
+                        }
+                    `,
+                    })
+                    .then((data) => {
+                      console.log(data.data);
+                      return data.data;
+                    })
+                    .then((g) => {
+                      console.log(g.miner.storageDealStats.dataStored);
+                      setStorageDealStats(g.miner.storageDealStats);
+                      // setEstimatedEarnings(g);
+                      // console.log("esti", g);
+                    })
+                    .catch((e) => {
+                      console.log("err", e);
+                    });
+                }}
+              >
+                Storage Deal Stats
+              </Tab>
+              <Tab
+                onClick={() => {
+                  console.log(
+                    "osccmcmcm",
+                    process.env.BACKEND_URL,
+                    "mid",
+                    miner.id,
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -228,7 +282,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id
+                    miner.id,
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -293,7 +347,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id
+                    miner.id,
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -395,6 +449,18 @@ export default function Miner({ miner }) {
                   repair={miner.service.serviceTypes.repair}
                   online={miner.service.dataTransferMechanism.online}
                   offline={miner.service.dataTransferMechanism.offline}
+                />
+              </TabPanel>
+              <TabPanel>
+                <StorageDealStats
+                  averagePrice={storageDealStats.averagePrice}
+                  dataStored={storageDealStats.dataStored}
+                  faultTerminated={storageDealStats.faultTerminated}
+                  noPenalties={storageDealStats.noPenalties}
+                  slashed={storageDealStats.slashed}
+                  successRate={storageDealStats.successRate}
+                  terminated={storageDealStats.terminated}
+                  total={storageDealStats.total}
                 />
               </TabPanel>
               <TabPanel>
