@@ -3,12 +3,15 @@ import {
   Flex,
   Link,
   Image,
+  IconButton,
   HStack,
   Spacer,
   Modal,
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import { Icon, SettingsIcon } from "@chakra-ui/icons";
+import { FiSettings } from "react-icons/fi";
 
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
@@ -98,13 +101,21 @@ const DashboardNavbar = (props) => {
         </Link>
         <Spacer />
         <HStack spacing="12" color="gray.700">
+          {/* <IconButton
+            variant="ghost"
+            colorScheme="gray"
+            fontSize="24px"
+            icon={<FiSettings />}
+            onClick={() => router.push("/profileSettings")}
+          /> */}
+
           <Button
             colorScheme="blue"
             size="md"
             variant="solid"
             onClick={() => {
               onOpen();
-              console.log("heyyyy there")
+              console.log("heyyyy there");
               getAddress();
             }}
           >

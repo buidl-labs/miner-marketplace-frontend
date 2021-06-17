@@ -171,7 +171,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -228,7 +228,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -293,7 +293,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
