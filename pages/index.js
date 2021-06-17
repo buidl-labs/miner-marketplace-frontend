@@ -17,7 +17,7 @@ import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
 import { useBreakpointValue } from "@chakra-ui/react";
 
 const IndexPage = (stats) => {
-  console.log(stats);
+  //console.log(stats);
   // console.log("active", stats.stats.activeMinersCount);
   // console.log("dataS", stats.stats.dataStored);
 
