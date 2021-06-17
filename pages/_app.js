@@ -11,12 +11,12 @@ const config = {
 
 const theme = extendTheme(
   { config },
-  {
-    fonts: {
-      heading: "Inter",
-      body: "Inter",
-    },
-  },
+  // {
+  //   fonts: {
+  //     heading: "Inter",
+  //     body: "Inter",
+  //   },
+  // },
 );
 
 function MyApp({ Component, pageProps }) {
