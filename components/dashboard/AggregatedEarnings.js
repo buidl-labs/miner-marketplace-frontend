@@ -54,61 +54,6 @@ function AggregatedEarnings(props) {
               ($ {Math.round(props.netEarnings * filecoinUSDRate)})
             </StatHelpText>*/}
             </Stat>
-            {/* <hr /> */}
-
-            {/* <Stat alignItems="left" textAlign="left">
-              <StatLabel fontSize="lg">Aggregate Income</StatLabel>
-              <StatNumber color="green.600">
-                {(Number(props.totalIncome) / 10 ** 18).toFixed(3)} FIL
-              </StatNumber>
-              <StatHelpText>
-                ($ {Math.round(props.totalIncome * filecoinUSDRate)})
-              </StatHelpText>
-            </Stat> */}
-
-            {/* <VStack textAlign="left" alignItems="left">
-              <HStack>
-                <Text>Storage Deals Payments</Text>
-                <Text>{(Number(props.storageDeal) / 10 ** 18).toFixed(3)}</Text>
-              </HStack>
-              <HStack>
-                <Text>Block Rewards</Text>
-                <Text>
-                  {(Number(props.blockRewards) / 10 ** 18).toFixed(3)}
-                </Text>
-              </HStack>
-            </VStack> */}
-
-            {/* <hr /> */}
-
-            {/* <Stat textAlign="left">
-              <StatLabel fontSize="lg">Aggregate Expenditure</StatLabel>
-              <StatNumber color="red.600">
-                {(Number(props.totalExpenditure) / 10 ** 18).toFixed(3)} FIL
-              </StatNumber>
-              <StatHelpText>
-                ($ {Math.round(props.totalExpenditure * filecoinUSDRate)})
-              </StatHelpText>
-            </Stat> */}
-
-            {/* <VStack textAlign="left" alignItems="left">
-              <HStack>
-                <Text>Collateral Deposit</Text>
-                <Text>{(Number(props.deposits) / 10 ** 18).toFixed(3)}</Text>
-              </HStack>
-              <HStack>
-                <Text>Gas</Text>
-                <Text>{(Number(props.gas) / 10 ** 18).toFixed(3)}</Text>
-              </HStack>
-              <HStack>
-                <Text>Penalty</Text>
-                <Text>{(Number(props.penalty) / 10 ** 18).toFixed(3)}</Text>
-              </HStack>
-              <HStack>
-                <Text>Others</Text>
-                <Text>{(Number(props.others) / 10 ** 18).toFixed(3)}</Text>
-              </HStack>
-            </VStack> */}
 
             <Accordion allowMultiple>
               <AccordionItem py={2}>

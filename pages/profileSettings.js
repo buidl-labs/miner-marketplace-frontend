@@ -1,4 +1,8 @@
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
   Grid,
   GridItem,
   Heading,
@@ -79,8 +83,18 @@ function ProfileSettings(props) {
   const toast = useToast();
   return (
     <>
+      <Alert
+        status="info"
+        bg="blue.50"
+        rounded="lg"
+        color="blue.700"
+        fontWeight="semibold"
+      >
+        <AlertIcon color="blue.400" />
+        You will need to connect wallet to edit.
+      </Alert>
       <Grid
-        templateRows="repeat(4, 1fr)"
+        templateRows="repeat(1, 1fr)"
         templateColumns="repeat(12, 1fr)"
         gap="0.5"
         pr="8"
@@ -229,7 +243,7 @@ function ProfileSettings(props) {
                   />
                 </FormControl>
               </Stack>
-              <Stack spacing="4">
+              {/* <Stack spacing="4">
                 <Text fontSize="lg" fontWeight="medium" color="blue.900">
                   Country
                 </Text>
@@ -250,7 +264,7 @@ function ProfileSettings(props) {
                   value={region}
                   onChange={handleRegionChange}
                 />
-              </Stack>
+              </Stack> */}
               <Stack spacing="4">
                 <Text fontSize="lg" fontWeight="medium" color="blue.900">
                   Ask Price
