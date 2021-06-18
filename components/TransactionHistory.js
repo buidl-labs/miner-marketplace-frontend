@@ -1,4 +1,9 @@
 import {
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionButton,
+  AccordionIcon,
   Button,
   Heading,
   Stack,
@@ -23,8 +28,11 @@ import {
   Wrap,
   WrapItem,
   Text,
-  CheckboxGroup,
-  Checkbox,
+  Spacer,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
@@ -226,7 +234,7 @@ export default function TransactionHistory(props) {
 
   return (
     <>
-      <div>
+      {/* <div>
         <p>Transaction History of miner {props.minerID}</p>
 
         <Table
@@ -234,7 +242,45 @@ export default function TransactionHistory(props) {
           dataSource={dataSource}
           pagination={pagination}
         />
-      </div>
+      </div> */}
+      <Stack>
+        <Heading>Transaction History</Heading>
+        <Text>for miner ID {props.minerID}</Text>
+        <Accordion allowMultiple>
+          <AccordionItem>
+            <AccordionButton>
+              <HStack spacing="32" textAlign="left">
+                <Text fontWeight="medium" fontSize="lg">
+                  TransactionType
+                </Text>
+                <Stack>
+                  <Text>from</Text>
+                  <Text>fromAddressGoesHere</Text>
+                </Stack>
+                <Stack>
+                  <Text>to</Text>
+                  <Text>toAddressGoesHere</Text>
+                </Stack>
+                <Stat>
+                  <StatLabel>value</StatLabel>
+                  <StatNumber whiteSpace="nowrap">0.247 FIL</StatNumber>
+                </Stat>
+              </HStack>
+              <Spacer />
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              <Stack spacing="2">
+                <Text>ID: d2324c3svmsdmcm131dm</Text>
+                <Text>Height: 0</Text>
+                <Text>Miner Fee: 0</Text>
+                <Text>Burn Fee: 0 </Text>
+                <Text>Exit Code: 0 </Text>
+              </Stack>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      </Stack>
     </>
   );
 }

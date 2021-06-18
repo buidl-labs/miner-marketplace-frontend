@@ -24,11 +24,13 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
+import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
 import DashboardMenu from "../components/dashboard/DashboardMenu";
 import { Search } from "react-feather";
 import { useGlobalState } from "../state";
+import { useRouter } from "next/router";
 
 function ProfileSettings(props) {
   const [minerName, setMinerName] = useState(props.minerName);
@@ -81,14 +83,27 @@ function ProfileSettings(props) {
   const [ledgerAddress, setLedgerAddress] = useGlobalState("ledgerAddr");
 
   const toast = useToast();
+  const router = useRouter();
   return (
     <>
+      <Button
+        mt="28"
+        ml="8"
+        colorScheme="blue"
+        variant="link"
+        textDecoration="underline"
+        // onClick={() => router.push("/miners/")}
+      >
+        <ArrowBackIcon w={5} h={5} color="gray.600" mr="1" color="blue.500" />
+        Back to Miner Profile
+      </Button>
       <Alert
         status="info"
         bg="blue.50"
         rounded="lg"
         color="blue.700"
         fontWeight="semibold"
+        w={{ base: "full", lg: "60%" }}
       >
         <AlertIcon color="blue.400" />
         You will need to connect wallet to edit.
@@ -143,7 +158,7 @@ function ProfileSettings(props) {
                 <FormLabel>Twitter</FormLabel>
                 <Input
                   type="link"
-                  placeholder="abcd"
+                  placeholder="twitter profile link"
                   // defaultValue={props.minerTwitter}
                   value={minerTwitter}
                   onChange={handleMinerTwitterChange}
@@ -153,7 +168,7 @@ function ProfileSettings(props) {
                 <FormLabel>Slack</FormLabel>
                 <Input
                   type="text"
-                  placeholder="abcd"
+                  placeholder="slack link"
                   // defaultValue={props.minerSlack}
                   value={minerSlack}
                   onChange={handleMinerSlackChange}
@@ -265,7 +280,7 @@ function ProfileSettings(props) {
                   onChange={handleRegionChange}
                 />
               </Stack> */}
-              <Stack spacing="4">
+              {/* <Stack spacing="4">
                 <Text fontSize="lg" fontWeight="medium" color="blue.900">
                   Ask Price
                 </Text>
@@ -317,7 +332,7 @@ function ProfileSettings(props) {
                     attoFIL/B
                   </Text>
                 </HStack>
-              </Stack>
+              </Stack> */}
             </VStack>
             <HStack spacing="12" w="100%" py={8}>
               <Button colorScheme="gray">Discard</Button>

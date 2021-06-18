@@ -2,6 +2,7 @@ import {
   Button,
   Link,
   Grid,
+  Flex,
   Stack,
   VStack,
   HStack,
@@ -14,6 +15,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Spacer,
 } from "@chakra-ui/react";
 import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
 
@@ -133,7 +135,6 @@ export default function Miner({ miner }) {
       </Button>
       <SimpleGrid
         maxH="44rem"
-        templateRows="repeat(4, 1fr)"
         templateColumns={{ base: "repeat(1,1fr)", lg: "repeat(12, 1fr)" }}
         gap="12"
         mx="8"
@@ -162,18 +163,22 @@ export default function Miner({ miner }) {
             transparencyScore={miner.transparencyScore}
           />
         </GridItem>
-        <GridItem colSpan={{ base: 1, lg: 8 }} mr={{ base: 0, lg: 4 }}>
-          <Tabs>
-            <TabList>
+        <GridItem
+          colSpan={{ base: 1, lg: 12 }}
+          mr={{ base: 0, lg: 4 }}
+          overflow={{ base: "scroll", lg: "unset" }}
+        >
+          <Tabs overflow={{ base: "scroll", lg: "unset" }}>
+            <TabList whiteSpace="nowrap">
               <Tab>Service Details</Tab>
-              <Tab>Profile Settings</Tab>
+              {/* <Tab>Profile Settings</Tab> */}
               <Tab
                 onClick={() => {
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -225,7 +230,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -282,7 +287,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -347,7 +352,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -416,19 +421,33 @@ export default function Miner({ miner }) {
 
             <TabPanels>
               <TabPanel>
-                <ServiceDetails
-                  serviceLocation={
-                    miner.location.country + " (" + miner.location.region + ")"
-                  }
-                  storageAskPrice={miner.pricing.storageAskPrice}
-                  verifiedAskPrice={miner.pricing.verifiedAskPrice}
-                  retrievalAskPrice={miner.pricing.retrievalAskPrice}
-                  storage={miner.service.serviceTypes.storage}
-                  retrieval={miner.service.serviceTypes.retrieval}
-                  repair={miner.service.serviceTypes.repair}
-                  online={miner.service.dataTransferMechanism.online}
-                  offline={miner.service.dataTransferMechanism.offline}
-                />
+                <Flex
+                  spacing="16"
+                  flexDirection={{ md: "row", base: "column" }}
+                >
+                  <ServiceDetails
+                    serviceLocation={
+                      miner.location.country +
+                      " (" +
+                      miner.location.region +
+                      ")"
+                    }
+                    storageAskPrice={miner.pricing.storageAskPrice}
+                    verifiedAskPrice={miner.pricing.verifiedAskPrice}
+                    retrievalAskPrice={miner.pricing.retrievalAskPrice}
+                    storage={miner.service.serviceTypes.storage}
+                    retrieval={miner.service.serviceTypes.retrieval}
+                    repair={miner.service.serviceTypes.repair}
+                    online={miner.service.dataTransferMechanism.online}
+                    offline={miner.service.dataTransferMechanism.offline}
+                  />
+
+                  <Spacer />
+
+                  <QuoteCalculator
+                    storageAskPrice={miner.pricing.storageAskPrice}
+                  />
+                </Flex>
               </TabPanel>
               <TabPanel>
                 <ProfileSettings
@@ -553,9 +572,9 @@ export default function Miner({ miner }) {
             </TabPanels>
           </Tabs>
         </GridItem>
-        <GridItem colSpan={{ base: 1, lg: 4 }} mt={{ base: 0, lg: 16 }}>
+        {/* <GridItem colSpan={{ base: 1, lg: 4 }} mt={{ base: 0, lg: 16 }}>
           <QuoteCalculator storageAskPrice={miner.pricing.storageAskPrice} />
-        </GridItem>
+        </GridItem> */}
       </SimpleGrid>
     </>
   );

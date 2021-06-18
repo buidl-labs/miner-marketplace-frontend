@@ -33,7 +33,11 @@ function AggregatedEarnings(props) {
 
   return (
     <>
-      <VStack textAlign="left" alignItems="left">
+      <VStack
+        textAlign="left"
+        alignItems="left"
+        w={{ base: "full", lg: "60%" }}
+      >
         <Heading size="lg" color="blue.700" my={6}>
           Aggregated Earnings
         </Heading>

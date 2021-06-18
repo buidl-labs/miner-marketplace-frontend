@@ -83,7 +83,7 @@ export default function Miners({ miners, href }) {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
     )
       .then((res) => res.json())
       .then((r) => {
@@ -450,7 +450,7 @@ export default function Miners({ miners, href }) {
       "q",
       event.target.value,
       "qlc",
-      event.target.value.toLowerCase(),
+      event.target.value.toLowerCase()
     );
 
     const q = event.target.value.toLowerCase();
@@ -581,7 +581,7 @@ export default function Miners({ miners, href }) {
             </Stack>
           </HStack>
 
-          <Stack spacing="8" mt="6">
+          <Stack spacing="8" mt="6" overflow="scroll">
             <Table
               columns={columns}
               dataSource={filteredMiners}

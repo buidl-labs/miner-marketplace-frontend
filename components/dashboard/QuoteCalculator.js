@@ -32,7 +32,12 @@ function QuoteCalculator(props) {
 
   return (
     <>
-      <Box border="solid 2px #E2E8F0" borderRadius="2xl" p="10">
+      <Box
+        border="solid 2px #E2E8F0"
+        borderRadius="2xl"
+        p="10"
+        w={{ base: "auto", lg: "30vw" }}
+      >
         <Heading size="lg" color="blue.700">
           Quote Calculator
         </Heading>
