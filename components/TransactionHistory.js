@@ -6,6 +6,7 @@ import {
   AccordionIcon,
   Button,
   Heading,
+  Image,
   Stack,
   Grid,
   GridItem,
@@ -250,6 +251,7 @@ export default function TransactionHistory(props) {
           <AccordionItem>
             <AccordionButton>
               <HStack spacing="32" textAlign="left">
+                {/* <Image src="#" /> */}
                 <Text fontWeight="medium" fontSize="lg">
                   TransactionType
                 </Text>
@@ -273,6 +275,7 @@ export default function TransactionHistory(props) {
               <Stack spacing="2">
                 <Text>ID: d2324c3svmsdmcm131dm</Text>
                 <Text>Height: 0</Text>
+                <Text>Date & Time: 0</Text>
                 <Text>Miner Fee: 0</Text>
                 <Text>Burn Fee: 0 </Text>
                 <Text>Exit Code: 0 </Text>

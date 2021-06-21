@@ -171,7 +171,7 @@ export default function Miner({ miner }) {
           <Tabs overflow={{ base: "scroll", lg: "unset" }}>
             <TabList whiteSpace="nowrap">
               <Tab>Service Details</Tab>
-              {/* <Tab>Profile Settings</Tab> */}
+              <Tab>Profile Settings</Tab>
               <Tab
                 onClick={() => {
                   console.log(

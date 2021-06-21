@@ -31,6 +31,7 @@ import DashboardMenu from "../components/dashboard/DashboardMenu";
 import { Search } from "react-feather";
 import { useGlobalState } from "../state";
 import { useRouter } from "next/router";
+import TransparencyScore from "../components/dashboard/TransparencyScore";
 
 function ProfileSettings(props) {
   const [minerName, setMinerName] = useState(props.minerName);
@@ -86,34 +87,47 @@ function ProfileSettings(props) {
   const router = useRouter();
   return (
     <>
-      <Button
-        mt="28"
-        ml="8"
-        colorScheme="blue"
-        variant="link"
-        textDecoration="underline"
-        // onClick={() => router.push("/miners/")}
-      >
-        <ArrowBackIcon w={5} h={5} color="gray.600" mr="1" color="blue.500" />
-        Back to Miner Profile
-      </Button>
-      <Alert
-        status="info"
-        bg="blue.50"
-        rounded="lg"
-        color="blue.700"
-        fontWeight="semibold"
-        w={{ base: "full", lg: "60%" }}
-      >
-        <AlertIcon color="blue.400" />
-        You will need to connect wallet to edit.
-      </Alert>
       <Grid
         templateRows="repeat(1, 1fr)"
         templateColumns="repeat(12, 1fr)"
         gap="0.5"
         pr="8"
       >
+        <GridItem colSpan="8">
+          <Button
+            mt="28"
+            colorScheme="blue"
+            variant="link"
+            textDecoration="underline"
+            // onClick={() => router.push("/miners/")}
+          >
+            <ArrowBackIcon
+              w={5}
+              h={5}
+              color="gray.600"
+              mr="1"
+              color="blue.500"
+            />
+            Back to Miner Profile
+          </Button>
+          <Alert
+            status="info"
+            bg="blue.50"
+            rounded="lg"
+            color="blue.700"
+            fontWeight="semibold"
+            w="full"
+            mt="4"
+          >
+            <AlertIcon color="blue.400" />
+            You will need to connect wallet to edit.
+          </Alert>
+        </GridItem>
+
+        <GridItem colSpan="8">
+          <TransparencyScore />
+        </GridItem>
+
         <GridItem colSpan="10" mt={8}>
           <VStack alignItems="flex-start" spacing="8">
             <VStack alignItems="flex-start">

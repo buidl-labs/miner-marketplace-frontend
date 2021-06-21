@@ -15,6 +15,7 @@ import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
 import { useBreakpointValue } from "@chakra-ui/react";
+import { Head } from "next/head";
 
 const IndexPage = (stats) => {
   //console.log(stats);
@@ -23,6 +24,13 @@ const IndexPage = (stats) => {
 
   return (
     <>
+      <Head>
+        <link rel="preconnect" href="https://fonts.gstatic.com"></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        ></link>
+      </Head>
       <Navbar />
 
       <Container maxW={{ lg: "container.xl" }} mb="16">
