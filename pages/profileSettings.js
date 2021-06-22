@@ -41,10 +41,10 @@ function ProfileSettings(props) {
   const [region, setRegion] = useState(props.region);
   const [storageAskPrice, setStorageAskPrice] = useState(props.storageAskPrice);
   const [verifiedAskPrice, setVerifiedAskPrice] = useState(
-    props.verifiedAskPrice
+    props.verifiedAskPrice,
   );
   const [retrievalAskPrice, setRetrievalAskPrice] = useState(
-    props.retrievalAskPrice
+    props.retrievalAskPrice,
   );
   const [storage, setStorage] = useState(props.storage);
   const [retrieval, setRetrieval] = useState(props.retrieval);
@@ -265,7 +265,7 @@ function ProfileSettings(props) {
                   onChange={handleRegionChange}
                 />
               </Stack> */}
-              <Stack spacing="4">
+              {/*<Stack spacing="4">
                 <Text fontSize="lg" fontWeight="medium" color="blue.900">
                   Ask Price
                 </Text>
@@ -317,7 +317,7 @@ function ProfileSettings(props) {
                     attoFIL/B
                   </Text>
                 </HStack>
-              </Stack>
+              </Stack>*/}
             </VStack>
             <HStack spacing="12" w="100%" py={8}>
               <Button colorScheme="gray">Discard</Button>
@@ -332,7 +332,7 @@ function ProfileSettings(props) {
                     minerName,
                     minerBio,
                     retrieval,
-                    minerTwitter
+                    minerTwitter,
                   );
                   console.log("props", props, "url", process.env.BACKEND_URL);
                   fetch(
@@ -368,7 +368,7 @@ function ProfileSettings(props) {
                           )
                         }`,
                       }),
-                    }
+                    },
                   )
                     .then((r) => {
                       console.log("rrrr", r);

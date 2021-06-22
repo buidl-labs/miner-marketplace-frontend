@@ -561,7 +561,7 @@ export default function Miner({ miner }) {
   );
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const client = new ApolloClient({
     uri: process.env.BACKEND_URL,
     cache: new InMemoryCache(),
@@ -644,10 +644,10 @@ async function getAllMinerIds() {
   });
 }
 
-export async function getStaticPaths() {
-  const paths = await getAllMinerIds();
-  return {
-    paths,
-    fallback: false,
-  };
-}
+// export async function getStaticPaths() {
+//   const paths = await getAllMinerIds();
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
