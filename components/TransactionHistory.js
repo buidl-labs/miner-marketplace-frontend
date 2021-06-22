@@ -121,17 +121,23 @@ export default function TransactionHistory(props) {
       dataIndex: "methodName",
       key: "methodName",
       filters: [
+        { text: "AddBalance", value: "AddBalance" },
         { text: "PreCommitSector", value: "PreCommitSector" },
         { text: "ProveCommitSector", value: "ProveCommitSector" },
         { text: "ApplyRewards", value: "ApplyRewards" },
+        { text: "PublishStorageDeals", value: "PublishStorageDeals" },
         { text: "TerminateSectors", value: "TerminateSectors" },
         { text: "RepayDebt", value: "RepayDebt" },
+        { text: "ReportConsensusFault", value: "ReportConsensusFault" },
+        { text: "DisputeWindowedPoSt", value: "DisputeWindowedPoSt" },
         {
           text: "WithdrawBalance (miner)",
           value: "WithdrawBalance (miner)",
         },
-        { text: "ReportConsensusFault", value: "ReportConsensusFault" },
-        { text: "DisputeWindowedPoSt", value: "DisputeWindowedPoSt" },
+        {
+          text: "WithdrawBalance (market)",
+          value: "WithdrawBalance (market)",
+        },
       ],
       onFilter: (value, record) => {
         return record.methodName.includes(value);
