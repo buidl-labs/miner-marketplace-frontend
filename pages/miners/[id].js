@@ -243,7 +243,7 @@ export default function Miner({ miner }) {
                             aggregateEarnings(
                               startHeight: 0
                               endHeight: 1000000
-                              includeGas: true
+                              includeGas: false
                             ) {
                               income {
                                 total
@@ -299,7 +299,7 @@ export default function Miner({ miner }) {
                         id
                           estimatedEarnings(
                             days: 60
-                            includeGas: true
+                            includeGas: false
                           ) {
                             income {
                               total
