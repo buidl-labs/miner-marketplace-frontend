@@ -43,6 +43,8 @@ import { SearchOutlined } from "@ant-design/icons";
 
 import { useRouter } from "next/router";
 
+import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
+
 export default function Miners({ miners, href }) {
   // const [miners, setMiners] = useState([]);
 
@@ -233,6 +235,19 @@ export default function Miners({ miners, href }) {
     if (fd.personalInfo.name == "") {
       minerName = "Unclaimed Miner";
     }
+
+    let storageAskPrice = fd.pricing.storageAskPrice;
+    if (
+      isNaN(fd.pricing.storageAskPrice) ||
+      fd.pricing.storageAskPrice == null ||
+      fd.pricing.storageAskPrice == ""
+    ) {
+      console.log(
+        "fd.pricing.storageAskPrice invalid",
+        fd.pricing.storageAskPrice,
+      );
+      storageAskPrice = 0; // show zero for miners who haven't mentioned askPrice
+    }
     return {
       key: fd.id,
       // sno: 1,
@@ -254,16 +269,26 @@ export default function Miners({ miners, href }) {
           30 *
           2880 *
           storageAmount *
-          (parseInt(fd.pricing.storageAskPrice) / 10 ** 18),
+          (parseInt(storageAskPrice) / 10 ** 18),
+        display: GetFormattedFILUnits(
+          storageDuration *
+            30 *
+            2880 *
+            storageAmount *
+            parseInt(storageAskPrice),
+        ),
         usd:
           storageDuration *
           30 *
           2880 *
           storageAmount *
-          (parseInt(fd.pricing.storageAskPrice) / 10 ** 18) *
+          (parseInt(storageAskPrice) / 10 ** 18) *
           filecoinUSDRate,
       },
-      qap: fd.qualityAdjustedPower,
+      qap: {
+        val: fd.qualityAdjustedPower,
+        display: GetFormattedStorageUnits(fd.qualityAdjustedPower),
+      },
     };
   });
 
@@ -400,17 +425,18 @@ export default function Miners({ miners, href }) {
       dataIndex: "estimatedQuote",
       key: "estimatedQuote",
       sorter: {
-        compare: (a, b) =>
-          parseInt(a.estimatedQuote.fil) - parseInt(b.estimatedQuote.fil),
+        compare: (a, b) => a.estimatedQuote.fil - b.estimatedQuote.fil,
+        // parseInt(a.estimatedQuote.fil) - parseInt(b.estimatedQuote.fil),
       },
       render: (l) => {
         return (
           <div>
             <Text fontSize="larger" fontWeight="medium" color="gray.600">
-              {Math.round((l.fil + Number.EPSILON) * 1000) / 1000} FIL
+              {/*{Math.round((l.fil + Number.EPSILON) * 1000) / 1000} FIL*/}
+              {l.display}
             </Text>
             <Text color="gray.500">
-              ($ {Math.round((l.usd + Number.EPSILON) * 1000) / 1000})
+              ${Math.round((l.usd + Number.EPSILON) * 100) / 100}
             </Text>
           </div>
         );
@@ -421,7 +447,10 @@ export default function Miners({ miners, href }) {
       dataIndex: "qap",
       key: "qap",
       sorter: {
-        compare: (a, b) => parseInt(a.qap) - parseInt(b.qap),
+        compare: (a, b) => parseInt(a.qap.val) - parseInt(b.qap.val),
+      },
+      render: (l) => {
+        return <p>{l.display}</p>;
       },
     },
   ];

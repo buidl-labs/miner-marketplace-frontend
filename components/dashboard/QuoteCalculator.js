@@ -14,6 +14,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 
+import {
+  GetFormattedStorageUnits,
+  GetFormattedFILUnits,
+} from "../../util/util";
+
 function QuoteCalculator(props) {
   const [storageDuration, setStorageDuration] = useState(6);
   const [storageAmount, setStorageAmount] = useState(10);
@@ -21,7 +26,7 @@ function QuoteCalculator(props) {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
@@ -29,6 +34,11 @@ function QuoteCalculator(props) {
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);
+
+  let storageAskPrice = props.storageAskPrice;
+  if (props.storageAskPrice == "") {
+    storageAskPrice = 0;
+  }
 
   return (
     <>
@@ -38,7 +48,16 @@ function QuoteCalculator(props) {
         </Heading>
         <HStack spacing="2" alignItems="center">
           <Text fontSize="5xl" color="blue.900">
-            {Math.round(
+            {
+              GetFormattedFILUnits(
+                storageDuration *
+                  30 *
+                  2880 *
+                  storageAmount *
+                  parseInt(storageAskPrice),
+              ).split(" ")[0]
+            }
+            {/*{Math.round(
               ((storageDuration *
                 30 *
                 2880 *
@@ -46,16 +65,24 @@ function QuoteCalculator(props) {
                 props.storageAskPrice) /
                 10 ** 18 +
                 Number.EPSILON) *
-                1000
-            ) / 1000}
+                100,
+              ) / 100}*/}
           </Text>
           <Text fontSize="2xl" color="gray.600">
-            FIL
+            {
+              GetFormattedFILUnits(
+                storageDuration *
+                  30 *
+                  2880 *
+                  storageAmount *
+                  parseInt(storageAskPrice),
+              ).split(" ")[1]
+            }
           </Text>
         </HStack>
         <Stack color="gray.600" size="md">
           <Text>
-            (${" "}
+            $
             {Math.round(
               ((storageDuration *
                 30 *
@@ -65,9 +92,8 @@ function QuoteCalculator(props) {
                 filecoinUSDRate) /
                 10 ** 18 +
                 Number.EPSILON) *
-                1000
-            ) / 1000}
-            )
+                100,
+            ) / 100}
           </Text>
           <Text>Estimated Quote</Text>
         </Stack>

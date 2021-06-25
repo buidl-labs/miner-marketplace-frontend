@@ -40,6 +40,8 @@ import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 
+import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
+
 export default function TransactionHistory(props) {
   const [pagination, setPagination] = useState({});
   const dataSource = props.transactions.map((txn) => {
@@ -53,21 +55,41 @@ export default function TransactionHistory(props) {
     if (txn.methodName == "ApplyRewards") {
       txntype = "block";
     }
+    let valuesign = "+";
+    if (txn.methodName != "ApplyRewards") {
+      valuesign = "-";
+    }
+    if (Number(txn.value) == 0) {
+      valuesign = "";
+    }
+    if (txn.transactionType == "Transfer") {
+      valuesign = "";
+    }
     return {
       key: txn.id,
       id: {
         mid: txn.id,
         txntype: txntype,
       },
-      value: (Number(txn.value) / 10 ** 18).toFixed(3),
+      value: {
+        val: Number(txn.value),
+        display: valuesign + GetFormattedFILUnits(Number(txn.value)),
+      },
       methodName: txn.methodName,
       from: txn.from,
       to: txn.to,
-      minerFee: (Number(txn.minerFee) / 10 ** 18).toFixed(3),
-      burnFee: (Number(txn.burnFee) / 10 ** 18).toFixed(3),
+      minerFee: {
+        val: Number(txn.minerFee),
+        display: GetFormattedFILUnits(Number(txn.minerFee)),
+      },
+      burnFee: {
+        val: Number(txn.burnFee),
+        display: GetFormattedFILUnits(Number(txn.burnFee)),
+      },
       transactionType: txn.transactionType,
       exitCode: txn.exitCode,
       height: txn.height,
+      timestamp: txn.timestamp,
     };
   });
 
@@ -98,6 +120,14 @@ export default function TransactionHistory(props) {
       key: "height",
       sorter: {
         compare: (a, b) => parseInt(a.height) - parseInt(b.height),
+      },
+    },
+    {
+      title: "Timestamp",
+      dataIndex: "timestamp",
+      key: "timestamp",
+      sorter: {
+        compare: (a, b) => parseInt(a.timestamp) - parseInt(b.timestamp),
       },
     },
     {
@@ -195,7 +225,10 @@ export default function TransactionHistory(props) {
       dataIndex: "value",
       key: "value",
       sorter: {
-        compare: (a, b) => parseInt(a.value) - parseInt(b.value),
+        compare: (a, b) => parseInt(a.value.val) - parseInt(b.value.val),
+      },
+      render: (v) => {
+        return <p>{v.display}</p>;
       },
     },
     {
@@ -203,7 +236,10 @@ export default function TransactionHistory(props) {
       dataIndex: "minerFee",
       key: "minerFee",
       sorter: {
-        compare: (a, b) => parseInt(a.minerFee) - parseInt(b.minerFee),
+        compare: (a, b) => parseInt(a.minerFee.val) - parseInt(b.minerFee.val),
+      },
+      render: (v) => {
+        return <p>{v.display}</p>;
       },
     },
     {
@@ -211,11 +247,14 @@ export default function TransactionHistory(props) {
       dataIndex: "burnFee",
       key: "burnFee",
       sorter: {
-        compare: (a, b) => parseInt(a.burnFee) - parseInt(b.burnFee),
+        compare: (a, b) => parseInt(a.burnFee.val) - parseInt(b.burnFee.val),
+      },
+      render: (v) => {
+        return <p>{v.display}</p>;
       },
     },
     {
-      title: "ExitCode",
+      title: "Exit Code",
       dataIndex: "exitCode",
       key: "exitCode",
       filters: [
