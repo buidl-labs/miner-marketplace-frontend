@@ -38,7 +38,7 @@ function AggregatedEarnings(props) {
         alignItems="left"
         w={{ base: "full", lg: "60%" }}
       >
-        <Heading size="lg" color="blue.700" my={6}>
+        <Heading size="lg" color="blue.800" my={6} pl="4">
           Aggregated Earnings
         </Heading>
 
@@ -51,7 +51,7 @@ function AggregatedEarnings(props) {
               <StatLabel fontSize="md" color="gray.600" mb="2">
                 Net Aggregate Earnings
               </StatLabel>
-              <StatNumber color="blue.700">
+              <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
                 {(Number(props.netEarnings) / 10 ** 18).toFixed(3)} FIL
               </StatNumber>
               {/*<StatHelpText>
@@ -67,7 +67,11 @@ function AggregatedEarnings(props) {
                       <StatLabel fontSize="md" color="gray.600" mb="2">
                         Aggregate Income
                       </StatLabel>
-                      <StatNumber color="green.600">
+                      <StatNumber
+                        color="green.600"
+                        fontWeight="normal"
+                        fontSize="3xl"
+                      >
                         {(Number(props.totalIncome) / 10 ** 18).toFixed(3)} FIL
                       </StatNumber>
                     </Stat>
@@ -76,18 +80,22 @@ function AggregatedEarnings(props) {
                 </h2>
                 <AccordionPanel pb={4}>
                   <VStack textAlign="left" alignItems="left">
-                    <HStack>
-                      <Text>Storage Deals Payments:</Text>
-                      <Text>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600">
+                        Storage Deals Payments:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {(Number(props.storageDeal) / 10 ** 18).toFixed(3)}
                       </Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Block Rewards:</Text>
-                      <Text>
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600">
+                        Block Rewards:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {(Number(props.blockRewards) / 10 ** 18).toFixed(3)}
                       </Text>
-                    </HStack>
+                    </Stack>
                   </VStack>
                 </AccordionPanel>
               </AccordionItem>
@@ -98,7 +106,11 @@ function AggregatedEarnings(props) {
                       <StatLabel fontSize="md" color="gray.600" mb="2">
                         Aggregate Expenditure
                       </StatLabel>
-                      <StatNumber color="red.600">
+                      <StatNumber
+                        color="red.600"
+                        fontWeight="normal"
+                        fontSize="3xl"
+                      >
                         {(Number(props.totalExpenditure) / 10 ** 18).toFixed(3)}{" "}
                         FIL
                       </StatNumber>
@@ -107,29 +119,44 @@ function AggregatedEarnings(props) {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <VStack textAlign="left" alignItems="left">
-                    <HStack>
-                      <Text>Collateral Deposit:</Text>
-                      <Text>
+                  <VStack
+                    textAlign="left"
+                    alignItems="left"
+                    spacing="4"
+                    alignItems="left"
+                  >
+                    <Stack>
+                      <Text fontSize="md" color="gray.600">
+                        Collateral Deposit:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {(Number(props.deposits) / 10 ** 18).toFixed(3)}
                       </Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Gas:</Text>
-                      <Text>{(Number(props.gas) / 10 ** 18).toFixed(3)}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Penalty:</Text>
-                      <Text>
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600">
+                        Gas:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
+                        {(Number(props.gas) / 10 ** 18).toFixed(3)}
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600">
+                        Penalty:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {(Number(props.penalty) / 10 ** 18).toFixed(3)}
                       </Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Others:</Text>
-                      <Text>
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600">
+                        Others:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {(Number(props.others) / 10 ** 18).toFixed(3)}
                       </Text>
-                    </HStack>
+                    </Stack>
                   </VStack>
                 </AccordionPanel>
               </AccordionItem>
