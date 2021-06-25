@@ -604,7 +604,7 @@ export async function getStaticProps() {
   const { data: fmmData } = await client.query({
     query: gql`
       query {
-        miners {
+        miners(first: 3000) {
           id
           claimed
           personalInfo {

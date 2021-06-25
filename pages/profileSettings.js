@@ -294,7 +294,7 @@ function ProfileSettings(props) {
                   onChange={handleRegionChange}
                 />
               </Stack> */}
-              {/* <Stack spacing="4">
+              {/*<Stack spacing="4">
                 <Text fontSize="lg" fontWeight="medium" color="blue.900">
                   Ask Price
                 </Text>
@@ -346,7 +346,7 @@ function ProfileSettings(props) {
                     attoFIL/B
                   </Text>
                 </HStack>
-              </Stack> */}
+              </Stack>*/}
             </VStack>
             <HStack spacing="12" w="100%" py={8}>
               <Button colorScheme="gray">Discard</Button>

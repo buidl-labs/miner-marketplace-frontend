@@ -7,19 +7,19 @@ function ServiceDetails(props) {
     serviceType.push(
       <Tag key="str" size="lg" borderRadius="full" colorScheme="yellow">
         Storage
-      </Tag>
+      </Tag>,
     );
   if (props.retrieval)
     serviceType.push(
       <Tag key="ret" size="lg" borderRadius="full" colorScheme="purple">
         Retrieval
-      </Tag>
+      </Tag>,
     );
   if (props.repair)
     serviceType.push(
       <Tag key="rep" size="lg" borderRadius="full" colorScheme="pink">
         Repair
-      </Tag>
+      </Tag>,
     );
 
   let dataTransferMechanism = [];
@@ -27,13 +27,13 @@ function ServiceDetails(props) {
     dataTransferMechanism.push(
       <Tag key="online" size="lg" borderRadius="full" colorScheme="green">
         Online
-      </Tag>
+      </Tag>,
     );
   if (props.offline)
     dataTransferMechanism.push(
       <Tag key="offline" size="lg" borderRadius="full" colorScheme="orange">
         Offline
-      </Tag>
+      </Tag>,
     );
 
   return (
@@ -91,7 +91,7 @@ function ServiceDetails(props) {
             </Wrap>
             <Wrap>
               <Text fontSize="2xl" color="gray.700">
-                {props.verifiedAskPrice}
+                {props.verifiedAskPrice / 10 ** 18}
               </Text>
               <Text fontSize="sm" color="gray.500">
                 FIL/GiB/epoch
