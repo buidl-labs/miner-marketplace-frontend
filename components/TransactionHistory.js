@@ -107,7 +107,6 @@ export default function TransactionHistory(props) {
       filters: [
         { text: "Collateral Deposit", value: "Collateral Deposit" },
         { text: "Block Reward", value: "Block Reward" },
-        { text: "Deals Publish", value: "Deals Publish" },
         { text: "Penalty", value: "Penalty" },
         { text: "Transfer", value: "Transfer" },
         { text: "Others", value: "Others" },
