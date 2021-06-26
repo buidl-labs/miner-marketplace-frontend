@@ -378,6 +378,7 @@ export default function Miner({ miner }) {
                             transactionType
                             exitCode
                             height
+                            timestamp
                           }
                         }
                       }
