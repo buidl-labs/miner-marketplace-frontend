@@ -18,7 +18,7 @@ function StorageDealStats(props) {
   return (
     <>
       <VStack textAlign="left" alignItems="left">
-        <Heading size="lg" color="blue.800" my={6}>
+        <Heading size="lg" color="blue.700" my={6}>
           Storage Deal Stats
         </Heading>
 
@@ -27,14 +27,9 @@ function StorageDealStats(props) {
           gap={1}
         >
           <GridItem colSpan="1" pb={{ base: 8, lg: 2 }}>
-            <VStack textAlign="left" alignItems="left">
+            <VStack textAlign="left" alignItems="left" spacing="7">
               <Stat>
-                <StatLabel
-                  fontSize="md"
-                  fontWeigth="medium"
-                  color="gray.700"
-                  mb="2"
-                >
+                <StatLabel fontSize="lg" fontWeigth="medium" color="gray.700">
                   Average Deal Price
                 </StatLabel>
                 <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
@@ -42,7 +37,7 @@ function StorageDealStats(props) {
                 </StatNumber>
               </Stat>
               <Stat>
-                <StatLabel fontSize="md" color="gray.600" mb="2">
+                <StatLabel fontSize="lg" color="gray.600">
                   Amount of Data Stored
                 </StatLabel>
                 <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
@@ -50,7 +45,7 @@ function StorageDealStats(props) {
                 </StatNumber>
               </Stat>
               <Stat>
-                <StatLabel fontSize="md" color="gray.600" mb="2">
+                <StatLabel fontSize="lg" color="gray.600">
                   Success Rate
                 </StatLabel>
                 <StatNumber
@@ -64,15 +59,15 @@ function StorageDealStats(props) {
             </VStack>
           </GridItem>
           {/*<Stat pl="4">
-              <StatLabel fontSize="md" color="gray.600" mb="2">
+              <StatLabel fontSize="md" color="gray.600" >
                 faultTerminated
               </StatLabel>
               <StatNumber color="blue.700">{props.faultTerminated}</StatNumber>
             </Stat>*/}
           <GridItem>
-            <VStack textAlign="left" alignItems="left">
+            <VStack textAlign="left" alignItems="left" spacing="4">
               <Stat>
-                <StatLabel fontSize="md" color="gray.600" mb="2">
+                <StatLabel fontSize="md" color="gray.600">
                   Number of Times Slashed
                 </StatLabel>
                 <StatNumber color="gray.700" fontWeight="medium" fontSize="lg">
@@ -80,7 +75,7 @@ function StorageDealStats(props) {
                 </StatNumber>
               </Stat>
               <Stat>
-                <StatLabel fontSize="md" color="gray.600" mb="2">
+                <StatLabel fontSize="md" color="gray.600">
                   Number of Successful Storage Deals
                 </StatLabel>
                 <StatNumber color="gray.700" fontWeight="medium" fontSize="lg">
@@ -88,7 +83,7 @@ function StorageDealStats(props) {
                 </StatNumber>
               </Stat>
               <Stat>
-                <StatLabel fontSize="md" color="gray.600" mb="2">
+                <StatLabel fontSize="md" color="gray.600">
                   Number of Terminated Deals
                 </StatLabel>
                 <StatNumber color="gray.700" fontWeight="medium" fontSize="lg">
@@ -96,7 +91,7 @@ function StorageDealStats(props) {
                 </StatNumber>
               </Stat>
               <Stat>
-                <StatLabel fontSize="md" color="gray.600" mb="2">
+                <StatLabel fontSize="md" color="gray.600">
                   Total Number of Storage Deals
                 </StatLabel>
                 <StatNumber color="gray.700" fontWeight="medium" fontSize="lg">

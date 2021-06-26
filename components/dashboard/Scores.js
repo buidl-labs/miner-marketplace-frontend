@@ -3,8 +3,6 @@ import {
   Heading,
   Text,
   Spacer,
-  Wrap,
-  WrapItem,
   Stack,
   HStack,
   VStack,
@@ -26,17 +24,17 @@ function Scores(props) {
           Scores
         </Heading>
 
-        <HStack spacing="12">
-          <VStack alignItems="left">
-            <WrapItem alignItems="baseline">
+        <HStack spacing="8">
+          <Stack alignItems="left">
+            <Stack alignItems="baseline">
               <Text fontSize="4xl" color="blue.600" pr="1">
                 {props.reputationScore}
               </Text>
-              <Text size="sm" color="gray.500">
+              {/* <Text size="sm" color="gray.500">
                 /100
-              </Text>
-            </WrapItem>
-            <WrapItem alignItems="center" color="gray.600">
+              </Text> */}
+            </Stack>
+            <Stack alignItems="center" color="gray.600">
               <Tooltip
                 label="Reputation scores are based on your performance of previous deals"
                 aria-label="Reputation Scores"
@@ -45,23 +43,23 @@ function Scores(props) {
                 borderRadius="lg"
                 hasArrow
               >
-                <Text size="md" pr="2">
+                <Text size="md">
                   Reputation Score <InfoIcon w={5} h={5} color="gray.500" />
                 </Text>
               </Tooltip>
-            </WrapItem>
-          </VStack>
+            </Stack>
+          </Stack>
           <Spacer />
-          <VStack alignItems="left">
-            <WrapItem alignItems="baseline">
+          <Stack alignItems="left">
+            <Stack alignItems="baseline">
               <Text fontSize="4xl" color="orange.500" pr="1">
                 {props.transparencyScore}
               </Text>
-              <Text size="sm" color="gray.500">
+              {/* <Text size="sm" color="gray.500">
                 /100
-              </Text>
-            </WrapItem>
-            <WrapItem alignItems="center" color="gray.600">
+              </Text> */}
+            </Stack>
+            <Stack alignItems="center" color="gray.600">
               <Tooltip
                 label="Transparency scores are based on your public information like email, social media handle, service details etc."
                 aria-label="Transparency Scores"
@@ -70,12 +68,12 @@ function Scores(props) {
                 borderRadius="lg"
                 hasArrow
               >
-                <Text size="md" pr="2">
+                <Text size="md">
                   Transparency Score <InfoIcon w={5} h={5} color="gray.500" />
                 </Text>
               </Tooltip>
-            </WrapItem>
-          </VStack>
+            </Stack>
+          </Stack>
         </HStack>
       </Box>
     </>

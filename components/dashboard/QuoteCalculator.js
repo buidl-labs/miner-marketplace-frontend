@@ -26,7 +26,7 @@ function QuoteCalculator(props) {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
     )
       .then((res) => res.json())
       .then((r) => {
@@ -43,7 +43,7 @@ function QuoteCalculator(props) {
   return (
     <>
       <Box
-        border="solid 2px #E2E8F0"
+        bg="gray.100"
         borderRadius="2xl"
         p="10"
         w={{ base: "auto", lg: "30vw" }}
@@ -59,7 +59,7 @@ function QuoteCalculator(props) {
                   30 *
                   2880 *
                   storageAmount *
-                  parseInt(storageAskPrice),
+                  parseInt(storageAskPrice)
               ).split(" ")[0]
             }
             {/*{Math.round(
@@ -80,7 +80,7 @@ function QuoteCalculator(props) {
                   30 *
                   2880 *
                   storageAmount *
-                  parseInt(storageAskPrice),
+                  parseInt(storageAskPrice)
               ).split(" ")[1]
             }
           </Text>
@@ -97,7 +97,7 @@ function QuoteCalculator(props) {
                 filecoinUSDRate) /
                 10 ** 18 +
                 Number.EPSILON) *
-                100,
+                100
             ) / 100}
           </Text>
           <Text>Estimated Quote</Text>
@@ -106,7 +106,9 @@ function QuoteCalculator(props) {
           <FormControl id="storage">
             <FormLabel>Amount of Storage (in GiB)</FormLabel>
             <Input
+              bg="white"
               type="number"
+              size="lg"
               placeholder="Enter amount of Storage"
               value={storageAmount}
               onChange={(event) => setStorageAmount(event.target.value)}
@@ -115,7 +117,9 @@ function QuoteCalculator(props) {
           <FormControl id="time">
             <FormLabel>Duration of Storage (in months)</FormLabel>
             <Input
+              bg="white"
               type="number"
+              size="lg"
               placeholder="Enter duration of Storage"
               value={storageDuration}
               onChange={(event) => setStorageDuration(event.target.value)}

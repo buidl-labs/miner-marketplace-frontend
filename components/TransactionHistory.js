@@ -31,12 +31,19 @@ import {
   Text,
   Spacer,
   Stat,
+  Switch,
   StatLabel,
   StatNumber,
   StatHelpText,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
-import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
+import {
+  Icon,
+  IconProps,
+  Search2Icon,
+  ArrowDownIcon,
+  ArrowUpIcon,
+} from "@chakra-ui/icons";
 import DashboardMenu from "../components/dashboard/DashboardMenu";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
@@ -289,44 +296,182 @@ export default function TransactionHistory(props) {
         />
       </div> */}
       <Stack>
-        <Heading>Transaction History</Heading>
-        <Text>for miner ID {props.minerID}</Text>
-        <Accordion allowMultiple>
-          <AccordionItem>
-            <AccordionButton>
-              <HStack spacing="32" textAlign="left">
-                {/* <Image src="#" /> */}
-                <Text fontWeight="medium" fontSize="lg">
-                  TransactionType
-                </Text>
-                <Stack>
-                  <Text>from</Text>
-                  <Text>fromAddressGoesHere</Text>
+        <HStack justifyContent="space-between" mb="8" alignItems="center">
+          <VStack alignItems="left">
+            <Heading size="lg" color="blue.700" mt="6" pl="4">
+              Transaction History
+            </Heading>
+            <Text fontSize="md" fontWeight="medium" color="gray.600" pl="4">
+              for miner ID {props.minerID}
+            </Text>
+          </VStack>
+          <HStack>
+            <Text fontSize="lg" fontWeight="medium" color="gray.600">
+              Toggle Advance Mode
+            </Text>
+            <Switch id="toggle-txn" />
+          </HStack>
+        </HStack>
+
+        <Stack w="74vw">
+          <Heading size="md" color="gray.700" fontWeight="semibold">
+            dateGoesHere
+          </Heading>
+          <Accordion allowMultiple>
+            <AccordionItem>
+              <AccordionButton alignItems="center">
+                <HStack spacing="36" textAlign="left" alignItems="center">
+                  <HStack>
+                    <ArrowDownIcon
+                      h={10}
+                      w={10}
+                      p="2"
+                      mr="2"
+                      borderRadius="full"
+                      bg="green.50"
+                      color="green.600"
+                    />
+                    <Stat>
+                      <StatLabel
+                        fontSize="xl"
+                        color="gray.700"
+                        whiteSpace="nowrap"
+                      >
+                        Block Rewards
+                      </StatLabel>
+                      <StatNumber
+                        fontSize="sm"
+                        fontWeight="normal"
+                        color="gray.600"
+                      >
+                        11:06 AM
+                      </StatNumber>
+                    </Stat>
+                  </HStack>
+                  <Stat>
+                    <StatLabel fontSize="sm" color="gray.600">
+                      Total Gas
+                    </StatLabel>
+                    <StatNumber
+                      fontSize="lg"
+                      fontWeight="normal"
+                      color="red.600"
+                    >
+                      0.17
+                    </StatNumber>
+                  </Stat>
+                  <Stat>
+                    <StatLabel color="gray.600">value</StatLabel>
+                    <StatNumber
+                      whiteSpace="nowrap"
+                      fontSize="2xl"
+                      color="blue.900"
+                      fontWeight="normal"
+                    >
+                      0.247 FIL
+                    </StatNumber>
+                  </Stat>
+                  <Stat>
+                    <StatLabel fontSize="sm" color="gray.600">
+                      Status
+                    </StatLabel>
+                    <Tag colorScheme="green" borderRadius="full">
+                      Success
+                    </Tag>
+                  </Stat>
+                </HStack>
+                <Spacer />
+                <AccordionIcon />
+              </AccordionButton>
+              <AccordionPanel my="4">
+                <Stack spacing="8">
+                  <HStack spacing="24">
+                    <Stack>
+                      <Heading
+                        size="sm"
+                        fontWeight="medium"
+                        color="gray.700"
+                        lineHeight="80%"
+                      >
+                        Method Name
+                      </Heading>
+                      <Text size="md" fontWeight="normal" color="gray.600">
+                        SubmitWindowPoS
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <Heading
+                        size="sm"
+                        fontWeight="medium"
+                        color="gray.700"
+                        lineHeight="80%"
+                      >
+                        Transaction ID
+                      </Heading>
+                      <Text size="md" fontWeight="normal" color="gray.600">
+                        TransactionIDValue
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <Heading
+                        size="sm"
+                        fontWeight="medium"
+                        color="gray.700"
+                        lineHeight="80%"
+                      >
+                        From
+                      </Heading>
+                      <Text size="md" fontWeight="normal" color="gray.600">
+                        fromAddress
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <Heading
+                        size="sm"
+                        fontWeight="medium"
+                        color="gray.700"
+                        lineHeight="80%"
+                      >
+                        To
+                      </Heading>
+                      <Text size="md" fontWeight="normal" color="gray.600">
+                        toAddress
+                      </Text>
+                    </Stack>
+                  </HStack>
+                  <HStack spacing="24">
+                    <Stack>
+                      <Heading
+                        size="sm"
+                        fontWeight="medium"
+                        color="gray.700"
+                        lineHeight="80%"
+                      >
+                        Miner Fee
+                      </Heading>
+                      <Text size="md" fontWeight="normal" color="gray.600">
+                        minerFeeValue
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <Heading
+                        size="sm"
+                        fontWeight="medium"
+                        color="gray.700"
+                        lineHeight="80%"
+                      >
+                        Burn Fee
+                      </Heading>
+                      <Text size="md" fontWeight="normal" color="gray.600">
+                        burnFeeValue
+                      </Text>
+                    </Stack>
+                  </HStack>
                 </Stack>
-                <Stack>
-                  <Text>to</Text>
-                  <Text>toAddressGoesHere</Text>
-                </Stack>
-                <Stat>
-                  <StatLabel>value</StatLabel>
-                  <StatNumber whiteSpace="nowrap">0.247 FIL</StatNumber>
-                </Stat>
-              </HStack>
-              <Spacer />
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel>
-              <Stack spacing="2">
-                <Text>ID: d2324c3svmsdmcm131dm</Text>
-                <Text>Height: 0</Text>
-                <Text>Date & Time: 0</Text>
-                <Text>Miner Fee: 0</Text>
-                <Text>Burn Fee: 0 </Text>
-                <Text>Exit Code: 0 </Text>
-              </Stack>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </Stack>
       </Stack>
     </>
   );

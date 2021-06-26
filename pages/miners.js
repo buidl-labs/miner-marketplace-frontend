@@ -244,7 +244,7 @@ export default function Miners({ miners, href }) {
     ) {
       console.log(
         "fd.pricing.storageAskPrice invalid",
-        fd.pricing.storageAskPrice,
+        fd.pricing.storageAskPrice
       );
       storageAskPrice = 0; // show zero for miners who haven't mentioned askPrice
     }
@@ -275,7 +275,7 @@ export default function Miners({ miners, href }) {
             30 *
             2880 *
             storageAmount *
-            parseInt(storageAskPrice),
+            parseInt(storageAskPrice)
         ),
         usd:
           storageDuration *

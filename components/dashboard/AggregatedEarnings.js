@@ -38,7 +38,7 @@ function AggregatedEarnings(props) {
         alignItems="left"
         w={{ base: "full", lg: "60%" }}
       >
-        <Heading size="lg" color="blue.800" my={6} pl="4">
+        <Heading size="lg" color="blue.700" my={6} pl="4">
           Aggregated Earnings
         </Heading>
 
@@ -79,9 +79,9 @@ function AggregatedEarnings(props) {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <VStack textAlign="left" alignItems="left">
+                  <VStack textAlign="left" alignItems="left" spacing="4">
                     <Stack>
-                      <Text fontSize="md" color="gray.600">
+                      <Text fontSize="md" color="gray.600" mb="-2">
                         Storage Deals Payments:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
@@ -89,7 +89,7 @@ function AggregatedEarnings(props) {
                       </Text>
                     </Stack>
                     <Stack>
-                      <Text fontSize="md" color="gray.600">
+                      <Text fontSize="md" color="gray.600" mb="-2">
                         Block Rewards:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
@@ -126,7 +126,7 @@ function AggregatedEarnings(props) {
                     alignItems="left"
                   >
                     <Stack>
-                      <Text fontSize="md" color="gray.600">
+                      <Text fontSize="md" color="gray.600" mb="-2">
                         Collateral Deposit:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
@@ -134,7 +134,7 @@ function AggregatedEarnings(props) {
                       </Text>
                     </Stack>
                     <Stack>
-                      <Text fontSize="md" color="gray.600">
+                      <Text fontSize="md" color="gray.600" mb="-2">
                         Gas:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
@@ -142,7 +142,7 @@ function AggregatedEarnings(props) {
                       </Text>
                     </Stack>
                     <Stack>
-                      <Text fontSize="md" color="gray.600">
+                      <Text fontSize="md" color="gray.600" mb="-2">
                         Penalty:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
@@ -150,7 +150,7 @@ function AggregatedEarnings(props) {
                       </Text>
                     </Stack>
                     <Stack>
-                      <Text fontSize="md" color="gray.600">
+                      <Text fontSize="md" color="gray.600" mb="-2">
                         Others:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">

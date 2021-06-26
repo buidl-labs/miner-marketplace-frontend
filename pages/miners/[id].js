@@ -16,6 +16,7 @@ import {
   Tab,
   TabPanel,
   Spacer,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
 
@@ -143,7 +144,7 @@ export default function Miner({ miner }) {
         {/* <GridItem rowSpan="8" colSpan="2">
           <DashboardMenu />
         </GridItem> */}
-        <GridItem colSpan={{ base: 1, lg: 6 }}>
+        <GridItem colSpan={{ base: 1, lg: 7 }}>
           <PersonalDetails
             minerClaimed={miner.claimed}
             minerName={miner.personalInfo.name}
@@ -157,7 +158,7 @@ export default function Miner({ miner }) {
             minerBio={miner.personalInfo.bio}
           />
         </GridItem>
-        <GridItem colSpan={{ base: 1, md: 6 }}>
+        <GridItem colSpan={{ base: 1, md: 5 }}>
           <Scores
             reputationScore={miner.reputationScore}
             transparencyScore={miner.transparencyScore}

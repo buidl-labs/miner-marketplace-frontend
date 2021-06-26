@@ -2,22 +2,26 @@ import { Flex, HStack, Progress, Stack, Text } from "@chakra-ui/react";
 import { Icon, IconProps, CheckCircleIcon } from "@chakra-ui/icons";
 import React from "react";
 
-function TransparencyScore() {
+function TransparencyScore(props) {
   return (
     <>
       <Stack py="8">
         <HStack alignItems="center">
           <Text fontSize="md" fontWeight="medium" color="gray.600">
-            Complete your Profile to increase your Transparency-Score:
+            Complete your Profile to increase your Transparency Score:
           </Text>
           <Text fontWeight="bold" color="blue.600" fontSize="3xl">
-            64
+            {props.transparencyScore}
           </Text>
           <Text fontSize="sm" color="gray.600">
             /100
           </Text>
         </HStack>
-        <Progress value={64} borderRadius="xl" colorScheme="blue" />
+        <Progress
+          value={props.transparencyScore}
+          borderRadius="xl"
+          colorScheme="blue"
+        />
         <Flex justifyContent="space-between">
           <HStack color="gray.400">
             <CheckCircleIcon h={4} w={4} />

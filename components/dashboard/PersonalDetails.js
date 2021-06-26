@@ -133,7 +133,7 @@ const PersonalDetails = (props) => {
         </WrapItem>
         <VStack spacing="4" alignItems="left" pt="4">
           <WrapItem alignItems="baseline">
-            <Heading size="sm" color="gray.700" mr="3">
+            <Heading size="sm" color="gray.600" mr="3">
               Worker Address:
             </Heading>
             <Link href={workerAddressLink} isExternal>
@@ -146,7 +146,7 @@ const PersonalDetails = (props) => {
             </Link>
           </WrapItem>
           <WrapItem alignItems="baseline">
-            <Heading size="sm" color="gray.700" mr="3">
+            <Heading size="sm" color="gray.600" mr="3">
               Owner Address:
             </Heading>
             <Link href={ownerAddressLink} isExternal>
@@ -159,7 +159,7 @@ const PersonalDetails = (props) => {
             </Link>
           </WrapItem>
           <WrapItem alignItems="baseline">
-            <Heading size="sm" color="gray.700" mr="3">
+            <Heading size="sm" color="gray.600" mr="3">
               Bio:
             </Heading>
             <Text color="gray.600">{props.minerBio}</Text>
