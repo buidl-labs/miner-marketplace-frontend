@@ -386,15 +386,15 @@ export default function Miner({ miner }) {
                     `,
                     })
                     .then((data) => {
-                      console.log(data.data);
+                      //console.log(data.data);
                       return data.data;
                     })
                     .then((d) => {
-                      console.log(d.miner.id);
+                      //console.log(d.miner.id);
                       return d.miner;
                     })
                     .then((m) => {
-                      console.log("txns", m.transactions);
+                      //console.log("txns", m.transactions);
                       setTransactions(m.transactions);
                       let fromArr = [];
                       let toArr = [];
@@ -410,8 +410,8 @@ export default function Miner({ miner }) {
                       toArr = toArr.map((ta) => {
                         return { text: ta, value: ta };
                       });
-                      console.log("lf", fromArr.length, "tl", toArr.length);
-                      console.log(fromArr, toArr);
+                      //console.log("lf", fromArr.length, "tl", toArr.length);
+                      //console.log(fromArr, toArr);
                       setFinalFromArr(fromArr);
                       setFinalToArr(toArr);
                     });

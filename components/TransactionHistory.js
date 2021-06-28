@@ -5,6 +5,7 @@ import {
   AccordionButton,
   AccordionIcon,
   Button,
+  Box,
   Heading,
   Image,
   Stack,
@@ -44,8 +45,6 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
 } from "@chakra-ui/icons";
-import DashboardMenu from "../components/dashboard/DashboardMenu";
-import DashboardNavbar from "../components/dashboard/DashboardNavbar";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { createHttpLink } from "apollo-link-http";
 import { TableProps } from "antd/lib/table";
@@ -60,7 +59,7 @@ import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
 
 export default function TransactionHistory(props) {
   const [pagination, setPagination] = useState({});
-  console.log(props.transactions.timestamp);
+
   const dataSource = props.transactions.map((txn) => {
     // Math.round((Number(txn.value) / 10 ** 18 + Number.EPSILON) * 1000) / 1000;
     // if (txn.minerFee > 0)
@@ -287,15 +286,6 @@ export default function TransactionHistory(props) {
 
   return (
     <>
-      <div>
-        <p>Transaction History of miner {props.minerID}</p>
-
-        <Table
-          columns={columns}
-          dataSource={dataSource}
-          pagination={pagination}
-        />
-      </div>
       <Stack>
         <HStack justifyContent="space-between" mb="8" alignItems="center">
           <VStack alignItems="left">
@@ -310,168 +300,212 @@ export default function TransactionHistory(props) {
             <Text fontSize="lg" fontWeight="medium" color="gray.600">
               Toggle Advance Mode
             </Text>
-            <Switch id="toggle-txn" />
+            <Switch id="transactionView" />
           </HStack>
         </HStack>
 
+        <Box display="none">
+          <p>Transaction History of miner {props.minerID}</p>
+
+          <Table
+            columns={columns}
+            dataSource={dataSource}
+            pagination={pagination}
+          />
+        </Box>
+
         <Stack w="74vw">
-          <Heading size="md" color="gray.700" fontWeight="semibold">
-            txn.timestamp
+          <Heading size="md" color="gray.700" fontWeight="semibold" pl="4">
+            dateGoesHere
           </Heading>
-          ;
+
           <Accordion allowMultiple>
-            <AccordionItem>
-              <AccordionButton alignItems="center">
-                <HStack spacing="36" textAlign="left" alignItems="center">
-                  <HStack>
-                    <ArrowDownIcon
-                      h={10}
-                      w={10}
-                      p="2"
-                      mr="2"
-                      borderRadius="full"
-                      bg="green.50"
-                      color="green.600"
-                    />
-                    <Stat>
-                      <StatLabel
-                        fontSize="xl"
-                        color="gray.700"
-                        whiteSpace="nowrap"
-                      >
-                        txn.Type
-                      </StatLabel>
-                      <StatNumber
-                        fontSize="sm"
-                        fontWeight="normal"
-                        color="gray.600"
-                      >
-                        txn.timestamp.time
-                      </StatNumber>
-                    </Stat>
+            {dataSource.slice(0, 10).map((txn) => (
+              <AccordionItem py="3">
+                <AccordionButton alignItems="center">
+                  <HStack textAlign="left" alignItems="center">
+                    <Grid templateColumns="repeat(5, 1fr)" gap={36}>
+                      <GridItem colSpan="2">
+                        <HStack>
+                          <ArrowDownIcon
+                            h={10}
+                            w={10}
+                            p="2"
+                            mr="2"
+                            borderRadius="full"
+                            bg="green.50"
+                            color="green.600"
+                          />
+                          <Stat>
+                            <StatLabel
+                              fontSize="xl"
+                              color="gray.700"
+                              whiteSpace="nowrap"
+                            >
+                              {txn.transactionType}
+                            </StatLabel>
+                            <StatNumber
+                              fontSize="sm"
+                              fontWeight="normal"
+                              color="gray.600"
+                            >
+                              {txn.timestamp}
+                            </StatNumber>
+                          </Stat>
+                        </HStack>
+                      </GridItem>
+
+                      <GridItem colSpan="1">
+                        <Stat>
+                          <StatLabel fontSize="sm" color="gray.600">
+                            Total Gas
+                          </StatLabel>
+                          <StatNumber
+                            fontSize="lg"
+                            fontWeight="normal"
+                            color="red.600"
+                          >
+                            txn.totalGas
+                          </StatNumber>
+                        </Stat>
+                      </GridItem>
+
+                      <GridItem colSpan="1">
+                        <Stat>
+                          <StatLabel color="gray.600">value</StatLabel>
+                          <StatNumber
+                            whiteSpace="nowrap"
+                            fontSize="2xl"
+                            color="blue.900"
+                            fontWeight="normal"
+                          >
+                            txn.value
+                          </StatNumber>
+                        </Stat>
+                      </GridItem>
+
+                      <GridItem colSpan="1">
+                        <Stat>
+                          <StatLabel fontSize="sm" color="gray.600">
+                            Status
+                          </StatLabel>
+                          <Tag colorScheme="green" borderRadius="full">
+                            {txn.exitCode}
+                          </Tag>
+                        </Stat>
+                      </GridItem>
+                    </Grid>
                   </HStack>
-                  <Stat>
-                    <StatLabel fontSize="sm" color="gray.600">
-                      Total Gas
-                    </StatLabel>
-                    <StatNumber
-                      fontSize="lg"
-                      fontWeight="normal"
-                      color="red.600"
-                    >
-                      txn.gasValue
-                    </StatNumber>
-                  </Stat>
-                  <Stat>
-                    <StatLabel color="gray.600">value</StatLabel>
-                    <StatNumber
-                      whiteSpace="nowrap"
-                      fontSize="2xl"
-                      color="blue.900"
-                      fontWeight="normal"
-                    >
-                      txn.transactionValue
-                    </StatNumber>
-                  </Stat>
-                  <Stat>
-                    <StatLabel fontSize="sm" color="gray.600">
-                      Status
-                    </StatLabel>
-                    <Tag colorScheme="green" borderRadius="full">
-                      statusCode
-                    </Tag>
-                  </Stat>
-                </HStack>
-                <Spacer />
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel my="4">
-                <Stack spacing="8">
-                  <HStack spacing="24">
-                    <Stack>
-                      <Heading
-                        size="sm"
-                        fontWeight="medium"
-                        color="gray.700"
-                        lineHeight="80%"
-                      >
-                        Method Name
-                      </Heading>
-                      <Text size="md" fontWeight="normal" color="gray.600">
-                        txn.methodName
-                      </Text>
-                    </Stack>
-                    <Stack>
-                      <Heading
-                        size="sm"
-                        fontWeight="medium"
-                        color="gray.700"
-                        lineHeight="80%"
-                      >
-                        Transaction ID
-                      </Heading>
-                      <Text size="md" fontWeight="normal" color="gray.600">
-                        TransactionIDValue
-                      </Text>
-                    </Stack>
-                    <Stack>
-                      <Heading
-                        size="sm"
-                        fontWeight="medium"
-                        color="gray.700"
-                        lineHeight="80%"
-                      >
-                        From
-                      </Heading>
-                      <Text size="md" fontWeight="normal" color="gray.600">
-                        fromAddress
-                      </Text>
-                    </Stack>
-                    <Stack>
-                      <Heading
-                        size="sm"
-                        fontWeight="medium"
-                        color="gray.700"
-                        lineHeight="80%"
-                      >
-                        To
-                      </Heading>
-                      <Text size="md" fontWeight="normal" color="gray.600">
-                        toAddress
-                      </Text>
-                    </Stack>
-                  </HStack>
-                  <HStack spacing="24">
-                    <Stack>
-                      <Heading
-                        size="sm"
-                        fontWeight="medium"
-                        color="gray.700"
-                        lineHeight="80%"
-                      >
-                        Miner Fee
-                      </Heading>
-                      <Text size="md" fontWeight="normal" color="gray.600">
-                        minerFeeValue
-                      </Text>
-                    </Stack>
-                    <Stack>
-                      <Heading
-                        size="sm"
-                        fontWeight="medium"
-                        color="gray.700"
-                        lineHeight="80%"
-                      >
-                        Burn Fee
-                      </Heading>
-                      <Text size="md" fontWeight="normal" color="gray.600">
-                        burnFeeValue
-                      </Text>
-                    </Stack>
-                  </HStack>
-                </Stack>
-              </AccordionPanel>
-            </AccordionItem>
+
+                  <AccordionIcon />
+                </AccordionButton>
+                <AccordionPanel py="4">
+                  <Stack spacing="8">
+                    <Grid templateColumns="repeat(5, 1fr)" gap={24}>
+                      <GridItem colSpan="1">
+                        <Stack>
+                          <Heading
+                            size="sm"
+                            fontWeight="medium"
+                            color="gray.700"
+                            lineHeight="80%"
+                            whiteSpace="nowrap"
+                          >
+                            Method Name
+                          </Heading>
+                          <Text size="md" fontWeight="normal" color="gray.600">
+                            {txn.methodName}
+                          </Text>
+                        </Stack>
+                      </GridItem>
+
+                      <GridItem colSpan="1">
+                        <Stack>
+                          <Heading
+                            size="sm"
+                            fontWeight="medium"
+                            color="gray.700"
+                            lineHeight="80%"
+                            whiteSpace="nowrap"
+                          >
+                            Transaction ID
+                          </Heading>
+                          <Text size="md" fontWeight="normal" color="gray.600">
+                            txn.id
+                          </Text>
+                        </Stack>
+                      </GridItem>
+
+                      <GridItem colSpan="2">
+                        <Stack>
+                          <Heading
+                            size="sm"
+                            fontWeight="medium"
+                            color="gray.700"
+                            lineHeight="80%"
+                          >
+                            From
+                          </Heading>
+                          <Text size="md" fontWeight="normal" color="gray.600">
+                            {txn.from}
+                          </Text>
+                        </Stack>
+                      </GridItem>
+
+                      <GridItem colSpan="1">
+                        <Stack>
+                          <Heading
+                            size="sm"
+                            fontWeight="medium"
+                            color="gray.700"
+                            lineHeight="80%"
+                          >
+                            To
+                          </Heading>
+                          <Text size="md" fontWeight="normal" color="gray.600">
+                            {txn.to}
+                          </Text>
+                        </Stack>
+                      </GridItem>
+                    </Grid>
+
+                    <Grid templateColumns="repeat(5, 1fr)" gap={16}>
+                      <GridItem colSpan="1">
+                        <Stack>
+                          <Heading
+                            size="sm"
+                            fontWeight="medium"
+                            color="gray.700"
+                            lineHeight="80%"
+                          >
+                            Miner Fee
+                          </Heading>
+                          <Text size="md" fontWeight="normal" color="gray.600">
+                            txn.minerFee
+                          </Text>
+                        </Stack>
+                      </GridItem>
+
+                      <GridItem colSpan="1">
+                        <Stack>
+                          <Heading
+                            size="sm"
+                            fontWeight="medium"
+                            color="gray.700"
+                            lineHeight="80%"
+                          >
+                            Burn Fee
+                          </Heading>
+                          <Text size="md" fontWeight="normal" color="gray.600">
+                            txn.burnFee
+                          </Text>
+                        </Stack>
+                      </GridItem>
+                    </Grid>
+                  </Stack>
+                </AccordionPanel>
+              </AccordionItem>
+            ))}
           </Accordion>
         </Stack>
       </Stack>

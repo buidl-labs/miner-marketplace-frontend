@@ -2,6 +2,7 @@ import {
   Button,
   Heading,
   Stack,
+  Flex,
   Grid,
   GridItem,
   Input,
@@ -21,11 +22,10 @@ import {
   Th,
   Td,
   TableCaption,
-  Wrap,
-  WrapItem,
   Text,
   CheckboxGroup,
   Checkbox,
+  Circle,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
@@ -357,6 +357,14 @@ export default function Miners({ miners, href }) {
         compare: (a, b) =>
           parseInt(a.reputationScore) - parseInt(b.reputationScore),
       },
+      render: (reputationScore) => {
+        var color = reputationScore < 50 ? "gray.500" : "blue.600";
+        return (
+          <Text color={color} fontSize="lg">
+            {reputationScore}
+          </Text>
+        );
+      },
     },
     {
       title: "Transparency Score",
@@ -365,6 +373,14 @@ export default function Miners({ miners, href }) {
       sorter: {
         compare: (a, b) =>
           parseInt(a.transparencyScore) - parseInt(b.transparencyScore),
+      },
+      render: (transparencyScore) => {
+        var color = transparencyScore < 50 ? "orange.600" : "blue.700";
+        return (
+          <Text color={color} fontSize="lg">
+            {transparencyScore}
+          </Text>
+        );
       },
     },
     {
@@ -380,6 +396,26 @@ export default function Miners({ miners, href }) {
         console.log("VR", value, record);
         return record.serviceType.includes(value);
       },
+      render: (serviceTypes) => (
+        <HStack spacing="2">
+          {serviceTypes.map((service) => {
+            let tagColor = "gray.700";
+            let tagBg = "gray.100";
+            if (service === "Storage") {
+              tagColor = "blue.700";
+              let tagBg = "blue.50";
+            } else if (service === "Retrieval") {
+              tagColor = "purple.700";
+              tagBg = "purple.50";
+            }
+            return (
+              <Tag color={tagColor} bg={tagBg} borderRadius="full">
+                {service}
+              </Tag>
+            );
+          })}
+        </HStack>
+      ),
     },
     {
       title: "Data Transfer Mechanism",
@@ -390,6 +426,19 @@ export default function Miners({ miners, href }) {
         { text: "Offline", value: "Offline" },
       ],
       onFilter: (value, record) => record.dataTransferMechanism.includes(value),
+      render: (dataTransferMechanism) =>
+        dataTransferMechanism.map((datatype) => {
+          let color = "gray.500";
+          if (datatype === "Online") {
+            color = "green.500";
+          }
+          return (
+            <HStack>
+              <Circle size="0.8rem" bg={color} />
+              <Text color={color}>{datatype}</Text>
+            </HStack>
+          );
+        }),
     },
     {
       title: "Location",
