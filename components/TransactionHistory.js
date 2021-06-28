@@ -60,6 +60,7 @@ import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
 
 export default function TransactionHistory(props) {
   const [pagination, setPagination] = useState({});
+  console.log(props.transactions.timestamp);
   const dataSource = props.transactions.map((txn) => {
     // Math.round((Number(txn.value) / 10 ** 18 + Number.EPSILON) * 1000) / 1000;
     // if (txn.minerFee > 0)
@@ -286,7 +287,7 @@ export default function TransactionHistory(props) {
 
   return (
     <>
-      {/* <div>
+      <div>
         <p>Transaction History of miner {props.minerID}</p>
 
         <Table
@@ -294,7 +295,7 @@ export default function TransactionHistory(props) {
           dataSource={dataSource}
           pagination={pagination}
         />
-      </div> */}
+      </div>
       <Stack>
         <HStack justifyContent="space-between" mb="8" alignItems="center">
           <VStack alignItems="left">
@@ -315,8 +316,9 @@ export default function TransactionHistory(props) {
 
         <Stack w="74vw">
           <Heading size="md" color="gray.700" fontWeight="semibold">
-            dateGoesHere
+            txn.timestamp
           </Heading>
+          ;
           <Accordion allowMultiple>
             <AccordionItem>
               <AccordionButton alignItems="center">
@@ -337,14 +339,14 @@ export default function TransactionHistory(props) {
                         color="gray.700"
                         whiteSpace="nowrap"
                       >
-                        Block Rewards
+                        txn.Type
                       </StatLabel>
                       <StatNumber
                         fontSize="sm"
                         fontWeight="normal"
                         color="gray.600"
                       >
-                        11:06 AM
+                        txn.timestamp.time
                       </StatNumber>
                     </Stat>
                   </HStack>
@@ -357,7 +359,7 @@ export default function TransactionHistory(props) {
                       fontWeight="normal"
                       color="red.600"
                     >
-                      0.17
+                      txn.gasValue
                     </StatNumber>
                   </Stat>
                   <Stat>
@@ -368,7 +370,7 @@ export default function TransactionHistory(props) {
                       color="blue.900"
                       fontWeight="normal"
                     >
-                      0.247 FIL
+                      txn.transactionValue
                     </StatNumber>
                   </Stat>
                   <Stat>
@@ -376,7 +378,7 @@ export default function TransactionHistory(props) {
                       Status
                     </StatLabel>
                     <Tag colorScheme="green" borderRadius="full">
-                      Success
+                      statusCode
                     </Tag>
                   </Stat>
                 </HStack>
@@ -396,7 +398,7 @@ export default function TransactionHistory(props) {
                         Method Name
                       </Heading>
                       <Text size="md" fontWeight="normal" color="gray.600">
-                        SubmitWindowPoS
+                        txn.methodName
                       </Text>
                     </Stack>
                     <Stack>

@@ -7,6 +7,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  InputLeftElement,
   Select,
   VStack,
   HStack,
@@ -330,8 +331,6 @@ export default function Miners({ miners, href }) {
                 color="blue.500"
                 fontWeight="semibold"
                 textDecoration="underline"
-                //borderBottom="solid 1px #3182CE"
-                //w="fit-content"
               >
                 {m.id}
               </Text>
@@ -415,7 +414,7 @@ export default function Miners({ miners, href }) {
         return (
           <div color="gray.600">
             <Text>{l.country}</Text>
-            <Text>({l.region})</Text>
+            <Text fontSize="sm">({l.region})</Text>
           </div>
         );
       },
@@ -506,14 +505,14 @@ export default function Miners({ miners, href }) {
 
         <GridItem colSpan="12" pt="28" bg="white" px="8">
           <Stack spacing="4">
-            <Heading color="gray.700" size="lg" mb={4}>
+            <Heading color="gray.700" size="lg">
               Search Miners
             </Heading>
             <Stack spacing="4" pb="4">
               <InputGroup maxW="40%">
-                <InputRightElement
+                <InputLeftElement
                   pointerEvents="visible"
-                  children={<Search2Icon color="blue.600" />}
+                  children={<Search2Icon color="gray.500" />}
                 />
                 <Input
                   type="text"
@@ -525,64 +524,86 @@ export default function Miners({ miners, href }) {
             </Stack>
           </Stack>
 
-          <HStack py={8} spacing="16" w="full">
-            {/*<VStack alignItems="left">
+          <HStack
+            py={8}
+            w="full"
+            justifyContent="space-between"
+            alignItems="top"
+          >
+            <VStack alignItems="left" w="20rem">
               <Select placeholder="Type of Service">
                 <option value="storage">Storage</option>
                 <option value="retrieval">Retrieval</option>
-                <option value="repair">Repair</option>
               </Select>
               <HStack>
-                <Tag size="lg" borderRadius="full" colorScheme="yellow">
+                <Tag
+                  size="lg"
+                  borderRadius="full"
+                  color="teal.700"
+                  bg="teal.50"
+                >
                   Storage
                 </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="purple">
+                <Tag
+                  size="lg"
+                  borderRadius="full"
+                  color="purple.700"
+                  bg="purple.50"
+                >
                   Retrieval
                 </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="pink">
-                  Repair
-                </Tag>
               </HStack>
-            </VStack>*/}
+            </VStack>
 
-            {/*<VStack alignItems="left">
+            <VStack alignItems="left" w="20rem">
               <Select placeholder="Data Transfer Mechanism">
                 <option value="option1">Online</option>
                 <option value="option2">Offline</option>
-                {<CheckboxGroup>
-                  <Checkbox value="online">Online</Checkbox>
-                  <Checkbox value="offline">Offline</Checkbox>
-                </CheckboxGroup>}
               </Select>
               <HStack>
                 <Tag size="lg" borderRadius="full" colorScheme="green">
                   Online
                 </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="orange">
+                <Tag size="lg" borderRadius="full" colorScheme="gray">
                   Offline
                 </Tag>
               </HStack>
-            </VStack>*/}
+            </VStack>
 
-            {/*<VStack alignItems="left">
+            <VStack alignItems="left" w="20rem">
               <InputGroup>
                 <InputRightElement
                   pointerEvents="none"
                   children={<Search2Icon color="gray" />}
                 />
-                <Input type="text" placeholder="Location" color="#4A5568" />
+                <Input type="text" placeholder="Location" color="gray.500" />
               </InputGroup>
               <HStack>
-                <Tag size="lg" borderRadius="full" colorScheme="gray">
+                <Tag
+                  size="lg"
+                  borderRadius="full"
+                  color="blue.700"
+                  bg="blue.50"
+                >
                   countryName
                 </Tag>
               </HStack>
-            </VStack>*/}
+            </VStack>
 
-            <Stack maxW="25%" alignItems="left" spacing="4">
+            <Stack
+              alignItems="left"
+              spacing="4"
+              bg="gray.100"
+              p="6"
+              borderRadius="xl"
+              w="20rem"
+            >
               <Stack spacing="1">
-                <Text>Storage amount (in GiB)</Text>
+                <Text fontWeight="medium" color="gray.700">
+                  Storage amount (in GiB)
+                </Text>
                 <Input
+                  bg="white"
                   type="number"
                   placeholder="Enter amount of storage"
                   value={storageAmount}
@@ -590,8 +611,11 @@ export default function Miners({ miners, href }) {
                 />
               </Stack>
               <Stack spacing="1">
-                <Text>Storage Duration (in months)</Text>
+                <Text fontWeight="medium" color="gray.700">
+                  Storage Duration (in months)
+                </Text>
                 <Input
+                  bg="white"
                   type="number"
                   placeholder="Enter duration of storage"
                   value={storageDuration}
@@ -600,7 +624,7 @@ export default function Miners({ miners, href }) {
               </Stack>
               <Button
                 colorScheme="blue"
-                variant="outline"
+                variant="solid"
                 onClick={(event) => {
                   filterList(event);
                 }}
@@ -610,7 +634,7 @@ export default function Miners({ miners, href }) {
             </Stack>
           </HStack>
 
-          <Stack spacing="8" mt="6" overflow="scroll">
+          <Stack spacing="8" mt="6">
             <Table
               columns={columns}
               dataSource={filteredMiners}
