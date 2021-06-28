@@ -54,6 +54,7 @@ import { Table, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import { useDisclosure } from "@chakra-ui/hooks";
 
 import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
 
@@ -284,6 +285,17 @@ export default function TransactionHistory(props) {
     },
   ];
 
+  const [toggle, setToggle] = useState(false);
+
+  function handleTxnToggle() {
+    // if (toggle) {
+    //   setToggle(false);
+    // } else {
+    //   setToggle(true);
+    // }
+    toggle ? setToggle(false) : setToggle(true);
+  }
+
   return (
     <>
       <Stack>
@@ -300,214 +312,243 @@ export default function TransactionHistory(props) {
             <Text fontSize="lg" fontWeight="medium" color="gray.600">
               Toggle Advance Mode
             </Text>
-            <Switch id="transactionView" />
+            <Switch
+              id="transactionView"
+              onChange={handleTxnToggle}
+              isChecked={toggle}
+            />
           </HStack>
         </HStack>
+        {toggle && (
+          <Box>
+            {/* <p>Transaction History of miner {props.minerID}</p> */}
+            <Table
+              columns={columns}
+              dataSource={dataSource}
+              pagination={pagination}
+            />
+          </Box>
+        )}
+        {!toggle && (
+          <Stack w="74vw">
+            <Heading size="md" color="gray.700" fontWeight="semibold" pl="4">
+              dateGoesHere
+            </Heading>
 
-        <Box display="none">
-          <p>Transaction History of miner {props.minerID}</p>
+            <Accordion allowMultiple>
+              {dataSource.slice(0, 10).map((txn) => (
+                <AccordionItem py="3">
+                  <AccordionButton alignItems="center">
+                    <HStack textAlign="left" alignItems="center">
+                      <Grid templateColumns="repeat(5, 1fr)" gap={36}>
+                        <GridItem colSpan="2">
+                          <HStack>
+                            <ArrowDownIcon
+                              h={10}
+                              w={10}
+                              p="2"
+                              mr="2"
+                              borderRadius="full"
+                              bg="green.50"
+                              color="green.600"
+                            />
+                            <Stat>
+                              <StatLabel
+                                fontSize="xl"
+                                color="gray.700"
+                                whiteSpace="nowrap"
+                              >
+                                {txn.transactionType}
+                              </StatLabel>
+                              <StatNumber
+                                fontSize="sm"
+                                fontWeight="normal"
+                                color="gray.600"
+                              >
+                                {txn.timestamp}
+                              </StatNumber>
+                            </Stat>
+                          </HStack>
+                        </GridItem>
 
-          <Table
-            columns={columns}
-            dataSource={dataSource}
-            pagination={pagination}
-          />
-        </Box>
-
-        <Stack w="74vw">
-          <Heading size="md" color="gray.700" fontWeight="semibold" pl="4">
-            dateGoesHere
-          </Heading>
-
-          <Accordion allowMultiple>
-            {dataSource.slice(0, 10).map((txn) => (
-              <AccordionItem py="3">
-                <AccordionButton alignItems="center">
-                  <HStack textAlign="left" alignItems="center">
-                    <Grid templateColumns="repeat(5, 1fr)" gap={36}>
-                      <GridItem colSpan="2">
-                        <HStack>
-                          <ArrowDownIcon
-                            h={10}
-                            w={10}
-                            p="2"
-                            mr="2"
-                            borderRadius="full"
-                            bg="green.50"
-                            color="green.600"
-                          />
+                        <GridItem colSpan="1">
                           <Stat>
-                            <StatLabel
-                              fontSize="xl"
-                              color="gray.700"
-                              whiteSpace="nowrap"
-                            >
-                              {txn.transactionType}
+                            <StatLabel fontSize="sm" color="gray.600">
+                              Total Gas
                             </StatLabel>
                             <StatNumber
-                              fontSize="sm"
+                              fontSize="lg"
+                              fontWeight="normal"
+                              color="red.600"
+                            >
+                              txn.totalGas
+                            </StatNumber>
+                          </Stat>
+                        </GridItem>
+
+                        <GridItem colSpan="1">
+                          <Stat>
+                            <StatLabel color="gray.600">value</StatLabel>
+                            <StatNumber
+                              whiteSpace="nowrap"
+                              fontSize="2xl"
+                              color="blue.900"
+                              fontWeight="normal"
+                            >
+                              txn.value
+                            </StatNumber>
+                          </Stat>
+                        </GridItem>
+
+                        <GridItem colSpan="1">
+                          <Stat>
+                            <StatLabel fontSize="sm" color="gray.600">
+                              Status
+                            </StatLabel>
+                            <Tag colorScheme="green" borderRadius="full">
+                              {txn.exitCode}
+                            </Tag>
+                          </Stat>
+                        </GridItem>
+                      </Grid>
+                    </HStack>
+
+                    <AccordionIcon />
+                  </AccordionButton>
+                  <AccordionPanel py="4">
+                    <Stack spacing="8">
+                      <Grid templateColumns="repeat(5, 1fr)" gap={24}>
+                        <GridItem colSpan="1">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                              whiteSpace="nowrap"
+                            >
+                              Method Name
+                            </Heading>
+                            <Text
+                              size="md"
                               fontWeight="normal"
                               color="gray.600"
                             >
-                              {txn.timestamp}
-                            </StatNumber>
-                          </Stat>
-                        </HStack>
-                      </GridItem>
+                              {txn.methodName}
+                            </Text>
+                          </Stack>
+                        </GridItem>
 
-                      <GridItem colSpan="1">
-                        <Stat>
-                          <StatLabel fontSize="sm" color="gray.600">
-                            Total Gas
-                          </StatLabel>
-                          <StatNumber
-                            fontSize="lg"
-                            fontWeight="normal"
-                            color="red.600"
-                          >
-                            txn.totalGas
-                          </StatNumber>
-                        </Stat>
-                      </GridItem>
+                        <GridItem colSpan="1">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                              whiteSpace="nowrap"
+                            >
+                              Transaction ID
+                            </Heading>
+                            <Text
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                            >
+                              txn.id
+                            </Text>
+                          </Stack>
+                        </GridItem>
 
-                      <GridItem colSpan="1">
-                        <Stat>
-                          <StatLabel color="gray.600">value</StatLabel>
-                          <StatNumber
-                            whiteSpace="nowrap"
-                            fontSize="2xl"
-                            color="blue.900"
-                            fontWeight="normal"
-                          >
-                            txn.value
-                          </StatNumber>
-                        </Stat>
-                      </GridItem>
+                        <GridItem colSpan="2">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                            >
+                              From
+                            </Heading>
+                            <Text
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                            >
+                              {txn.from}
+                            </Text>
+                          </Stack>
+                        </GridItem>
 
-                      <GridItem colSpan="1">
-                        <Stat>
-                          <StatLabel fontSize="sm" color="gray.600">
-                            Status
-                          </StatLabel>
-                          <Tag colorScheme="green" borderRadius="full">
-                            {txn.exitCode}
-                          </Tag>
-                        </Stat>
-                      </GridItem>
-                    </Grid>
-                  </HStack>
+                        <GridItem colSpan="1">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                            >
+                              To
+                            </Heading>
+                            <Text
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                            >
+                              {txn.to}
+                            </Text>
+                          </Stack>
+                        </GridItem>
+                      </Grid>
 
-                  <AccordionIcon />
-                </AccordionButton>
-                <AccordionPanel py="4">
-                  <Stack spacing="8">
-                    <Grid templateColumns="repeat(5, 1fr)" gap={24}>
-                      <GridItem colSpan="1">
-                        <Stack>
-                          <Heading
-                            size="sm"
-                            fontWeight="medium"
-                            color="gray.700"
-                            lineHeight="80%"
-                            whiteSpace="nowrap"
-                          >
-                            Method Name
-                          </Heading>
-                          <Text size="md" fontWeight="normal" color="gray.600">
-                            {txn.methodName}
-                          </Text>
-                        </Stack>
-                      </GridItem>
+                      <Grid templateColumns="repeat(5, 1fr)" gap={16}>
+                        <GridItem colSpan="1">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                            >
+                              Miner Fee
+                            </Heading>
+                            <Text
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                            >
+                              txn.minerFee
+                            </Text>
+                          </Stack>
+                        </GridItem>
 
-                      <GridItem colSpan="1">
-                        <Stack>
-                          <Heading
-                            size="sm"
-                            fontWeight="medium"
-                            color="gray.700"
-                            lineHeight="80%"
-                            whiteSpace="nowrap"
-                          >
-                            Transaction ID
-                          </Heading>
-                          <Text size="md" fontWeight="normal" color="gray.600">
-                            txn.id
-                          </Text>
-                        </Stack>
-                      </GridItem>
-
-                      <GridItem colSpan="2">
-                        <Stack>
-                          <Heading
-                            size="sm"
-                            fontWeight="medium"
-                            color="gray.700"
-                            lineHeight="80%"
-                          >
-                            From
-                          </Heading>
-                          <Text size="md" fontWeight="normal" color="gray.600">
-                            {txn.from}
-                          </Text>
-                        </Stack>
-                      </GridItem>
-
-                      <GridItem colSpan="1">
-                        <Stack>
-                          <Heading
-                            size="sm"
-                            fontWeight="medium"
-                            color="gray.700"
-                            lineHeight="80%"
-                          >
-                            To
-                          </Heading>
-                          <Text size="md" fontWeight="normal" color="gray.600">
-                            {txn.to}
-                          </Text>
-                        </Stack>
-                      </GridItem>
-                    </Grid>
-
-                    <Grid templateColumns="repeat(5, 1fr)" gap={16}>
-                      <GridItem colSpan="1">
-                        <Stack>
-                          <Heading
-                            size="sm"
-                            fontWeight="medium"
-                            color="gray.700"
-                            lineHeight="80%"
-                          >
-                            Miner Fee
-                          </Heading>
-                          <Text size="md" fontWeight="normal" color="gray.600">
-                            txn.minerFee
-                          </Text>
-                        </Stack>
-                      </GridItem>
-
-                      <GridItem colSpan="1">
-                        <Stack>
-                          <Heading
-                            size="sm"
-                            fontWeight="medium"
-                            color="gray.700"
-                            lineHeight="80%"
-                          >
-                            Burn Fee
-                          </Heading>
-                          <Text size="md" fontWeight="normal" color="gray.600">
-                            txn.burnFee
-                          </Text>
-                        </Stack>
-                      </GridItem>
-                    </Grid>
-                  </Stack>
-                </AccordionPanel>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </Stack>
+                        <GridItem colSpan="1">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                            >
+                              Burn Fee
+                            </Heading>
+                            <Text
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                            >
+                              txn.burnFee
+                            </Text>
+                          </Stack>
+                        </GridItem>
+                      </Grid>
+                    </Stack>
+                  </AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </Stack>
+        )}
       </Stack>
     </>
   );

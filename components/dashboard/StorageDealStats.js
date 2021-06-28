@@ -29,7 +29,7 @@ function StorageDealStats(props) {
           <GridItem colSpan="1" pb={{ base: 8, lg: 2 }}>
             <VStack textAlign="left" alignItems="left" spacing="7">
               <Stat>
-                <StatLabel fontSize="lg" fontWeigth="medium" color="gray.700">
+                <StatLabel fontSize="lg" fontWeight="medium" color="gray.700">
                   Average Deal Price
                 </StatLabel>
                 <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">

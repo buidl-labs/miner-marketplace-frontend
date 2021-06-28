@@ -270,13 +270,13 @@ export default function Miner({ miner }) {
                       `,
                     })
                     .then((data) => {
-                      console.log(data.data);
+                      //console.log(data.data);
                       return data.data;
                     })
                     .then((g) => {
                       console.log(g.aggregateEarnings);
                       setAggregateEarnings(g);
-                      console.log("agge", g);
+                      //console.log("agge", g);
                     });
                 }}
               >
@@ -332,13 +332,13 @@ export default function Miner({ miner }) {
                     `,
                     })
                     .then((data) => {
-                      console.log(data.data);
+                      //console.log(data.data);
                       return data.data;
                     })
                     .then((g) => {
-                      console.log(g.estimatedEarnings);
+                      //console.log(g.estimatedEarnings);
                       setEstimatedEarnings(g);
-                      console.log("esti", g);
+                      //console.log("esti", g);
                     })
                     .catch((e) => {
                       console.log("esti err", e);
