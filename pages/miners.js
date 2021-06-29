@@ -90,7 +90,7 @@ export default function Miners({ miners, href }) {
     )
       .then((res) => res.json())
       .then((r) => {
-        console.log(r.filecoin.usd);
+        // console.log(r.filecoin.usd);
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);
@@ -243,10 +243,10 @@ export default function Miners({ miners, href }) {
       fd.pricing.storageAskPrice == null ||
       fd.pricing.storageAskPrice == ""
     ) {
-      console.log(
-        "fd.pricing.storageAskPrice invalid",
-        fd.pricing.storageAskPrice
-      );
+      // console.log(
+      //   "fd.pricing.storageAskPrice invalid",
+      //   fd.pricing.storageAskPrice
+      // );
       storageAskPrice = 0; // show zero for miners who haven't mentioned askPrice
     }
     return {
@@ -393,7 +393,7 @@ export default function Miners({ miners, href }) {
         { text: "Repair", value: "Repair" },
       ],
       onFilter: (value, record) => {
-        console.log("VR", value, record);
+        //console.log("VR", value, record);
         return record.serviceType.includes(value);
       },
       render: (serviceTypes) => (
@@ -509,7 +509,7 @@ export default function Miners({ miners, href }) {
     let mminers = dataSource;
     let q = minerIdQuery;
     if (q == "") {
-      console.log("");
+      // console.log("");
     }
     mminers = mminers.filter(function (m) {
       // console.log("m", m.miner.id, "ido", m.miner.id.indexOf(q), "q", q);
@@ -521,14 +521,14 @@ export default function Miners({ miners, href }) {
     setFilteredMiners(mminers);
   };
   const onChange = (event) => {
-    console.log(
-      "qupdated",
-      minerIdQuery,
-      "q",
-      event.target.value,
-      "qlc",
-      event.target.value.toLowerCase()
-    );
+    // console.log(
+    //   "qupdated",
+    //   minerIdQuery,
+    //   "q",
+    //   event.target.value,
+    //   "qlc",
+    //   event.target.value.toLowerCase()
+    // );
 
     const q = event.target.value.toLowerCase();
     // if (q == "") {

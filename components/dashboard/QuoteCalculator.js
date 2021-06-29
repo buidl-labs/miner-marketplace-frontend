@@ -30,7 +30,7 @@ function QuoteCalculator(props) {
     )
       .then((res) => res.json())
       .then((r) => {
-        console.log(r.filecoin.usd);
+        //console.log(r.filecoin.usd);
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);

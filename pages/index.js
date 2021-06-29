@@ -70,10 +70,6 @@ const IndexPage = (stats) => {
             />
           </SimpleGrid>
 
-          {/*
-{loading && LoaderComponent}
-*/}
-
           {/*Filecoin Stats*/}
           <Box
             bgColor="blue.600"

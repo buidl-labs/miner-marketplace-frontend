@@ -6,11 +6,13 @@ import {
   AccordionIcon,
   Button,
   Box,
+  Center,
   Heading,
   Image,
   Stack,
   Grid,
   GridItem,
+  IconButton,
   Input,
   InputGroup,
   InputRightElement,
@@ -288,17 +290,40 @@ export default function TransactionHistory(props) {
   const [toggle, setToggle] = useState(false);
 
   function handleTxnToggle() {
-    // if (toggle) {
-    //   setToggle(false);
-    // } else {
-    //   setToggle(true);
-    // }
     toggle ? setToggle(false) : setToggle(true);
+  }
+
+  const [next, setNext] = useState(10);
+
+  function handleLoadMore() {
+    setNext(next + 10);
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 
   return (
     <>
       <Stack>
+        <IconButton
+          icon={<ArrowUpIcon h={8} w={8} />}
+          aria-label="go to top"
+          color="gray.600"
+          bg="gray.100"
+          border="2px solid #CBD5E0"
+          boxShadow="xl"
+          isRound
+          onClick={scrollToTop}
+          right="8"
+          bottom="8"
+          position="fixed"
+          w={12}
+          h={12}
+        />
         <HStack justifyContent="space-between" mb="8" alignItems="center">
           <VStack alignItems="left">
             <Heading size="lg" color="blue.700" mt="6" pl="4">
@@ -321,7 +346,6 @@ export default function TransactionHistory(props) {
         </HStack>
         {toggle && (
           <Box>
-            {/* <p>Transaction History of miner {props.minerID}</p> */}
             <Table
               columns={columns}
               dataSource={dataSource}
@@ -329,6 +353,7 @@ export default function TransactionHistory(props) {
             />
           </Box>
         )}
+
         {!toggle && (
           <Stack w="74vw">
             <Heading size="md" color="gray.700" fontWeight="semibold" pl="4">
@@ -336,7 +361,7 @@ export default function TransactionHistory(props) {
             </Heading>
 
             <Accordion allowMultiple>
-              {dataSource.slice(0, 10).map((txn) => (
+              {dataSource.slice(0, next).map((txn) => (
                 <AccordionItem py="3">
                   <AccordionButton alignItems="center">
                     <HStack textAlign="left" alignItems="center">
@@ -547,6 +572,17 @@ export default function TransactionHistory(props) {
                 </AccordionItem>
               ))}
             </Accordion>
+            <Center>
+              <Button
+                mt="6"
+                w="36"
+                colorScheme="blue"
+                variant="outline"
+                onClick={handleLoadMore}
+              >
+                View more
+              </Button>
+            </Center>
           </Stack>
         )}
       </Stack>
