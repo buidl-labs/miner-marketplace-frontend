@@ -57,6 +57,7 @@ import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/hooks";
+import { BiTransfer } from "react-icons/bi";
 
 import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
 
@@ -368,15 +369,38 @@ export default function TransactionHistory(props) {
                       <Grid templateColumns="repeat(5, 1fr)" gap={36}>
                         <GridItem colSpan="2">
                           <HStack>
-                            <ArrowDownIcon
-                              h={10}
-                              w={10}
-                              p="2"
-                              mr="2"
-                              borderRadius="full"
-                              bg="green.50"
-                              color="green.600"
-                            />
+                            {txn.transactionType === "Block Reward" ? (
+                              <ArrowUpIcon
+                                h={10}
+                                w={10}
+                                p="2"
+                                mr="2"
+                                borderRadius="full"
+                                bg="green.100"
+                                color="green.600"
+                              />
+                            ) : txn.transactionType === "Collateral Deposit" ? (
+                              <ArrowDownIcon
+                                h={10}
+                                w={10}
+                                p="2"
+                                mr="2"
+                                borderRadius="full"
+                                bg="red.100"
+                                color="red.600"
+                              />
+                            ) : (
+                              <Icon
+                                as={BiTransfer}
+                                h={10}
+                                w={10}
+                                p="2"
+                                mr="2"
+                                borderRadius="full"
+                                bg="gray.100"
+                                color="gray.600"
+                              />
+                            )}
                             <Stat>
                               <StatLabel
                                 fontSize="xl"
@@ -406,7 +430,22 @@ export default function TransactionHistory(props) {
                               fontWeight="normal"
                               color="red.600"
                             >
-                              txn.totalGas
+                              {txn.methodName === "PreCommitSector" ||
+                              "ProveCommitSector" ||
+                              "PublishStorageDeals" ||
+                              "TerminateSectors" ||
+                              "RepayDebt" ||
+                              "WithdrawBalance (miner)" ||
+                              "WithdrawBalance (market)" ||
+                              "AddBalance" ||
+                              "ChangeWorkerAddress" ||
+                              "ChangeOwnerAddress" ||
+                              "ChangePeerID" ||
+                              "DeclareFaults" ||
+                              "DeclareFaultsRecovered" ||
+                              "ExtendSectorExpiration"
+                                ? "-" + (txn.minerFee.val + txn.burnFee.val)
+                                : "0"}
                             </StatNumber>
                           </Stat>
                         </GridItem>
@@ -420,7 +459,7 @@ export default function TransactionHistory(props) {
                               color="blue.900"
                               fontWeight="normal"
                             >
-                              txn.value
+                              {txn.value.display}
                             </StatNumber>
                           </Stat>
                         </GridItem>
@@ -430,9 +469,16 @@ export default function TransactionHistory(props) {
                             <StatLabel fontSize="sm" color="gray.600">
                               Status
                             </StatLabel>
-                            <Tag colorScheme="green" borderRadius="full">
-                              {txn.exitCode}
-                            </Tag>
+
+                            {txn.exitCode === 0 ? (
+                              <Tag colorScheme="green" borderRadius="full">
+                                Success
+                              </Tag>
+                            ) : (
+                              <Tag colorScheme="red" borderRadius="full">
+                                Faliure
+                              </Tag>
+                            )}
                           </Stat>
                         </GridItem>
                       </Grid>
@@ -480,7 +526,7 @@ export default function TransactionHistory(props) {
                               fontWeight="normal"
                               color="gray.600"
                             >
-                              txn.id
+                              {txn.id.mid}
                             </Text>
                           </Stack>
                         </GridItem>
@@ -542,7 +588,22 @@ export default function TransactionHistory(props) {
                               fontWeight="normal"
                               color="gray.600"
                             >
-                              txn.minerFee
+                              {txn.methodName === "PreCommitSector" ||
+                              "ProveCommitSector" ||
+                              "PublishStorageDeals" ||
+                              "TerminateSectors" ||
+                              "RepayDebt" ||
+                              "WithdrawBalance (miner)" ||
+                              "WithdrawBalance (market)" ||
+                              "AddBalance" ||
+                              "ChangeWorkerAddress" ||
+                              "ChangeOwnerAddress" ||
+                              "ChangePeerID" ||
+                              "DeclareFaults" ||
+                              "DeclareFaultsRecovered" ||
+                              "ExtendSectorExpiration"
+                                ? "-" + txn.minerFee.display
+                                : "0"}
                             </Text>
                           </Stack>
                         </GridItem>
@@ -562,7 +623,24 @@ export default function TransactionHistory(props) {
                               fontWeight="normal"
                               color="gray.600"
                             >
-                              txn.burnFee
+                              {txn.methodName === "PreCommitSector" ||
+                              "ProveCommitSector" ||
+                              "PublishStorageDeals" ||
+                              "TerminateSectors" ||
+                              "RepayDebt" ||
+                              "WithdrawBalance (miner)" ||
+                              "WithdrawBalance (market)" ||
+                              "AddBalance" ||
+                              "ChangeWorkerAddress" ||
+                              "ChangeOwnerAddress" ||
+                              "ChangePeerID" ||
+                              "DeclareFaults" ||
+                              "DeclareFaultsRecovered" ||
+                              "ExtendSectorExpiration" ? (
+                                "-" + txn.burnFee.display
+                              ) : (
+                                <p>0</p>
+                              )}
                             </Text>
                           </Stack>
                         </GridItem>
