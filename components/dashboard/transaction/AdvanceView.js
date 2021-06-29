@@ -57,22 +57,13 @@ import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/hooks";
-import { BiTransfer } from "react-icons/bi";
+import {
+  GetFormattedStorageUnits,
+  GetFormattedFILUnits,
+} from "../../../util/util";
 
-import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
-import BasicView from "./dashboard/transaction/BasicView";
-import AdvanceView from "./dashboard/transaction/AdvanceView";
-
-export default function TransactionHistory(props) {
-  const [pagination, setPagination] = useState({});
-
+function AdvanceView(props) {
   const dataSource = props.transactions.map((txn) => {
-    // Math.round((Number(txn.value) / 10 ** 18 + Number.EPSILON) * 1000) / 1000;
-    // if (txn.minerFee > 0)
-    //   console.log("MF", txn.minerFee, Number(txn.minerFee) / 10 ** 18);
-    // TODO: convert value, minerFee, burnFee to nanoFIL/attoFIL etc based on their size
-    // right now all are in FIL
-
     let txntype = "message";
     if (txn.methodName == "ApplyRewards") {
       txntype = "block";
@@ -115,6 +106,8 @@ export default function TransactionHistory(props) {
     };
   });
 
+  //const [pagination, setPagination] = useState({});
+
   const columns = [
     {
       title: "ID",
@@ -150,6 +143,12 @@ export default function TransactionHistory(props) {
       key: "timestamp",
       sorter: {
         compare: (a, b) => parseInt(a.timestamp) - parseInt(b.timestamp),
+      },
+      render: (dateProps) => {
+        const miliseconds = dateProps * 1000;
+        const dateObject = new Date(miliseconds);
+        const txnDate = dateObject.toLocaleString();
+        return <p>{txnDate}</p>;
       },
     },
     {
@@ -290,87 +289,90 @@ export default function TransactionHistory(props) {
     },
   ];
 
-  const [toggle, setToggle] = useState(false);
+  const [transactions, setTransactions] = useState([]);
+  const [finalFromArr, setFinalFromArr] = useState([]);
+  const [finalToArr, setFinalToArr] = useState([]);
 
-  function handleTxnToggle() {
-    toggle ? setToggle(false) : setToggle(true);
-  }
-
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-
-  // const [next, setNext] = useState(10);
+  const [next, setNext] = useState(10);
   // function handleLoadMore() {
   //   setNext(next + 10);
   // }
 
-  // function dateOfTransaction(dateProps) {
-  //   const miliseconds = dateProps * 1000;
-  //   const dateObject = new Date(miliseconds);
-  //   const txnDate = dateObject.toLocaleDateString();
-  //   return (
-  //     <Text fontSize="sm" fontWeight="normal" color="gray.600">
-  //       {txnDate}
-  //     </Text>
-  //   );
-  // }
-
   return (
     <>
-      <Stack>
-        <IconButton
-          icon={<ArrowUpIcon h={8} w={8} />}
-          aria-label="go to top"
-          color="gray.600"
-          bg="gray.100"
-          border="2px solid #CBD5E0"
-          boxShadow="xl"
-          isRound
-          onClick={scrollToTop}
-          right="8"
-          bottom="8"
-          position="fixed"
-          w={12}
-          h={12}
-          zIndex="10"
+      <Box>
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          // pagination={pagination}
         />
-        <HStack justifyContent="space-between" mb="8" alignItems="center">
-          <VStack alignItems="left">
-            <Heading size="lg" color="blue.700" mt="6" pl="4">
-              Transaction History
-            </Heading>
-            <Text fontSize="md" fontWeight="medium" color="gray.600" pl="4">
-              for miner ID {props.minerID}
-            </Text>
-          </VStack>
-          <HStack>
-            <Text fontSize="lg" fontWeight="medium" color="gray.600">
-              Toggle Advance Mode
-            </Text>
-            <Switch
-              id="transactionView"
-              onChange={handleTxnToggle}
-              isChecked={toggle}
-            />
-          </HStack>
-        </HStack>
-        {toggle && (
-          <AdvanceView
-            minerID={props.minerID}
-            transactions={props.transactions}
-            finalFromArr={props.finalFromArr}
-            finalToArr={props.finalToArr}
-          />
-        )}
-        {!toggle && <BasicView transactions={props.transactions} />}
-      </Stack>
+      </Box>
+      <Button
+        colorScheme="blue"
+        variant="outline"
+        onClick={() => {
+          setNext(next + 10);
+          const BACKEND_URL =
+            "https://miner-marketplace-backend-2.onrender.com/query";
+          const client = new ApolloClient({
+            uri: BACKEND_URL,
+            cache: new InMemoryCache(),
+          });
+
+          client
+            .query({
+              query: gql`
+                      query {
+                        miner(id: "${props.minerID}") {
+                          id
+                          transactions (first: 10 , offset: ${next} , orderBy: { param: timestamp, sort: DESC }) {
+                            id
+                            value
+                            methodName
+                            from
+                            to
+                            minerFee
+                            burnFee
+                            transactionType
+                            exitCode
+                            height
+                            timestamp
+                          }
+                        }
+                      }
+                    `,
+            })
+            .then((data) => {
+              return data.data;
+            })
+            .then((d) => {
+              return d.miner;
+            })
+            .then((m) => {
+              setTransactions(m.transactions);
+              let fromArr = [];
+              let toArr = [];
+              m.transactions.forEach((txn) => {
+                fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
+                toArr.push(txn.to); //{ text: txn.to, value: txn.to });
+              });
+              fromArr = [...new Set(fromArr)];
+              toArr = [...new Set(toArr)];
+              fromArr = fromArr.map((fa) => {
+                return { text: fa, value: fa };
+              });
+              toArr = toArr.map((ta) => {
+                return { text: ta, value: ta };
+              });
+              setFinalFromArr(fromArr);
+              setFinalToArr(toArr);
+            });
+        }}
+      >
+        View more
+      </Button>
     </>
   );
 }
 
-// export default TransactionHistory;
-// export async function getStaticProps()
+export default AdvanceView;

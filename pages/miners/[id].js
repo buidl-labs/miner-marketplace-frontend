@@ -371,7 +371,7 @@ export default function Miner({ miner }) {
                       query {
                         miner(id: "${miner.id}") {
                           id
-                          transactions {
+                          transactions (first: 50, orderBy: { param: timestamp, sort: DESC }) {
                             id
                             value
                             methodName

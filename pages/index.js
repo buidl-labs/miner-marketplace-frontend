@@ -147,8 +147,6 @@ const IndexPage = (stats) => {
 export default IndexPage;
 
 export async function getStaticProps() {
-  // state loading, setLoading
-  //setLoading : true
   const client = new ApolloClient({
     uri: process.env.BACKEND_URL,
     cache: new InMemoryCache(),
@@ -170,6 +168,5 @@ export async function getStaticProps() {
     props: {
       stats: data.networkStats,
     },
-    //setLoading false
   };
 }
