@@ -307,6 +307,17 @@ export default function TransactionHistory(props) {
     });
   }
 
+  function dateOfTransaction(dateProps) {
+    const miliseconds = dateProps * 1000;
+    const dateObject = new Date(miliseconds);
+    const txnDate = dateObject.toLocaleDateString();
+    return (
+      <Text fontSize="sm" fontWeight="normal" color="gray.600">
+        {txnDate}
+      </Text>
+    );
+  }
+
   return (
     <>
       <Stack>
@@ -366,8 +377,8 @@ export default function TransactionHistory(props) {
                 <AccordionItem py="3">
                   <AccordionButton alignItems="center">
                     <HStack textAlign="left" alignItems="center">
-                      <Grid templateColumns="repeat(5, 1fr)" gap={36}>
-                        <GridItem colSpan="2">
+                      <Grid templateColumns="repeat(8, 1fr)" gap={36}>
+                        <GridItem colSpan="3">
                           <HStack>
                             {txn.transactionType === "Block Reward" ? (
                               <ArrowUpIcon
@@ -414,13 +425,14 @@ export default function TransactionHistory(props) {
                                 fontWeight="normal"
                                 color="gray.600"
                               >
-                                {txn.timestamp}
+                                {/* {txn.timestamp} */}
+                                {dateOfTransaction(txn.timestamp)}
                               </StatNumber>
                             </Stat>
                           </HStack>
                         </GridItem>
 
-                        <GridItem colSpan="1">
+                        <GridItem colSpan="2">
                           <Stat>
                             <StatLabel fontSize="sm" color="gray.600">
                               Total Gas
@@ -429,6 +441,7 @@ export default function TransactionHistory(props) {
                               fontSize="lg"
                               fontWeight="normal"
                               color="red.600"
+                              whiteSpace="nowrap"
                             >
                               {txn.methodName === "PreCommitSector" ||
                               "ProveCommitSector" ||
@@ -444,13 +457,16 @@ export default function TransactionHistory(props) {
                               "DeclareFaults" ||
                               "DeclareFaultsRecovered" ||
                               "ExtendSectorExpiration"
-                                ? "-" + (txn.minerFee.val + txn.burnFee.val)
+                                ? "-" +
+                                  GetFormattedFILUnits(
+                                    txn.minerFee.val + txn.burnFee.val
+                                  )
                                 : "0"}
                             </StatNumber>
                           </Stat>
                         </GridItem>
 
-                        <GridItem colSpan="1">
+                        <GridItem colSpan="2">
                           <Stat>
                             <StatLabel color="gray.600">value</StatLabel>
                             <StatNumber
@@ -488,8 +504,8 @@ export default function TransactionHistory(props) {
                   </AccordionButton>
                   <AccordionPanel py="4">
                     <Stack spacing="8">
-                      <Grid templateColumns="repeat(5, 1fr)" gap={24}>
-                        <GridItem colSpan="1">
+                      <Grid templateColumns="repeat(8, 1fr)" gap={16}>
+                        <GridItem colSpan="2">
                           <Stack>
                             <Heading
                               size="sm"
@@ -510,7 +526,7 @@ export default function TransactionHistory(props) {
                           </Stack>
                         </GridItem>
 
-                        <GridItem colSpan="1">
+                        <GridItem colSpan="2">
                           <Stack>
                             <Heading
                               size="sm"
@@ -572,8 +588,8 @@ export default function TransactionHistory(props) {
                         </GridItem>
                       </Grid>
 
-                      <Grid templateColumns="repeat(5, 1fr)" gap={16}>
-                        <GridItem colSpan="1">
+                      <Grid templateColumns="repeat(8, 1fr)" gap={16}>
+                        <GridItem colSpan="2">
                           <Stack>
                             <Heading
                               size="sm"
@@ -608,7 +624,7 @@ export default function TransactionHistory(props) {
                           </Stack>
                         </GridItem>
 
-                        <GridItem colSpan="1">
+                        <GridItem colSpan="2">
                           <Stack>
                             <Heading
                               size="sm"
