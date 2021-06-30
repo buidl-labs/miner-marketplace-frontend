@@ -319,6 +319,11 @@ export default function TransactionHistory(props) {
   //   );
   // }
 
+  const [offsetValue, setOffsetValue] = useState(10);
+  function handleLoadMore() {
+    setOffsetValue(offsetValue + 10);
+  }
+
   return (
     <>
       <Stack>
@@ -348,14 +353,14 @@ export default function TransactionHistory(props) {
             </Text>
           </VStack>
           <HStack>
-            <Text fontSize="lg" fontWeight="medium" color="gray.600">
-              Toggle Advance Mode
-            </Text>
             <Switch
               id="transactionView"
               onChange={handleTxnToggle}
               isChecked={toggle}
             />
+            <Text fontSize="lg" fontWeight="medium" color="gray.600">
+              Toggle Advance Mode
+            </Text>
           </HStack>
         </HStack>
         {toggle && (
@@ -366,7 +371,24 @@ export default function TransactionHistory(props) {
             finalToArr={props.finalToArr}
           />
         )}
-        {!toggle && <BasicView transactions={props.transactions} />}
+        {!toggle && (
+          <BasicView
+            minerID={props.minerID}
+            transactions={props.transactions}
+            offsetValue={props.offsetValue}
+          />
+        )}
+        <Center>
+          <Button
+            mt="6"
+            w="36"
+            colorScheme="blue"
+            variant="outline"
+            onClick={handleLoadMore}
+          >
+            View more
+          </Button>
+        </Center>
       </Stack>
     </>
   );

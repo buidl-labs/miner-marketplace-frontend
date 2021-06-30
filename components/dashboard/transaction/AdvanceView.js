@@ -307,72 +307,72 @@ function AdvanceView(props) {
           // pagination={pagination}
         />
       </Box>
-      <Button
-        colorScheme="blue"
-        variant="outline"
-        onClick={() => {
-          setNext(next + 10);
-          const BACKEND_URL =
-            "https://miner-marketplace-backend-2.onrender.com/query";
-          const client = new ApolloClient({
-            uri: BACKEND_URL,
-            cache: new InMemoryCache(),
-          });
-
-          client
-            .query({
-              query: gql`
-                      query {
-                        miner(id: "${props.minerID}") {
-                          id
-                          transactions (first: 10 , offset: ${next} , orderBy: { param: timestamp, sort: DESC }) {
-                            id
-                            value
-                            methodName
-                            from
-                            to
-                            minerFee
-                            burnFee
-                            transactionType
-                            exitCode
-                            height
-                            timestamp
-                          }
-                        }
-                      }
-                    `,
-            })
-            .then((data) => {
-              return data.data;
-            })
-            .then((d) => {
-              return d.miner;
-            })
-            .then((m) => {
-              setTransactions(m.transactions);
-              let fromArr = [];
-              let toArr = [];
-              m.transactions.forEach((txn) => {
-                fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
-                toArr.push(txn.to); //{ text: txn.to, value: txn.to });
-              });
-              fromArr = [...new Set(fromArr)];
-              toArr = [...new Set(toArr)];
-              fromArr = fromArr.map((fa) => {
-                return { text: fa, value: fa };
-              });
-              toArr = toArr.map((ta) => {
-                return { text: ta, value: ta };
-              });
-              setFinalFromArr(fromArr);
-              setFinalToArr(toArr);
-            });
-        }}
-      >
-        View more
-      </Button>
     </>
   );
 }
 
 export default AdvanceView;
+
+export async function getStaticProps() {
+  const BACKEND_URL = "https://miner-marketplace-backend-2.onrender.com/query";
+  const client = new ApolloClient({
+    uri: BACKEND_URL,
+    cache: new InMemoryCache(),
+  });
+  const { data } = await client
+    .query({
+      query: gql`
+      query {
+        miner(id: "${minerID}") {
+          id
+          transactions (first: 5, orderBy: { param: timestamp, sort: DESC }) {
+            id
+            value
+            methodName
+            from
+            to
+            minerFee
+            burnFee
+            transactionType
+            exitCode
+            height
+            timestamp
+          }
+        }
+      }
+    `,
+    })
+    .then((data) => {
+      return data.data;
+    })
+    .then((d) => {
+      return d.miner;
+    })
+    .then((m) => {
+      setTransactions(m.transactions);
+      let fromArr = [];
+      let toArr = [];
+      m.transactions.forEach((txn) => {
+        fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
+        toArr.push(txn.to); //{ text: txn.to, value: txn.to });
+      });
+      fromArr = [...new Set(fromArr)];
+      toArr = [...new Set(toArr)];
+      fromArr = fromArr.map((fa) => {
+        return { text: fa, value: fa };
+      });
+      toArr = toArr.map((ta) => {
+        return { text: ta, value: ta };
+      });
+      setFinalFromArr(fromArr);
+      setFinalToArr(toArr);
+    });
+  return {
+    props: {
+      props: transactions,
+      transactions: props.transactions,
+      finalFromArr: props.finalFromArr,
+      finalToArr: props.finalToArr,
+    },
+  };
+}

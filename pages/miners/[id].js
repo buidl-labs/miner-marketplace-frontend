@@ -115,6 +115,7 @@ export default function Miner({ miner }) {
   const [transactions, setTransactions] = useState([]);
   const [finalFromArr, setFinalFromArr] = useState([]);
   const [finalToArr, setFinalToArr] = useState([]);
+  const [offsetValue, setOffsetValue] = useState(10);
 
   return (
     <>
@@ -371,7 +372,7 @@ export default function Miner({ miner }) {
                       query {
                         miner(id: "${miner.id}") {
                           id
-                          transactions (first: 50, orderBy: { param: timestamp, sort: DESC }) {
+                          transactions (first: 5, offset: ${offsetValue} orderBy: { param: timestamp, sort: DESC }) {
                             id
                             value
                             methodName

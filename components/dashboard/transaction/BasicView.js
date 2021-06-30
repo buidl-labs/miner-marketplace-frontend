@@ -87,10 +87,10 @@ function BasicView(props) {
     };
   });
 
-  const [next, setNext] = useState(10);
-  function handleLoadMore() {
-    setNext(next + 10);
-  }
+  // const [offsetValue, setOffsetValue] = useState(10);
+  // function handleLoadMore() {
+  //   setOffsetValue(offsetValue + 10);
+  // }
 
   function dateOfTransaction(dateProps) {
     const miliseconds = dateProps * 1000;
@@ -102,6 +102,10 @@ function BasicView(props) {
       </Text>
     );
   }
+
+  const [transactions, setTransactions] = useState([]);
+  const [finalFromArr, setFinalFromArr] = useState([]);
+  const [finalToArr, setFinalToArr] = useState([]);
 
   return (
     <>
@@ -380,17 +384,76 @@ function BasicView(props) {
               </AccordionItem>
             ))}
           </Accordion>
-          <Center>
+          {/* <Center>
             <Button
               mt="6"
               w="36"
               colorScheme="blue"
               variant="outline"
-              onClick={handleLoadMore}
+              onClick={() => {
+                handleLoadMore();
+                console.log("offset", offsetValue);
+                const BACKEND_URL =
+                  "https://miner-marketplace-backend-2.onrender.com/query";
+                const client = new ApolloClient({
+                  uri: BACKEND_URL,
+                  cache: new InMemoryCache(),
+                });
+
+                client
+                  .query({
+                    query: gql`
+                      query {
+                        miner(id: "${props.minerID}") {
+                          id
+                          transactions (first: 5, offset: ${offsetValue} orderBy: { param: timestamp, sort: DESC }) {
+                            id
+                            value
+                            methodName
+                            from
+                            to
+                            minerFee
+                            burnFee
+                            transactionType
+                            exitCode
+                            height
+                            timestamp
+                          }
+                        }
+                      }
+                    `,
+                  })
+                  .then((data) => {
+                    //console.log(data.data);
+                    return data.data;
+                  })
+                  .then((d) => {
+                    return d.miner;
+                  })
+                  .then((m) => {
+                    setTransactions(m.transactions);
+                    let fromArr = [];
+                    let toArr = [];
+                    m.transactions.forEach((txn) => {
+                      fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
+                      toArr.push(txn.to); //{ text: txn.to, value: txn.to });
+                    });
+                    fromArr = [...new Set(fromArr)];
+                    toArr = [...new Set(toArr)];
+                    fromArr = fromArr.map((fa) => {
+                      return { text: fa, value: fa };
+                    });
+                    toArr = toArr.map((ta) => {
+                      return { text: ta, value: ta };
+                    });
+                    setFinalFromArr(fromArr);
+                    setFinalToArr(toArr);
+                  });
+              }}
             >
               View more
             </Button>
-          </Center>
+          </Center> */}
         </Stack>
       </>
     </>

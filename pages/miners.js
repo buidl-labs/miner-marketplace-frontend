@@ -9,7 +9,6 @@ import {
   InputGroup,
   InputRightElement,
   InputLeftElement,
-  Select,
   VStack,
   HStack,
   Link,
@@ -29,6 +28,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
+import Select from "react-select";
 
 import DashboardMenu from "../components/dashboard/DashboardMenu";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
@@ -540,6 +540,39 @@ export default function Miners({ miners, href }) {
     // }
   };
 
+  /* Options for Select Component */
+  const mServices = [
+    { label: "Storage", value: "Storage" },
+    { label: "Retrieval", value: "Retrieval" },
+    { label: "Repair", value: "Repair" },
+  ];
+
+  const mDataMechanism = [
+    { label: "Online", value: "Online" },
+    { label: "Offline", value: "Offline" },
+  ];
+
+  const mLocationSelect = [
+    { label: "Asia", value: "Asia" },
+    { label: "Europe", value: "Europe" },
+    { label: "Africa", value: "Africa" },
+    { label: "Oceania", value: "Oceania" },
+    { label: "South America", value: "South America" },
+    { label: "Central America", value: "Central America" },
+    { label: "North America", value: "North America" },
+  ];
+
+  const dStorageAmount = [
+    { label: "MB", value: "MB" },
+    { label: "GB", value: "GB" },
+    { label: "TB", value: "TB" },
+    { label: "PB", value: "PB" },
+  ];
+  const dStorageDuration = [
+    { label: "Months", value: "Months" },
+    { label: "Years", value: "Years" },
+  ];
+
   return (
     <>
       <DashboardNavbar isMinerProfile={false} />
@@ -580,11 +613,11 @@ export default function Miners({ miners, href }) {
             alignItems="top"
           >
             <VStack alignItems="left" w="20rem">
-              <Select placeholder="Type of Service">
-                <option value="storage">Storage</option>
-                <option value="retrieval">Retrieval</option>
-              </Select>
-              <HStack>
+              <Heading size="sm" fontWeight="medium" color="gray.700">
+                Type of Service
+              </Heading>
+              <Select closeMenuOnSelect={true} options={mServices} isMulti />
+              {/* <HStack>
                 <Tag
                   size="lg"
                   borderRadius="full"
@@ -601,33 +634,39 @@ export default function Miners({ miners, href }) {
                 >
                   Retrieval
                 </Tag>
-              </HStack>
+              </HStack> */}
             </VStack>
 
             <VStack alignItems="left" w="20rem">
-              <Select placeholder="Data Transfer Mechanism">
-                <option value="option1">Online</option>
-                <option value="option2">Offline</option>
-              </Select>
-              <HStack>
+              <Heading size="sm" fontWeight="medium" color="gray.700">
+                Data Transfer Mechanism
+              </Heading>
+              <Select options={mDataMechanism} isMulti />
+
+              {/* <HStack>
                 <Tag size="lg" borderRadius="full" colorScheme="green">
                   Online
                 </Tag>
                 <Tag size="lg" borderRadius="full" colorScheme="gray">
                   Offline
                 </Tag>
-              </HStack>
+              </HStack> */}
             </VStack>
 
             <VStack alignItems="left" w="20rem">
-              <InputGroup>
+              {/* <InputGroup>
                 <InputRightElement
                   pointerEvents="none"
                   children={<Search2Icon color="gray" />}
                 />
                 <Input type="text" placeholder="Location" color="gray.500" />
-              </InputGroup>
-              <HStack>
+              </InputGroup> */}
+              <Heading size="sm" fontWeight="medium" color="gray.700">
+                Location
+              </Heading>
+              <Select options={mLocationSelect} isMulti />
+
+              {/* <HStack>
                 <Tag
                   size="lg"
                   borderRadius="full"
@@ -636,7 +675,7 @@ export default function Miners({ miners, href }) {
                 >
                   countryName
                 </Tag>
-              </HStack>
+              </HStack> */}
             </VStack>
 
             <Stack
@@ -647,29 +686,48 @@ export default function Miners({ miners, href }) {
               borderRadius="xl"
               w="20rem"
             >
+              <Heading size="sm" fontWeight="medium" color="gray.700">
+                Estimated Quote
+              </Heading>
               <Stack spacing="1">
                 <Text fontWeight="medium" color="gray.700">
-                  Storage amount (in GiB)
+                  Storage amount
                 </Text>
-                <Input
-                  bg="white"
-                  type="number"
-                  placeholder="Enter amount of storage"
-                  value={storageAmount}
-                  onChange={(event) => setStorageAmount(event.target.value)}
-                />
+                <InputGroup>
+                  <Input
+                    bg="white"
+                    type="number"
+                    placeholder="Enter amount of storage"
+                    value={storageAmount}
+                    onChange={(event) => setStorageAmount(event.target.value)}
+                  />
+                  <Select
+                    options={dStorageAmount}
+                    defaultValue={dStorageAmount[1]}
+                    isClearable={false}
+                    isSearchable={false}
+                  />
+                </InputGroup>
               </Stack>
               <Stack spacing="1">
                 <Text fontWeight="medium" color="gray.700">
-                  Storage Duration (in months)
+                  Storage Duration
                 </Text>
-                <Input
-                  bg="white"
-                  type="number"
-                  placeholder="Enter duration of storage"
-                  value={storageDuration}
-                  onChange={(event) => setStorageDuration(event.target.value)}
-                />
+                <InputGroup>
+                  <Input
+                    bg="white"
+                    type="number"
+                    placeholder="Enter duration of storage"
+                    value={storageDuration}
+                    onChange={(event) => setStorageDuration(event.target.value)}
+                  />
+                  <Select
+                    options={dStorageDuration}
+                    defaultValue={dStorageDuration[0]}
+                    isClearable={false}
+                    isSearchable={false}
+                  />
+                </InputGroup>
               </Stack>
               <Button
                 colorScheme="blue"
