@@ -24,11 +24,14 @@ import {
 function QuoteCalculator(props) {
   const [storageDuration, setStorageDuration] = useState(6);
   const [storageAmount, setStorageAmount] = useState(10);
+  const [storageDurationText, setStorageDurationText] = useState(6);
+  const [storageAmountText, setStorageAmountText] = useState(10);
+
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
@@ -42,16 +45,53 @@ function QuoteCalculator(props) {
     storageAskPrice = 0;
   }
 
-  const dStorageAmount = [
+  const dStorageUnitsArr = [
     { label: "MB", value: "MB" },
     { label: "GB", value: "GB" },
     { label: "TB", value: "TB" },
     { label: "PB", value: "PB" },
   ];
-  const dStorageDuration = [
+  const dStorageDurationUnitsArr = [
     { label: "Months", value: "Months" },
     { label: "Years", value: "Years" },
   ];
+
+  const [dStorageUnits, setDStorageUnits] = useState(dStorageUnitsArr[1]);
+  const [dStorageDurationUnits, setDStorageDurationUnits] = useState(
+    dStorageDurationUnitsArr[0],
+  );
+
+  const handleStorageUnitsChange = (event) => {
+    console.log("setDStorageUnits", dStorageUnits, event);
+    setDStorageUnits(event);
+
+    let finalSA = storageAmountText;
+    console.log("storageAmountText", storageAmountText);
+    if (event.value == "MB") {
+      finalSA *= 0.001 * 0.931323;
+    } else if (event.value == "GB") {
+      finalSA *= 0.931323;
+    } else if (event.value == "TB") {
+      finalSA *= 1000 * 0.931323;
+    } else if (event.value == "PB") {
+      finalSA *= 1000000 * 0.931323;
+    }
+    console.log("finalSA", finalSA);
+    setStorageAmount(finalSA);
+  };
+  const handleStorageDurationUnitsChange = (event) => {
+    console.log("setDStorageDurationUnits", dStorageDurationUnits, event);
+    setDStorageDurationUnits(event);
+
+    let finalSD = storageDurationText;
+    console.log("storageDurationText", storageDurationText);
+    if (event.value == "Years") {
+      // && dStorageDurationUnits.value != "Years") {
+      finalSD *= 12;
+    }
+    console.log("finalSD", finalSD);
+    setStorageDuration(finalSD);
+  };
 
   const customStyles = {
     control: (Base) => ({
@@ -74,7 +114,7 @@ function QuoteCalculator(props) {
         w={{ base: "auto", lg: "30vw" }}
       >
         <Heading size="lg" color="blue.700">
-          Quote Calculator
+          Estimated Quote
         </Heading>
         <HStack spacing="2" alignItems="center">
           <Text fontSize="5xl" color="blue.900">
@@ -84,7 +124,7 @@ function QuoteCalculator(props) {
                   30 *
                   2880 *
                   storageAmount *
-                  parseInt(storageAskPrice)
+                  parseInt(storageAskPrice),
               ).split(" ")[0]
             }
             {/*{Math.round(
@@ -105,13 +145,13 @@ function QuoteCalculator(props) {
                   30 *
                   2880 *
                   storageAmount *
-                  parseInt(storageAskPrice)
+                  parseInt(storageAskPrice),
               ).split(" ")[1]
             }
           </Text>
         </HStack>
         <Stack color="gray.600" size="md">
-          <Text>
+          <Text fontSize="xl">
             $
             {Math.round(
               ((storageDuration *
@@ -122,10 +162,10 @@ function QuoteCalculator(props) {
                 filecoinUSDRate) /
                 10 ** 18 +
                 Number.EPSILON) *
-                100
+                100,
             ) / 100}
           </Text>
-          <Text>Estimated Quote</Text>
+          {/*<Text>Estimated Quote</Text>*/}
         </Stack>
         <VStack spacing="6" pt="6" alignItems="flex-start">
           <FormControl id="storage">
@@ -140,14 +180,39 @@ function QuoteCalculator(props) {
                 type="number"
                 size="lg"
                 placeholder="Enter amount of Storage"
-                value={storageAmount}
-                onChange={(event) => setStorageAmount(event.target.value)}
+                value={storageAmountText}
+                onChange={(event) => {
+                  console.log("amt changed");
+                  let finalSA = event.target.value;
+                  setStorageAmountText(event.target.value);
+                  if (dStorageUnits.value == "MB") {
+                    finalSA *= 0.001 * 0.931323;
+                  } else if (dStorageUnits.value == "GB") {
+                    finalSA *= 0.931323;
+                  } else if (dStorageUnits.value == "TB") {
+                    finalSA *= 1000 * 0.931323;
+                  } else if (dStorageUnits.value == "PB") {
+                    finalSA *= 1000000 * 0.931323;
+                  }
+                  console.log("finalSA", finalSA);
+
+                  setStorageAmount(finalSA);
+                  console.log(
+                    "storageAmount",
+                    storageAmount,
+                    event.target.value,
+                  );
+                  console.log("dStorageUnits", dStorageUnits);
+                  console.log("dStorageDurationUnits", dStorageDurationUnits);
+                }}
                 borderRight="none"
                 borderRadius="0.4rem 0rem 0rem 0.4rem"
               />
               <Select
-                options={dStorageAmount}
-                defaultValue={dStorageAmount[1]}
+                options={dStorageUnitsArr}
+                value={dStorageUnits}
+                onChange={handleStorageUnitsChange}
+                // defaultValue={dStorageUnitsArr[1]}
                 isClearable={false}
                 isSearchable={false}
                 styles={customStyles}
@@ -166,14 +231,33 @@ function QuoteCalculator(props) {
                 type="number"
                 size="lg"
                 placeholder="Enter duration of Storage"
-                value={storageDuration}
-                onChange={(event) => setStorageDuration(event.target.value)}
+                value={storageDurationText}
+                onChange={(event) => {
+                  console.log("dur changed");
+                  let finalSD = event.target.value;
+                  setStorageDurationText(event.target.value);
+                  if (dStorageDurationUnits.value == "Years") {
+                    finalSD *= 12;
+                  }
+                  console.log("finalSD", finalSD);
+
+                  setStorageDuration(finalSD);
+                  console.log(
+                    "storageDuration",
+                    storageDuration,
+                    event.target.value,
+                  );
+                  console.log("dStorageUnits", dStorageUnits);
+                  console.log("dStorageDurationUnits", dStorageDurationUnits);
+                }}
                 borderRight="none"
                 borderRadius="0.4rem 0rem 0rem 0.4rem"
               />
               <Select
-                options={dStorageDuration}
-                defaultValue={dStorageDuration[0]}
+                options={dStorageDurationUnitsArr}
+                value={dStorageDurationUnits}
+                onChange={handleStorageDurationUnitsChange}
+                // defaultValue={dStorageDurationUnitsArr[0]}
                 isClearable={false}
                 isSearchable={false}
                 styles={customStyles}

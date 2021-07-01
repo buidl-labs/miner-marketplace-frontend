@@ -308,22 +308,48 @@ export default function TransactionHistory(props) {
   //   setNext(next + 10);
   // }
 
-  // function dateOfTransaction(dateProps) {
-  //   const miliseconds = dateProps * 1000;
-  //   const dateObject = new Date(miliseconds);
-  //   const txnDate = dateObject.toLocaleDateString();
-  //   return (
-  //     <Text fontSize="sm" fontWeight="normal" color="gray.600">
-  //       {txnDate}
-  //     </Text>
-  //   );
-  // }
-
-  // const [offsetValue, setOffsetValue] = useState(10);
-  // function handleLoadMore() {
-  //   setOffsetValue(offsetValue + 10);
-  //   transactions.push(offsetValue);
-  // }
+  let dss = props.transactions.map((txn) => {
+    let txntype = "message";
+    if (txn.methodName == "ApplyRewards") {
+      txntype = "block";
+    }
+    let valuesign = "";
+    if (txn.methodName != "ApplyRewards") {
+      valuesign = "";
+    }
+    if (Number(txn.value) == 0) {
+      valuesign = "";
+    }
+    if (txn.transactionType == "Transfer") {
+      valuesign = "";
+    }
+    return {
+      key: txn.id,
+      id: {
+        mid: txn.id,
+        txntype: txntype,
+      },
+      value: {
+        val: Number(txn.value),
+        display: valuesign + GetFormattedFILUnits(Number(txn.value)),
+      },
+      methodName: txn.methodName,
+      from: txn.from,
+      to: txn.to,
+      minerFee: {
+        val: Number(txn.minerFee),
+        display: GetFormattedFILUnits(Number(txn.minerFee)),
+      },
+      burnFee: {
+        val: Number(txn.burnFee),
+        display: GetFormattedFILUnits(Number(txn.burnFee)),
+      },
+      transactionType: txn.transactionType,
+      exitCode: txn.exitCode,
+      height: txn.height,
+      timestamp: txn.timestamp,
+    };
+  });
 
   return (
     <>
@@ -349,9 +375,6 @@ export default function TransactionHistory(props) {
             <Heading size="lg" color="blue.700" mt="6" pl="4">
               Transaction History
             </Heading>
-            <Text fontSize="md" fontWeight="medium" color="gray.600" pl="4">
-              for miner ID {props.minerID}
-            </Text>
           </VStack>
           <HStack>
             <Switch
@@ -360,16 +383,16 @@ export default function TransactionHistory(props) {
               isChecked={toggle}
             />
             <Text fontSize="lg" fontWeight="medium" color="gray.600">
-              Toggle Advance Mode
+              Advanced view
             </Text>
           </HStack>
         </HStack>
         {toggle && (
           <AdvanceView
             minerID={props.minerID}
-            transactions={props.transactions}
-            finalFromArr={props.finalFromArr}
-            finalToArr={props.finalToArr}
+            // transactions={props.transactions}
+            // finalFromArr={props.finalFromArr}
+            // finalToArr={props.finalToArr}
           />
         )}
         {!toggle && (
@@ -377,6 +400,7 @@ export default function TransactionHistory(props) {
             minerID={props.minerID}
             transactions={props.transactions}
             offsetValue={props.offsetValue}
+            dss={dss}
           />
         )}
       </Stack>

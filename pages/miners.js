@@ -48,46 +48,9 @@ import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
 import Base from "antd/lib/typography/Base";
 
 export default function Miners({ miners, href }) {
-  // const [miners, setMiners] = useState([]);
-
-  // useEffect(() => {
-  //   async function fetchMyAPI() {
-  //     const link = createHttpLink({
-  //       uri: process.env.BACKEND_URL,
-  //       credentials: "same-origin",
-  //     });
-  //     const client = new ApolloClient({
-  //       uri: process.env.BACKEND_URL,
-  //       cache: new InMemoryCache(),
-  //       // link,
-  //       // fetchOptions: {
-  //       //   mode: "no-cors",
-  //       // },
-  //       // headers: {
-  //       //   "Access-Control-Allow-Credentials": true,
-  //       // },
-  //     });
-
-  //     const { data } = await client.query({
-  //       query: gql`
-  //         query {
-  //           miners {
-  //             id
-  //             owner {
-  //               address
-  //             }
-  //           }
-  //         }
-  //       `,
-  //     });
-  //     setMiners(data.miners);
-  //   }
-  //   fetchMyAPI();
-  // }, []);
-
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
@@ -105,6 +68,8 @@ export default function Miners({ miners, href }) {
 
   const [storageDuration, setStorageDuration] = useState(6);
   const [storageAmount, setStorageAmount] = useState(10);
+  const [storageDurationText, setStorageDurationText] = useState(6);
+  const [storageAmountText, setStorageAmountText] = useState(10);
 
   const [pagination, setPagination] = useState({});
   // const [filteredInfo, setFilteredInfo] = useState({});
@@ -128,93 +93,6 @@ export default function Miners({ miners, href }) {
     setSearchText("");
   }
 
-  // console.log(miners);
-  const fetchedData = [
-    {
-      id: "f02770",
-      claimed: true,
-      personalInfo: {
-        name: "john doe",
-      },
-      reputationScore: 30,
-      transparencyScore: 0,
-      location: {
-        country: "CN",
-        region: "Asia",
-      },
-      service: {
-        serviceTypes: {
-          storage: true,
-          retrieval: false,
-          repair: false,
-        },
-        dataTransferMechanism: {
-          online: true,
-          offline: false,
-        },
-      },
-      pricing: {
-        storageAskPrice: 1.5,
-      },
-      qualityAdjustedPower: "81775868078194688",
-    },
-    {
-      id: "f083273827",
-      claimed: true,
-      personalInfo: {
-        name: "",
-      },
-      reputationScore: 50,
-      transparencyScore: 10,
-      location: {
-        country: "NL",
-        region: "Europe",
-      },
-      service: {
-        serviceTypes: {
-          storage: true,
-          retrieval: false,
-          repair: false,
-        },
-        dataTransferMechanism: {
-          online: true,
-          offline: true,
-        },
-      },
-      pricing: {
-        storageAskPrice: 3.14,
-      },
-      qualityAdjustedPower: "11775868078194688",
-    },
-    {
-      id: "f037288",
-      claimed: true,
-      personalInfo: {
-        name: "jeff",
-      },
-      reputationScore: 15,
-      transparencyScore: 90,
-      location: {
-        country: "CA",
-        region: "North America",
-      },
-      service: {
-        serviceTypes: {
-          storage: true,
-          retrieval: true,
-          repair: false,
-        },
-        dataTransferMechanism: {
-          online: true,
-          offline: false,
-        },
-      },
-      pricing: {
-        storageAskPrice: 13.14,
-      },
-      qualityAdjustedPower: "51775868078194688",
-    },
-  ];
   const dataSource = miners.map((fd) => {
     let serviceTypeArr = [];
     if (fd.service.serviceTypes.storage) {
@@ -277,7 +155,7 @@ export default function Miners({ miners, href }) {
             30 *
             2880 *
             storageAmount *
-            parseInt(storageAskPrice)
+            parseInt(storageAskPrice),
         ),
         usd:
           storageDuration *
@@ -302,21 +180,8 @@ export default function Miners({ miners, href }) {
     { text: "South America", value: "South America" },
     { text: "Central America", value: "Central America" },
     { text: "North America", value: "North America" },
-    // ...new Set(
-    //   miners.map((m) => {
-    //     return {
-    //       text: m.location.country + " (" + m.location.region + ")",
-    //       value: m.location.country + " (" + m.location.region + ")",
-    //     };
-    //   }),
-    // ),
   ];
   const columns = [
-    // {
-    //   title: "S.No.",
-    //   dataIndex: "sno",
-    //   key: "sno",
-    // },
     {
       title: "Miner",
       dataIndex: "miner",
@@ -563,16 +428,53 @@ export default function Miners({ miners, href }) {
     { label: "North America", value: "North America" },
   ];
 
-  const dStorageAmount = [
+  const dStorageUnitsArr = [
     { label: "MB", value: "MB" },
     { label: "GB", value: "GB" },
     { label: "TB", value: "TB" },
     { label: "PB", value: "PB" },
   ];
-  const dStorageDuration = [
+  const dStorageDurationUnitsArr = [
     { label: "Months", value: "Months" },
     { label: "Years", value: "Years" },
   ];
+
+  const [dStorageUnits, setDStorageUnits] = useState(dStorageUnitsArr[1]);
+  const [dStorageDurationUnits, setDStorageDurationUnits] = useState(
+    dStorageDurationUnitsArr[0],
+  );
+
+  const handleStorageUnitsChange = (event) => {
+    console.log("setDStorageUnits", dStorageUnits, event);
+    setDStorageUnits(event);
+
+    let finalSA = storageAmountText;
+    console.log("storageAmountText", storageAmountText);
+    if (event.value == "MB") {
+      finalSA *= 0.001 * 0.931323;
+    } else if (event.value == "GB") {
+      finalSA *= 0.931323;
+    } else if (event.value == "TB") {
+      finalSA *= 1000 * 0.931323;
+    } else if (event.value == "PB") {
+      finalSA *= 1000000 * 0.931323;
+    }
+    console.log("finalSA", finalSA);
+    setStorageAmount(finalSA);
+  };
+  const handleStorageDurationUnitsChange = (event) => {
+    console.log("setDStorageDurationUnits", dStorageDurationUnits, event);
+    setDStorageDurationUnits(event);
+
+    let finalSD = storageDurationText;
+    console.log("storageDurationText", storageDurationText);
+    if (event.value == "Years") {
+      // && dStorageDurationUnits.value != "Years") {
+      finalSD *= 12;
+    }
+    console.log("finalSD", finalSD);
+    setStorageDuration(finalSD);
+  };
 
   const customStyles = {
     control: (Base) => ({
@@ -664,6 +566,12 @@ export default function Miners({ miners, href }) {
               </Heading>
               <Select
                 options={mLocationSelect}
+                onInputChange={(event) => {
+                  // console.log("inputchange", event)
+                }}
+                onChange={(event) => {
+                  console.log("justchange", event);
+                }}
                 styles={customStylesAlt}
                 isMulti
               />
@@ -694,15 +602,43 @@ export default function Miners({ miners, href }) {
                     bg="white"
                     type="number"
                     placeholder="Enter amount of storage"
-                    value={storageAmount}
-                    onChange={(event) => setStorageAmount(event.target.value)}
+                    value={storageAmountText}
+                    onChange={(event) => {
+                      console.log("amt changed");
+                      let finalSA = event.target.value;
+                      setStorageAmountText(event.target.value);
+                      if (dStorageUnits.value == "MB") {
+                        finalSA *= 0.001 * 0.931323;
+                      } else if (dStorageUnits.value == "GB") {
+                        finalSA *= 0.931323;
+                      } else if (dStorageUnits.value == "TB") {
+                        finalSA *= 1000 * 0.931323;
+                      } else if (dStorageUnits.value == "PB") {
+                        finalSA *= 1000000 * 0.931323;
+                      }
+                      console.log("finalSA", finalSA);
+
+                      setStorageAmount(finalSA);
+                      console.log(
+                        "storageAmount",
+                        storageAmount,
+                        event.target.value,
+                      );
+                      console.log("dStorageUnits", dStorageUnits);
+                      console.log(
+                        "dStorageDurationUnits",
+                        dStorageDurationUnits,
+                      );
+                    }}
                     borderRight="none"
                     borderRadius="0.4rem 0rem 0rem 0.4rem"
                   />
 
                   <Select
-                    options={dStorageAmount}
-                    defaultValue={dStorageAmount[1]}
+                    options={dStorageUnitsArr}
+                    value={dStorageUnits}
+                    onChange={handleStorageUnitsChange}
+                    // defaultValue={dStorageUnitsArr[1]}
                     isClearable={false}
                     isSearchable={false}
                     styles={customStyles}
@@ -718,14 +654,36 @@ export default function Miners({ miners, href }) {
                     bg="white"
                     type="number"
                     placeholder="Enter duration of storage"
-                    value={storageDuration}
-                    onChange={(event) => setStorageDuration(event.target.value)}
+                    value={storageDurationText}
+                    onChange={(event) => {
+                      console.log("dur changed");
+                      let finalSD = event.target.value;
+                      setStorageDurationText(event.target.value);
+                      if (dStorageDurationUnits.value == "Years") {
+                        finalSD *= 12;
+                      }
+                      console.log("finalSD", finalSD);
+
+                      setStorageDuration(finalSD);
+                      console.log(
+                        "storageDuration",
+                        storageDuration,
+                        event.target.value,
+                      );
+                      console.log("dStorageUnits", dStorageUnits);
+                      console.log(
+                        "dStorageDurationUnits",
+                        dStorageDurationUnits,
+                      );
+                    }}
                     borderRight="none"
                     borderRadius="0.4rem 0rem 0rem 0.4rem"
                   />
                   <Select
-                    options={dStorageDuration}
-                    defaultValue={dStorageDuration[0]}
+                    options={dStorageDurationUnitsArr}
+                    value={dStorageDurationUnits}
+                    onChange={handleStorageDurationUnitsChange}
+                    // defaultValue={dStorageDurationUnitsArr[0]}
                     isClearable={false}
                     isSearchable={false}
                     styles={customStyles}
@@ -806,126 +764,3 @@ export async function getStaticProps() {
     },
   };
 }
-
-// {
-//   /*Miner Listing Table*/
-// }
-// <Table variant="simple">
-//   {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-//   <Thead>
-//     <Tr>
-//       <Th>S.No.</Th>
-//       <Th>Miner</Th>
-//       <Th>Reputation Score</Th>
-//       <Th>Transparency Score</Th>
-//       <Th>Type of Service</Th>
-//       <Th>Data Transfer Mechanism</Th>
-//       <Th>Location</Th>
-//       <Th>Estimated Quote Price</Th>
-//       <Th>QAP</Th>
-//     </Tr>
-//   </Thead>
-//   <Tbody>
-//     <Tr>
-//       <Td>SerialNo</Td>
-//       <Td>
-//         <Text>UserName</Text>
-//         <Link>minerAddress</Link>
-//       </Td>
-//     </Tr>
-//   </Tbody>
-//   <Tfoot>
-//     {/*Probably Pagination will go here!
-//             <Tr>
-//               <Th>To convert</Th>
-//               <Th>into</Th>
-//               <Th isNumeric>multiply by</Th>
-//             </Tr> */}
-//   </Tfoot>
-// </Table>;
-
-// <Heading size="lg" color="gray.700">
-//   Search Miners
-// </Heading>
-// {/*Search*/}
-// <InputGroup w="50%">
-//   <InputRightElement
-//     pointerEvents="none"
-//     children={<Search2Icon color="gray" />}
-//   />
-//   <Input type="text" placeholder="Search Miners by Address" />
-// </InputGroup>
-// <Wrap spacing="16">
-//   {/*Type of Service*/}
-//   <WrapItem>
-//     <VStack alignItems="left">
-//       <Select placeholder="Type of Service">
-//         <option value="option1">Storage</option>
-//         <option value="option2">Retrieval</option>
-//         <option value="option2">Repair</option>
-//       </Select>
-//       <HStack>
-//         <Tag size="lg" borderRadius="full" colorScheme="yellow">
-//           Storage
-//         </Tag>
-//         <Tag size="lg" borderRadius="full" colorScheme="purple">
-//           Retrieval
-//         </Tag>
-//         <Tag size="lg" borderRadius="full" colorScheme="pink">
-//           Repair
-//         </Tag>
-//       </HStack>
-//     </VStack>
-//   </WrapItem>
-
-//   {/*Data Transfer Mechanism*/}
-//   <WrapItem>
-//     <VStack alignItems="left">
-//       <Select placeholder="Data Transfer Mechanism">
-//         <option value="option1">Online</option>
-//         <option value="option2">Offline</option>
-//       </Select>
-//       <HStack>
-//         <Tag size="lg" borderRadius="full" colorScheme="green">
-//           Online
-//         </Tag>
-//         <Tag size="lg" borderRadius="full" colorScheme="orange">
-//           Offline
-//         </Tag>
-//       </HStack>
-//     </VStack>
-//   </WrapItem>
-
-//   {/*Location*/}
-//   <WrapItem>
-//     <VStack alignItems="left">
-//       <InputGroup>
-//         <InputRightElement
-//           pointerEvents="none"
-//           children={<Search2Icon color="gray" />}
-//         />
-//         <Input type="text" placeholder="Location" color="#4A5568" />
-//       </InputGroup>
-//       <HStack>
-//         <Tag size="lg" borderRadius="full" colorScheme="gray">
-//           Online
-//         </Tag>
-//       </HStack>
-//     </VStack>
-//   </WrapItem>
-//   {/*Estimated Quote */}
-
-//   <WrapItem>
-//     <VStack alignItems="left">
-//       <Select placeholder="Estimated Quote Price">
-//         <option value="option1">Online</option>
-//         <option value="option2">Offline</option>
-//       </Select>
-//       <HStack>
-//         <Tag size="lg" borderRadius="full" colorScheme="blue">
-//           1000GiB / 24month
-//         </Tag>
-//       </HStack>
-//     </VStack>
-//   </WrapItem>
-// </Wrap>

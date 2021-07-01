@@ -16,13 +16,14 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { GetFormattedFILUnits } from "../../util/util";
 
 function PredictedEarnings(props) {
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
@@ -49,7 +50,7 @@ function PredictedEarnings(props) {
                 Net Estimated Earnings (next 60 days)
               </StatLabel>
               <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
-                {(Number(props.netEarnings) / 10 ** 18).toFixed(3)} FIL
+                {GetFormattedFILUnits(props.netEarnings)}
               </StatNumber>
               {/*<StatHelpText>
             ($ {Math.round(props.netEarnings * filecoinUSDRate)})
@@ -69,7 +70,7 @@ function PredictedEarnings(props) {
                         fontWeight="normal"
                         fontSize="3xl"
                       >
-                        {(Number(props.totalIncome) / 10 ** 18).toFixed(3)} FIL
+                        {GetFormattedFILUnits(props.totalIncome)}
                       </StatNumber>
                     </Stat>
                     <AccordionIcon />
@@ -82,7 +83,7 @@ function PredictedEarnings(props) {
                         Existing Deals:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.existing) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.existing)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -90,7 +91,7 @@ function PredictedEarnings(props) {
                         Potential Future Deals:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.potential) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.potential)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -98,7 +99,7 @@ function PredictedEarnings(props) {
                         Block Rewards:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.blockRewards) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.blockRewards)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -124,8 +125,7 @@ function PredictedEarnings(props) {
                         fontWeight="normal"
                         fontSize="3xl"
                       >
-                        {(Number(props.totalExpenditure) / 10 ** 18).toFixed(3)}{" "}
-                        FIL
+                        {GetFormattedFILUnits(props.totalExpenditure)}
                       </StatNumber>
                     </Stat>
                     <AccordionIcon />
@@ -138,7 +138,7 @@ function PredictedEarnings(props) {
                         Collateral Deposit:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.deposits) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.deposits)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -146,7 +146,7 @@ function PredictedEarnings(props) {
                         Gas:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.gas) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.gas)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -154,7 +154,7 @@ function PredictedEarnings(props) {
                         Penalty:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.penalty) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.penalty)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -162,7 +162,7 @@ function PredictedEarnings(props) {
                         Others:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.others) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.others)}
                       </Text>
                     </Stack>
                   </VStack>

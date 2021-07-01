@@ -138,8 +138,15 @@ const PersonalDetails = (props) => {
             </Heading>
             <Link href={workerAddressLink} isExternal>
               <HStack>
-                <Text color="gray.600" maxW="72" isTruncated>
-                  {props.workerAddress}
+                <Text color="gray.600" maxW="72">
+                  {props.workerAddress.length > 25
+                    ? props.workerAddress.substr(0, 12) +
+                      "..." +
+                      props.workerAddress.substr(
+                        props.workerAddress.length - 12,
+                        props.workerAddress.length,
+                      )
+                    : props.workerAddress}
                 </Text>
                 <Icon as={FiExternalLink} w={5} h={5} color="gray.600" />
               </HStack>
@@ -151,8 +158,15 @@ const PersonalDetails = (props) => {
             </Heading>
             <Link href={ownerAddressLink} isExternal>
               <HStack>
-                <Text color="gray.600" maxW="72" isTruncated>
-                  {props.ownerAddress}
+                <Text color="gray.600" maxW="72">
+                  {props.ownerAddress.length > 25
+                    ? props.ownerAddress.substr(0, 12) +
+                      "..." +
+                      props.ownerAddress.substr(
+                        props.ownerAddress.length - 12,
+                        props.ownerAddress.length,
+                      )
+                    : props.ownerAddress}
                 </Text>
                 <Icon as={FiExternalLink} w={5} h={5} color="gray.600" />
               </HStack>

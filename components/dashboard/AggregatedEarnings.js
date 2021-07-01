@@ -16,13 +16,14 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { GetFormattedFILUnits } from "../../util/util";
 
 function AggregatedEarnings(props) {
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
@@ -52,7 +53,7 @@ function AggregatedEarnings(props) {
                 Net Aggregate Earnings
               </StatLabel>
               <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
-                {(Number(props.netEarnings) / 10 ** 18).toFixed(3)} FIL
+                {GetFormattedFILUnits(props.netEarnings)}
               </StatNumber>
               {/*<StatHelpText>
               ($ {Math.round(props.netEarnings * filecoinUSDRate)})
@@ -72,7 +73,7 @@ function AggregatedEarnings(props) {
                         fontWeight="normal"
                         fontSize="3xl"
                       >
-                        {(Number(props.totalIncome) / 10 ** 18).toFixed(3)} FIL
+                        {GetFormattedFILUnits(props.totalIncome)}
                       </StatNumber>
                     </Stat>
                     <AccordionIcon />
@@ -85,7 +86,7 @@ function AggregatedEarnings(props) {
                         Storage Deals Payments:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.storageDeal) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.storageDeal)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -93,7 +94,7 @@ function AggregatedEarnings(props) {
                         Block Rewards:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.blockRewards) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.blockRewards)}
                       </Text>
                     </Stack>
                   </VStack>
@@ -111,8 +112,7 @@ function AggregatedEarnings(props) {
                         fontWeight="normal"
                         fontSize="3xl"
                       >
-                        {(Number(props.totalExpenditure) / 10 ** 18).toFixed(3)}{" "}
-                        FIL
+                        {GetFormattedFILUnits(props.totalExpenditure)}
                       </StatNumber>
                     </Stat>
                     <AccordionIcon />
@@ -130,7 +130,7 @@ function AggregatedEarnings(props) {
                         Collateral Deposit:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.deposits) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.deposits)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -138,7 +138,7 @@ function AggregatedEarnings(props) {
                         Gas:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.gas) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.gas)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -146,7 +146,7 @@ function AggregatedEarnings(props) {
                         Penalty:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.penalty) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.penalty)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -154,7 +154,7 @@ function AggregatedEarnings(props) {
                         Others:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {(Number(props.others) / 10 ** 18).toFixed(3)}
+                        {GetFormattedFILUnits(props.others)}
                       </Text>
                     </Stack>
                   </VStack>

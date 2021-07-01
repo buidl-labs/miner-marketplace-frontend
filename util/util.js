@@ -25,6 +25,9 @@ export function GetFormattedFILUnits(amountInAttoFIL) {
   // 1attoFIL=10^-18FIL
   //console.log("amountInAttoFIL", amountInAttoFIL);
   let amountInAttoFILInt = amountInAttoFIL; // parseInt(amountInAttoFIL);
+  if (amountInAttoFILInt == 0) {
+    return `0 FIL`;
+  }
   //console.log("amountInAttoFILInt", amountInAttoFILInt);
   if (amountInAttoFILInt < 10 ** 3) {
     return `${amountInAttoFILInt.toFixed(2)} attoFIL`; // <=999attoFIL

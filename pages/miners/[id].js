@@ -116,7 +116,7 @@ export default function Miner({ miner }) {
   const [finalFromArr, setFinalFromArr] = useState([]);
   const [finalToArr, setFinalToArr] = useState([]);
   //const [offsetValue, setOffsetValue] = useState(10);
-  let offsetValue = 10;
+  let offsetValue = 0;
 
   return (
     <>
@@ -401,24 +401,22 @@ export default function Miner({ miner }) {
                     .then((m) => {
                       //console.log("txns", m.transactions);
                       setTransactions(m.transactions);
-                      let fromArr = [];
-                      let toArr = [];
-                      m.transactions.forEach((txn) => {
-                        fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
-                        toArr.push(txn.to); //{ text: txn.to, value: txn.to });
-                      });
-                      fromArr = [...new Set(fromArr)];
-                      toArr = [...new Set(toArr)];
-                      fromArr = fromArr.map((fa) => {
-                        return { text: fa, value: fa };
-                      });
-                      toArr = toArr.map((ta) => {
-                        return { text: ta, value: ta };
-                      });
-                      //console.log("lf", fromArr.length, "tl", toArr.length);
-                      //console.log(fromArr, toArr);
-                      setFinalFromArr(fromArr);
-                      setFinalToArr(toArr);
+                      // let fromArr = [];
+                      // let toArr = [];
+                      // m.transactions.forEach((txn) => {
+                      //   fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
+                      //   toArr.push(txn.to); //{ text: txn.to, value: txn.to });
+                      // });
+                      // fromArr = [...new Set(fromArr)];
+                      // toArr = [...new Set(toArr)];
+                      // fromArr = fromArr.map((fa) => {
+                      //   return { text: fa, value: fa };
+                      // });
+                      // toArr = toArr.map((ta) => {
+                      //   return { text: ta, value: ta };
+                      // });
+                      // setFinalFromArr(fromArr);
+                      // setFinalToArr(toArr);
                     });
                   setLoading(false);
                 }}
