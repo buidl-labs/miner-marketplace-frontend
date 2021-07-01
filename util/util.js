@@ -23,9 +23,12 @@ export function GetFormattedStorageUnits(amountInBytes) {
 
 export function GetFormattedFILUnits(amountInAttoFIL) {
   // 1attoFIL=10^-18FIL
-  console.log("amountInAttoFIL", amountInAttoFIL);
+  //console.log("amountInAttoFIL", amountInAttoFIL);
   let amountInAttoFILInt = amountInAttoFIL; // parseInt(amountInAttoFIL);
-  console.log("amountInAttoFILInt", amountInAttoFILInt);
+  if (amountInAttoFILInt == 0) {
+    return `0 FIL`;
+  }
+  //console.log("amountInAttoFILInt", amountInAttoFILInt);
   if (amountInAttoFILInt < 10 ** 3) {
     return `${amountInAttoFILInt.toFixed(2)} attoFIL`; // <=999attoFIL
   } else if (amountInAttoFILInt < 10 ** 6) {
@@ -37,7 +40,7 @@ export function GetFormattedFILUnits(amountInAttoFIL) {
   } else if (amountInAttoFILInt < 10 ** 15) {
     return `${(amountInAttoFILInt / 10 ** 12).toFixed(2)} microFIL`; // 1microFIL to 999microFIL
   } else if (amountInAttoFILInt < 10 ** 18) {
-    return `${(amountInAttoFILInt / 10 ** 15).toFixed(2)} milliFIL`;// 
+    return `${(amountInAttoFILInt / 10 ** 15).toFixed(2)} milliFIL`; //
   } else if (amountInAttoFILInt < 10 ** 21) {
     return `${(amountInAttoFILInt / 10 ** 18).toFixed(2)} FIL`;
   } else if (amountInAttoFILInt < 10 ** 24) {

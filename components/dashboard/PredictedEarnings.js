@@ -16,25 +16,30 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { GetFormattedFILUnits } from "../../util/util";
 
 function PredictedEarnings(props) {
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
-        console.log(r.filecoin.usd);
+        //console.log(r.filecoin.usd);
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);
 
   return (
     <>
-      <VStack textAlign="left" alignItems="left">
-        <Heading size="lg" color="blue.700" my={6}>
+      <VStack
+        textAlign="left"
+        alignItems="left"
+        w={{ base: "full", lg: "60%" }}
+      >
+        <Heading size="lg" color="blue.700" my={6} pl="4">
           Predicted Earnings
         </Heading>
 
@@ -44,8 +49,8 @@ function PredictedEarnings(props) {
               <StatLabel fontSize="md" color="gray.600" mb="2">
                 Net Estimated Earnings (next 60 days)
               </StatLabel>
-              <StatNumber color="blue.700">
-                {(Number(props.netEarnings) / 10 ** 18).toFixed(3)} FIL
+              <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
+                {GetFormattedFILUnits(props.netEarnings)}
               </StatNumber>
               {/*<StatHelpText>
             ($ {Math.round(props.netEarnings * filecoinUSDRate)})
@@ -60,37 +65,51 @@ function PredictedEarnings(props) {
                       <StatLabel fontSize="md" color="gray.600" mb="2">
                         Total Estimated Income (next 60 days)
                       </StatLabel>
-                      <StatNumber color="green.600">
-                        {(Number(props.totalIncome) / 10 ** 18).toFixed(3)} FIL
+                      <StatNumber
+                        color="green.600"
+                        fontWeight="normal"
+                        fontSize="3xl"
+                      >
+                        {GetFormattedFILUnits(props.totalIncome)}
                       </StatNumber>
                     </Stat>
                     <AccordionIcon />
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <VStack textAlign="left" alignItems="left">
-                    <HStack>
-                      <Text>Existing Deals:</Text>
-                      <Text>
-                        {(Number(props.existing) / 10 ** 18).toFixed(3)}
+                  <VStack textAlign="left" alignItems="left" spacing="4">
+                    <Stack>
+                      <Text fontSize="md" color="gray.600" mb="-2">
+                        Existing Deals:
                       </Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Potential Future Deals:</Text>
-                      <Text>
-                        {(Number(props.potential) / 10 ** 18).toFixed(3)}
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
+                        {GetFormattedFILUnits(props.existing)}
                       </Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Block Rewards:</Text>
-                      <Text>
-                        {(Number(props.blockRewards) / 10 ** 18).toFixed(3)}
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600" mb="-2">
+                        Potential Future Deals:
                       </Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Days until eligible for block rewards:</Text>
-                      <Text>{props.days}</Text>
-                    </HStack>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
+                        {GetFormattedFILUnits(props.potential)}
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600" mb="-2">
+                        Block Rewards:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
+                        {GetFormattedFILUnits(props.blockRewards)}
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600" mb="-2">
+                        Days until eligible for block rewards:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
+                        {props.days}
+                      </Text>
+                    </Stack>
                   </VStack>
                 </AccordionPanel>
               </AccordionItem>
@@ -101,38 +120,51 @@ function PredictedEarnings(props) {
                       <StatLabel fontSize="md" color="gray.600" mb="2">
                         Total Estimated Expenditure (next 60 days)
                       </StatLabel>
-                      <StatNumber color="red.600">
-                        {(Number(props.totalExpenditure) / 10 ** 18).toFixed(3)}{" "}
-                        FIL
+                      <StatNumber
+                        color="red.600"
+                        fontWeight="normal"
+                        fontSize="3xl"
+                      >
+                        {GetFormattedFILUnits(props.totalExpenditure)}
                       </StatNumber>
                     </Stat>
                     <AccordionIcon />
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <VStack textAlign="left" alignItems="left">
-                    <HStack>
-                      <Text>Collateral Deposit:</Text>
-                      <Text>
-                        {(Number(props.deposits) / 10 ** 18).toFixed(3)}
+                  <VStack textAlign="left" alignItems="left" spacing="4">
+                    <Stack>
+                      <Text fontSize="md" color="gray.600" mb="-2">
+                        Collateral Deposit:
                       </Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Gas:</Text>
-                      <Text>{(Number(props.gas) / 10 ** 18).toFixed(3)}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Penalty:</Text>
-                      <Text>
-                        {(Number(props.penalty) / 10 ** 18).toFixed(3)}
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
+                        {GetFormattedFILUnits(props.deposits)}
                       </Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Others:</Text>
-                      <Text>
-                        {(Number(props.others) / 10 ** 18).toFixed(3)}
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600" mb="-2">
+                        Gas:
                       </Text>
-                    </HStack>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
+                        {GetFormattedFILUnits(props.gas)}
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600" mb="-2">
+                        Penalty:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
+                        {GetFormattedFILUnits(props.penalty)}
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <Text fontSize="md" color="gray.600" mb="-2">
+                        Others:
+                      </Text>
+                      <Text color="gray.700" fontWeight="medium" fontSize="lg">
+                        {GetFormattedFILUnits(props.others)}
+                      </Text>
+                    </Stack>
                   </VStack>
                 </AccordionPanel>
               </AccordionItem>

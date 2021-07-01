@@ -80,6 +80,19 @@ const DashboardNavbar = (props) => {
     if (isSignedIn) return props.minerID;
     return "Connect Wallet";
   }
+  function DisplaySettings() {
+    if (isSignedIn)
+      return (
+        <IconButton
+          variant="ghost"
+          colorScheme="gray"
+          fontSize="24px"
+          icon={<FiSettings />}
+          onClick={() => router.push("/profileSettings")}
+        />
+      );
+    return "Connect Wallet";
+  }
 
   return (
     <>
@@ -108,7 +121,7 @@ const DashboardNavbar = (props) => {
             icon={<FiSettings />}
             onClick={() => router.push("/profileSettings")}
           /> */}
-
+          {DisplaySettings()}
           <Button
             colorScheme="blue"
             size="md"

@@ -47,7 +47,7 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
 } from "@chakra-ui/icons";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { ApolloClient, InMemoryCache, gql, useApolloClient } from "@apollo/client";
 import { createHttpLink } from "apollo-link-http";
 import { TableProps } from "antd/lib/table";
 import "antd/dist/antd.css";
@@ -57,22 +57,74 @@ import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/hooks";
-import { BiTransfer } from "react-icons/bi";
+import {
+  GetFormattedStorageUnits,
+  GetFormattedFILUnits,
+} from "../../../util/util";
 
-import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
-import BasicView from "./dashboard/transaction/BasicView";
-import AdvanceView from "./dashboard/transaction/AdvanceView";
+function AdvanceView(props) {
 
-export default function TransactionHistory(props) {
-  const [pagination, setPagination] = useState({});
+  const [transactions, setTransactions] = useState([]);
+  const [finalFromArr, setFinalFromArr] = useState([]);
+  const [finalToArr, setFinalToArr] = useState([]);
+  
+  const BACKEND_URL = "https://miner-marketplace-backend-2.onrender.com/query";
+  const client = new ApolloClient({
+    uri: BACKEND_URL,
+    cache: new InMemoryCache(),
+  });
+  // const { data } = await 
+  client
+    .query({
+      query: gql`
+      query {
+        miner(id: "${props.minerID}") {
+          id
+          transactions (orderBy: { param: timestamp, sort: DESC }) {
+            id
+            value
+            methodName
+            from
+            to
+            minerFee
+            burnFee
+            transactionType
+            exitCode
+            height
+            timestamp
+          }
+        }
+      }
+    `,
+    })
+    .then((data) => {
+      return data.data;
+    })
+    .then((d) => {
+      return d.miner;
+    })
+    .then((m) => {
+      setTransactions(m.transactions);
+      let fromArr = [];
+      let toArr = [];
+      m.transactions.forEach((txn) => {
+        fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
+        toArr.push(txn.to); //{ text: txn.to, value: txn.to });
+      });
+      fromArr = [...new Set(fromArr)];
+      toArr = [...new Set(toArr)];
+      fromArr = fromArr.map((fa) => {
+        return { text: fa, value: fa };
+      });
+      toArr = toArr.map((ta) => {
+        return { text: ta, value: ta };
+      });
+      setFinalFromArr(fromArr);
+      setFinalToArr(toArr);
+    });
 
-  const dataSource = props.transactions.map((txn) => {
-    // Math.round((Number(txn.value) / 10 ** 18 + Number.EPSILON) * 1000) / 1000;
-    // if (txn.minerFee > 0)
-    //   console.log("MF", txn.minerFee, Number(txn.minerFee) / 10 ** 18);
-    // TODO: convert value, minerFee, burnFee to nanoFIL/attoFIL etc based on their size
-    // right now all are in FIL
 
+  const dataSource = transactions.map((txn) => {
     let txntype = "message";
     if (txn.methodName == "ApplyRewards") {
       txntype = "block";
@@ -115,6 +167,8 @@ export default function TransactionHistory(props) {
     };
   });
 
+  //const [pagination, setPagination] = useState({});
+
   const columns = [
     {
       title: "ID",
@@ -150,6 +204,12 @@ export default function TransactionHistory(props) {
       key: "timestamp",
       sorter: {
         compare: (a, b) => parseInt(a.timestamp) - parseInt(b.timestamp),
+      },
+      render: (dateProps) => {
+        const miliseconds = dateProps * 1000;
+        const dateObject = new Date(miliseconds);
+        const txnDate = dateObject.toLocaleString();
+        return <p>{txnDate}</p>;
       },
     },
     {
@@ -198,7 +258,7 @@ export default function TransactionHistory(props) {
       title: "From",
       dataIndex: "from",
       key: "from",
-      filters: props.finalFromArr,
+      filters: finalFromArr,
       onFilter: (value, record) => {
         return record.from.includes(value);
       },
@@ -222,7 +282,7 @@ export default function TransactionHistory(props) {
       title: "To",
       dataIndex: "to",
       key: "to",
-      filters: props.finalToArr,
+      filters: finalToArr,
       onFilter: (value, record) => {
         return record.to.includes(value);
       },
@@ -290,123 +350,90 @@ export default function TransactionHistory(props) {
     },
   ];
 
-  const [toggle, setToggle] = useState(false);
+  // const [transactions, setTransactions] = useState([]);
+  // const [finalFromArr, setFinalFromArr] = useState([]);
+  // const [finalToArr, setFinalToArr] = useState([]);
 
-  function handleTxnToggle() {
-    toggle ? setToggle(false) : setToggle(true);
-  }
-
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-
-  // const [next, setNext] = useState(10);
+  const [next, setNext] = useState(10);
   // function handleLoadMore() {
   //   setNext(next + 10);
   // }
 
-  let dss = props.transactions.map((txn) => {
-    let txntype = "message";
-    if (txn.methodName == "ApplyRewards") {
-      txntype = "block";
-    }
-    let valuesign = "";
-    if (txn.methodName != "ApplyRewards") {
-      valuesign = "";
-    }
-    if (Number(txn.value) == 0) {
-      valuesign = "";
-    }
-    if (txn.transactionType == "Transfer") {
-      valuesign = "";
-    }
-    return {
-      key: txn.id,
-      id: {
-        mid: txn.id,
-        txntype: txntype,
-      },
-      value: {
-        val: Number(txn.value),
-        display: valuesign + GetFormattedFILUnits(Number(txn.value)),
-      },
-      methodName: txn.methodName,
-      from: txn.from,
-      to: txn.to,
-      minerFee: {
-        val: Number(txn.minerFee),
-        display: GetFormattedFILUnits(Number(txn.minerFee)),
-      },
-      burnFee: {
-        val: Number(txn.burnFee),
-        display: GetFormattedFILUnits(Number(txn.burnFee)),
-      },
-      transactionType: txn.transactionType,
-      exitCode: txn.exitCode,
-      height: txn.height,
-      timestamp: txn.timestamp,
-    };
-  });
-
   return (
     <>
-      <Stack>
-        <IconButton
-          icon={<ArrowUpIcon h={8} w={8} />}
-          aria-label="go to top"
-          color="gray.600"
-          bg="gray.100"
-          border="2px solid #CBD5E0"
-          boxShadow="xl"
-          isRound
-          onClick={scrollToTop}
-          right="8"
-          bottom="8"
-          position="fixed"
-          w={12}
-          h={12}
-          zIndex="10"
+      <Box>
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          // pagination={pagination}
         />
-        <HStack justifyContent="space-between" mb="8" alignItems="center">
-          <VStack alignItems="left">
-            <Heading size="lg" color="blue.700" mt="6" pl="4">
-              Transaction History
-            </Heading>
-          </VStack>
-          <HStack>
-            <Switch
-              id="transactionView"
-              onChange={handleTxnToggle}
-              isChecked={toggle}
-            />
-            <Text fontSize="lg" fontWeight="medium" color="gray.600">
-              Advanced view
-            </Text>
-          </HStack>
-        </HStack>
-        {toggle && (
-          <AdvanceView
-            minerID={props.minerID}
-            // transactions={props.transactions}
-            // finalFromArr={props.finalFromArr}
-            // finalToArr={props.finalToArr}
-          />
-        )}
-        {!toggle && (
-          <BasicView
-            minerID={props.minerID}
-            transactions={props.transactions}
-            offsetValue={props.offsetValue}
-            dss={dss}
-          />
-        )}
-      </Stack>
+      </Box>
     </>
   );
 }
 
-// export default TransactionHistory;
-// export async function getStaticProps()
+export default AdvanceView;
+
+// export async function getStaticProps() {
+//   const BACKEND_URL = "https://miner-marketplace-backend-2.onrender.com/query";
+//   const client = new ApolloClient({
+//     uri: BACKEND_URL,
+//     cache: new InMemoryCache(),
+//   });
+//   const { data } = await client
+//     .query({
+//       query: gql`
+//       query {
+//         miner(id: "${minerID}") {
+//           id
+//           transactions (orderBy: { param: timestamp, sort: DESC }) {
+//             id
+//             value
+//             methodName
+//             from
+//             to
+//             minerFee
+//             burnFee
+//             transactionType
+//             exitCode
+//             height
+//             timestamp
+//           }
+//         }
+//       }
+//     `,
+//     })
+//     .then((data) => {
+//       return data.data;
+//     })
+//     .then((d) => {
+//       return d.miner;
+//     })
+//     .then((m) => {
+//       setTransactions(m.transactions);
+//       let fromArr = [];
+//       let toArr = [];
+//       m.transactions.forEach((txn) => {
+//         fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
+//         toArr.push(txn.to); //{ text: txn.to, value: txn.to });
+//       });
+//       fromArr = [...new Set(fromArr)];
+//       toArr = [...new Set(toArr)];
+//       fromArr = fromArr.map((fa) => {
+//         return { text: fa, value: fa };
+//       });
+//       toArr = toArr.map((ta) => {
+//         return { text: ta, value: ta };
+//       });
+//       setFinalFromArr(fromArr);
+//       setFinalToArr(toArr);
+//     });
+//   return {
+//     props: {
+//       // props: transactions,
+//       transactions: props.transactions,
+//       finalFromArr: props.finalFromArr,
+//       finalToArr: props.finalToArr,
+//     },
+//   };
+// }

@@ -14,7 +14,6 @@ import JoinNetwork from "../components/landingPage/JoinNetwork";
 import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
-import { useBreakpointValue } from "@chakra-ui/react";
 
 const IndexPage = (stats) => {
   //console.log(stats);

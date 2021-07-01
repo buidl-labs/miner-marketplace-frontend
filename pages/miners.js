@@ -2,12 +2,13 @@ import {
   Button,
   Heading,
   Stack,
+  Flex,
   Grid,
   GridItem,
   Input,
   InputGroup,
   InputRightElement,
-  Select,
+  InputLeftElement,
   VStack,
   HStack,
   Link,
@@ -20,14 +21,14 @@ import {
   Th,
   Td,
   TableCaption,
-  Wrap,
-  WrapItem,
   Text,
   CheckboxGroup,
   Checkbox,
+  Circle,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
+import Select from "react-select";
 
 import DashboardMenu from "../components/dashboard/DashboardMenu";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
@@ -44,52 +45,16 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 
 import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
+import Base from "antd/lib/typography/Base";
 
 export default function Miners({ miners, href }) {
-  // const [miners, setMiners] = useState([]);
-
-  // useEffect(() => {
-  //   async function fetchMyAPI() {
-  //     const link = createHttpLink({
-  //       uri: process.env.BACKEND_URL,
-  //       credentials: "same-origin",
-  //     });
-  //     const client = new ApolloClient({
-  //       uri: process.env.BACKEND_URL,
-  //       cache: new InMemoryCache(),
-  //       // link,
-  //       // fetchOptions: {
-  //       //   mode: "no-cors",
-  //       // },
-  //       // headers: {
-  //       //   "Access-Control-Allow-Credentials": true,
-  //       // },
-  //     });
-
-  //     const { data } = await client.query({
-  //       query: gql`
-  //         query {
-  //           miners {
-  //             id
-  //             owner {
-  //               address
-  //             }
-  //           }
-  //         }
-  //       `,
-  //     });
-  //     setMiners(data.miners);
-  //   }
-  //   fetchMyAPI();
-  // }, []);
-
   useEffect(() => {
     fetch(
       "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
-        console.log(r.filecoin.usd);
+        // console.log(r.filecoin.usd);
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);
@@ -103,6 +68,8 @@ export default function Miners({ miners, href }) {
 
   const [storageDuration, setStorageDuration] = useState(6);
   const [storageAmount, setStorageAmount] = useState(10);
+  const [storageDurationText, setStorageDurationText] = useState(6);
+  const [storageAmountText, setStorageAmountText] = useState(10);
 
   const [pagination, setPagination] = useState({});
   // const [filteredInfo, setFilteredInfo] = useState({});
@@ -126,93 +93,6 @@ export default function Miners({ miners, href }) {
     setSearchText("");
   }
 
-  // console.log(miners);
-  const fetchedData = [
-    {
-      id: "f02770",
-      claimed: true,
-      personalInfo: {
-        name: "john doe",
-      },
-      reputationScore: 30,
-      transparencyScore: 0,
-      location: {
-        country: "CN",
-        region: "Asia",
-      },
-      service: {
-        serviceTypes: {
-          storage: true,
-          retrieval: false,
-          repair: false,
-        },
-        dataTransferMechanism: {
-          online: true,
-          offline: false,
-        },
-      },
-      pricing: {
-        storageAskPrice: 1.5,
-      },
-      qualityAdjustedPower: "81775868078194688",
-    },
-    {
-      id: "f083273827",
-      claimed: true,
-      personalInfo: {
-        name: "",
-      },
-      reputationScore: 50,
-      transparencyScore: 10,
-      location: {
-        country: "NL",
-        region: "Europe",
-      },
-      service: {
-        serviceTypes: {
-          storage: true,
-          retrieval: false,
-          repair: false,
-        },
-        dataTransferMechanism: {
-          online: true,
-          offline: true,
-        },
-      },
-      pricing: {
-        storageAskPrice: 3.14,
-      },
-      qualityAdjustedPower: "11775868078194688",
-    },
-    {
-      id: "f037288",
-      claimed: true,
-      personalInfo: {
-        name: "jeff",
-      },
-      reputationScore: 15,
-      transparencyScore: 90,
-      location: {
-        country: "CA",
-        region: "North America",
-      },
-      service: {
-        serviceTypes: {
-          storage: true,
-          retrieval: true,
-          repair: false,
-        },
-        dataTransferMechanism: {
-          online: true,
-          offline: false,
-        },
-      },
-      pricing: {
-        storageAskPrice: 13.14,
-      },
-      qualityAdjustedPower: "51775868078194688",
-    },
-  ];
   const dataSource = miners.map((fd) => {
     let serviceTypeArr = [];
     if (fd.service.serviceTypes.storage) {
@@ -242,10 +122,10 @@ export default function Miners({ miners, href }) {
       fd.pricing.storageAskPrice == null ||
       fd.pricing.storageAskPrice == ""
     ) {
-      console.log(
-        "fd.pricing.storageAskPrice invalid",
-        fd.pricing.storageAskPrice,
-      );
+      // console.log(
+      //   "fd.pricing.storageAskPrice invalid",
+      //   fd.pricing.storageAskPrice
+      // );
       storageAskPrice = 0; // show zero for miners who haven't mentioned askPrice
     }
     return {
@@ -300,21 +180,8 @@ export default function Miners({ miners, href }) {
     { text: "South America", value: "South America" },
     { text: "Central America", value: "Central America" },
     { text: "North America", value: "North America" },
-    // ...new Set(
-    //   miners.map((m) => {
-    //     return {
-    //       text: m.location.country + " (" + m.location.region + ")",
-    //       value: m.location.country + " (" + m.location.region + ")",
-    //     };
-    //   }),
-    // ),
   ];
   const columns = [
-    // {
-    //   title: "S.No.",
-    //   dataIndex: "sno",
-    //   key: "sno",
-    // },
     {
       title: "Miner",
       dataIndex: "miner",
@@ -330,8 +197,6 @@ export default function Miners({ miners, href }) {
                 color="blue.500"
                 fontWeight="semibold"
                 textDecoration="underline"
-                //borderBottom="solid 1px #3182CE"
-                //w="fit-content"
               >
                 {m.id}
               </Text>
@@ -358,6 +223,14 @@ export default function Miners({ miners, href }) {
         compare: (a, b) =>
           parseInt(a.reputationScore) - parseInt(b.reputationScore),
       },
+      render: (reputationScore) => {
+        var color = reputationScore < 50 ? "gray.500" : "blue.600";
+        return (
+          <Text color={color} fontSize="lg">
+            {reputationScore}
+          </Text>
+        );
+      },
     },
     {
       title: "Transparency Score",
@@ -366,6 +239,14 @@ export default function Miners({ miners, href }) {
       sorter: {
         compare: (a, b) =>
           parseInt(a.transparencyScore) - parseInt(b.transparencyScore),
+      },
+      render: (transparencyScore) => {
+        var color = transparencyScore < 50 ? "orange.600" : "blue.700";
+        return (
+          <Text color={color} fontSize="lg">
+            {transparencyScore}
+          </Text>
+        );
       },
     },
     {
@@ -378,9 +259,29 @@ export default function Miners({ miners, href }) {
         { text: "Repair", value: "Repair" },
       ],
       onFilter: (value, record) => {
-        console.log("VR", value, record);
+        //console.log("VR", value, record);
         return record.serviceType.includes(value);
       },
+      render: (serviceTypes) => (
+        <HStack spacing="2">
+          {serviceTypes.map((service) => {
+            let tagColor = "gray.700";
+            let tagBg = "gray.100";
+            if (service === "Storage") {
+              tagColor = "blue.700";
+              let tagBg = "blue.50";
+            } else if (service === "Retrieval") {
+              tagColor = "purple.700";
+              tagBg = "purple.50";
+            }
+            return (
+              <Tag color={tagColor} bg={tagBg} borderRadius="full">
+                {service}
+              </Tag>
+            );
+          })}
+        </HStack>
+      ),
     },
     {
       title: "Data Transfer Mechanism",
@@ -391,6 +292,19 @@ export default function Miners({ miners, href }) {
         { text: "Offline", value: "Offline" },
       ],
       onFilter: (value, record) => record.dataTransferMechanism.includes(value),
+      render: (dataTransferMechanism) =>
+        dataTransferMechanism.map((datatype) => {
+          let color = "gray.500";
+          if (datatype === "Online") {
+            color = "green.500";
+          }
+          return (
+            <HStack>
+              <Circle size="0.8rem" bg={color} />
+              <Text color={color}>{datatype}</Text>
+            </HStack>
+          );
+        }),
     },
     {
       title: "Location",
@@ -415,7 +329,7 @@ export default function Miners({ miners, href }) {
         return (
           <div color="gray.600">
             <Text>{l.country}</Text>
-            <Text>({l.region})</Text>
+            <Text fontSize="sm">({l.region})</Text>
           </div>
         );
       },
@@ -461,7 +375,7 @@ export default function Miners({ miners, href }) {
     let mminers = dataSource;
     let q = minerIdQuery;
     if (q == "") {
-      console.log("");
+      // console.log("");
     }
     mminers = mminers.filter(function (m) {
       // console.log("m", m.miner.id, "ido", m.miner.id.indexOf(q), "q", q);
@@ -473,14 +387,14 @@ export default function Miners({ miners, href }) {
     setFilteredMiners(mminers);
   };
   const onChange = (event) => {
-    console.log(
-      "qupdated",
-      minerIdQuery,
-      "q",
-      event.target.value,
-      "qlc",
-      event.target.value.toLowerCase(),
-    );
+    // console.log(
+    //   "qupdated",
+    //   minerIdQuery,
+    //   "q",
+    //   event.target.value,
+    //   "qlc",
+    //   event.target.value.toLowerCase()
+    // );
 
     const q = event.target.value.toLowerCase();
     // if (q == "") {
@@ -490,6 +404,98 @@ export default function Miners({ miners, href }) {
     setMinerIdQuery(event.target.value);
     filterList(event);
     // }
+  };
+
+  /* Options for Select Component */
+  const mServices = [
+    { label: "Storage", value: "Storage" },
+    { label: "Retrieval", value: "Retrieval" },
+    { label: "Repair", value: "Repair" },
+  ];
+
+  const mDataMechanism = [
+    { label: "Online", value: "Online" },
+    { label: "Offline", value: "Offline" },
+  ];
+
+  const mLocationSelect = [
+    { label: "Asia", value: "Asia" },
+    { label: "Europe", value: "Europe" },
+    { label: "Africa", value: "Africa" },
+    { label: "Oceania", value: "Oceania" },
+    { label: "South America", value: "South America" },
+    { label: "Central America", value: "Central America" },
+    { label: "North America", value: "North America" },
+  ];
+
+  const dStorageUnitsArr = [
+    { label: "MB", value: "MB" },
+    { label: "GB", value: "GB" },
+    { label: "TB", value: "TB" },
+    { label: "PB", value: "PB" },
+  ];
+  const dStorageDurationUnitsArr = [
+    { label: "Months", value: "Months" },
+    { label: "Years", value: "Years" },
+  ];
+
+  const [dStorageUnits, setDStorageUnits] = useState(dStorageUnitsArr[1]);
+  const [dStorageDurationUnits, setDStorageDurationUnits] = useState(
+    dStorageDurationUnitsArr[0],
+  );
+
+  const handleStorageUnitsChange = (event) => {
+    console.log("setDStorageUnits", dStorageUnits, event);
+    setDStorageUnits(event);
+
+    let finalSA = storageAmountText;
+    console.log("storageAmountText", storageAmountText);
+    if (event.value == "MB") {
+      finalSA *= 0.001 * 0.931323;
+    } else if (event.value == "GB") {
+      finalSA *= 0.931323;
+    } else if (event.value == "TB") {
+      finalSA *= 1000 * 0.931323;
+    } else if (event.value == "PB") {
+      finalSA *= 1000000 * 0.931323;
+    }
+    console.log("finalSA", finalSA);
+    setStorageAmount(finalSA);
+  };
+  const handleStorageDurationUnitsChange = (event) => {
+    console.log("setDStorageDurationUnits", dStorageDurationUnits, event);
+    setDStorageDurationUnits(event);
+
+    let finalSD = storageDurationText;
+    console.log("storageDurationText", storageDurationText);
+    if (event.value == "Years") {
+      // && dStorageDurationUnits.value != "Years") {
+      finalSD *= 12;
+    }
+    console.log("finalSD", finalSD);
+    setStorageDuration(finalSD);
+  };
+
+  const customStyles = {
+    control: (Base) => ({
+      ...Base,
+      backgroundColor: "#F7FAFC",
+      width: "6.4rem",
+      height: "2.5rem",
+      borderRadius: "0rem 0.4rem 0.4rem 0rem",
+      borderLeft: "none",
+      borderColor: "#E2E8F0",
+    }),
+  };
+
+  const customStylesAlt = {
+    control: (Base) => ({
+      ...Base,
+      height: "2.5rem",
+      borderRadius: "0.4rem",
+
+      borderColor: "#E2E8F0",
+    }),
   };
 
   return (
@@ -506,14 +512,14 @@ export default function Miners({ miners, href }) {
 
         <GridItem colSpan="12" pt="28" bg="white" px="8">
           <Stack spacing="4">
-            <Heading color="gray.700" size="lg" mb={4}>
+            <Heading color="gray.700" size="lg">
               Search Miners
             </Heading>
             <Stack spacing="4" pb="4">
               <InputGroup maxW="40%">
-                <InputRightElement
+                <InputLeftElement
                   pointerEvents="visible"
-                  children={<Search2Icon color="blue.600" />}
+                  children={<Search2Icon color="gray.500" />}
                 />
                 <Input
                   type="text"
@@ -525,82 +531,168 @@ export default function Miners({ miners, href }) {
             </Stack>
           </Stack>
 
-          <HStack py={8} spacing="16" w="full">
-            {/*<VStack alignItems="left">
-              <Select placeholder="Type of Service">
-                <option value="storage">Storage</option>
-                <option value="retrieval">Retrieval</option>
-                <option value="repair">Repair</option>
-              </Select>
-              <HStack>
-                <Tag size="lg" borderRadius="full" colorScheme="yellow">
-                  Storage
-                </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="purple">
-                  Retrieval
-                </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="pink">
-                  Repair
-                </Tag>
-              </HStack>
-            </VStack>*/}
+          <HStack
+            py={8}
+            w="full"
+            justifyContent="space-between"
+            alignItems="top"
+          >
+            <VStack alignItems="left" w="20rem">
+              <Heading size="sm" fontWeight="medium" color="gray.700">
+                Type of Service
+              </Heading>
+              <Select
+                closeMenuOnSelect={true}
+                options={mServices}
+                styles={customStylesAlt}
+                isMulti
+              />
+            </VStack>
 
-            {/*<VStack alignItems="left">
-              <Select placeholder="Data Transfer Mechanism">
-                <option value="option1">Online</option>
-                <option value="option2">Offline</option>
-                {<CheckboxGroup>
-                  <Checkbox value="online">Online</Checkbox>
-                  <Checkbox value="offline">Offline</Checkbox>
-                </CheckboxGroup>}
-              </Select>
-              <HStack>
-                <Tag size="lg" borderRadius="full" colorScheme="green">
-                  Online
-                </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="orange">
-                  Offline
-                </Tag>
-              </HStack>
-            </VStack>*/}
+            <VStack alignItems="left" w="20rem">
+              <Heading size="sm" fontWeight="medium" color="gray.700">
+                Data Transfer Mechanism
+              </Heading>
+              <Select
+                options={mDataMechanism}
+                styles={customStylesAlt}
+                isMulti
+              />
+            </VStack>
 
-            {/*<VStack alignItems="left">
-              <InputGroup>
-                <InputRightElement
-                  pointerEvents="none"
-                  children={<Search2Icon color="gray" />}
-                />
-                <Input type="text" placeholder="Location" color="#4A5568" />
-              </InputGroup>
-              <HStack>
-                <Tag size="lg" borderRadius="full" colorScheme="gray">
-                  countryName
-                </Tag>
-              </HStack>
-            </VStack>*/}
+            <VStack alignItems="left" w="20rem">
+              <Heading size="sm" fontWeight="medium" color="gray.700">
+                Location
+              </Heading>
+              <Select
+                options={mLocationSelect}
+                onInputChange={(event) => {
+                  // console.log("inputchange", event)
+                }}
+                onChange={(event) => {
+                  console.log("justchange", event);
+                }}
+                styles={customStylesAlt}
+                isMulti
+              />
+            </VStack>
 
-            <Stack maxW="25%" alignItems="left" spacing="4">
+            <Stack
+              alignItems="left"
+              spacing="4"
+              bg="gray.100"
+              p="6"
+              borderRadius="xl"
+              w="20rem"
+            >
+              <Heading size="sm" fontWeight="medium" color="gray.700">
+                Estimated Quote
+              </Heading>
               <Stack spacing="1">
-                <Text>Storage amount (in GiB)</Text>
-                <Input
-                  type="number"
-                  placeholder="Enter amount of storage"
-                  value={storageAmount}
-                  onChange={(event) => setStorageAmount(event.target.value)}
-                />
+                <Text fontWeight="medium" color="gray.700">
+                  Storage amount
+                </Text>
+
+                <InputGroup
+                  height="fit-content"
+                  alignContent="center"
+                  alignItems="center"
+                >
+                  <Input
+                    bg="white"
+                    type="number"
+                    placeholder="Enter amount of storage"
+                    value={storageAmountText}
+                    onChange={(event) => {
+                      console.log("amt changed");
+                      let finalSA = event.target.value;
+                      setStorageAmountText(event.target.value);
+                      if (dStorageUnits.value == "MB") {
+                        finalSA *= 0.001 * 0.931323;
+                      } else if (dStorageUnits.value == "GB") {
+                        finalSA *= 0.931323;
+                      } else if (dStorageUnits.value == "TB") {
+                        finalSA *= 1000 * 0.931323;
+                      } else if (dStorageUnits.value == "PB") {
+                        finalSA *= 1000000 * 0.931323;
+                      }
+                      console.log("finalSA", finalSA);
+
+                      setStorageAmount(finalSA);
+                      console.log(
+                        "storageAmount",
+                        storageAmount,
+                        event.target.value,
+                      );
+                      console.log("dStorageUnits", dStorageUnits);
+                      console.log(
+                        "dStorageDurationUnits",
+                        dStorageDurationUnits,
+                      );
+                    }}
+                    borderRight="none"
+                    borderRadius="0.4rem 0rem 0rem 0.4rem"
+                  />
+
+                  <Select
+                    options={dStorageUnitsArr}
+                    value={dStorageUnits}
+                    onChange={handleStorageUnitsChange}
+                    // defaultValue={dStorageUnitsArr[1]}
+                    isClearable={false}
+                    isSearchable={false}
+                    styles={customStyles}
+                  />
+                </InputGroup>
               </Stack>
               <Stack spacing="1">
-                <Text>Storage Duration (in months)</Text>
-                <Input
-                  type="number"
-                  placeholder="Enter duration of storage"
-                  value={storageDuration}
-                  onChange={(event) => setStorageDuration(event.target.value)}
-                />
+                <Text fontWeight="medium" color="gray.700">
+                  Storage Duration
+                </Text>
+                <InputGroup>
+                  <Input
+                    bg="white"
+                    type="number"
+                    placeholder="Enter duration of storage"
+                    value={storageDurationText}
+                    onChange={(event) => {
+                      console.log("dur changed");
+                      let finalSD = event.target.value;
+                      setStorageDurationText(event.target.value);
+                      if (dStorageDurationUnits.value == "Years") {
+                        finalSD *= 12;
+                      }
+                      console.log("finalSD", finalSD);
+
+                      setStorageDuration(finalSD);
+                      console.log(
+                        "storageDuration",
+                        storageDuration,
+                        event.target.value,
+                      );
+                      console.log("dStorageUnits", dStorageUnits);
+                      console.log(
+                        "dStorageDurationUnits",
+                        dStorageDurationUnits,
+                      );
+                    }}
+                    borderRight="none"
+                    borderRadius="0.4rem 0rem 0rem 0.4rem"
+                  />
+                  <Select
+                    options={dStorageDurationUnitsArr}
+                    value={dStorageDurationUnits}
+                    onChange={handleStorageDurationUnitsChange}
+                    // defaultValue={dStorageDurationUnitsArr[0]}
+                    isClearable={false}
+                    isSearchable={false}
+                    styles={customStyles}
+                  />
+                </InputGroup>
               </Stack>
               <Button
                 colorScheme="blue"
-                variant="outline"
+                variant="solid"
                 onClick={(event) => {
                   filterList(event);
                 }}
@@ -672,126 +764,3 @@ export async function getStaticProps() {
     },
   };
 }
-
-// {
-//   /*Miner Listing Table*/
-// }
-// <Table variant="simple">
-//   {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-//   <Thead>
-//     <Tr>
-//       <Th>S.No.</Th>
-//       <Th>Miner</Th>
-//       <Th>Reputation Score</Th>
-//       <Th>Transparency Score</Th>
-//       <Th>Type of Service</Th>
-//       <Th>Data Transfer Mechanism</Th>
-//       <Th>Location</Th>
-//       <Th>Estimated Quote Price</Th>
-//       <Th>QAP</Th>
-//     </Tr>
-//   </Thead>
-//   <Tbody>
-//     <Tr>
-//       <Td>SerialNo</Td>
-//       <Td>
-//         <Text>UserName</Text>
-//         <Link>minerAddress</Link>
-//       </Td>
-//     </Tr>
-//   </Tbody>
-//   <Tfoot>
-//     {/*Probably Pagination will go here!
-//             <Tr>
-//               <Th>To convert</Th>
-//               <Th>into</Th>
-//               <Th isNumeric>multiply by</Th>
-//             </Tr> */}
-//   </Tfoot>
-// </Table>;
-
-// <Heading size="lg" color="gray.700">
-//   Search Miners
-// </Heading>
-// {/*Search*/}
-// <InputGroup w="50%">
-//   <InputRightElement
-//     pointerEvents="none"
-//     children={<Search2Icon color="gray" />}
-//   />
-//   <Input type="text" placeholder="Search Miners by Address" />
-// </InputGroup>
-// <Wrap spacing="16">
-//   {/*Type of Service*/}
-//   <WrapItem>
-//     <VStack alignItems="left">
-//       <Select placeholder="Type of Service">
-//         <option value="option1">Storage</option>
-//         <option value="option2">Retrieval</option>
-//         <option value="option2">Repair</option>
-//       </Select>
-//       <HStack>
-//         <Tag size="lg" borderRadius="full" colorScheme="yellow">
-//           Storage
-//         </Tag>
-//         <Tag size="lg" borderRadius="full" colorScheme="purple">
-//           Retrieval
-//         </Tag>
-//         <Tag size="lg" borderRadius="full" colorScheme="pink">
-//           Repair
-//         </Tag>
-//       </HStack>
-//     </VStack>
-//   </WrapItem>
-
-//   {/*Data Transfer Mechanism*/}
-//   <WrapItem>
-//     <VStack alignItems="left">
-//       <Select placeholder="Data Transfer Mechanism">
-//         <option value="option1">Online</option>
-//         <option value="option2">Offline</option>
-//       </Select>
-//       <HStack>
-//         <Tag size="lg" borderRadius="full" colorScheme="green">
-//           Online
-//         </Tag>
-//         <Tag size="lg" borderRadius="full" colorScheme="orange">
-//           Offline
-//         </Tag>
-//       </HStack>
-//     </VStack>
-//   </WrapItem>
-
-//   {/*Location*/}
-//   <WrapItem>
-//     <VStack alignItems="left">
-//       <InputGroup>
-//         <InputRightElement
-//           pointerEvents="none"
-//           children={<Search2Icon color="gray" />}
-//         />
-//         <Input type="text" placeholder="Location" color="#4A5568" />
-//       </InputGroup>
-//       <HStack>
-//         <Tag size="lg" borderRadius="full" colorScheme="gray">
-//           Online
-//         </Tag>
-//       </HStack>
-//     </VStack>
-//   </WrapItem>
-//   {/*Estimated Quote */}
-
-//   <WrapItem>
-//     <VStack alignItems="left">
-//       <Select placeholder="Estimated Quote Price">
-//         <option value="option1">Online</option>
-//         <option value="option2">Offline</option>
-//       </Select>
-//       <HStack>
-//         <Tag size="lg" borderRadius="full" colorScheme="blue">
-//           1000GiB / 24month
-//         </Tag>
-//       </HStack>
-//     </VStack>
-//   </WrapItem>
-// </Wrap>

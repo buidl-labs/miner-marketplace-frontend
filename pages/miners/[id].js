@@ -1,23 +1,27 @@
 import {
   Button,
-  Link,
+  Flex,
   Grid,
-  Stack,
-  VStack,
-  HStack,
-  Text,
-  Heading,
-  SimpleGrid,
   GridItem,
+  HStack,
+  Heading,
+  Link,
+  SimpleGrid,
+  Spacer,
+  Spinner,
+  Stack,
+  Text,
   Tabs,
   TabList,
   TabPanels,
   Tab,
   TabPanel,
+  VStack,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import ProfileSettings from "../profileSettings";
@@ -45,6 +49,8 @@ export default function Miner({ miner }) {
   // const [isSignedIn, setisSignedIn] = useGlobalState("isSignedIn");
   // const [isClaimed, setIsClaimed] = useGlobalState("isClaimed");
   // setIsClaimed(miner.claimed);
+
+  const [loading, setLoading] = useState(false);
 
   const [storageDealStats, setStorageDealStats] = useState({});
   //state for estimated & aggregated earnings' query, keeping initital state as static to avoid errors
@@ -109,6 +115,8 @@ export default function Miner({ miner }) {
   const [transactions, setTransactions] = useState([]);
   const [finalFromArr, setFinalFromArr] = useState([]);
   const [finalToArr, setFinalToArr] = useState([]);
+  //const [offsetValue, setOffsetValue] = useState(10);
+  let offsetValue = 0;
 
   return (
     <>
@@ -133,7 +141,6 @@ export default function Miner({ miner }) {
       </Button>
       <SimpleGrid
         maxH="44rem"
-        templateRows="repeat(4, 1fr)"
         templateColumns={{ base: "repeat(1,1fr)", lg: "repeat(12, 1fr)" }}
         gap="12"
         mx="8"
@@ -142,7 +149,7 @@ export default function Miner({ miner }) {
         {/* <GridItem rowSpan="8" colSpan="2">
           <DashboardMenu />
         </GridItem> */}
-        <GridItem colSpan={{ base: 1, lg: 6 }}>
+        <GridItem colSpan={{ base: 1, lg: 7 }}>
           <PersonalDetails
             minerClaimed={miner.claimed}
             minerName={miner.personalInfo.name}
@@ -156,24 +163,29 @@ export default function Miner({ miner }) {
             minerBio={miner.personalInfo.bio}
           />
         </GridItem>
-        <GridItem colSpan={{ base: 1, md: 6 }}>
+        <GridItem colSpan={{ base: 1, md: 5 }}>
           <Scores
             reputationScore={miner.reputationScore}
             transparencyScore={miner.transparencyScore}
           />
         </GridItem>
-        <GridItem colSpan={{ base: 1, lg: 8 }} mr={{ base: 0, lg: 4 }}>
-          <Tabs>
-            <TabList>
+        <GridItem
+          colSpan={{ base: 1, lg: 12 }}
+          mr={{ base: 0, lg: 4 }}
+          overflow={{ base: "scroll", lg: "unset" }}
+        >
+          <Tabs overflow={{ base: "scroll", lg: "unset" }}>
+            <TabList whiteSpace="nowrap">
               <Tab>Service Details</Tab>
               <Tab>Profile Settings</Tab>
               <Tab
                 onClick={() => {
+                  setLoading(true);
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -203,29 +215,29 @@ export default function Miner({ miner }) {
                     `,
                     })
                     .then((data) => {
-                      console.log(data.data);
+                      // console.log(data.data);
                       return data.data;
                     })
                     .then((g) => {
-                      console.log(g.miner.storageDealStats.dataStored);
+                      // console.log(g.miner.storageDealStats.dataStored);
                       setStorageDealStats(g.miner.storageDealStats);
-                      // setEstimatedEarnings(g);
-                      // console.log("esti", g);
                     })
                     .catch((e) => {
                       console.log("err", e);
                     });
+                  setLoading(false);
                 }}
               >
                 Storage Deal Stats
               </Tab>
               <Tab
                 onClick={() => {
+                  setLoading(true);
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -264,25 +276,25 @@ export default function Miner({ miner }) {
                       `,
                     })
                     .then((data) => {
-                      console.log(data.data);
                       return data.data;
                     })
                     .then((g) => {
-                      console.log(g.aggregateEarnings);
+                      //console.log(g.aggregateEarnings);
                       setAggregateEarnings(g);
-                      console.log("agge", g);
                     });
+                  setLoading(false);
                 }}
               >
                 Aggregated Earnings
               </Tab>
               <Tab
                 onClick={() => {
+                  setLoading(true);
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -326,28 +338,27 @@ export default function Miner({ miner }) {
                     `,
                     })
                     .then((data) => {
-                      console.log(data.data);
                       return data.data;
                     })
                     .then((g) => {
-                      console.log(g.estimatedEarnings);
                       setEstimatedEarnings(g);
-                      console.log("esti", g);
                     })
                     .catch((e) => {
                       console.log("esti err", e);
                     });
+                  setLoading(false);
                 }}
               >
                 Predicted Earnings
               </Tab>
               <Tab
                 onClick={() => {
+                  setLoading(true);
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -362,7 +373,7 @@ export default function Miner({ miner }) {
                       query {
                         miner(id: "${miner.id}") {
                           id
-                          transactions {
+                          transactions (first: 20, offset: ${offsetValue} orderBy: { param: timestamp, sort: DESC }) {
                             id
                             value
                             methodName
@@ -380,35 +391,34 @@ export default function Miner({ miner }) {
                     `,
                     })
                     .then((data) => {
-                      console.log(data.data);
+                      //console.log(data.data);
                       return data.data;
                     })
                     .then((d) => {
-                      console.log(d.miner.id);
+                      //console.log(d.miner.id);
                       return d.miner;
                     })
                     .then((m) => {
-                      console.log("txns", m.transactions);
+                      //console.log("txns", m.transactions);
                       setTransactions(m.transactions);
-                      let fromArr = [];
-                      let toArr = [];
-                      m.transactions.forEach((txn) => {
-                        fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
-                        toArr.push(txn.to); //{ text: txn.to, value: txn.to });
-                      });
-                      fromArr = [...new Set(fromArr)];
-                      toArr = [...new Set(toArr)];
-                      fromArr = fromArr.map((fa) => {
-                        return { text: fa, value: fa };
-                      });
-                      toArr = toArr.map((ta) => {
-                        return { text: ta, value: ta };
-                      });
-                      console.log("lf", fromArr.length, "tl", toArr.length);
-                      console.log(fromArr, toArr);
-                      setFinalFromArr(fromArr);
-                      setFinalToArr(toArr);
+                      // let fromArr = [];
+                      // let toArr = [];
+                      // m.transactions.forEach((txn) => {
+                      //   fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
+                      //   toArr.push(txn.to); //{ text: txn.to, value: txn.to });
+                      // });
+                      // fromArr = [...new Set(fromArr)];
+                      // toArr = [...new Set(toArr)];
+                      // fromArr = fromArr.map((fa) => {
+                      //   return { text: fa, value: fa };
+                      // });
+                      // toArr = toArr.map((ta) => {
+                      //   return { text: ta, value: ta };
+                      // });
+                      // setFinalFromArr(fromArr);
+                      // setFinalToArr(toArr);
                     });
+                  setLoading(false);
                 }}
               >
                 Transaction History
@@ -417,19 +427,33 @@ export default function Miner({ miner }) {
 
             <TabPanels>
               <TabPanel>
-                <ServiceDetails
-                  serviceLocation={
-                    miner.location.country + " (" + miner.location.region + ")"
-                  }
-                  storageAskPrice={miner.pricing.storageAskPrice}
-                  verifiedAskPrice={miner.pricing.verifiedAskPrice}
-                  retrievalAskPrice={miner.pricing.retrievalAskPrice}
-                  storage={miner.service.serviceTypes.storage}
-                  retrieval={miner.service.serviceTypes.retrieval}
-                  repair={miner.service.serviceTypes.repair}
-                  online={miner.service.dataTransferMechanism.online}
-                  offline={miner.service.dataTransferMechanism.offline}
-                />
+                <Flex
+                  spacing="16"
+                  flexDirection={{ md: "row", base: "column" }}
+                >
+                  <ServiceDetails
+                    serviceLocation={
+                      miner.location.country +
+                      " (" +
+                      miner.location.region +
+                      ")"
+                    }
+                    storageAskPrice={miner.pricing.storageAskPrice}
+                    verifiedAskPrice={miner.pricing.verifiedAskPrice}
+                    retrievalAskPrice={miner.pricing.retrievalAskPrice}
+                    storage={miner.service.serviceTypes.storage}
+                    retrieval={miner.service.serviceTypes.retrieval}
+                    repair={miner.service.serviceTypes.repair}
+                    online={miner.service.dataTransferMechanism.online}
+                    offline={miner.service.dataTransferMechanism.offline}
+                  />
+
+                  <Spacer />
+
+                  <QuoteCalculator
+                    storageAskPrice={miner.pricing.storageAskPrice}
+                  />
+                </Flex>
               </TabPanel>
               <TabPanel>
                 <ProfileSettings
@@ -450,113 +474,135 @@ export default function Miner({ miner }) {
                   repair={miner.service.serviceTypes.repair}
                   online={miner.service.dataTransferMechanism.online}
                   offline={miner.service.dataTransferMechanism.offline}
+                  transparencyScore={miner.transparencyScore}
                 />
               </TabPanel>
               <TabPanel>
-                <StorageDealStats
-                  averagePrice={storageDealStats.averagePrice}
-                  dataStored={storageDealStats.dataStored}
-                  faultTerminated={storageDealStats.faultTerminated}
-                  noPenalties={storageDealStats.noPenalties}
-                  slashed={storageDealStats.slashed}
-                  successRate={storageDealStats.successRate}
-                  terminated={storageDealStats.terminated}
-                  total={storageDealStats.total}
-                />
+                {loading ? (
+                  <Spinner size="lg" />
+                ) : (
+                  <StorageDealStats
+                    averagePrice={storageDealStats.averagePrice}
+                    dataStored={storageDealStats.dataStored}
+                    faultTerminated={storageDealStats.faultTerminated}
+                    noPenalties={storageDealStats.noPenalties}
+                    slashed={storageDealStats.slashed}
+                    successRate={storageDealStats.successRate}
+                    terminated={storageDealStats.terminated}
+                    total={storageDealStats.total}
+                  />
+                )}
               </TabPanel>
               <TabPanel>
-                <AggregatedEarnings
-                  qap={aggregateEarnings.miner.qualityAdjustedPower}
-                  totalIncome={
-                    aggregateEarnings.miner.aggregateEarnings.income.total
-                  }
-                  storageDeal={
-                    aggregateEarnings.miner.aggregateEarnings.income
-                      .storageDealPayments
-                  }
-                  blockRewards={
-                    aggregateEarnings.miner.aggregateEarnings.income
-                      .blockRewards
-                  }
-                  totalExpenditure={
-                    aggregateEarnings.miner.aggregateEarnings.expenditure.total
-                  }
-                  deposits={
-                    aggregateEarnings.miner.aggregateEarnings.expenditure
-                      .collateralDeposit
-                  }
-                  gas={
-                    aggregateEarnings.miner.aggregateEarnings.expenditure.gas
-                  }
-                  penalty={
-                    aggregateEarnings.miner.aggregateEarnings.expenditure
-                      .penalty
-                  }
-                  others={
-                    aggregateEarnings.miner.aggregateEarnings.expenditure.others
-                  }
-                  netEarnings={
-                    aggregateEarnings.miner.aggregateEarnings.netEarnings
-                  }
-                />
+                {loading ? (
+                  <Spinner size="xl" color="red.500" />
+                ) : (
+                  <AggregatedEarnings
+                    qap={aggregateEarnings.miner.qualityAdjustedPower}
+                    totalIncome={
+                      aggregateEarnings.miner.aggregateEarnings.income.total
+                    }
+                    storageDeal={
+                      aggregateEarnings.miner.aggregateEarnings.income
+                        .storageDealPayments
+                    }
+                    blockRewards={
+                      aggregateEarnings.miner.aggregateEarnings.income
+                        .blockRewards
+                    }
+                    totalExpenditure={
+                      aggregateEarnings.miner.aggregateEarnings.expenditure
+                        .total
+                    }
+                    deposits={
+                      aggregateEarnings.miner.aggregateEarnings.expenditure
+                        .collateralDeposit
+                    }
+                    gas={
+                      aggregateEarnings.miner.aggregateEarnings.expenditure.gas
+                    }
+                    penalty={
+                      aggregateEarnings.miner.aggregateEarnings.expenditure
+                        .penalty
+                    }
+                    others={
+                      aggregateEarnings.miner.aggregateEarnings.expenditure
+                        .others
+                    }
+                    netEarnings={
+                      aggregateEarnings.miner.aggregateEarnings.netEarnings
+                    }
+                  />
+                )}
               </TabPanel>
               <TabPanel>
-                <PredictedEarnings
-                  totalIncome={
-                    estimatedEarnings.miner.estimatedEarnings.income.total
-                  }
-                  existing={
-                    estimatedEarnings.miner.estimatedEarnings.income
-                      .storageDealPayments.existingDeals
-                  }
-                  potential={
-                    estimatedEarnings.miner.estimatedEarnings.income
-                      .storageDealPayments.potentialFutureDeals
-                  }
-                  blockRewards={
-                    estimatedEarnings.miner.estimatedEarnings.income
-                      .blockRewards.blockRewards
-                  }
-                  totalExpenditure={
-                    estimatedEarnings.miner.estimatedEarnings.expenditure.total
-                  }
-                  deposits={
-                    estimatedEarnings.miner.estimatedEarnings.expenditure
-                      .collateralDeposit
-                  }
-                  gas={
-                    estimatedEarnings.miner.estimatedEarnings.expenditure.gas
-                  }
-                  penalty={
-                    estimatedEarnings.miner.estimatedEarnings.expenditure
-                      .penalty
-                  }
-                  others={
-                    estimatedEarnings.miner.estimatedEarnings.expenditure.others
-                  }
-                  netEarnings={
-                    estimatedEarnings.miner.estimatedEarnings.netEarnings
-                  }
-                  days={
-                    estimatedEarnings.miner.estimatedEarnings.income
-                      .blockRewards.daysUntilEligible
-                  }
-                />
+                {loading ? (
+                  <Spinner color="blue.900" size="xl" />
+                ) : (
+                  <PredictedEarnings
+                    totalIncome={
+                      estimatedEarnings.miner.estimatedEarnings.income.total
+                    }
+                    existing={
+                      estimatedEarnings.miner.estimatedEarnings.income
+                        .storageDealPayments.existingDeals
+                    }
+                    potential={
+                      estimatedEarnings.miner.estimatedEarnings.income
+                        .storageDealPayments.potentialFutureDeals
+                    }
+                    blockRewards={
+                      estimatedEarnings.miner.estimatedEarnings.income
+                        .blockRewards.blockRewards
+                    }
+                    totalExpenditure={
+                      estimatedEarnings.miner.estimatedEarnings.expenditure
+                        .total
+                    }
+                    deposits={
+                      estimatedEarnings.miner.estimatedEarnings.expenditure
+                        .collateralDeposit
+                    }
+                    gas={
+                      estimatedEarnings.miner.estimatedEarnings.expenditure.gas
+                    }
+                    penalty={
+                      estimatedEarnings.miner.estimatedEarnings.expenditure
+                        .penalty
+                    }
+                    others={
+                      estimatedEarnings.miner.estimatedEarnings.expenditure
+                        .others
+                    }
+                    netEarnings={
+                      estimatedEarnings.miner.estimatedEarnings.netEarnings
+                    }
+                    days={
+                      estimatedEarnings.miner.estimatedEarnings.income
+                        .blockRewards.daysUntilEligible
+                    }
+                  />
+                )}
               </TabPanel>
               <TabPanel>
-                <TransactionHistory
-                  minerID={miner.id}
-                  transactions={transactions}
-                  finalFromArr={finalFromArr}
-                  finalToArr={finalToArr}
-                />
+                {loading ? (
+                  <Spinner color="red.600" size="xl" />
+                ) : (
+                  <TransactionHistory
+                    minerID={miner.id}
+                    transactions={transactions}
+                    finalFromArr={finalFromArr}
+                    finalToArr={finalToArr}
+                    offsetValue={offsetValue}
+                  />
+                )}
               </TabPanel>
             </TabPanels>
           </Tabs>
         </GridItem>
-        <GridItem colSpan={{ base: 1, lg: 4 }} mt={{ base: 0, lg: 16 }}>
+        {/* <GridItem colSpan={{ base: 1, lg: 4 }} mt={{ base: 0, lg: 16 }}>
           <QuoteCalculator storageAskPrice={miner.pricing.storageAskPrice} />
-        </GridItem>
+        </GridItem> */}
       </SimpleGrid>
     </>
   );

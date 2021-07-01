@@ -1,25 +1,45 @@
-import { Heading, Stack, Tag, Text, HStack, Wrap } from "@chakra-ui/react";
+import {
+  Heading,
+  Stack,
+  Tag,
+  Text,
+  HStack,
+  Wrap,
+  VStack,
+} from "@chakra-ui/react";
 import React from "react";
 
 function ServiceDetails(props) {
   let serviceType = [];
   if (props.storage)
     serviceType.push(
-      <Tag key="str" size="lg" borderRadius="full" colorScheme="yellow">
+      <Tag
+        key="str"
+        size="lg"
+        borderRadius="full"
+        bg="blue.50"
+        color="blue.700"
+      >
         Storage
-      </Tag>,
+      </Tag>
     );
   if (props.retrieval)
     serviceType.push(
-      <Tag key="ret" size="lg" borderRadius="full" colorScheme="purple">
+      <Tag
+        key="ret"
+        size="lg"
+        borderRadius="full"
+        bg="purple.50"
+        color="purple.700"
+      >
         Retrieval
-      </Tag>,
+      </Tag>
     );
   if (props.repair)
     serviceType.push(
-      <Tag key="rep" size="lg" borderRadius="full" colorScheme="pink">
+      <Tag key="rep" size="lg" borderRadius="full" colorScheme="gray">
         Repair
-      </Tag>,
+      </Tag>
     );
 
   let dataTransferMechanism = [];
@@ -27,18 +47,18 @@ function ServiceDetails(props) {
     dataTransferMechanism.push(
       <Tag key="online" size="lg" borderRadius="full" colorScheme="green">
         Online
-      </Tag>,
+      </Tag>
     );
   if (props.offline)
     dataTransferMechanism.push(
-      <Tag key="offline" size="lg" borderRadius="full" colorScheme="orange">
+      <Tag key="offline" size="lg" borderRadius="full" colorScheme="gray">
         Offline
-      </Tag>,
+      </Tag>
     );
 
   return (
     <>
-      <Stack alignItems="flex-start" spacing="8" mt="8">
+      <Stack alignItems="flex-start" spacing="8" my="8">
         <Heading size="lg" color="blue.700">
           Service Offering
         </Heading>
@@ -55,8 +75,8 @@ function ServiceDetails(props) {
             </Text>
           </Stack>
           <Stack spacing="4">
-            <Wrap>{serviceType}</Wrap>
             <Wrap>{dataTransferMechanism}</Wrap>
+            <Wrap>{serviceType}</Wrap>
             <Wrap>
               <Text color="blue.600" fontWeight="medium">
                 {props.serviceLocation}
@@ -81,30 +101,30 @@ function ServiceDetails(props) {
             </Text>
           </Stack>
           <Stack spacing="4" textAlign="center">
-            <Wrap>
+            <HStack>
               <Text fontSize="2xl" color="gray.700">
                 {props.storageAskPrice / 10 ** 18}
               </Text>
               <Text fontSize="sm" color="gray.500">
                 FIL/GiB/epoch
               </Text>
-            </Wrap>
-            <Wrap>
+            </HStack>
+            <HStack>
               <Text fontSize="2xl" color="gray.700">
                 {props.verifiedAskPrice / 10 ** 18}
               </Text>
               <Text fontSize="sm" color="gray.500">
                 FIL/GiB/epoch
               </Text>
-            </Wrap>
-            <Wrap>
+            </HStack>
+            <HStack>
               <Text fontSize="2xl" color="gray.700">
                 {props.retrievalAskPrice}
               </Text>
               <Text fontSize="sm" color="gray.500">
                 FIL/B
               </Text>
-            </Wrap>
+            </HStack>
           </Stack>
         </HStack>
       </Stack>
