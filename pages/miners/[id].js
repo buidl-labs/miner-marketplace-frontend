@@ -115,7 +115,8 @@ export default function Miner({ miner }) {
   const [transactions, setTransactions] = useState([]);
   const [finalFromArr, setFinalFromArr] = useState([]);
   const [finalToArr, setFinalToArr] = useState([]);
-  const [offsetValue, setOffsetValue] = useState(10);
+  //const [offsetValue, setOffsetValue] = useState(10);
+  let offsetValue = 10;
 
   return (
     <>
@@ -372,7 +373,7 @@ export default function Miner({ miner }) {
                       query {
                         miner(id: "${miner.id}") {
                           id
-                          transactions (first: 5, offset: ${offsetValue} orderBy: { param: timestamp, sort: DESC }) {
+                          transactions (first: 20, offset: ${offsetValue} orderBy: { param: timestamp, sort: DESC }) {
                             id
                             value
                             methodName
@@ -475,6 +476,7 @@ export default function Miner({ miner }) {
                   repair={miner.service.serviceTypes.repair}
                   online={miner.service.dataTransferMechanism.online}
                   offline={miner.service.dataTransferMechanism.offline}
+                  transparencyScore={miner.transparencyScore}
                 />
               </TabPanel>
               <TabPanel>
@@ -593,6 +595,7 @@ export default function Miner({ miner }) {
                     transactions={transactions}
                     finalFromArr={finalFromArr}
                     finalToArr={finalToArr}
+                    offsetValue={offsetValue}
                   />
                 )}
               </TabPanel>

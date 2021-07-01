@@ -45,6 +45,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 
 import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
+import Base from "antd/lib/typography/Base";
 
 export default function Miners({ miners, href }) {
   // const [miners, setMiners] = useState([]);
@@ -573,6 +574,28 @@ export default function Miners({ miners, href }) {
     { label: "Years", value: "Years" },
   ];
 
+  const customStyles = {
+    control: (Base) => ({
+      ...Base,
+      backgroundColor: "#F7FAFC",
+      width: "6.4rem",
+      height: "2.5rem",
+      borderRadius: "0rem 0.4rem 0.4rem 0rem",
+      borderLeft: "none",
+      borderColor: "#E2E8F0",
+    }),
+  };
+
+  const customStylesAlt = {
+    control: (Base) => ({
+      ...Base,
+      height: "2.5rem",
+      borderRadius: "0.4rem",
+
+      borderColor: "#E2E8F0",
+    }),
+  };
+
   return (
     <>
       <DashboardNavbar isMinerProfile={false} />
@@ -616,66 +639,34 @@ export default function Miners({ miners, href }) {
               <Heading size="sm" fontWeight="medium" color="gray.700">
                 Type of Service
               </Heading>
-              <Select closeMenuOnSelect={true} options={mServices} isMulti />
-              {/* <HStack>
-                <Tag
-                  size="lg"
-                  borderRadius="full"
-                  color="teal.700"
-                  bg="teal.50"
-                >
-                  Storage
-                </Tag>
-                <Tag
-                  size="lg"
-                  borderRadius="full"
-                  color="purple.700"
-                  bg="purple.50"
-                >
-                  Retrieval
-                </Tag>
-              </HStack> */}
+              <Select
+                closeMenuOnSelect={true}
+                options={mServices}
+                styles={customStylesAlt}
+                isMulti
+              />
             </VStack>
 
             <VStack alignItems="left" w="20rem">
               <Heading size="sm" fontWeight="medium" color="gray.700">
                 Data Transfer Mechanism
               </Heading>
-              <Select options={mDataMechanism} isMulti />
-
-              {/* <HStack>
-                <Tag size="lg" borderRadius="full" colorScheme="green">
-                  Online
-                </Tag>
-                <Tag size="lg" borderRadius="full" colorScheme="gray">
-                  Offline
-                </Tag>
-              </HStack> */}
+              <Select
+                options={mDataMechanism}
+                styles={customStylesAlt}
+                isMulti
+              />
             </VStack>
 
             <VStack alignItems="left" w="20rem">
-              {/* <InputGroup>
-                <InputRightElement
-                  pointerEvents="none"
-                  children={<Search2Icon color="gray" />}
-                />
-                <Input type="text" placeholder="Location" color="gray.500" />
-              </InputGroup> */}
               <Heading size="sm" fontWeight="medium" color="gray.700">
                 Location
               </Heading>
-              <Select options={mLocationSelect} isMulti />
-
-              {/* <HStack>
-                <Tag
-                  size="lg"
-                  borderRadius="full"
-                  color="blue.700"
-                  bg="blue.50"
-                >
-                  countryName
-                </Tag>
-              </HStack> */}
+              <Select
+                options={mLocationSelect}
+                styles={customStylesAlt}
+                isMulti
+              />
             </VStack>
 
             <Stack
@@ -693,19 +684,28 @@ export default function Miners({ miners, href }) {
                 <Text fontWeight="medium" color="gray.700">
                   Storage amount
                 </Text>
-                <InputGroup>
+
+                <InputGroup
+                  height="fit-content"
+                  alignContent="center"
+                  alignItems="center"
+                >
                   <Input
                     bg="white"
                     type="number"
                     placeholder="Enter amount of storage"
                     value={storageAmount}
                     onChange={(event) => setStorageAmount(event.target.value)}
+                    borderRight="none"
+                    borderRadius="0.4rem 0rem 0rem 0.4rem"
                   />
+
                   <Select
                     options={dStorageAmount}
                     defaultValue={dStorageAmount[1]}
                     isClearable={false}
                     isSearchable={false}
+                    styles={customStyles}
                   />
                 </InputGroup>
               </Stack>
@@ -720,12 +720,15 @@ export default function Miners({ miners, href }) {
                     placeholder="Enter duration of storage"
                     value={storageDuration}
                     onChange={(event) => setStorageDuration(event.target.value)}
+                    borderRight="none"
+                    borderRadius="0.4rem 0rem 0rem 0.4rem"
                   />
                   <Select
                     options={dStorageDuration}
                     defaultValue={dStorageDuration[0]}
                     isClearable={false}
                     isSearchable={false}
+                    styles={customStyles}
                   />
                 </InputGroup>
               </Stack>

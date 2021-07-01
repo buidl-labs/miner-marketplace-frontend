@@ -319,10 +319,11 @@ export default function TransactionHistory(props) {
   //   );
   // }
 
-  const [offsetValue, setOffsetValue] = useState(10);
-  function handleLoadMore() {
-    setOffsetValue(offsetValue + 10);
-  }
+  // const [offsetValue, setOffsetValue] = useState(10);
+  // function handleLoadMore() {
+  //   setOffsetValue(offsetValue + 10);
+  //   transactions.push(offsetValue);
+  // }
 
   return (
     <>
@@ -378,17 +379,6 @@ export default function TransactionHistory(props) {
             offsetValue={props.offsetValue}
           />
         )}
-        <Center>
-          <Button
-            mt="6"
-            w="36"
-            colorScheme="blue"
-            variant="outline"
-            onClick={handleLoadMore}
-          >
-            View more
-          </Button>
-        </Center>
       </Stack>
     </>
   );

@@ -20,7 +20,7 @@ function TransparencyScore(props) {
         <Progress
           value={props.transparencyScore}
           borderRadius="xl"
-          colorScheme="blue"
+          colorScheme="orange"
         />
         <Flex justifyContent="space-between">
           <HStack color="gray.400">

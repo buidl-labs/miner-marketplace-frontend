@@ -37,6 +37,7 @@ import {
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import { BiTransfer } from "react-icons/bi";
+import { FiExternalLink } from "react-icons/fi";
 
 import {
   GetFormattedStorageUnits,
@@ -87,10 +88,8 @@ function BasicView(props) {
     };
   });
 
-  // const [offsetValue, setOffsetValue] = useState(10);
-  // function handleLoadMore() {
-  //   setOffsetValue(offsetValue + 10);
-  // }
+  //const [offsetValue, setOffsetValue] = useState(10);
+  function handleLoadMore(offsetValue) {}
 
   function dateOfTransaction(dateProps) {
     const miliseconds = dateProps * 1000;
@@ -102,6 +101,8 @@ function BasicView(props) {
       </Text>
     );
   }
+
+  //const txnIDLink = "https://filfox.info/en/address/" + props.txn.id.mid;
 
   const [transactions, setTransactions] = useState([]);
   const [finalFromArr, setFinalFromArr] = useState([]);
@@ -116,7 +117,7 @@ function BasicView(props) {
           </Heading>
 
           <Accordion allowMultiple>
-            {dataSource.slice(0, next).map((txn) => (
+            {dataSource.map((txn) => (
               <AccordionItem py="3">
                 <AccordionButton alignItems="center">
                   <HStack textAlign="left" alignItems="center">
@@ -124,7 +125,7 @@ function BasicView(props) {
                       <GridItem colSpan="3">
                         <HStack>
                           {txn.transactionType === "Block Reward" ? (
-                            <ArrowUpIcon
+                            <ArrowDownIcon
                               h={10}
                               w={10}
                               p="2"
@@ -134,7 +135,7 @@ function BasicView(props) {
                               color="green.600"
                             />
                           ) : txn.transactionType === "Collateral Deposit" ? (
-                            <ArrowDownIcon
+                            <ArrowUpIcon
                               h={10}
                               w={10}
                               p="2"
@@ -199,8 +200,7 @@ function BasicView(props) {
                             "DeclareFaults" ||
                             "DeclareFaultsRecovered" ||
                             "ExtendSectorExpiration"
-                              ? "-" +
-                                GetFormattedFILUnits(
+                              ? GetFormattedFILUnits(
                                   txn.minerFee.val + txn.burnFee.val
                                 )
                               : "0"}
@@ -275,9 +275,17 @@ function BasicView(props) {
                           >
                             Transaction ID
                           </Heading>
-                          <Text size="md" fontWeight="normal" color="gray.600">
+
+                          <Link
+                            href={`https://filfox.info/en/message/${txn.id.mid}`}
+                            isExternal
+                            alt="transaction id link"
+                            size="md"
+                            fontWeight="normal"
+                            color="gray.600"
+                          >
                             {txn.id.mid}
-                          </Text>
+                          </Link>
                         </Stack>
                       </GridItem>
 
@@ -291,9 +299,16 @@ function BasicView(props) {
                           >
                             From
                           </Heading>
-                          <Text size="md" fontWeight="normal" color="gray.600">
+                          <Link
+                            href={`https://filfox.info/en/message/${txn.from}`}
+                            isExternal
+                            alt="transaction id link"
+                            size="md"
+                            fontWeight="normal"
+                            color="gray.600"
+                          >
                             {txn.from}
-                          </Text>
+                          </Link>
                         </Stack>
                       </GridItem>
 
@@ -307,9 +322,17 @@ function BasicView(props) {
                           >
                             To
                           </Heading>
-                          <Text size="md" fontWeight="normal" color="gray.600">
+
+                          <Link
+                            href={`https://filfox.info/en/message/${txn.to}`}
+                            isExternal
+                            alt="transaction id link"
+                            size="md"
+                            fontWeight="normal"
+                            color="gray.600"
+                          >
                             {txn.to}
-                          </Text>
+                          </Link>
                         </Stack>
                       </GridItem>
                     </Grid>
@@ -340,7 +363,7 @@ function BasicView(props) {
                             "DeclareFaults" ||
                             "DeclareFaultsRecovered" ||
                             "ExtendSectorExpiration"
-                              ? "-" + txn.minerFee.display
+                              ? txn.minerFee.display
                               : "0"}
                           </Text>
                         </Stack>
@@ -371,7 +394,7 @@ function BasicView(props) {
                             "DeclareFaults" ||
                             "DeclareFaultsRecovered" ||
                             "ExtendSectorExpiration" ? (
-                              "-" + txn.burnFee.display
+                              txn.burnFee.display
                             ) : (
                               <p>0</p>
                             )}
@@ -384,76 +407,17 @@ function BasicView(props) {
               </AccordionItem>
             ))}
           </Accordion>
-          {/* <Center>
+          <Center>
             <Button
               mt="6"
               w="36"
               colorScheme="blue"
               variant="outline"
-              onClick={() => {
-                handleLoadMore();
-                console.log("offset", offsetValue);
-                const BACKEND_URL =
-                  "https://miner-marketplace-backend-2.onrender.com/query";
-                const client = new ApolloClient({
-                  uri: BACKEND_URL,
-                  cache: new InMemoryCache(),
-                });
-
-                client
-                  .query({
-                    query: gql`
-                      query {
-                        miner(id: "${props.minerID}") {
-                          id
-                          transactions (first: 5, offset: ${offsetValue} orderBy: { param: timestamp, sort: DESC }) {
-                            id
-                            value
-                            methodName
-                            from
-                            to
-                            minerFee
-                            burnFee
-                            transactionType
-                            exitCode
-                            height
-                            timestamp
-                          }
-                        }
-                      }
-                    `,
-                  })
-                  .then((data) => {
-                    //console.log(data.data);
-                    return data.data;
-                  })
-                  .then((d) => {
-                    return d.miner;
-                  })
-                  .then((m) => {
-                    setTransactions(m.transactions);
-                    let fromArr = [];
-                    let toArr = [];
-                    m.transactions.forEach((txn) => {
-                      fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
-                      toArr.push(txn.to); //{ text: txn.to, value: txn.to });
-                    });
-                    fromArr = [...new Set(fromArr)];
-                    toArr = [...new Set(toArr)];
-                    fromArr = fromArr.map((fa) => {
-                      return { text: fa, value: fa };
-                    });
-                    toArr = toArr.map((ta) => {
-                      return { text: ta, value: ta };
-                    });
-                    setFinalFromArr(fromArr);
-                    setFinalToArr(toArr);
-                  });
-              }}
+              onClick={handleLoadMore}
             >
               View more
             </Button>
-          </Center> */}
+          </Center>
         </Stack>
       </>
     </>

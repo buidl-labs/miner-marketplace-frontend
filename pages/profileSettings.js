@@ -125,7 +125,7 @@ function ProfileSettings(props) {
         </GridItem>
 
         <GridItem colSpan="8">
-          <TransparencyScore />
+          <TransparencyScore transparencyScore={props.transparencyScore} />
         </GridItem>
 
         <GridItem colSpan="10" mt={8}>
