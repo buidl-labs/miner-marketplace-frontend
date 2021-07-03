@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { GetFormattedFILUnits } from "../../util/util";
+import { GetFormattedFILUnits, GetSimpleFILUnits } from "../../util/util";
 
 function AggregatedEarnings(props) {
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
@@ -53,7 +53,7 @@ function AggregatedEarnings(props) {
                 Net Aggregate Earnings
               </StatLabel>
               <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
-                {GetFormattedFILUnits(props.netEarnings)}
+                {GetSimpleFILUnits(props.netEarnings)}
               </StatNumber>
               {/*<StatHelpText>
               ($ {Math.round(props.netEarnings * filecoinUSDRate)})
@@ -73,7 +73,7 @@ function AggregatedEarnings(props) {
                         fontWeight="normal"
                         fontSize="3xl"
                       >
-                        {GetFormattedFILUnits(props.totalIncome)}
+                        {GetSimpleFILUnits(props.totalIncome)}
                       </StatNumber>
                     </Stat>
                     <AccordionIcon />
@@ -86,7 +86,7 @@ function AggregatedEarnings(props) {
                         Storage Deals Payments:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {GetFormattedFILUnits(props.storageDeal)}
+                        {GetSimpleFILUnits(props.storageDeal)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -94,7 +94,7 @@ function AggregatedEarnings(props) {
                         Block Rewards:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {GetFormattedFILUnits(props.blockRewards)}
+                        {GetSimpleFILUnits(props.blockRewards)}
                       </Text>
                     </Stack>
                   </VStack>
@@ -112,7 +112,7 @@ function AggregatedEarnings(props) {
                         fontWeight="normal"
                         fontSize="3xl"
                       >
-                        {GetFormattedFILUnits(props.totalExpenditure)}
+                        {GetSimpleFILUnits(props.totalExpenditure)}
                       </StatNumber>
                     </Stat>
                     <AccordionIcon />
@@ -130,7 +130,7 @@ function AggregatedEarnings(props) {
                         Collateral Deposit:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {GetFormattedFILUnits(props.deposits)}
+                        {GetSimpleFILUnits(props.deposits)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -138,7 +138,7 @@ function AggregatedEarnings(props) {
                         Gas:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {GetFormattedFILUnits(props.gas)}
+                        {GetSimpleFILUnits(props.gas)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -146,7 +146,7 @@ function AggregatedEarnings(props) {
                         Penalty:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {GetFormattedFILUnits(props.penalty)}
+                        {GetSimpleFILUnits(props.penalty)}
                       </Text>
                     </Stack>
                     <Stack>
@@ -154,7 +154,7 @@ function AggregatedEarnings(props) {
                         Others:
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
-                        {GetFormattedFILUnits(props.others)}
+                        {GetSimpleFILUnits(props.others)}
                       </Text>
                     </Stack>
                   </VStack>

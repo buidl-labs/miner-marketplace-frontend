@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { GetSimpleFILUnits, GetFormattedFILUnits, GetFormattedStorageUnits } from "../../util/util"
 
 function StorageDealStats(props) {
   return (
@@ -33,7 +34,7 @@ function StorageDealStats(props) {
                   Average Deal Price
                 </StatLabel>
                 <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
-                  {(Number(props.averagePrice) / 10 ** 9).toFixed(3)} nanoFIL
+                  {GetFormattedFILUnits(props.averagePrice)}
                 </StatNumber>
               </Stat>
               <Stat>
@@ -41,7 +42,7 @@ function StorageDealStats(props) {
                   Amount of Data Stored
                 </StatLabel>
                 <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
-                  {(parseInt(props.dataStored) / 10 ** 12).toFixed(3)} TB
+                  {GetFormattedStorageUnits(props.dataStored)}
                 </StatNumber>
               </Stat>
               <Stat>
@@ -53,7 +54,7 @@ function StorageDealStats(props) {
                   fontWeight="normal"
                   fontSize="3xl"
                 >
-                  {(parseFloat(props.successRate) * 100).toFixed(3)}%
+                  {(parseFloat(props.successRate) * 100).toFixed(2)}%
                 </StatNumber>
               </Stat>
             </VStack>

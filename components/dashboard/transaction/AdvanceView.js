@@ -129,16 +129,7 @@ function AdvanceView(props) {
     if (txn.methodName == "ApplyRewards") {
       txntype = "block";
     }
-    let valuesign = "+";
-    if (txn.methodName != "ApplyRewards") {
-      valuesign = "-";
-    }
-    if (Number(txn.value) == 0) {
-      valuesign = "";
-    }
-    if (txn.transactionType == "Transfer") {
-      valuesign = "";
-    }
+
     return {
       key: txn.id,
       id: {
@@ -147,7 +138,7 @@ function AdvanceView(props) {
       },
       value: {
         val: Number(txn.value),
-        display: valuesign + GetFormattedFILUnits(Number(txn.value)),
+        display: GetFormattedFILUnits(Number(txn.value)),
       },
       methodName: txn.methodName,
       from: txn.from,
@@ -365,7 +356,8 @@ function AdvanceView(props) {
         <Table
           columns={columns}
           dataSource={dataSource}
-        // pagination={pagination}
+          pagination={{ pageSize: 50 }}
+          scroll={{ y: 480 }}
         />
       </Box>
     </>
