@@ -12,6 +12,7 @@ import {
   Heading,
   WrapItem,
   Wrap,
+  Link,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -32,7 +33,9 @@ const JoinNetwork = (props) => {
           </Text>
           <Box>
             <Button colorScheme="blue" variant={props.ctaVariant}>
+            <Link href={props.ctaLink} onClick={props.ctaRoute} isExternal colorScheme="blue" textDecoration="none">
               {props.ctaText}
+              </Link>
             </Button>
           </Box>
         </Stack>
