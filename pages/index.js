@@ -14,7 +14,7 @@ import JoinNetwork from "../components/landingPage/JoinNetwork";
 import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 const IndexPage = (stats) => {
   //console.log(stats);
@@ -119,7 +119,7 @@ const IndexPage = (stats) => {
                 fielcoin miners."
                 ctaText="Become a Miner"
                 ctaVariant="solid"
-                ctaLink="https://filecoin.io/mine/"
+                ctaRoute={() => { router.push('/minerLanding') }}
               />
               <JoinNetwork
                 cardHeading="Looking to Store Data"
@@ -127,7 +127,7 @@ const IndexPage = (stats) => {
             securely on Filecoin Network."
                 ctaText="Explore Miners"
                 ctaVariant="outline"
-                ctaRoute={()=>{router.push('/miners')}}
+                ctaRoute={() => { router.push('/miners') }}
               />
             </SimpleGrid>
           </Stack>
@@ -138,14 +138,14 @@ const IndexPage = (stats) => {
             <Stack w={{ base: "80vw", md: "48rem" }} textAlign="left">
               <Accordion allowToggle="false">
                 <Faq
-                question="What is filecoin?"
-                answer="Filecoin is a peer-to-peer network that stores files on the internet, with built-in economic incentives to ensure files are stored reliably over time." />
+                  question="What is filecoin?"
+                  answer="Filecoin is a peer-to-peer network that stores files on the internet, with built-in economic incentives to ensure files are stored reliably over time." />
                 <Faq
-                question="Is this platform free to use?"
-                answer="Yes" />
+                  question="Is this platform free to use?"
+                  answer="Yes" />
                 <Faq
-                question="What is the difference between Filecoin & IPFS?"
-                answer="Filecoin and IPFS are two separate, complementary protocols, both created by Protocol Labs. IPFS allows peers to store, request, and transfer verifiable data with each other, while Filecoin is designed to provide a system of persistent data storage." />
+                  question="What is the difference between Filecoin & IPFS?"
+                  answer="Filecoin and IPFS are two separate, complementary protocols, both created by Protocol Labs. IPFS allows peers to store, request, and transfer verifiable data with each other, while Filecoin is designed to provide a system of persistent data storage." />
               </Accordion>
             </Stack>
           </Stack>

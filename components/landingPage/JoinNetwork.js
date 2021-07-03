@@ -14,6 +14,7 @@ import {
   Wrap,
   Link,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 
 const JoinNetwork = (props) => {
@@ -32,11 +33,11 @@ const JoinNetwork = (props) => {
             {props.cardText}
           </Text>
           <Box>
-            <Button colorScheme="blue" variant={props.ctaVariant}>
-            <Link href={props.ctaLink} onClick={props.ctaRoute} isExternal colorScheme="blue" textDecoration="none">
-              {props.ctaText}
-              </Link>
-            </Button>
+            <Link href={props.ctaLink} isExternal colorScheme="blue" textDecoration="none">
+              <Button colorScheme="blue" variant={props.ctaVariant} rightIcon={props.ctaIcon} onClick={props.ctaRoute}>
+                {props.ctaText}
+              </Button>
+            </Link>
           </Box>
         </Stack>
       </Center>
