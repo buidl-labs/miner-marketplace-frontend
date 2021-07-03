@@ -5,6 +5,7 @@ import {
   GridItem,
   HStack,
   Heading,
+  Center,
   Link,
   SimpleGrid,
   Spacer,
@@ -50,9 +51,25 @@ export default function Miner({ miner }) {
   // const [isClaimed, setIsClaimed] = useGlobalState("isClaimed");
   // setIsClaimed(miner.claimed);
 
-  const [loading, setLoading] = useState(false);
+  const [storageDealStatsIsLoaded, setStorageDealStatsIsLoaded] =
+    useState(false);
+  const [aggregateEarningsIsLoaded, setAggregateEarningsIsLoaded] =
+    useState(false);
+  const [predictedEarningsIsLoaded, setPredictedEarningsIsLoaded] =
+    useState(false);
+  const [transactionHistoryIsLoaded, setTransactionHistoryIsLoaded] =
+    useState(true);
 
-  const [storageDealStats, setStorageDealStats] = useState({});
+  const [storageDealStats, setStorageDealStats] = useState({
+    averagePrice: "0",
+    dataStored: "0",
+    faultTerminated: 0,
+    noPenalties: 0,
+    slashed: 0,
+    successRate: "1.00000000000000000000",
+    terminated: 0,
+    total: 0,
+  });
   //state for estimated & aggregated earnings' query, keeping initital state as static to avoid errors
   const [estimatedEarnings, setEstimatedEarnings] = useState({
     miner: {
@@ -180,12 +197,11 @@ export default function Miner({ miner }) {
               <Tab>Profile Settings</Tab>
               <Tab
                 onClick={() => {
-                  setLoading(true);
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id
+                    miner.id,
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -215,29 +231,26 @@ export default function Miner({ miner }) {
                     `,
                     })
                     .then((data) => {
-                      // console.log(data.data);
                       return data.data;
                     })
                     .then((g) => {
-                      // console.log(g.miner.storageDealStats.dataStored);
                       setStorageDealStats(g.miner.storageDealStats);
+                      setStorageDealStatsIsLoaded(true);
                     })
                     .catch((e) => {
                       console.log("err", e);
                     });
-                  setLoading(false);
                 }}
               >
                 Storage Deal Stats
               </Tab>
               <Tab
                 onClick={() => {
-                  setLoading(true);
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id
+                    miner.id,
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -279,22 +292,20 @@ export default function Miner({ miner }) {
                       return data.data;
                     })
                     .then((g) => {
-                      //console.log(g.aggregateEarnings);
                       setAggregateEarnings(g);
+                      setAggregateEarningsIsLoaded(true);
                     });
-                  setLoading(false);
                 }}
               >
                 Aggregated Earnings
               </Tab>
               <Tab
                 onClick={() => {
-                  setLoading(true);
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id
+                    miner.id,
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -342,87 +353,16 @@ export default function Miner({ miner }) {
                     })
                     .then((g) => {
                       setEstimatedEarnings(g);
+                      setPredictedEarningsIsLoaded(true);
                     })
                     .catch((e) => {
                       console.log("esti err", e);
                     });
-                  setLoading(false);
                 }}
               >
                 Predicted Earnings
               </Tab>
-              <Tab
-                onClick={() => {
-                  setLoading(true);
-                  console.log(
-                    "osccmcmcm",
-                    process.env.BACKEND_URL,
-                    "mid",
-                    miner.id
-                  );
-                  const BACKEND_URL =
-                    "https://miner-marketplace-backend-2.onrender.com/query";
-                  const client = new ApolloClient({
-                    uri: BACKEND_URL,
-                    cache: new InMemoryCache(),
-                  });
-
-                  client
-                    .query({
-                      query: gql`
-                      query {
-                        miner(id: "${miner.id}") {
-                          id
-                          transactions (first: 20, offset: ${offsetValue} orderBy: { param: timestamp, sort: DESC }) {
-                            id
-                            value
-                            methodName
-                            from
-                            to
-                            minerFee
-                            burnFee
-                            transactionType
-                            exitCode
-                            height
-                            timestamp
-                          }
-                        }
-                      }
-                    `,
-                    })
-                    .then((data) => {
-                      //console.log(data.data);
-                      return data.data;
-                    })
-                    .then((d) => {
-                      //console.log(d.miner.id);
-                      return d.miner;
-                    })
-                    .then((m) => {
-                      //console.log("txns", m.transactions);
-                      setTransactions(m.transactions);
-                      // let fromArr = [];
-                      // let toArr = [];
-                      // m.transactions.forEach((txn) => {
-                      //   fromArr.push(txn.from); //{ text: txn.from, value: txn.from });
-                      //   toArr.push(txn.to); //{ text: txn.to, value: txn.to });
-                      // });
-                      // fromArr = [...new Set(fromArr)];
-                      // toArr = [...new Set(toArr)];
-                      // fromArr = fromArr.map((fa) => {
-                      //   return { text: fa, value: fa };
-                      // });
-                      // toArr = toArr.map((ta) => {
-                      //   return { text: ta, value: ta };
-                      // });
-                      // setFinalFromArr(fromArr);
-                      // setFinalToArr(toArr);
-                    });
-                  setLoading(false);
-                }}
-              >
-                Transaction History
-              </Tab>
+              <Tab>Transaction History</Tab>
             </TabList>
 
             <TabPanels>
@@ -438,6 +378,8 @@ export default function Miner({ miner }) {
                       miner.location.region +
                       ")"
                     }
+                    country={miner.location.country}
+                    region={miner.location.region}
                     storageAskPrice={miner.pricing.storageAskPrice}
                     verifiedAskPrice={miner.pricing.verifiedAskPrice}
                     retrievalAskPrice={miner.pricing.retrievalAskPrice}
@@ -478,9 +420,7 @@ export default function Miner({ miner }) {
                 />
               </TabPanel>
               <TabPanel>
-                {loading ? (
-                  <Spinner size="lg" />
-                ) : (
+                {storageDealStatsIsLoaded ? (
                   <StorageDealStats
                     averagePrice={storageDealStats.averagePrice}
                     dataStored={storageDealStats.dataStored}
@@ -491,12 +431,17 @@ export default function Miner({ miner }) {
                     terminated={storageDealStats.terminated}
                     total={storageDealStats.total}
                   />
+                ) : (
+                  <>
+                    <Center>
+                      {/**<Spinner size="xl" color="red.500" /> */}
+                      <Spinner marginTop="16" color="blue.900" size="lg" />
+                    </Center>
+                  </>
                 )}
               </TabPanel>
               <TabPanel>
-                {loading ? (
-                  <Spinner size="xl" color="red.500" />
-                ) : (
+                {aggregateEarningsIsLoaded ? (
                   <AggregatedEarnings
                     qap={aggregateEarnings.miner.qualityAdjustedPower}
                     totalIncome={
@@ -533,12 +478,17 @@ export default function Miner({ miner }) {
                       aggregateEarnings.miner.aggregateEarnings.netEarnings
                     }
                   />
+                ) : (
+                  <>
+                    <Center>
+                      {/**<Spinner size="xl" color="red.500" /> */}
+                      <Spinner marginTop="16" color="blue.900" size="lg" />
+                    </Center>
+                  </>
                 )}
               </TabPanel>
               <TabPanel>
-                {loading ? (
-                  <Spinner color="blue.900" size="xl" />
-                ) : (
+                {predictedEarningsIsLoaded ? (
                   <PredictedEarnings
                     totalIncome={
                       estimatedEarnings.miner.estimatedEarnings.income.total
@@ -582,12 +532,17 @@ export default function Miner({ miner }) {
                         .blockRewards.daysUntilEligible
                     }
                   />
+                ) : (
+                  <>
+                    <Center>
+                      {/**<Spinner size="xl" color="red.500" /> */}
+                      <Spinner marginTop="16" color="blue.900" size="lg" />
+                    </Center>
+                  </>
                 )}
               </TabPanel>
               <TabPanel>
-                {loading ? (
-                  <Spinner color="red.600" size="xl" />
-                ) : (
+                {transactionHistoryIsLoaded ? (
                   <TransactionHistory
                     minerID={miner.id}
                     transactions={transactions}
@@ -595,6 +550,13 @@ export default function Miner({ miner }) {
                     finalToArr={finalToArr}
                     offsetValue={offsetValue}
                   />
+                ) : (
+                  <>
+                    <Center>
+                      {/**<Spinner size="xl" color="red.500" /> */}
+                      <Spinner marginTop="16" color="blue.900" size="lg" />
+                    </Center>
+                  </>
                 )}
               </TabPanel>
             </TabPanels>

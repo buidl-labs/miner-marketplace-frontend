@@ -8,6 +8,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
+import { GetFormattedStorageUnits, GetFormattedFILUnits, GetSimpleFILUnits, GetSimpleUSDUnits } from "../../util/util";
+import { Countries } from "../../util/raw";
+
+let countries = Countries();
 
 function ServiceDetails(props) {
   let serviceType = [];
@@ -79,7 +83,7 @@ function ServiceDetails(props) {
             <Wrap>{serviceType}</Wrap>
             <Wrap>
               <Text color="blue.600" fontWeight="medium">
-                {props.serviceLocation}
+                {countries[props.country]} ({props.region})
               </Text>
             </Wrap>
           </Stack>
@@ -103,26 +107,26 @@ function ServiceDetails(props) {
           <Stack spacing="4" textAlign="center">
             <HStack>
               <Text fontSize="2xl" color="gray.700">
-                {props.storageAskPrice / 10 ** 18}
+                {GetFormattedFILUnits(props.storageAskPrice).split(" ")[0]}
               </Text>
               <Text fontSize="sm" color="gray.500">
-                FIL/GiB/epoch
+                {GetFormattedFILUnits(props.storageAskPrice).split(" ")[1]}/GiB/epoch
               </Text>
             </HStack>
             <HStack>
-              <Text fontSize="2xl" color="gray.700">
+              {/*<Text fontSize="2xl" color="gray.700">
                 {props.verifiedAskPrice / 10 ** 18}
-              </Text>
+              </Text>*/}
               <Text fontSize="sm" color="gray.500">
-                FIL/GiB/epoch
+                Requirement dependent. Contact miner directly for estimates
               </Text>
             </HStack>
             <HStack>
-              <Text fontSize="2xl" color="gray.700">
+              {/*<Text fontSize="2xl" color="gray.700">
                 {props.retrievalAskPrice}
-              </Text>
+              </Text>*/}
               <Text fontSize="sm" color="gray.500">
-                FIL/B
+                Requirement dependent. Contact miner directly for estimates
               </Text>
             </HStack>
           </Stack>
