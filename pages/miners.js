@@ -25,6 +25,7 @@ import {
   CheckboxGroup,
   Checkbox,
   Circle,
+  Spacer,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
@@ -152,10 +153,10 @@ export default function Miners({ miners, href }) {
           (parseInt(storageAskPrice) / 10 ** 18),
         display: GetFormattedFILUnits(
           storageDuration *
-            30 *
-            2880 *
-            storageAmount *
-            parseInt(storageAskPrice),
+          30 *
+          2880 *
+          storageAmount *
+          parseInt(storageAskPrice),
         ),
         usd:
           storageDuration *
@@ -172,6 +173,255 @@ export default function Miners({ miners, href }) {
     };
   });
 
+  let c = {
+    "AF": "Afghanistan",
+    "AX": "Aland Islands",
+    "AL": "Albania",
+    "DZ": "Algeria",
+    "AS": "American Samoa",
+    "AD": "Andorra",
+    "AO": "Angola",
+    "AI": "Anguilla",
+    "AQ": "Antarctica",
+    "AG": "Antigua And Barbuda",
+    "AR": "Argentina",
+    "AM": "Armenia",
+    "AW": "Aruba",
+    "AU": "Australia",
+    "AT": "Austria",
+    "AZ": "Azerbaijan",
+    "BS": "Bahamas",
+    "BH": "Bahrain",
+    "BD": "Bangladesh",
+    "BB": "Barbados",
+    "BY": "Belarus",
+    "BE": "Belgium",
+    "BZ": "Belize",
+    "BJ": "Benin",
+    "BM": "Bermuda",
+    "BT": "Bhutan",
+    "BO": "Bolivia",
+    "BA": "Bosnia And Herzegovina",
+    "BW": "Botswana",
+    "BV": "Bouvet Island",
+    "BR": "Brazil",
+    "IO": "British Indian Ocean Territory",
+    "BN": "Brunei Darussalam",
+    "BG": "Bulgaria",
+    "BF": "Burkina Faso",
+    "BI": "Burundi",
+    "KH": "Cambodia",
+    "CM": "Cameroon",
+    "CA": "Canada",
+    "CV": "Cape Verde",
+    "KY": "Cayman Islands",
+    "CF": "Central African Republic",
+    "TD": "Chad",
+    "CL": "Chile",
+    "CN": "China",
+    "CX": "Christmas Island",
+    "CC": "Cocos (Keeling) Islands",
+    "CO": "Colombia",
+    "KM": "Comoros",
+    "CG": "Congo",
+    "CD": "Congo, Democratic Republic",
+    "CK": "Cook Islands",
+    "CR": "Costa Rica",
+    "CI": "Cote D\"Ivoire",
+    "HR": "Croatia",
+    "CU": "Cuba",
+    "CY": "Cyprus",
+    "CZ": "Czech Republic",
+    "DK": "Denmark",
+    "DJ": "Djibouti",
+    "DM": "Dominica",
+    "DO": "Dominican Republic",
+    "EC": "Ecuador",
+    "EG": "Egypt",
+    "SV": "El Salvador",
+    "GQ": "Equatorial Guinea",
+    "ER": "Eritrea",
+    "EE": "Estonia",
+    "ET": "Ethiopia",
+    "FK": "Falkland Islands (Malvinas)",
+    "FO": "Faroe Islands",
+    "FJ": "Fiji",
+    "FI": "Finland",
+    "FR": "France",
+    "GF": "French Guiana",
+    "PF": "French Polynesia",
+    "TF": "French Southern Territories",
+    "GA": "Gabon",
+    "GM": "Gambia",
+    "GE": "Georgia",
+    "DE": "Germany",
+    "GH": "Ghana",
+    "GI": "Gibraltar",
+    "GR": "Greece",
+    "GL": "Greenland",
+    "GD": "Grenada",
+    "GP": "Guadeloupe",
+    "GU": "Guam",
+    "GT": "Guatemala",
+    "GG": "Guernsey",
+    "GN": "Guinea",
+    "GW": "Guinea-Bissau",
+    "GY": "Guyana",
+    "HT": "Haiti",
+    "HM": "Heard Island & Mcdonald Islands",
+    "VA": "Holy See (Vatican City State)",
+    "HN": "Honduras",
+    "HK": "Hong Kong",
+    "HU": "Hungary",
+    "IS": "Iceland",
+    "IN": "India",
+    "ID": "Indonesia",
+    "IR": "Iran, Islamic Republic Of",
+    "IQ": "Iraq",
+    "IE": "Ireland",
+    "IM": "Isle Of Man",
+    "IL": "Israel",
+    "IT": "Italy",
+    "JM": "Jamaica",
+    "JP": "Japan",
+    "JE": "Jersey",
+    "JO": "Jordan",
+    "KZ": "Kazakhstan",
+    "KE": "Kenya",
+    "KI": "Kiribati",
+    "KR": "Korea",
+    "KP": "North Korea",
+    "KW": "Kuwait",
+    "KG": "Kyrgyzstan",
+    "LA": "Lao People\"s Democratic Republic",
+    "LV": "Latvia",
+    "LB": "Lebanon",
+    "LS": "Lesotho",
+    "LR": "Liberia",
+    "LY": "Libyan Arab Jamahiriya",
+    "LI": "Liechtenstein",
+    "LT": "Lithuania",
+    "LU": "Luxembourg",
+    "MO": "Macao",
+    "MK": "Macedonia",
+    "MG": "Madagascar",
+    "MW": "Malawi",
+    "MY": "Malaysia",
+    "MV": "Maldives",
+    "ML": "Mali",
+    "MT": "Malta",
+    "MH": "Marshall Islands",
+    "MQ": "Martinique",
+    "MR": "Mauritania",
+    "MU": "Mauritius",
+    "YT": "Mayotte",
+    "MX": "Mexico",
+    "FM": "Micronesia, Federated States Of",
+    "MD": "Moldova",
+    "MC": "Monaco",
+    "MN": "Mongolia",
+    "ME": "Montenegro",
+    "MS": "Montserrat",
+    "MA": "Morocco",
+    "MZ": "Mozambique",
+    "MM": "Myanmar",
+    "NA": "Namibia",
+    "NR": "Nauru",
+    "NP": "Nepal",
+    "NL": "Netherlands",
+    "AN": "Netherlands Antilles",
+    "NC": "New Caledonia",
+    "NZ": "New Zealand",
+    "NI": "Nicaragua",
+    "NE": "Niger",
+    "NG": "Nigeria",
+    "NU": "Niue",
+    "NF": "Norfolk Island",
+    "MP": "Northern Mariana Islands",
+    "NO": "Norway",
+    "OM": "Oman",
+    "PK": "Pakistan",
+    "PW": "Palau",
+    "PS": "Palestinian Territory, Occupied",
+    "PA": "Panama",
+    "PG": "Papua New Guinea",
+    "PY": "Paraguay",
+    "PE": "Peru",
+    "PH": "Philippines",
+    "PN": "Pitcairn",
+    "PL": "Poland",
+    "PT": "Portugal",
+    "PR": "Puerto Rico",
+    "QA": "Qatar",
+    "RE": "Reunion",
+    "RO": "Romania",
+    "RU": "Russian Federation",
+    "RW": "Rwanda",
+    "BL": "Saint Barthelemy",
+    "SH": "Saint Helena",
+    "KN": "Saint Kitts And Nevis",
+    "LC": "Saint Lucia",
+    "MF": "Saint Martin",
+    "PM": "Saint Pierre And Miquelon",
+    "VC": "Saint Vincent And Grenadines",
+    "WS": "Samoa",
+    "SM": "San Marino",
+    "ST": "Sao Tome And Principe",
+    "SA": "Saudi Arabia",
+    "SN": "Senegal",
+    "RS": "Serbia",
+    "SC": "Seychelles",
+    "SL": "Sierra Leone",
+    "SG": "Singapore",
+    "SK": "Slovakia",
+    "SI": "Slovenia",
+    "SB": "Solomon Islands",
+    "SO": "Somalia",
+    "ZA": "South Africa",
+    "GS": "South Georgia And Sandwich Isl.",
+    "ES": "Spain",
+    "LK": "Sri Lanka",
+    "SD": "Sudan",
+    "SR": "Suriname",
+    "SJ": "Svalbard And Jan Mayen",
+    "SZ": "Swaziland",
+    "SE": "Sweden",
+    "CH": "Switzerland",
+    "SY": "Syrian Arab Republic",
+    "TW": "Taiwan",
+    "TJ": "Tajikistan",
+    "TZ": "Tanzania",
+    "TH": "Thailand",
+    "TL": "Timor-Leste",
+    "TG": "Togo",
+    "TK": "Tokelau",
+    "TO": "Tonga",
+    "TT": "Trinidad And Tobago",
+    "TN": "Tunisia",
+    "TR": "Turkey",
+    "TM": "Turkmenistan",
+    "TC": "Turks And Caicos Islands",
+    "TV": "Tuvalu",
+    "UG": "Uganda",
+    "UA": "Ukraine",
+    "AE": "United Arab Emirates",
+    "GB": "United Kingdom",
+    "US": "United States",
+    "UM": "United States Outlying Islands",
+    "UY": "Uruguay",
+    "UZ": "Uzbekistan",
+    "VU": "Vanuatu",
+    "VE": "Venezuela",
+    "VN": "Vietnam",
+    "VG": "Virgin Islands, British",
+    "VI": "Virgin Islands, U.S.",
+    "WF": "Wallis And Futuna",
+    "EH": "Western Sahara",
+    "YE": "Yemen",
+    "ZM": "Zambia",
+    "ZW": "Zimbabwe"
+  }
+
   const mLocations = [
     { text: "Asia", value: "Asia" },
     { text: "Europe", value: "Europe" },
@@ -181,6 +431,7 @@ export default function Miners({ miners, href }) {
     { text: "Central America", value: "Central America" },
     { text: "North America", value: "North America" },
   ];
+
   const columns = [
     {
       title: "Miner",
@@ -300,7 +551,7 @@ export default function Miners({ miners, href }) {
           }
           return (
             <HStack>
-              <Circle size="0.8rem" bg={color} />
+              {/* <Circle size="0.8rem" bg={color} /> */}
               <Text color={color}>{datatype}</Text>
             </HStack>
           );
@@ -328,8 +579,9 @@ export default function Miners({ miners, href }) {
       render: (l) => {
         return (
           <div color="gray.600">
-            <Text>{l.country}</Text>
-            <Text fontSize="sm">({l.region})</Text>
+            <Text>{c[l.country]}</Text>
+            {l.region && (<Text fontSize="sm">({l.region})</Text>)}
+            {!l.region && (<Text fontSize="sm">-</Text>)}
           </div>
         );
       },
@@ -364,7 +616,10 @@ export default function Miners({ miners, href }) {
         compare: (a, b) => parseInt(a.qap.val) - parseInt(b.qap.val),
       },
       render: (l) => {
-        return <p>{l.display}</p>;
+        return (<>
+          {/* {!l.display && (<p>{l.display}</p>)} */}
+          {l.display == "NaN YB" ? (<p>-</p>) : (<p>{l.display}</p>)}
+        </>);
       },
     },
   ];
@@ -491,7 +746,7 @@ export default function Miners({ miners, href }) {
   const customStylesAlt = {
     control: (Base) => ({
       ...Base,
-      height: "2.5rem",
+      height: "2rem",
       borderRadius: "0.4rem",
 
       borderColor: "#E2E8F0",
@@ -511,33 +766,164 @@ export default function Miners({ miners, href }) {
         </GridItem> */}
 
         <GridItem colSpan="12" pt="28" bg="white" px="8">
-          <Stack spacing="4">
-            <Heading color="gray.700" size="lg">
-              Search Miners
-            </Heading>
-            <Stack spacing="4" pb="4">
-              <InputGroup maxW="40%">
-                <InputLeftElement
-                  pointerEvents="visible"
-                  children={<Search2Icon color="gray.500" />}
-                />
-                <Input
-                  type="text"
-                  placeholder="Search by Miner Address"
-                  value={minerIdQuery}
-                  onChange={onChange}
-                />
-              </InputGroup>
+          <Flex justifyContent="space-between">
+            <Stack spacing="6" w="36rem">
+              <Heading color="gray.700" size="lg">
+                Search Miners
+              </Heading>
+              <Stack spacing="4" pb="4">
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="visible"
+                    children={<Search2Icon w={5} h={5} color="gray.500" />}
+                  />
+                  <Input
+                    type="text"
+                    size="lg"
+                    placeholder="Search by Miner Address"
+                    value={minerIdQuery}
+                    onChange={onChange}
+                  />
+                </InputGroup>
+              </Stack>
             </Stack>
-          </Stack>
 
+            <Stack
+              bg="gray.100"
+              borderRadius="xl"
+              p="6"
+            >
+              <HStack
+                spacing="4"
+                alignItems="flex-end"
+                pb="2"
+              >
+                <Stack spacing="2" >
+                  <Heading size="sm" fontWeight="semibold" color="gray.700">
+                    Estimated Quote
+                  </Heading>
+                  <Text fontWeight="medium" color="gray.700">
+                    Storage amount
+                  </Text>
+                  <InputGroup
+                    height="fit-content"
+                    alignContent="center"
+                    alignItems="center"
+                  >
+                    <Input
+                      bg="white"
+                      type="number"
+                      w="36"
+                      placeholder="Enter amount of storage"
+                      value={storageAmountText}
+                      onChange={(event) => {
+                        console.log("amt changed");
+                        let finalSA = event.target.value;
+                        setStorageAmountText(event.target.value);
+                        if (dStorageUnits.value == "MB") {
+                          finalSA *= 0.001 * 0.931323;
+                        } else if (dStorageUnits.value == "GB") {
+                          finalSA *= 0.931323;
+                        } else if (dStorageUnits.value == "TB") {
+                          finalSA *= 1000 * 0.931323;
+                        } else if (dStorageUnits.value == "PB") {
+                          finalSA *= 1000000 * 0.931323;
+                        }
+                        console.log("finalSA", finalSA);
+
+                        setStorageAmount(finalSA);
+                        console.log(
+                          "storageAmount",
+                          storageAmount,
+                          event.target.value,
+                        );
+                        console.log("dStorageUnits", dStorageUnits);
+                        console.log(
+                          "dStorageDurationUnits",
+                          dStorageDurationUnits,
+                        );
+                      }}
+                      borderRight="none"
+                      borderRadius="0.4rem 0rem 0rem 0.4rem"
+                    />
+
+                    <Select
+                      options={dStorageUnitsArr}
+                      value={dStorageUnits}
+                      onChange={handleStorageUnitsChange}
+                      // defaultValue={dStorageUnitsArr[1]}
+                      isClearable={false}
+                      isSearchable={false}
+                      styles={customStyles}
+                    />
+                  </InputGroup>
+                </Stack>
+                <Stack spacing="1">
+                  <Text fontWeight="medium" color="gray.700">
+                    Storage Duration
+                  </Text>
+                  <InputGroup>
+                    <Input
+                      bg="white"
+                      type="number"
+                      w="36"
+                      placeholder="Enter duration of storage"
+                      value={storageDurationText}
+                      onChange={(event) => {
+                        console.log("dur changed");
+                        let finalSD = event.target.value;
+                        setStorageDurationText(event.target.value);
+                        if (dStorageDurationUnits.value == "Years") {
+                          finalSD *= 12;
+                        }
+                        console.log("finalSD", finalSD);
+
+                        setStorageDuration(finalSD);
+                        console.log(
+                          "storageDuration",
+                          storageDuration,
+                          event.target.value,
+                        );
+                        console.log("dStorageUnits", dStorageUnits);
+                        console.log(
+                          "dStorageDurationUnits",
+                          dStorageDurationUnits,
+                        );
+                      }}
+                      borderRight="none"
+                      borderRadius="0.4rem 0rem 0rem 0.4rem"
+                    />
+                    <Select
+                      options={dStorageDurationUnitsArr}
+                      value={dStorageDurationUnits}
+                      onChange={handleStorageDurationUnitsChange}
+                      // defaultValue={dStorageDurationUnitsArr[0]}
+                      isClearable={false}
+                      isSearchable={false}
+                      styles={customStyles}
+                    />
+                  </InputGroup>
+                </Stack>
+              </HStack>
+              <Button
+                w="fit-content"
+                colorScheme="blue"
+                variant="solid"
+                onClick={(event) => {
+                  filterList(event);
+                }}
+              >
+                Update Estimated Quote
+              </Button>
+            </Stack>
+          </Flex>
           <HStack
-            py={8}
-            w="full"
-            justifyContent="space-between"
-            alignItems="top"
+          //py={8}
+          //w="full"
+          //justifyContent="space-between"
+          //alignItems="top"
           >
-            <VStack alignItems="left" w="20rem">
+            {/* <VStack alignItems="left" w="20rem">
               <Heading size="sm" fontWeight="medium" color="gray.700">
                 Type of Service
               </Heading>
@@ -547,9 +933,9 @@ export default function Miners({ miners, href }) {
                 styles={customStylesAlt}
                 isMulti
               />
-            </VStack>
+            </VStack> */}
 
-            <VStack alignItems="left" w="20rem">
+            {/* <VStack alignItems="left" w="20rem">
               <Heading size="sm" fontWeight="medium" color="gray.700">
                 Data Transfer Mechanism
               </Heading>
@@ -558,9 +944,9 @@ export default function Miners({ miners, href }) {
                 styles={customStylesAlt}
                 isMulti
               />
-            </VStack>
+            </VStack> */}
 
-            <VStack alignItems="left" w="20rem">
+            {/* <VStack alignItems="left" w="20rem">
               <Heading size="sm" fontWeight="medium" color="gray.700">
                 Location
               </Heading>
@@ -575,131 +961,8 @@ export default function Miners({ miners, href }) {
                 styles={customStylesAlt}
                 isMulti
               />
-            </VStack>
+            </VStack> */}
 
-            <Stack
-              alignItems="left"
-              spacing="4"
-              bg="gray.100"
-              p="6"
-              borderRadius="xl"
-              w="20rem"
-            >
-              <Heading size="sm" fontWeight="medium" color="gray.700">
-                Estimated Quote
-              </Heading>
-              <Stack spacing="1">
-                <Text fontWeight="medium" color="gray.700">
-                  Storage amount
-                </Text>
-
-                <InputGroup
-                  height="fit-content"
-                  alignContent="center"
-                  alignItems="center"
-                >
-                  <Input
-                    bg="white"
-                    type="number"
-                    placeholder="Enter amount of storage"
-                    value={storageAmountText}
-                    onChange={(event) => {
-                      console.log("amt changed");
-                      let finalSA = event.target.value;
-                      setStorageAmountText(event.target.value);
-                      if (dStorageUnits.value == "MB") {
-                        finalSA *= 0.001 * 0.931323;
-                      } else if (dStorageUnits.value == "GB") {
-                        finalSA *= 0.931323;
-                      } else if (dStorageUnits.value == "TB") {
-                        finalSA *= 1000 * 0.931323;
-                      } else if (dStorageUnits.value == "PB") {
-                        finalSA *= 1000000 * 0.931323;
-                      }
-                      console.log("finalSA", finalSA);
-
-                      setStorageAmount(finalSA);
-                      console.log(
-                        "storageAmount",
-                        storageAmount,
-                        event.target.value,
-                      );
-                      console.log("dStorageUnits", dStorageUnits);
-                      console.log(
-                        "dStorageDurationUnits",
-                        dStorageDurationUnits,
-                      );
-                    }}
-                    borderRight="none"
-                    borderRadius="0.4rem 0rem 0rem 0.4rem"
-                  />
-
-                  <Select
-                    options={dStorageUnitsArr}
-                    value={dStorageUnits}
-                    onChange={handleStorageUnitsChange}
-                    // defaultValue={dStorageUnitsArr[1]}
-                    isClearable={false}
-                    isSearchable={false}
-                    styles={customStyles}
-                  />
-                </InputGroup>
-              </Stack>
-              <Stack spacing="1">
-                <Text fontWeight="medium" color="gray.700">
-                  Storage Duration
-                </Text>
-                <InputGroup>
-                  <Input
-                    bg="white"
-                    type="number"
-                    placeholder="Enter duration of storage"
-                    value={storageDurationText}
-                    onChange={(event) => {
-                      console.log("dur changed");
-                      let finalSD = event.target.value;
-                      setStorageDurationText(event.target.value);
-                      if (dStorageDurationUnits.value == "Years") {
-                        finalSD *= 12;
-                      }
-                      console.log("finalSD", finalSD);
-
-                      setStorageDuration(finalSD);
-                      console.log(
-                        "storageDuration",
-                        storageDuration,
-                        event.target.value,
-                      );
-                      console.log("dStorageUnits", dStorageUnits);
-                      console.log(
-                        "dStorageDurationUnits",
-                        dStorageDurationUnits,
-                      );
-                    }}
-                    borderRight="none"
-                    borderRadius="0.4rem 0rem 0rem 0.4rem"
-                  />
-                  <Select
-                    options={dStorageDurationUnitsArr}
-                    value={dStorageDurationUnits}
-                    onChange={handleStorageDurationUnitsChange}
-                    // defaultValue={dStorageDurationUnitsArr[0]}
-                    isClearable={false}
-                    isSearchable={false}
-                    styles={customStyles}
-                  />
-                </InputGroup>
-              </Stack>
-              <Button
-                colorScheme="blue"
-                variant="solid"
-                onClick={(event) => {
-                  filterList(event);
-                }}
-              >
-                Update Estimated Quote
-              </Button>
-            </Stack>
           </HStack>
 
           <Stack spacing="8" mt="6">

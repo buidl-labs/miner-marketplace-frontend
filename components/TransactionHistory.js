@@ -1,9 +1,8 @@
 import {
-  Accordion,
-  AccordionItem,
-  AccordionPanel,
-  AccordionButton,
-  AccordionIcon,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
   Button,
   Box,
   Center,
@@ -13,10 +12,6 @@ import {
   Grid,
   GridItem,
   IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Select,
   VStack,
   HStack,
   Link,
@@ -388,12 +383,16 @@ export default function TransactionHistory(props) {
           </HStack>
         </HStack>
         {toggle && (
-          <AdvanceView
-            minerID={props.minerID}
-            // transactions={props.transactions}
-            // finalFromArr={props.finalFromArr}
-            // finalToArr={props.finalToArr}
-          />
+          <>
+            <Alert status="warning" borderRadius="lg" maxW={{ md: "60vw", base: "full" }}>
+              <AlertIcon />
+              <AlertTitle mr={2}>This feature is currently in beta!</AlertTitle>
+              <AlertDescription>information might be incorrect</AlertDescription>
+            </Alert>
+            <AdvanceView
+              minerID={props.minerID}
+            />
+          </>
         )}
         {!toggle && (
           <BasicView

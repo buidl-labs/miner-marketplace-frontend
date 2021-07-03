@@ -9,6 +9,7 @@ import {
   HStack,
   Stack,
 } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons"
 import Navbar from "../components/Navbar";
 import Hero from "../components/landingPage/Hero";
 import Features from "../components/landingPage/Features";
@@ -17,11 +18,13 @@ import JoinNetwork from "../components/landingPage/JoinNetwork";
 import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
+import { useRouter } from "next/router";
 
 const minerLanding = (stats) => {
   // console.log(stats);
   // console.log("active", stats.stats.activeMinersCount);
   // console.log("dataS", stats.stats.dataStored);
+  const router = useRouter();
   return (
     <>
       <Navbar />
@@ -34,6 +37,7 @@ const minerLanding = (stats) => {
             heroHeading="Provide Storage Services & Earn Rewards"
             heroText="The Filecoin network is designed to reward participants at multiple levels — from large scale data centers to local entrepreneurs with mining rigs that cover the last mile."
             ctaText="Become a Miner"
+            ctaLink="https://filecoin.io/mine/"
           />
 
           {/* Features Section */}
@@ -110,12 +114,15 @@ const minerLanding = (stats) => {
                 cardHeading="Become a Miner"
                 cardText="Want to join Filecoin network as a miner, click the link below to get started."
                 ctaText="Become a Miner"
-                ctaVariant="outline"
+                ctaVariant="link"
+                ctaIcon={<ArrowForwardIcon w={5} h={5} />}
+                ctaLink="https://filecoin.io/mine/"
               />
               <JoinNetwork
                 cardHeading="Already a Miner? Claim Profile"
                 cardText="If you are already a registered miner, claim your profile to see your storage stats and earning details in intuitive way."
                 ctaText="Claim Profile"
+                ctaRoute={() => router.push('/miners')}
               />
             </SimpleGrid>
           </Stack>
@@ -123,11 +130,13 @@ const minerLanding = (stats) => {
           {/*FAQ*/}
           <Stack textAlign="center" alignItems="center" spacing="16">
             <Heading size="lg">Frequently Asked Questions</Heading>
-            <Stack minW={{ base: "80vw", md: "48rem" }} textAlign="left">
+            <Stack w={{ base: "80vw", md: "48rem" }} textAlign="left">
               <Accordion allowToggle="false">
-                <Faq question="What?" answer="this is what" />
-                <Faq question="What?" answer="this is what" />
-                <Faq question="What?" answer="this is what" />
+                <Faq
+                  question="What's the minimum time period for the storage contract between the provider and the buyer?"
+                  answer="The minimum duration for a deal is set in the miner's ask. There's also a practical limitation because sectors have a minimum duration (currently one month)" />
+                <Faq question="What are block rewards?" answer="Block rewards are large sums that are given to the miner credited for a new block. Unlike storage fees, these rewards do not come from an associated client; rather, the network 'prints' new FIL as both an inflationary measure and an incentive to miners advancing the chain. " />
+                <Faq question="What are the minimum hardware requirements to start mining?" answer="at least 8+ Core GPU, 128 Gib RAM with 256 Gib of swap on very fast NVMe SSD" />
               </Accordion>
             </Stack>
           </Stack>

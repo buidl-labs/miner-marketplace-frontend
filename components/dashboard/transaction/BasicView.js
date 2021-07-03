@@ -99,7 +99,7 @@ function BasicView(props) {
   }
   const [offsetValue, setOffsetValue] = useState(props.offsetValue);
   console.log("offsetinitial", offsetValue);
-  function handleLoadMore(offsetValue) {}
+  function handleLoadMore(offsetValue) { }
 
   function dateOfTransaction(dateProps) {
     const miliseconds = dateProps * 1000;
@@ -152,17 +152,16 @@ function BasicView(props) {
   return (
     <>
       <>
-        <Stack w="74vw">
+        <Stack >
           {/*<Heading size="md" color="gray.700" fontWeight="semibold" pl="4">
             dateGoesHere
           </Heading>*/}
-
-          <Accordion allowMultiple>
+          <Accordion allowMultiple w="fit-content" maxW="96vw">
             {dataSourceU.map((txn) => (
               <AccordionItem py="3">
                 <AccordionButton alignItems="center">
                   <HStack textAlign="left" alignItems="center">
-                    <Grid templateColumns="repeat(8, 1fr)" gap={36}>
+                    <Grid templateColumns="repeat(8, 1fr)" gap={{ base: 12 }}>
                       <GridItem colSpan="3">
                         <HStack>
                           {txn.transactionType === "Block Reward" ? (
@@ -247,28 +246,28 @@ function BasicView(props) {
                             whiteSpace="nowrap"
                           >
                             {txn.methodName === "PreCommitSector" ||
-                            "ProveCommitSector" ||
-                            "PublishStorageDeals" ||
-                            "TerminateSectors" ||
-                            "RepayDebt" ||
-                            "WithdrawBalance (miner)" ||
-                            "WithdrawBalance (market)" ||
-                            "AddBalance" ||
-                            "ChangeWorkerAddress" ||
-                            "ChangeOwnerAddress" ||
-                            "ChangePeerID" ||
-                            "DeclareFaults" ||
-                            "DeclareFaultsRecovered" ||
-                            "ExtendSectorExpiration"
+                              "ProveCommitSector" ||
+                              "PublishStorageDeals" ||
+                              "TerminateSectors" ||
+                              "RepayDebt" ||
+                              "WithdrawBalance (miner)" ||
+                              "WithdrawBalance (market)" ||
+                              "AddBalance" ||
+                              "ChangeWorkerAddress" ||
+                              "ChangeOwnerAddress" ||
+                              "ChangePeerID" ||
+                              "DeclareFaults" ||
+                              "DeclareFaultsRecovered" ||
+                              "ExtendSectorExpiration"
                               ? GetFormattedFILUnits(
-                                  txn.minerFee.val + txn.burnFee.val,
-                                )
+                                txn.minerFee.val + txn.burnFee.val,
+                              )
                               : "0"}
                           </StatNumber>
                         </Stat>
                       </GridItem>
 
-                      <GridItem colSpan="1">
+                      <GridItem colSpan="1" pr="8">
                         <Stat>
                           <StatLabel fontSize="sm" color="gray.600">
                             Status
@@ -332,11 +331,11 @@ function BasicView(props) {
                           >
                             {txn.id.mid.length > 25
                               ? txn.id.mid.substr(0, 12) +
-                                "..." +
-                                txn.id.mid.substr(
-                                  txn.id.mid.length - 12,
-                                  txn.id.mid.length,
-                                )
+                              "..." +
+                              txn.id.mid.substr(
+                                txn.id.mid.length - 12,
+                                txn.id.mid.length,
+                              )
                               : txn.id.mid}
                           </Link>
                         </Stack>
@@ -362,11 +361,11 @@ function BasicView(props) {
                           >
                             {txn.from.length > 25
                               ? txn.from.substr(0, 12) +
-                                "..." +
-                                txn.from.substr(
-                                  txn.from.length - 12,
-                                  txn.from.length,
-                                )
+                              "..." +
+                              txn.from.substr(
+                                txn.from.length - 12,
+                                txn.from.length,
+                              )
                               : txn.from}
                           </Link>
                         </Stack>
@@ -393,8 +392,8 @@ function BasicView(props) {
                           >
                             {txn.to.length > 25
                               ? txn.to.substr(0, 12) +
-                                "..." +
-                                txn.to.substr(txn.to.length - 12, txn.to.length)
+                              "..." +
+                              txn.to.substr(txn.to.length - 12, txn.to.length)
                               : txn.to}
                           </Link>
                         </Stack>
@@ -414,19 +413,19 @@ function BasicView(props) {
                           </Heading>
                           <Text size="md" fontWeight="normal" color="gray.600">
                             {txn.methodName === "PreCommitSector" ||
-                            "ProveCommitSector" ||
-                            "PublishStorageDeals" ||
-                            "TerminateSectors" ||
-                            "RepayDebt" ||
-                            "WithdrawBalance (miner)" ||
-                            "WithdrawBalance (market)" ||
-                            "AddBalance" ||
-                            "ChangeWorkerAddress" ||
-                            "ChangeOwnerAddress" ||
-                            "ChangePeerID" ||
-                            "DeclareFaults" ||
-                            "DeclareFaultsRecovered" ||
-                            "ExtendSectorExpiration"
+                              "ProveCommitSector" ||
+                              "PublishStorageDeals" ||
+                              "TerminateSectors" ||
+                              "RepayDebt" ||
+                              "WithdrawBalance (miner)" ||
+                              "WithdrawBalance (market)" ||
+                              "AddBalance" ||
+                              "ChangeWorkerAddress" ||
+                              "ChangeOwnerAddress" ||
+                              "ChangePeerID" ||
+                              "DeclareFaults" ||
+                              "DeclareFaultsRecovered" ||
+                              "ExtendSectorExpiration"
                               ? txn.minerFee.display
                               : "0"}
                           </Text>
@@ -445,19 +444,19 @@ function BasicView(props) {
                           </Heading>
                           <Text size="md" fontWeight="normal" color="gray.600">
                             {txn.methodName === "PreCommitSector" ||
-                            "ProveCommitSector" ||
-                            "PublishStorageDeals" ||
-                            "TerminateSectors" ||
-                            "RepayDebt" ||
-                            "WithdrawBalance (miner)" ||
-                            "WithdrawBalance (market)" ||
-                            "AddBalance" ||
-                            "ChangeWorkerAddress" ||
-                            "ChangeOwnerAddress" ||
-                            "ChangePeerID" ||
-                            "DeclareFaults" ||
-                            "DeclareFaultsRecovered" ||
-                            "ExtendSectorExpiration" ? (
+                              "ProveCommitSector" ||
+                              "PublishStorageDeals" ||
+                              "TerminateSectors" ||
+                              "RepayDebt" ||
+                              "WithdrawBalance (miner)" ||
+                              "WithdrawBalance (market)" ||
+                              "AddBalance" ||
+                              "ChangeWorkerAddress" ||
+                              "ChangeOwnerAddress" ||
+                              "ChangePeerID" ||
+                              "DeclareFaults" ||
+                              "DeclareFaultsRecovered" ||
+                              "ExtendSectorExpiration" ? (
                               txn.burnFee.display
                             ) : (
                               <p>0</p>
