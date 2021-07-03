@@ -22,13 +22,13 @@ export function GetFormattedStorageUnits(amountInBytes) {
 }
 
 export function GetFormattedFILUnits(amountInAttoFIL) {
+  // ⨎
   // 1attoFIL=10^-18FIL
   //console.log("amountInAttoFIL", amountInAttoFIL);
   let amountInAttoFILInt = amountInAttoFIL; // parseInt(amountInAttoFIL);
   if (amountInAttoFILInt == 0) {
     return `0 FIL`;
   }
-  //console.log("amountInAttoFILInt", amountInAttoFILInt);
   if (amountInAttoFILInt < 10 ** 3) {
     return `${amountInAttoFILInt.toFixed(2)} attoFIL`; // <=999attoFIL
   } else if (amountInAttoFILInt < 10 ** 6) {
@@ -40,12 +40,47 @@ export function GetFormattedFILUnits(amountInAttoFIL) {
   } else if (amountInAttoFILInt < 10 ** 15) {
     return `${(amountInAttoFILInt / 10 ** 12).toFixed(2)} microFIL`; // 1microFIL to 999microFIL
   } else if (amountInAttoFILInt < 10 ** 18) {
-    return `${(amountInAttoFILInt / 10 ** 15).toFixed(2)} milliFIL`; //
+    return `${(amountInAttoFILInt / 10 ** 15).toFixed(2)} milliFIL`; // 1 milliFIL to 999milliFIL
   } else if (amountInAttoFILInt < 10 ** 21) {
-    return `${(amountInAttoFILInt / 10 ** 18).toFixed(2)} FIL`;
+    return `${(amountInAttoFILInt / 10 ** 18).toFixed(2)} FIL`; // 1FIL to 999FIL
   } else if (amountInAttoFILInt < 10 ** 24) {
-    return `${(amountInAttoFILInt / 10 ** 21).toFixed(2)} megaFIL`;
+    return `${(amountInAttoFILInt / 10 ** 21).toFixed(2)} kiloFIL`; // 1kiloFIL to 999kiloFIL
+  } else if (amountInAttoFILInt < 10 ** 27) {
+    return `${(amountInAttoFILInt / 10 ** 24).toFixed(2)} megaFIL`; // 1megaFIL to 999megaFIL
   } else {
-    return `${(amountInAttoFILInt / 10 ** 24).toFixed(2)} gigaFIL`;
+    return `${(amountInAttoFILInt / 10 ** 27).toFixed(2)} gigaFIL`; // >=1gigaFIL
+  }
+}
+
+export function GetSimpleFILUnits(amountInAttoFIL) {
+  // ⨎
+  let amountInFIL = amountInAttoFIL / 10 ** 18;
+  if (amountInFIL < 0.0001) {
+    return `0 FIL`;
+  } else if (amountInFIL < 1000) {
+    return `${amountInFIL.toFixed(2)} FIL`;
+  } else if (amountInFIL < 1000000) {
+    return `${(amountInFIL / 1000).toFixed(2)}K FIL`;
+  } else if (amountInFIL < 1000000000) {
+    return `${(amountInFIL / 1000000).toFixed(2)}M FIL`;
+  } else {
+    return `${(amountInFIL / 1000000000).toFixed(2)}B FIL`;
+  }
+}
+
+export function GetSimpleUSDUnits(amountInUSD) {
+  console.log("amountInUSD", amountInUSD);
+  if (amountInUSD < 0.01) {
+    return `$0`;
+  } else if (amountInUSD < 1000) {
+    return `$${amountInUSD.toFixed(2)}`;
+  } else if (amountInUSD < 1000000) {
+    return `$${(amountInUSD / 1000).toFixed(2)}K`;
+  } else if (amountInUSD < 1000000000) {
+    return `$${(amountInUSD / 1000000).toFixed(2)}M`;
+  } else if (amountInUSD < 1000000000000) {
+    return `$${(amountInUSD / 1000000000).toFixed(2)}B`;
+  } else {
+    return `$${(amountInUSD / 1000000000000).toFixed(2)}T`;
   }
 }

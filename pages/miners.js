@@ -45,7 +45,7 @@ import { SearchOutlined } from "@ant-design/icons";
 
 import { useRouter } from "next/router";
 
-import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
+import { GetFormattedStorageUnits, GetFormattedFILUnits, GetSimpleFILUnits, GetSimpleUSDUnits } from "../util/util";
 import Base from "antd/lib/typography/Base";
 
 export default function Miners({ miners, href }) {
@@ -151,7 +151,7 @@ export default function Miners({ miners, href }) {
           2880 *
           storageAmount *
           (parseInt(storageAskPrice) / 10 ** 18),
-        display: GetFormattedFILUnits(
+        display: GetSimpleFILUnits(
           storageDuration *
           30 *
           2880 *
@@ -165,6 +165,13 @@ export default function Miners({ miners, href }) {
           storageAmount *
           (parseInt(storageAskPrice) / 10 ** 18) *
           filecoinUSDRate,
+        displayUSD:
+          GetSimpleUSDUnits(storageDuration *
+            30 *
+            2880 *
+            storageAmount *
+            (parseInt(storageAskPrice) / 10 ** 18) *
+            filecoinUSDRate)
       },
       qap: {
         val: fd.qualityAdjustedPower,
@@ -602,7 +609,7 @@ export default function Miners({ miners, href }) {
               {l.display}
             </Text>
             <Text color="gray.500">
-              ${Math.round((l.usd + Number.EPSILON) * 100) / 100}
+              {l.displayUSD}
             </Text>
           </div>
         );
@@ -970,7 +977,9 @@ export default function Miners({ miners, href }) {
               columns={columns}
               dataSource={filteredMiners}
               // onChange={handleTableChange}
-              pagination={pagination}
+              // pagination={pagination}
+              pagination={{ pageSize: 50 }}
+              scroll={{ y: 480 }}
             />
           </Stack>
         </GridItem>
