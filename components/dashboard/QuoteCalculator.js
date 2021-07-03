@@ -19,6 +19,8 @@ import React, { useState, useEffect } from "react";
 import {
   GetFormattedStorageUnits,
   GetFormattedFILUnits,
+  GetSimpleFILUnits,
+  GetSimpleUSDUnits,
 } from "../../util/util";
 
 function QuoteCalculator(props) {
@@ -119,7 +121,7 @@ function QuoteCalculator(props) {
         <HStack spacing="2" alignItems="center">
           <Text fontSize="5xl" color="blue.900">
             {
-              GetFormattedFILUnits(
+              GetSimpleFILUnits(
                 storageDuration *
                   30 *
                   2880 *
@@ -140,7 +142,7 @@ function QuoteCalculator(props) {
           </Text>
           <Text fontSize="2xl" color="gray.600">
             {
-              GetFormattedFILUnits(
+              GetSimpleFILUnits(
                 storageDuration *
                   30 *
                   2880 *
@@ -152,8 +154,7 @@ function QuoteCalculator(props) {
         </HStack>
         <Stack color="gray.600" size="md">
           <Text fontSize="xl">
-            $
-            {Math.round(
+            {GetSimpleUSDUnits(Math.round(
               ((storageDuration *
                 30 *
                 2880 *
@@ -163,7 +164,7 @@ function QuoteCalculator(props) {
                 10 ** 18 +
                 Number.EPSILON) *
                 100,
-            ) / 100}
+            ) / 100)}
           </Text>
           {/*<Text>Estimated Quote</Text>*/}
         </Stack>
