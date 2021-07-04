@@ -69,10 +69,10 @@ function ServiceDetails(props) {
         <HStack spacing="16">
           <Stack spacing="6">
             <Text size="lg" color="blue.900">
-              Type of Service
+              Data Transfer Mechanism
             </Text>
             <Text size="lg" color="blue.900">
-              Data Transfer Mechanism
+              Type of Service
             </Text>
             <Text size="lg" color="blue.900">
               Location
@@ -82,9 +82,13 @@ function ServiceDetails(props) {
             <Wrap>{dataTransferMechanism}</Wrap>
             <Wrap>{serviceType}</Wrap>
             <Wrap>
-              <Text color="blue.600" fontWeight="medium">
+              {props.region && (<Text color="blue.600" fontWeight="medium">
                 {countries[props.country]} ({props.region})
-              </Text>
+              </Text>)}
+              {!props.region && (<Text color="blue.600" fontWeight="medium">
+                -
+              </Text>)}
+
             </Wrap>
           </Stack>
         </HStack>
