@@ -144,6 +144,23 @@ export default function Miner({ miner }) {
         // isClaimed={isClaimed}
         // onIsSignedInChange={handleIsSignedInChange}
         // onisClaimedChange={handleIsClaimedChange}
+        minerName={miner.personalInfo.name}
+        minerMail={miner.personalInfo.email}
+        minerWebsite={miner.personalInfo.website}
+        minerSlack={miner.personalInfo.slack}
+        minerTwitter={miner.personalInfo.twitter}
+        minerBio={miner.personalInfo.bio}
+        country={miner.location.country}
+        region={miner.location.region}
+        storageAskPrice={miner.pricing.storageAskPrice}
+        verifiedAskPrice={miner.pricing.verifiedAskPrice}
+        retrievalAskPrice={miner.pricing.retrievalAskPrice}
+        storage={miner.service.serviceTypes.storage}
+        retrieval={miner.service.serviceTypes.retrieval}
+        repair={miner.service.serviceTypes.repair}
+        online={miner.service.dataTransferMechanism.online}
+        offline={miner.service.dataTransferMechanism.offline}
+        transparencyScore={miner.transparencyScore}
       />
       <Button
         mt="28"
@@ -194,7 +211,7 @@ export default function Miner({ miner }) {
           <Tabs overflow={{ base: "scroll", lg: "unset" }}>
             <TabList whiteSpace="nowrap">
               <Tab>Service Details</Tab>
-              <Tab>Profile Settings</Tab>
+              {/*<Tab>Profile Settings</Tab>*/}
               <Tab
                 onClick={() => {
                   console.log(
@@ -397,7 +414,7 @@ export default function Miner({ miner }) {
                   />
                 </Flex>
               </TabPanel>
-              <TabPanel>
+              {/*<TabPanel>
                 <ProfileSettings
                   minerID={miner.id}
                   minerName={miner.personalInfo.name}
@@ -418,7 +435,7 @@ export default function Miner({ miner }) {
                   offline={miner.service.dataTransferMechanism.offline}
                   transparencyScore={miner.transparencyScore}
                 />
-              </TabPanel>
+              </TabPanel>*/}
               <TabPanel>
                 {storageDealStatsIsLoaded ? (
                   <StorageDealStats

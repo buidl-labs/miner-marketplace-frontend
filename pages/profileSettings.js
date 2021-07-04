@@ -9,6 +9,7 @@ import {
   Text,
   WrapItem,
   Input,
+  Box,
   InputGroup,
   InputRightElement,
   Stack,
@@ -23,6 +24,14 @@ import {
   Spacer,
   Button,
   useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Flex,
 } from "@chakra-ui/react";
 import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
@@ -44,10 +53,10 @@ function ProfileSettings(props) {
   const [region, setRegion] = useState(props.region);
   const [storageAskPrice, setStorageAskPrice] = useState(props.storageAskPrice);
   const [verifiedAskPrice, setVerifiedAskPrice] = useState(
-    props.verifiedAskPrice
+    props.verifiedAskPrice,
   );
   const [retrievalAskPrice, setRetrievalAskPrice] = useState(
-    props.retrievalAskPrice
+    props.retrievalAskPrice,
   );
   const [storage, setStorage] = useState(props.storage);
   const [retrieval, setRetrieval] = useState(props.retrieval);
@@ -93,7 +102,7 @@ function ProfileSettings(props) {
         gap="0.5"
         pr="8"
       >
-        <GridItem colSpan="8">
+        {/*<GridItem colSpan="8">
           <Button
             mt="28"
             colorScheme="blue"
@@ -122,27 +131,29 @@ function ProfileSettings(props) {
             <AlertIcon color="blue.400" />
             You will need to connect wallet to edit.
           </Alert>
-        </GridItem>
-
-        <GridItem colSpan="8">
+  </GridItem>*/}
+        <GridItem colSpan="15">
           <TransparencyScore transparencyScore={props.transparencyScore} />
         </GridItem>
 
         <GridItem colSpan="10" mt={8}>
           <VStack alignItems="flex-start" spacing="8">
-            <VStack alignItems="flex-start">
-              <Heading size="lg" color="gray.700">
-                Miner ID: {props.minerID}
+            {/*<VStack alignItems="flex-start">
+              <Heading size="lg" color="gray.700" alignContent="center">
+                {props.minerID}
               </Heading>
-            </VStack>
+            </VStack>*/}
 
             {/*Basic Settings */}
-            <VStack spacing="4" w="24rem">
+            <VStack alignItems="left" spacing="4" w="24rem">
+              <Heading size="lg" color="gray.700">
+                Personal Details
+              </Heading>
               <FormControl id="fullName">
                 <FormLabel>Full Name</FormLabel>
                 <Input
                   type="text"
-                  placeholder="Enter your Full Name"
+                  placeholder="Juan Benet"
                   // defaultValue={props.minerName}
                   value={minerName}
                   onChange={handleMinerNameChange}
@@ -152,7 +163,7 @@ function ProfileSettings(props) {
                 <FormLabel>Email address</FormLabel>
                 <Input
                   type="email"
-                  placeholder="example@email.com"
+                  placeholder="juan@benet.io"
                   // defaultValue={props.minerMail}
                   value={minerMail}
                   onChange={handleMinerMailChange}
@@ -162,7 +173,7 @@ function ProfileSettings(props) {
                 <FormLabel>Website</FormLabel>
                 <Input
                   type="website"
-                  placeholder="https://www.mywebsite.com"
+                  placeholder="https://juanbenet.io"
                   // defaultValue={props.minerWebsite}
                   value={minerWebsite}
                   onChange={handleMinerWebsiteChange}
@@ -172,7 +183,7 @@ function ProfileSettings(props) {
                 <FormLabel>Twitter</FormLabel>
                 <Input
                   type="link"
-                  placeholder="twitter profile link"
+                  placeholder="Twitter handle"
                   // defaultValue={props.minerTwitter}
                   value={minerTwitter}
                   onChange={handleMinerTwitterChange}
@@ -182,7 +193,7 @@ function ProfileSettings(props) {
                 <FormLabel>Slack</FormLabel>
                 <Input
                   type="text"
-                  placeholder="slack link"
+                  placeholder="Filecoin Slack handle"
                   // defaultValue={props.minerSlack}
                   value={minerSlack}
                   onChange={handleMinerSlackChange}
@@ -191,7 +202,7 @@ function ProfileSettings(props) {
               <FormControl id="bio">
                 <FormLabel>Bio</FormLabel>
                 <Textarea
-                  placeholder="Write a short Bio"
+                  placeholder="Write a short bio"
                   // defaultValue={props.minerBio}
                   value={minerBio}
                   onChange={handleMinerBioChange}
@@ -348,97 +359,99 @@ function ProfileSettings(props) {
                 </HStack>
               </Stack>*/}
             </VStack>
-            <HStack spacing="12" w="100%" py={8}>
-              <Button colorScheme="gray">Discard</Button>
-              <Button
-                colorScheme="blue"
-                // type="submit"
-                onClick={() => {
-                  console.log(
-                    "onsubmit",
-                    props.minerID,
-                    ledgerAddress,
-                    minerName,
-                    minerBio,
-                    retrieval,
-                    minerTwitter
-                  );
-                  console.log("props", props, "url", process.env.BACKEND_URL);
-                  fetch(
-                    "https://miner-marketplace-backend-2.onrender.com/query",
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({
-                        query: `mutation {
-                          editProfile(
-                            input: {
-                              minerID: "${props.minerID}"
-                              ledgerAddress: "${ledgerAddress}"
-                              name: "${minerName}"
-                              bio: "${minerBio}"
-                              email: "${minerMail}"
-                              website: "${minerWebsite}"
-                              twitter: "${minerTwitter}"
-                              slack: "${minerSlack}"
-                              region: "${region}"
-                              country: "${country}"
-                              storage: ${storage}
-                              retrieval: ${retrieval}
-                              repair: ${repair}
-                              online: ${online}
-                              offline: ${offline}
-                              storageAskPrice: "${storageAskPrice}"
-                              verifiedAskPrice: "${verifiedAskPrice}"
-                              retrievalAskPrice: "${retrievalAskPrice}"
-                            }
-                          )
-                        }`,
-                      }),
-                    }
-                  )
-                    .then((r) => {
-                      console.log("rrrr", r);
-                      return r.json();
-                    })
-                    .then((data) => {
-                      console.log("data returned:", data);
-                      if (data.data.editProfile) {
-                        toast({
-                          title: "Changes saved.",
-                          description: "Reload to view changes.",
-                          status: "success",
-                          duration: 9000,
-                          isClosable: true,
-                        });
-                      } else {
-                        toast({
-                          title: "Failed to update profile.",
-                          description:
-                            "There was an issue updating the miner profile.",
-                          status: "error",
-                          duration: 9000,
-                          isClosable: true,
-                        });
-                      }
-                      // const reqClaim = data.data.claimProfile;
-                      // if (reqClaim) setClval("✅ success");
-                      // else setClval("❌ failed");
-                    })
-                    .catch((e) => {
-                      console.log(e);
-                      // setClval("❌ failed");
-                    });
-                }}
-              >
-                Save Changes
-              </Button>
-            </HStack>
           </VStack>
         </GridItem>
       </Grid>
+      <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+        <Box w="100%" h="10" bg="" />
+        <Box w="100%" h="10" bg="" />
+        <Box w="100%" h="10" bg="" />
+        <Box w="100%" h="10" bg="" />
+
+        <HStack>
+          <Button variant="ghost" onClick={props.onClickFunc}>
+            Discard
+          </Button>
+          <Button
+            colorScheme="blue"
+            // type="submit"
+            onClick={() => {
+              console.log(
+                "onsubmit",
+                props.minerID,
+                ledgerAddress,
+                minerName,
+                minerBio,
+                retrieval,
+                minerTwitter,
+              );
+              console.log("props", props, "url", process.env.BACKEND_URL);
+              fetch("https://miner-marketplace-backend-2.onrender.com/query", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  query: `mutation {
+                      editProfile(
+                        input: {
+                          minerID: "${props.minerID}"
+                          ledgerAddress: "${ledgerAddress}"
+                          name: "${minerName}"
+                          bio: "${minerBio}"
+                          email: "${minerMail}"
+                          website: "${minerWebsite}"
+                          twitter: "${minerTwitter}"
+                          slack: "${minerSlack}"
+                          storage: ${storage}
+                          retrieval: ${retrieval}
+                          repair: ${repair}
+                          online: ${online}
+                          offline: ${offline}
+                        }
+                      )
+                    }`,
+                }),
+              })
+                .then((r) => {
+                  console.log("rrrr", r);
+                  return r.json();
+                })
+                .then((data) => {
+                  console.log("data returned:", data);
+                  if (data.data.editProfile) {
+                    toast({
+                      title: "Changes saved.",
+                      description: "Reload to view changes.",
+                      status: "success",
+                      duration: 9000,
+                      isClosable: true,
+                    });
+                  } else {
+                    toast({
+                      title: "Failed to update profile.",
+                      description:
+                        "There was an issue updating the miner profile.",
+                      status: "error",
+                      duration: 9000,
+                      isClosable: true,
+                    });
+                  }
+                  // const reqClaim = data.data.claimProfile;
+                  // if (reqClaim) setClval("✅ success");
+                  // else setClval("❌ failed");
+                })
+                .catch((e) => {
+                  console.log(e);
+                  // setClval("❌ failed");
+                });
+            }}
+          >
+            Save Changes
+          </Button>
+        </HStack>
+      </Grid>
+      <Box w="100%" h="2" bg="" />
     </>
   );
 }

@@ -8,6 +8,11 @@ import {
   Spacer,
   Modal,
   ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
 import { Icon, SettingsIcon } from "@chakra-ui/icons";
@@ -29,9 +34,100 @@ import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import { mapSeries } from "bluebird";
 import { useGlobalState } from "../../state";
 
+import ProfileSettings from "../../pages/profileSettings";
+
+const CustomModal = ({
+  showModalButtonText,
+  modalHeader,
+  modalBody,
+  minerID,
+  minerName,
+  minerMail,
+  minerWebsite,
+  minerSlack,
+  minerTwitter,
+  minerBio,
+  country,
+  region,
+  storageAskPrice,
+  verifiedAskPrice,
+  retrievalAskPrice,
+  storage,
+  retrieval,
+  repair,
+  online,
+  offline,
+  transparencyScore,
+}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <IconButton
+        variant="ghost"
+        colorScheme="gray"
+        fontSize="24px"
+        icon={<FiSettings />}
+        onClick={onOpen}
+      />
+
+      <Modal size="5xl" isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            {modalHeader}: {minerID}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <ProfileSettings
+              minerID={minerID}
+              minerName={minerName}
+              minerMail={minerMail}
+              minerWebsite={minerWebsite}
+              minerSlack={minerSlack}
+              minerTwitter={minerTwitter}
+              minerBio={minerBio}
+              country={country}
+              region={region}
+              storageAskPrice={storageAskPrice}
+              verifiedAskPrice={verifiedAskPrice}
+              retrievalAskPrice={retrievalAskPrice}
+              storage={storage}
+              retrieval={retrieval}
+              repair={repair}
+              online={online}
+              offline={offline}
+              transparencyScore={transparencyScore}
+              onClickFunc={onClose}
+            />
+          </ModalBody>
+
+          {/*<ModalFooter>
+            <Button variant="ghost" mr={3} onClick={onClose}>
+              Discard
+            </Button>
+            <Button
+              colorScheme="blue"
+              onClick={() => {
+                alert(1);
+              }}
+            >
+              Save Changes
+            </Button>
+            </ModalFooter>*/}
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
 const DashboardNavbar = (props) => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // const {
+  //   isProfileSettingsOpen,
+  //   onProfileSettingsOpen,
+  //   onProfileSettingsClose,
+  // } = useDisclosure();
 
   const [isSignedIn, setIsSignedIn] = useGlobalState("isSignedIn");
 
@@ -83,13 +179,31 @@ const DashboardNavbar = (props) => {
   function DisplaySettings() {
     if (isSignedIn)
       return (
-        <IconButton
-          variant="ghost"
-          colorScheme="gray"
-          fontSize="24px"
-          icon={<FiSettings />}
-          onClick={() => router.push("/profileSettings")}
-        />
+        <>
+          <CustomModal
+            showModalButtonText="Edit"
+            modalHeader="Profile Settings"
+            modalBody="Edit Modal"
+            minerID={props.minerID}
+            minerName={props.minerName}
+            minerMail={props.minerMail}
+            minerWebsite={props.minerWebsite}
+            minerSlack={props.minerSlack}
+            minerTwitter={props.minerTwitter}
+            minerBio={props.minerBio}
+            country={props.country}
+            region={props.region}
+            storageAskPrice={props.storageAskPrice}
+            verifiedAskPrice={props.verifiedAskPrice}
+            retrievalAskPrice={props.retrievalAskPrice}
+            storage={props.storage}
+            retrieval={props.retrieval}
+            repair={props.repair}
+            online={props.online}
+            offline={props.offline}
+            transparencyScore={props.transparencyScore}
+          />
+        </>
       );
     return "Connect Wallet";
   }
@@ -151,6 +265,23 @@ const DashboardNavbar = (props) => {
           </Modal>
         </HStack>
       </Flex>
+      {/*<Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <p>jfhdfjfhjdhfjdhf</p>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant="ghost">Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+          </Modal>*/}
     </>
   );
 };
