@@ -133,7 +133,20 @@ function ProfileSettings(props) {
           </Alert>
   </GridItem>*/}
         <GridItem colSpan="15">
-          <TransparencyScore transparencyScore={props.transparencyScore} />
+          <TransparencyScore
+            transparencyScore={props.transparencyScore}
+            name={props.minerName}
+            email={props.minerMail}
+            website={props.minerWebsite}
+            slack={props.minerSlack}
+            twitter={props.minerTwitter}
+            bio={props.minerBio}
+            storage={props.storage}
+            retrieval={props.retrieval}
+            repair={props.repair}
+            online={props.online}
+            offline={props.offline}
+          />
         </GridItem>
 
         <GridItem colSpan="10" mt={8}>
