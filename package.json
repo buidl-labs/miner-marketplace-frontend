@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.3.0",
     "@fontsource/inter": "^4.4.2",
     "@ledgerhq/hw-transport-webusb": "^5.53.1",
+    "@netlify/plugin-nextjs": "^3.6.1",
     "@next/bundle-analyzer": "^9.1.4",
     "@zondax/filecoin-signing-tools": "^0.15.0",
     "@zondax/ledger-filecoin": "^0.11.2",
