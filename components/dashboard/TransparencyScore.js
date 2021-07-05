@@ -23,35 +23,61 @@ function TransparencyScore(props) {
           colorScheme="orange"
         />
         <Flex justifyContent="space-between">
-          <HStack color="gray.400">
+          <HStack color={props.transparencyScore > 0 ? "orange" : "gray.400"}>
             <CheckCircleIcon h={4} w={4} />
             <Text>Verified</Text>
           </HStack>
-          <HStack color="gray.400">
+          <HStack
+            color={
+              props.name != "" && props.name != null ? "orange" : "gray.400"
+            }
+          >
             <CheckCircleIcon h={4} w={4} />
             <Text>Name</Text>
           </HStack>
-          <HStack color="gray.400">
+          <HStack
+            color={
+              props.email != "" && props.email != null ? "orange" : "gray.400"
+            }
+          >
             <CheckCircleIcon h={4} w={4} />
             <Text>Email Address</Text>
           </HStack>
-          <HStack color="gray.400">
+          <HStack
+            color={
+              props.website != "" && props.website != null
+                ? "orange"
+                : "gray.400"
+            }
+          >
             <CheckCircleIcon h={4} w={4} />
             <Text>Website</Text>
           </HStack>
-          <HStack color="gray.400">
+          <HStack
+            color={
+              props.slack != "" && props.slack != null ? "orange" : "gray.400"
+            }
+          >
             <CheckCircleIcon h={4} w={4} />
             <Text>Slack</Text>
           </HStack>
-          <HStack color="gray.400">
+          <HStack
+            color={
+              props.twitter != "" && props.twitter != null
+                ? "orange"
+                : "gray.400"
+            }
+          >
             <CheckCircleIcon h={4} w={4} />
             <Text>Twitter</Text>
           </HStack>
-          <HStack color="gray.400">
+          <HStack
+            color={props.bio != "" && props.bio != null ? "orange" : "gray.400"}
+          >
             <CheckCircleIcon h={4} w={4} />
             <Text>Bio</Text>
           </HStack>
-          <HStack color="gray.400">
+          <HStack color={props.transparencyScore > 0 ? "orange" : "gray.400"}>
             <CheckCircleIcon h={4} w={4} />
             <Text>Service Details</Text>
           </HStack>
