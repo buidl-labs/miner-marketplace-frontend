@@ -115,7 +115,7 @@ export default function Miner({ miner }) {
           penalty: 0,
           others: 0,
         },
-        netEarnings: "0",
+        netEarnings: 0,
       },
     },
   });
@@ -284,7 +284,7 @@ export default function Miner({ miner }) {
                           id
                             aggregateEarnings(
                               startHeight: 0
-                              endHeight: 1000000
+                              endHeight: 2000000
                               includeGas: false
                             ) {
                               income {
