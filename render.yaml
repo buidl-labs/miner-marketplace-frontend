@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: miner-marketplace-frontend
+    env: node
+    plan: starter
+    buildCommand: yarn; yarn build
+    startCommand: yarn start
+    pullRequestPreviewsEnabled: true
+    envVars:
+      - key: NODE_ENV
+        value: production
