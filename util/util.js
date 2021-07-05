@@ -55,15 +55,25 @@ export function GetFormattedFILUnits(amountInAttoFIL) {
 export function GetSimpleFILUnits(amountInAttoFIL) {
   // ⨎
   let amountInFIL = amountInAttoFIL / 10 ** 18;
-  if (amountInFIL < 0.0001) {
+  let sign = "";
+  if (amountInFIL < 0) {
+    sign = "-";
+  }
+  if (Math.abs(amountInFIL) < 0.0001) {
     return `0 FIL`;
-  } else if (amountInFIL < 1000) {
+  } else if (Math.abs(amountInFIL) < 1000) {
+    if (sign == "-") return sign + `${Math.abs(amountInFIL).toFixed(2)} FIL`;
     return `${amountInFIL.toFixed(2)} FIL`;
-  } else if (amountInFIL < 1000000) {
+  } else if (Math.abs(amountInFIL) < 1000000) {
+    if (sign == "-") return sign + `${Math.abs(amountInFIL / 1000).toFixed(2)} FIL`;
     return `${(amountInFIL / 1000).toFixed(2)}K FIL`;
-  } else if (amountInFIL < 1000000000) {
+  } else if (Math.abs(amountInFIL) < 1000000000) {
+    if (sign == "-")
+      return sign + `${Math.abs(amountInFIL / 1000000).toFixed(2)} FIL`;
     return `${(amountInFIL / 1000000).toFixed(2)}M FIL`;
   } else {
+    if (sign == "-")
+      return sign + `${Math.abs(amountInFIL / 1000000000).toFixed(2)} FIL`;
     return `${(amountInFIL / 1000000000).toFixed(2)}B FIL`;
   }
 }
