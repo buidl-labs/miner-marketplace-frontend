@@ -1,3 +1,3 @@
-export const trackGoal = (id) => {
-    window.fathom.trackGoal(id, 0);
-};
+// export const trackGoal = (id) => {
+//     window.fathom.trackGoal(id, 0);
+// };
