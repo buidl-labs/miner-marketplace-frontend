@@ -19,6 +19,7 @@ import {
 import React from "react";
 import { Icon, IconProps, ArrowForwardIcon } from "@chakra-ui/icons";
 
+
 const Hero = (props) => {
   return (
     <Stack pt="36" pb={{ base: 16, md: 0 }}>
@@ -35,11 +36,11 @@ const Hero = (props) => {
               size="lg"
               variant="link"
               colorScheme="blue"
-              textDecoration="underline" 
-                  
+              textDecoration="underline"
+
             >
-            <Link href={props.ctaLink} onClick={props.ctaRoute} isExternal>
-              {props.ctaText} <ArrowForwardIcon h={6} w={6} marginLeft={2} /></Link>
+              <Link href={props.ctaLink} onClick={props.ctaRoute} isExternal>
+                {props.ctaText} <ArrowForwardIcon h={6} w={6} marginLeft={2} /></Link>
             </Button>
           </Box>
         </Stack>

@@ -18,12 +18,10 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-
 import { HiMenuAlt3, HiX } from "react-icons/hi";
-
 import { useRouter } from "next/router";
-
 import { useRef } from "react";
+
 
 const Navbar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -53,7 +51,7 @@ const Navbar = (props) => {
         <Flex align="center">
           <Link onClick={() => router.push("/")}>
             <Image
-              src="/images/Logo.svg"
+              src="/images/Logo-b.svg"
               maxW="36"
               alt="Miner Marketplace Logo"
             />

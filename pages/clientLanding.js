@@ -19,7 +19,8 @@ import FilecoinStats from "../components/landingPage/FilecoinStats";
 import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import { gql, InMemoryCache, ApolloClient } from "@apollo/client";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
+import Head from "next/head"
 
 const clientLanding = (stats) => {
   // console.log(stats);
@@ -28,6 +29,11 @@ const clientLanding = (stats) => {
   const router = useRouter();
   return (
     <>
+      <Head>
+        <title>
+          Miner Marketplace - Find miners to store your data
+        </title>
+      </Head>
       <Navbar />
       <Container maxW="container.xl" mb="16">
         <SimpleGrid gap="12">
@@ -128,7 +134,7 @@ const clientLanding = (stats) => {
                   commons media, historical archives, preservation, and more.
                 </Text>
                 <Box>
-                  <Button colorScheme="blue" onClick={()=>router.push('/miners')}>Start Storing Data</Button>
+                  <Button colorScheme="blue" onClick={() => router.push('/miners')}>Start Storing Data</Button>
                 </Box>
               </Stack>
             </WrapItem>
@@ -140,14 +146,14 @@ const clientLanding = (stats) => {
             <Stack w={{ base: "80vw", md: "48rem" }} textAlign="left">
               <Accordion allowToggle="false">
                 <Faq
-                question="Will it be cheaper to store data on Filecoin than other centralized cloud services?" 
-                answer="Filecoin creates a hyper-competitive market for data storage. There will be many miners offering many prices, rather than one fixed price on the network." />
-                <Faq 
-                question="Who are miners?" 
-                answer="Miners in the Filecoin network are in charge of storing, providing content and issuing new blocks." />
-                <Faq 
-                question="How do I know that my storage miner will not charge prohibitively high costs for data retrieval?" 
-                answer="To avoid extortion, always ensure you store your data with a fairly decentralized set of miners" />
+                  question="Will it be cheaper to store data on Filecoin than other centralized cloud services?"
+                  answer="Filecoin creates a hyper-competitive market for data storage. There will be many miners offering many prices, rather than one fixed price on the network." />
+                <Faq
+                  question="Who are miners?"
+                  answer="Miners in the Filecoin network are in charge of storing, providing content and issuing new blocks." />
+                <Faq
+                  question="How do I know that my storage miner will not charge prohibitively high costs for data retrieval?"
+                  answer="To avoid extortion, always ensure you store your data with a fairly decentralized set of miners" />
               </Accordion>
             </Stack>
           </Stack>

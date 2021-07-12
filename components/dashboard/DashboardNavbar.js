@@ -14,9 +14,11 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Icon, SettingsIcon } from "@chakra-ui/icons";
 import { FiSettings } from "react-icons/fi";
+import { BiBug } from "react-icons/bi";
 
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
@@ -221,7 +223,7 @@ const DashboardNavbar = (props) => {
       >
         <Link onClick={() => router.push("/")}>
           <Image
-            src="/images/Logo.svg"
+            src="/images/Logo-b.svg"
             maxH="12"
             alt="Miner Marketplace Logo"
           />
@@ -235,6 +237,17 @@ const DashboardNavbar = (props) => {
             icon={<FiSettings />}
             onClick={() => router.push("/profileSettings")}
           /> */}
+          <Tooltip label="Report a Bug or Request a Feature / Enhancement" aria-label="report bug" p={4} borderRadius="lg" hasArrow>
+            <Link href="https://github.com/buidl-labs/miner-marketplace-frontend/issues/new/choose" isExternal alt="report-bug">
+              <Icon
+                color="gray.600"
+                as={BiBug}
+                w={6}
+                h={6}
+              />
+            </Link>
+          </Tooltip>
+
           {DisplaySettings()}
           <Button
             colorScheme="blue"
@@ -254,10 +267,10 @@ const DashboardNavbar = (props) => {
             <Authenticate
               minerID={router.asPath.split("/")[2]}
               ledgerAddress={ledgerAddress}
-              // isSignedIn={props.isSignedIn}
-              // isClaimed={props.isClaimed}
-              // onIsSignedInChange={handleIsSignedInChange}
-              // onisClaimedChange={handleIsClaimedChange}
+            // isSignedIn={props.isSignedIn}
+            // isClaimed={props.isClaimed}
+            // onIsSignedInChange={handleIsSignedInChange}
+            // onisClaimedChange={handleIsClaimedChange}
             />
             {/* <LedgerConfirm />
             <AuthSuccess />

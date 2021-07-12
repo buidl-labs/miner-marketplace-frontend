@@ -15,6 +15,7 @@ import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const IndexPage = (stats) => {
   //console.log(stats);
@@ -24,6 +25,9 @@ const IndexPage = (stats) => {
 
   return (
     <>
+      <Head>
+        <title>Miner Marketplace - Find Miners, See Earning Stats</title>
+      </Head>
       <Navbar />
 
       <Container maxW={{ lg: "container.xl" }} mb="16">

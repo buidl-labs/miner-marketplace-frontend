@@ -1,4 +1,9 @@
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Box,
   Button,
   Flex,
   Grid,
@@ -38,6 +43,7 @@ import AggregatedEarnings from "../../components/dashboard/AggregatedEarnings";
 import StorageDealStats from "../../components/dashboard/StorageDealStats";
 
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import Head from "next/head";
 // import getAllMinerIds from "../miners";
 // import { createGlobalState } from "react-hooks-global-state";
 
@@ -137,6 +143,12 @@ export default function Miner({ miner }) {
 
   return (
     <>
+      <Head>
+        <title>
+          Miner {miner.id} Stats
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <DashboardNavbar
         minerID={miner.id}
         isMinerProfile={true}
@@ -162,8 +174,15 @@ export default function Miner({ miner }) {
         offline={miner.service.dataTransferMechanism.offline}
         transparencyScore={miner.transparencyScore}
       />
+      <Box pt="24" mx="8">
+        <Alert status="warning" borderRadius="lg">
+          <AlertIcon />
+          <AlertTitle mr={2}>This is beta version of platform!</AlertTitle>
+          <AlertDescription>Not every Miner's data is in records currently, you can request your data by <Link href="mailto:saumay@buidllabs.io" isExternal fontWeight="semibold" textDecoration="underline" >contacting here</Link></AlertDescription>
+        </Alert>
+      </Box>
       <Button
-        mt="28"
+        mt="4"
         ml="8"
         colorScheme="blue"
         variant="link"
