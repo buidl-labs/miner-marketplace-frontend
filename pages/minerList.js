@@ -27,10 +27,16 @@ import React from "react";
 import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
 import DashboardMenu from "../components/dashboard/DashboardMenu";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
+import Head from "next/head";
 
 function minerList() {
   return (
     <>
+      <Head>
+        <title>
+          Miner List
+        </title>
+      </Head>
       <DashboardNavbar />
       <Grid
         templateRows="repeat(4, 1fr)"

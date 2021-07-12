@@ -12,12 +12,18 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/landingPage/Footer";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const Error = () => {
   const router = useRouter();
 
   return (
     <>
+      <Head>
+        <title>
+          Page not found
+        </title>
+      </Head>
       <Navbar />
       <Container
         maxW="container.lg"

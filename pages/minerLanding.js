@@ -19,6 +19,7 @@ import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const minerLanding = (stats) => {
   // console.log(stats);
@@ -27,6 +28,7 @@ const minerLanding = (stats) => {
   const router = useRouter();
   return (
     <>
+      <Head><title>Miner Marketplace - Join Miners across the world</title></Head>
       <Navbar />
       <Container maxW="container.xl" mb="16">
         <SimpleGrid gap="12">

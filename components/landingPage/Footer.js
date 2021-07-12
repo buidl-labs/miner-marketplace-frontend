@@ -61,8 +61,11 @@ const Footer = () => {
 
           <Link onClick={() => router.push("/disclaimer")}>Disclaimer</Link>
 
-          <Link href="#" isExternal>
+          {/* <Link href="#" isExternal>
             Contact
+          </Link> */}
+          <Link href="https://github.com/buidl-labs/miner-marketplace-frontend/issues/new/choose" isExternal>
+            Report Bug
           </Link>
         </HStack>
       </SimpleGrid>

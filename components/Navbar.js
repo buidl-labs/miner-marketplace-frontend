@@ -53,7 +53,7 @@ const Navbar = (props) => {
         <Flex align="center">
           <Link onClick={() => router.push("/")}>
             <Image
-              src="/images/Logo.svg"
+              src="/images/Logo-b.svg"
               maxW="36"
               alt="Miner Marketplace Logo"
             />
