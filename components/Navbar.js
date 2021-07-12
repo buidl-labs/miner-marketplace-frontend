@@ -86,12 +86,12 @@ const Navbar = (props) => {
 
             <DrawerBody>
               <Stack spacing="8" mt="8">
-                <Link onClick={() => router.push("/clientLanding"), trackGoal('HNOIHGME')}>
+                <Link onClick={() => router.push("/clientLanding"), () => trackGoal('HNOIHGME')}>
                   <Text fontSize="xl" fontWeight="medium">
                     Clients
                   </Text>
                 </Link>
-                <Link onClick={() => router.push("/minerLanding"), trackGoal('HNOIHGME')}>
+                <Link onClick={() => router.push("/minerLanding"), () => trackGoal('HNOIHGME')}>
                   <Text fontSize="xl" fontWeight="medium">
                     Miners
                   </Text>
@@ -101,7 +101,7 @@ const Navbar = (props) => {
                     size="lg"
                     variant="outline"
                     colorScheme="blue"
-                    onClick={() => router.push("/miners"), trackGoal('HNOIHGME')}
+                    onClick={() => router.push("/miners"), () => trackGoal('HNOIHGME')}
                   >
                     Dashboard
                   </Button>
@@ -118,12 +118,12 @@ const Navbar = (props) => {
           spacing="12"
           mr={12}
         >
-          <Link onClick={() => router.push("/clientLanding"), trackGoal('HNOIHGME')}>
+          <Link onClick={() => router.push("/clientLanding"), () => trackGoal('HNOIHGME')}>
             <Text fontSize="lg" fontWeight="medium">
               Clients
             </Text>
           </Link>
-          <Link onClick={() => router.push("/minerLanding"), trackGoal('HNOIHGME')}>
+          <Link onClick={() => router.push("/minerLanding"), () => trackGoal('HNOIHGME')}>
             <Text fontSize="lg" fontWeight="medium">
               Miners
             </Text>
@@ -138,7 +138,7 @@ const Navbar = (props) => {
           <Button
             variant="outline"
             colorScheme="blue"
-            onClick={() => router.push("/miners"), trackGoal('HNOIHGME')}
+            onClick={() => router.push("/miners"), () => trackGoal('HNOIHGME')}
           >
             Dashboard
           </Button>

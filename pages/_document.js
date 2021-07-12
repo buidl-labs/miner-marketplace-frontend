@@ -11,7 +11,7 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <meta charset="UTF-8" />
+                    <meta charSet="UTF-8" />
                     <meta httpEquiv="content-language" content="en-us" />
                     <meta name="keywords" content="filecoin, miner, marketplace, storage, decentralised, miner marketplace, storage solution, blockchain storage, ipfs, analytics, earning calculator, miners" />
                     <meta name="theme-color" content="#3182CE" />

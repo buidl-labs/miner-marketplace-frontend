@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { Icon, IconProps, ArrowForwardIcon } from "@chakra-ui/icons";
+import { trackGoal } from "fathom-client";
 
 const Hero = (props) => {
   return (
