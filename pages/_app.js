@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
-    Fathom.load('FATHOM_TRACKING_CODE', {
+    Fathom.load('HNOIHGME', {
       includedDomains: ['filecoin-miner-marketplace.onrender.com'],
     });
 

@@ -35,11 +35,11 @@ const Hero = (props) => {
               size="lg"
               variant="link"
               colorScheme="blue"
-              textDecoration="underline" 
-                  
+              textDecoration="underline"
+              onClick={() => trackGoal('HNOIHGME')}
             >
-            <Link href={props.ctaLink} onClick={props.ctaRoute} isExternal>
-              {props.ctaText} <ArrowForwardIcon h={6} w={6} marginLeft={2} /></Link>
+              <Link href={props.ctaLink} onClick={props.ctaRoute} isExternal>
+                {props.ctaText} <ArrowForwardIcon h={6} w={6} marginLeft={2} /></Link>
             </Button>
           </Box>
         </Stack>
