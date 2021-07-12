@@ -39,6 +39,7 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import { BiTransfer } from "react-icons/bi";
 import { FiExternalLink } from "react-icons/fi";
+import * as Fathom from "fathom-client";
 
 import {
   GetFormattedStorageUnits,
@@ -166,7 +167,7 @@ function BasicView(props) {
         setFirstValue(firstValue + 20);
         setIsLoaded(true);
       });
-    return () => {};
+    return () => { };
   }, []);
 
   if (true) {
@@ -273,22 +274,22 @@ function BasicView(props) {
                                 whiteSpace="nowrap"
                               >
                                 {txn.methodName === "PreCommitSector" ||
-                                "ProveCommitSector" ||
-                                "PublishStorageDeals" ||
-                                "TerminateSectors" ||
-                                "RepayDebt" ||
-                                "WithdrawBalance (miner)" ||
-                                "WithdrawBalance (market)" ||
-                                "AddBalance" ||
-                                "ChangeWorkerAddress" ||
-                                "ChangeOwnerAddress" ||
-                                "ChangePeerID" ||
-                                "DeclareFaults" ||
-                                "DeclareFaultsRecovered" ||
-                                "ExtendSectorExpiration"
+                                  "ProveCommitSector" ||
+                                  "PublishStorageDeals" ||
+                                  "TerminateSectors" ||
+                                  "RepayDebt" ||
+                                  "WithdrawBalance (miner)" ||
+                                  "WithdrawBalance (market)" ||
+                                  "AddBalance" ||
+                                  "ChangeWorkerAddress" ||
+                                  "ChangeOwnerAddress" ||
+                                  "ChangePeerID" ||
+                                  "DeclareFaults" ||
+                                  "DeclareFaultsRecovered" ||
+                                  "ExtendSectorExpiration"
                                   ? GetFormattedFILUnits(
-                                      txn.minerFee.val + txn.burnFee.val,
-                                    )
+                                    txn.minerFee.val + txn.burnFee.val,
+                                  )
                                   : "0"}
                               </StatNumber>
                             </Stat>
@@ -359,14 +360,15 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
+                                onClick={"Fathom.trackGoal('HNOIHGME',0)"}
                               >
                                 {txn.id.mid.length > 25
                                   ? txn.id.mid.substr(0, 12) +
-                                    "..." +
-                                    txn.id.mid.substr(
-                                      txn.id.mid.length - 12,
-                                      txn.id.mid.length,
-                                    )
+                                  "..." +
+                                  txn.id.mid.substr(
+                                    txn.id.mid.length - 12,
+                                    txn.id.mid.length,
+                                  )
                                   : txn.id.mid}
                               </Link>
                             </Stack>
@@ -389,14 +391,15 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
+                                onClick={"Fathom.trackGoal('HNOIHGME',0)"}
                               >
                                 {txn.from.length > 25
                                   ? txn.from.substr(0, 12) +
-                                    "..." +
-                                    txn.from.substr(
-                                      txn.from.length - 12,
-                                      txn.from.length,
-                                    )
+                                  "..." +
+                                  txn.from.substr(
+                                    txn.from.length - 12,
+                                    txn.from.length,
+                                  )
                                   : txn.from}
                               </Link>
                             </Stack>
@@ -420,14 +423,15 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
+                                onClick={"Fathom.trackGoal('HNOIHGME',0)"}
                               >
                                 {txn.to.length > 25
                                   ? txn.to.substr(0, 12) +
-                                    "..." +
-                                    txn.to.substr(
-                                      txn.to.length - 12,
-                                      txn.to.length,
-                                    )
+                                  "..." +
+                                  txn.to.substr(
+                                    txn.to.length - 12,
+                                    txn.to.length,
+                                  )
                                   : txn.to}
                               </Link>
                             </Stack>
@@ -451,19 +455,19 @@ function BasicView(props) {
                                 color="gray.600"
                               >
                                 {txn.methodName === "PreCommitSector" ||
-                                "ProveCommitSector" ||
-                                "PublishStorageDeals" ||
-                                "TerminateSectors" ||
-                                "RepayDebt" ||
-                                "WithdrawBalance (miner)" ||
-                                "WithdrawBalance (market)" ||
-                                "AddBalance" ||
-                                "ChangeWorkerAddress" ||
-                                "ChangeOwnerAddress" ||
-                                "ChangePeerID" ||
-                                "DeclareFaults" ||
-                                "DeclareFaultsRecovered" ||
-                                "ExtendSectorExpiration"
+                                  "ProveCommitSector" ||
+                                  "PublishStorageDeals" ||
+                                  "TerminateSectors" ||
+                                  "RepayDebt" ||
+                                  "WithdrawBalance (miner)" ||
+                                  "WithdrawBalance (market)" ||
+                                  "AddBalance" ||
+                                  "ChangeWorkerAddress" ||
+                                  "ChangeOwnerAddress" ||
+                                  "ChangePeerID" ||
+                                  "DeclareFaults" ||
+                                  "DeclareFaultsRecovered" ||
+                                  "ExtendSectorExpiration"
                                   ? txn.minerFee.display
                                   : "0"}
                               </Text>
@@ -486,19 +490,19 @@ function BasicView(props) {
                                 color="gray.600"
                               >
                                 {txn.methodName === "PreCommitSector" ||
-                                "ProveCommitSector" ||
-                                "PublishStorageDeals" ||
-                                "TerminateSectors" ||
-                                "RepayDebt" ||
-                                "WithdrawBalance (miner)" ||
-                                "WithdrawBalance (market)" ||
-                                "AddBalance" ||
-                                "ChangeWorkerAddress" ||
-                                "ChangeOwnerAddress" ||
-                                "ChangePeerID" ||
-                                "DeclareFaults" ||
-                                "DeclareFaultsRecovered" ||
-                                "ExtendSectorExpiration" ? (
+                                  "ProveCommitSector" ||
+                                  "PublishStorageDeals" ||
+                                  "TerminateSectors" ||
+                                  "RepayDebt" ||
+                                  "WithdrawBalance (miner)" ||
+                                  "WithdrawBalance (market)" ||
+                                  "AddBalance" ||
+                                  "ChangeWorkerAddress" ||
+                                  "ChangeOwnerAddress" ||
+                                  "ChangePeerID" ||
+                                  "DeclareFaults" ||
+                                  "DeclareFaultsRecovered" ||
+                                  "ExtendSectorExpiration" ? (
                                   txn.burnFee.display
                                 ) : (
                                   <p>0</p>

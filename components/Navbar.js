@@ -21,6 +21,7 @@ import {
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { useRouter } from "next/router";
 import { useRef } from "react";
+import * as Fathom from "fathom-client";
 
 
 const Navbar = (props) => {
@@ -98,7 +99,7 @@ const Navbar = (props) => {
                     size="lg"
                     variant="outline"
                     colorScheme="blue"
-                    onClick={() => router.push("/miners")}
+                    onClick={() => router.push("/miners"), "Fathom.trackGoal('HNOIHGME', 0)"}
                   >
                     Dashboard
                   </Button>
