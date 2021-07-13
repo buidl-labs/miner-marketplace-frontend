@@ -31,6 +31,12 @@ const Navbar = (props) => {
 
   const router = useRouter();
 
+  function track() {
+    if (typeof window != "undefined") {
+      Fathom.trackGoal('R1EOW6X3', 0);
+    }
+  }
+
   return (
     <>
       <Flex
@@ -98,7 +104,7 @@ const Navbar = (props) => {
                   <Button
                     size="lg"
                     variant="outline"
-                    onClick={() => router.push("/miners"), typeof window != "undefined" && Fathom.trackGoal('R1EOW6X3', 0)}
+                    onClick={() => { router.push("/miners"); track(); }}
                     colorScheme="blue"
                   >
                     Dashboard
@@ -136,7 +142,7 @@ const Navbar = (props) => {
           <Button
             variant="outline"
             colorScheme="blue"
-            onClick={() => router.push("/miners")}
+            onClick={() => { router.push("/miners"); track(); }}
           >
             Dashboard
           </Button>

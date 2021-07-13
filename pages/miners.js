@@ -515,6 +515,12 @@ export default function Miners({ miners, href }) {
     }),
   };
 
+  function track() {
+    if (typeof window != "undefined") {
+      Fathom.trackGoal('GOXF68VK', 0)
+    }
+  }
+
   return (
     <>
       <DashboardNavbar isMinerProfile={false} />
@@ -673,9 +679,9 @@ export default function Miners({ miners, href }) {
                 variant="solid"
                 onClick={(event) => {
                   filterList(event);
-                },
-                  typeof window != "undefined" &&
-                  Fathom.trackGoal('GOXF68VK', 0)}
+                  track();
+                }
+                }
               >
                 Update Estimated Quote
               </Button>
