@@ -178,7 +178,7 @@ export default function Miner({ miner }) {
         <Alert status="warning" borderRadius="lg">
           <AlertIcon />
           <AlertTitle mr={2}>This is beta version of platform!</AlertTitle>
-          <AlertDescription>Not every Miner's data is in records currently, you can request your data by <Link href="mailto:saumay@buidllabs.io" isExternal fontWeight="semibold" textDecoration="underline" >contacting here</Link></AlertDescription>
+          <AlertDescription>Not every Miner's data is in records currently, you can request your data by filling up <Link href="https://forms.gle/DydhKdkjcDxN6agK8" fontWeight="semibold" textDecoration="underline" isExternal >this form.</Link></AlertDescription>
         </Alert>
       </Box>
       <Button
