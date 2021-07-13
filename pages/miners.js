@@ -48,7 +48,7 @@ import { useRouter } from "next/router";
 import { GetFormattedStorageUnits, GetFormattedFILUnits, GetSimpleFILUnits, GetSimpleUSDUnits } from "../util/util";
 import { Countries } from "../util/raw";
 import Base from "antd/lib/typography/Base";
-import * as Fathom from "fathom-client";
+import { trackGoal } from "../util/analytics";
 
 let countries = Countries();
 
@@ -674,7 +674,7 @@ export default function Miners({ miners, href }) {
                 onClick={(event) => {
                   filterList(event);
                 },
-                  "Fathom.trackGoal('HNOIHGME',0)"}
+                  trackGoal('HNOIHGME')}
               >
                 Update Estimated Quote
               </Button>

@@ -45,6 +45,7 @@ import {
   GetFormattedStorageUnits,
   GetFormattedFILUnits,
 } from "../../../util/util";
+import { trackGoal } from "../../../util/analytics";
 
 function dateOfTransaction(dateProps) {
   const miliseconds = dateProps * 1000;
@@ -360,7 +361,7 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
-                                onClick={"Fathom.trackGoal('HNOIHGME',0)"}
+                                onClick={trackGoal('HNOIHGME')}
                               >
                                 {txn.id.mid.length > 25
                                   ? txn.id.mid.substr(0, 12) +
@@ -391,7 +392,7 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
-                                onClick={"Fathom.trackGoal('HNOIHGME',0)"}
+                                onClick={trackGoal('HNOIHGME')}
                               >
                                 {txn.from.length > 25
                                   ? txn.from.substr(0, 12) +
@@ -423,7 +424,7 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
-                                onClick={"Fathom.trackGoal('HNOIHGME',0)"}
+                                onClick={trackGoal('HNOIHGME')}
                               >
                                 {txn.to.length > 25
                                   ? txn.to.substr(0, 12) +
