@@ -98,7 +98,7 @@ const Navbar = (props) => {
                   <Button
                     size="lg"
                     variant="outline"
-                    onClick={() => router.push("/miners")}
+                    onClick={() => router.push("/miners"), typeof window != "undefined" && Fathom.trackGoal('R1EOW6X3', 0)}
                     colorScheme="blue"
                   >
                     Dashboard

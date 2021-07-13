@@ -38,7 +38,7 @@ const Hero = (props) => {
               variant="link"
               colorScheme="blue"
               textDecoration="underline"
-              onClick={trackGoal('HNOIHGME')}
+              onClick={typeof window != "undefined" && Fathom.trackGoal('HNOIHGME', 0)}
             >
               <Link href={props.ctaLink} onClick={props.ctaRoute} isExternal>
                 {props.ctaText} <ArrowForwardIcon h={6} w={6} marginLeft={2} /></Link>

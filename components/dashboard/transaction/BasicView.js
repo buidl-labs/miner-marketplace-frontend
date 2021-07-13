@@ -39,13 +39,13 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import { BiTransfer } from "react-icons/bi";
 import { FiExternalLink } from "react-icons/fi";
-import * as Fathom from "fathom-client";
 
 import {
   GetFormattedStorageUnits,
   GetFormattedFILUnits,
 } from "../../../util/util";
 import { trackGoal } from "../../../util/analytics";
+import * as Fathom from "fathom-client";
 
 function dateOfTransaction(dateProps) {
   const miliseconds = dateProps * 1000;
@@ -361,7 +361,7 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
-                                onClick={trackGoal('HNOIHGME')}
+                                onClick={typeof window != "undefined" && Fathom.trackGoal('NK6DSDVI', 0)}
                               >
                                 {txn.id.mid.length > 25
                                   ? txn.id.mid.substr(0, 12) +
@@ -392,7 +392,7 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
-                                onClick={trackGoal('HNOIHGME')}
+                                onClick={typeof window != "undefined" && Fathom.trackGoal('NK6DSDVI', 0)}
                               >
                                 {txn.from.length > 25
                                   ? txn.from.substr(0, 12) +
@@ -424,7 +424,7 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
-                                onClick={trackGoal('HNOIHGME')}
+                                onClick={typeof window != "undefined" && Fathom.trackGoal('NK6DSDVI', 0)}
                               >
                                 {txn.to.length > 25
                                   ? txn.to.substr(0, 12) +

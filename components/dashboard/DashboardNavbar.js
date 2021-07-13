@@ -259,7 +259,7 @@ const DashboardNavbar = (props) => {
               console.log("heyyyy there");
               getAddress();
             },
-              typeof window != undefined && Fathom.trackGoal('HNOIHGME')
+              typeof window != "undefined" && Fathom.trackGoal('OZHGANFZ', 0)
             }
           >
             <DisplayButton />
