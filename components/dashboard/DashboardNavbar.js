@@ -35,8 +35,9 @@ import FilecoinApp from "@zondax/ledger-filecoin";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import { mapSeries } from "bluebird";
 import { useGlobalState } from "../../state";
-
 import ProfileSettings from "../../pages/profileSettings";
+import * as Fathom from "fathom-client";
+import { trackGoal } from "../../util/analytics";
 
 const CustomModal = ({
   showModalButtonText,
@@ -257,7 +258,9 @@ const DashboardNavbar = (props) => {
               onOpen();
               console.log("heyyyy there");
               getAddress();
-            }}
+            },
+              typeof window != "undefined" && Fathom.trackGoal('OZHGANFZ', 0)
+            }
           >
             <DisplayButton />
           </Button>

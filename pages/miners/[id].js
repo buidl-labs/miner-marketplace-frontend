@@ -44,6 +44,7 @@ import StorageDealStats from "../../components/dashboard/StorageDealStats";
 
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import Head from "next/head";
+import * as Fathom from "fathom-client"
 // import getAllMinerIds from "../miners";
 // import { createGlobalState } from "react-hooks-global-state";
 
@@ -178,7 +179,7 @@ export default function Miner({ miner }) {
         <Alert status="warning" borderRadius="lg">
           <AlertIcon />
           <AlertTitle mr={2}>This is beta version of platform!</AlertTitle>
-          <AlertDescription>Not every Miner's data is in records currently, you can request your data by filling up <Link href="https://forms.gle/DydhKdkjcDxN6agK8" fontWeight="semibold" textDecoration="underline" isExternal >this form.</Link></AlertDescription>
+          <AlertDescription>Not every Miner's data is in records currently, you can request your data by filling up <Link href="https://forms.gle/DydhKdkjcDxN6agK8" onClick={typeof window != "undefined" && Fathom.trackGoal('UCY2LX9P', 0)} fontWeight="semibold" textDecoration="underline" isExternal >this form.</Link></AlertDescription>
         </Alert>
       </Box>
       <Button
