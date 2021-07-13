@@ -210,7 +210,9 @@ const DashboardNavbar = (props) => {
       );
     return "Connect Wallet";
   }
-
+  function track() {
+    if (typeof window != "undefined") { Fathom.trackGoal('OZHGANFZ', 0) }
+  }
   return (
     <>
       <Flex
@@ -258,8 +260,9 @@ const DashboardNavbar = (props) => {
               onOpen();
               console.log("heyyyy there");
               getAddress();
-            },
-              typeof window != "undefined" && Fathom.trackGoal('OZHGANFZ', 0)
+              track();
+            }
+
             }
           >
             <DisplayButton />

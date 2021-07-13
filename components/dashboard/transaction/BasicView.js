@@ -171,6 +171,10 @@ function BasicView(props) {
     return () => { };
   }, []);
 
+  function track() {
+    if (typeof window != "undefined") { Fathom.trackGoal('NK6DSDVI', 0) }
+  }
+
   if (true) {
     console.log("wowwwwwwww");
     return (
@@ -361,7 +365,7 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
-                                onClick={typeof window != "undefined" && Fathom.trackGoal('NK6DSDVI', 0)}
+                                onClick={track()}
                               >
                                 {txn.id.mid.length > 25
                                   ? txn.id.mid.substr(0, 12) +
@@ -392,7 +396,7 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
-                                onClick={typeof window != "undefined" && Fathom.trackGoal('NK6DSDVI', 0)}
+                                onClick={track()}
                               >
                                 {txn.from.length > 25
                                   ? txn.from.substr(0, 12) +
@@ -424,7 +428,7 @@ function BasicView(props) {
                                 size="md"
                                 fontWeight="normal"
                                 color="gray.600"
-                                onClick={typeof window != "undefined" && Fathom.trackGoal('NK6DSDVI', 0)}
+                                onClick={track()}
                               >
                                 {txn.to.length > 25
                                   ? txn.to.substr(0, 12) +
