@@ -636,5 +636,3 @@ function BasicView(props) {
 }
 
 export default BasicView;
-
-// export async function getStaticProps() {}

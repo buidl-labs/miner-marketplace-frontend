@@ -151,7 +151,7 @@ const minerLanding = (stats) => {
 
 export default minerLanding;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const client = new ApolloClient({
     uri: process.env.BACKEND_URL,
     cache: new InMemoryCache(),
