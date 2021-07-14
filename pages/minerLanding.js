@@ -28,7 +28,7 @@ const minerLanding = (stats) => {
   const router = useRouter();
   return (
     <>
-      <Head><title>Miner Marketplace - Join Miners across the world</title></Head>
+      <Head><title>Join Miners across the world - Filecoin Miner Marketplace</title></Head>
       <Navbar />
       <Container maxW="container.xl" mb="16">
         <SimpleGrid gap="12">

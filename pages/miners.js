@@ -38,6 +38,7 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { createHttpLink } from "apollo-link-http";
 import { TableProps } from "antd/lib/table";
 import "antd/dist/antd.css";
+import Head from "next/head";
 import NxLink from "next/link";
 import { Table, Space } from "antd";
 import Highlighter from "react-highlight-words";
@@ -523,6 +524,12 @@ export default function Miners({ miners, href }) {
 
   return (
     <>
+      <Head>
+        <title>
+          Dashboard - Filecoin Miner Marketplace
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <DashboardNavbar isMinerProfile={false} />
       <Grid
         h="200px"
@@ -571,7 +578,7 @@ export default function Miners({ miners, href }) {
                     Estimated Quote
                   </Heading>
                   <Text fontWeight="medium" color="gray.700">
-                    Storage amount
+                    Storage Amount
                   </Text>
                   <InputGroup
                     height="fit-content"
@@ -582,7 +589,7 @@ export default function Miners({ miners, href }) {
                       bg="white"
                       type="number"
                       w="36"
-                      placeholder="Enter amount of storage"
+                      placeholder={"Storage amount in " + dStorageUnits.value}
                       value={storageAmountText}
                       onChange={(event) => {
                         console.log("amt changed");
@@ -635,7 +642,7 @@ export default function Miners({ miners, href }) {
                       bg="white"
                       type="number"
                       w="36"
-                      placeholder="Enter duration of storage"
+                      placeholder={"Storage duration in " + dStorageDurationUnits.value}
                       value={storageDurationText}
                       onChange={(event) => {
                         console.log("dur changed");

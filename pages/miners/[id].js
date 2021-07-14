@@ -146,7 +146,7 @@ export default function Miner({ miner }) {
     <>
       <Head>
         <title>
-          Miner {miner.id} Stats
+          Miner {miner.id} - Filecoin Miner Marketplace
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>

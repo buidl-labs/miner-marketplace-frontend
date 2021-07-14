@@ -31,7 +31,7 @@ const clientLanding = (stats) => {
     <>
       <Head>
         <title>
-          Miner Marketplace - Find miners to store your data
+          Find miners to store your data - Filecoin Miner Marketplace
         </title>
       </Head>
       <Navbar />

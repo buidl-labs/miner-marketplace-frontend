@@ -170,7 +170,7 @@ function QuoteCalculator(props) {
         </Stack>
         <VStack spacing="6" pt="6" alignItems="flex-start">
           <FormControl id="storage">
-            <FormLabel>Amount of Storage (in GiB)</FormLabel>
+            <FormLabel>Storage Amount</FormLabel>
             <InputGroup
               height="fit-content"
               alignContent="center"
@@ -180,7 +180,7 @@ function QuoteCalculator(props) {
                 bg="white"
                 type="number"
                 size="lg"
-                placeholder="Enter amount of Storage"
+                placeholder={"Storage amount in " + dStorageUnits.value}
                 value={storageAmountText}
                 onChange={(event) => {
                   console.log("amt changed");
@@ -221,7 +221,7 @@ function QuoteCalculator(props) {
             </InputGroup>
           </FormControl>
           <FormControl id="time">
-            <FormLabel>Duration of Storage (in months)</FormLabel>
+            <FormLabel>Storage Duration</FormLabel>
             <InputGroup
               height="fit-content"
               alignContent="center"
@@ -231,7 +231,7 @@ function QuoteCalculator(props) {
                 bg="white"
                 type="number"
                 size="lg"
-                placeholder="Enter duration of Storage"
+                placeholder={"Storage duration in " + dStorageDurationUnits.value}
                 value={storageDurationText}
                 onChange={(event) => {
                   console.log("dur changed");

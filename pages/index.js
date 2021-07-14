@@ -26,7 +26,7 @@ const IndexPage = (stats) => {
   return (
     <>
       <Head>
-        <title>Miner Marketplace - Find Miners, See Earning Stats</title>
+        <title>Explore Miners, Get Financial Stats - Filecoin Miner Marketplace</title>
       </Head>
       <Navbar />
 
