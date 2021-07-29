@@ -16,17 +16,17 @@ import {
 import React from "react";
 
 import { CopyIcon, Icon, IconProps, QuestionIcon } from "@chakra-ui/icons";
-import { } from "react-icons";
+import {} from "react-icons";
 import { FaSlack, FaTwitter, FaGlobe } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { FiExternalLink } from "react-icons/fi";
-import * as Fathom from "fathom-client"
+import * as Fathom from "fathom-client";
 
 function ClaimButton(props) {
   return (
     <>
       <Tooltip
-        label={`To claim this profile, click on \"Connect Wallet\"`}
+        label={`To claim this profile, click on \"Authenticate\"`}
         aria-label="claim profile"
         px="4"
         py="2"
@@ -137,16 +137,22 @@ const PersonalDetails = (props) => {
             <Heading size="sm" color="gray.600" mr="3">
               Worker Address:
             </Heading>
-            <Link href={workerAddressLink} onClick={typeof window != "undefined" && Fathom.trackGoal('NK6DSDVI', 0)} isExternal>
+            <Link
+              href={workerAddressLink}
+              onClick={
+                typeof window != "undefined" && Fathom.trackGoal("NK6DSDVI", 0)
+              }
+              isExternal
+            >
               <HStack>
                 <Text color="gray.600" maxW="72">
                   {props.workerAddress.length > 25
                     ? props.workerAddress.substr(0, 12) +
-                    "..." +
-                    props.workerAddress.substr(
-                      props.workerAddress.length - 12,
-                      props.workerAddress.length,
-                    )
+                      "..." +
+                      props.workerAddress.substr(
+                        props.workerAddress.length - 12,
+                        props.workerAddress.length
+                      )
                     : props.workerAddress}
                 </Text>
                 <Icon as={FiExternalLink} w={5} h={5} color="gray.600" />
@@ -157,16 +163,22 @@ const PersonalDetails = (props) => {
             <Heading size="sm" color="gray.600" mr="3">
               Owner Address:
             </Heading>
-            <Link href={ownerAddressLink} onClick={typeof window != "undefined" && Fathom.trackGoal('NK6DSDVI', 0)} isExternal>
+            <Link
+              href={ownerAddressLink}
+              onClick={
+                typeof window != "undefined" && Fathom.trackGoal("NK6DSDVI", 0)
+              }
+              isExternal
+            >
               <HStack>
                 <Text color="gray.600" maxW="72">
                   {props.ownerAddress.length > 25
                     ? props.ownerAddress.substr(0, 12) +
-                    "..." +
-                    props.ownerAddress.substr(
-                      props.ownerAddress.length - 12,
-                      props.ownerAddress.length,
-                    )
+                      "..." +
+                      props.ownerAddress.substr(
+                        props.ownerAddress.length - 12,
+                        props.ownerAddress.length
+                      )
                     : props.ownerAddress}
                 </Text>
                 <Icon as={FiExternalLink} w={5} h={5} color="gray.600" />

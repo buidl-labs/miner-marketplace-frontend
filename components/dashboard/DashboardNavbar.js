@@ -27,6 +27,7 @@ import Authenticate from "./ledgerAlert/Authenticate";
 import AuthFail from "./ledgerAlert/AuthFail";
 import AuthSuccess from "./ledgerAlert/AuthSuccess";
 import LedgerConfirm from "./ledgerAlert/LedgerConfirm";
+import AuthMode from "./ledgerAlert/AuthMode";
 
 import createTransport from "./ledger/ct";
 import * as wasm from "@zondax/filecoin-signing-tools/js";
@@ -38,6 +39,7 @@ import { useGlobalState } from "../../state";
 import ProfileSettings from "../../pages/profileSettings";
 import * as Fathom from "fathom-client";
 import { trackGoal } from "../../util/analytics";
+import Signature from "./ledgerAlert/Signature";
 
 const CustomModal = ({
   showModalButtonText,
@@ -177,7 +179,7 @@ const DashboardNavbar = (props) => {
 
   function DisplayButton() {
     if (isSignedIn) return props.minerID;
-    return "Connect Wallet";
+    return "Authenticate";
   }
   function DisplaySettings() {
     if (isSignedIn)
@@ -211,7 +213,9 @@ const DashboardNavbar = (props) => {
     return "Connect Wallet";
   }
   function track() {
-    if (typeof window != "undefined") { Fathom.trackGoal('OZHGANFZ', 0) }
+    if (typeof window != "undefined") {
+      Fathom.trackGoal("OZHGANFZ", 0);
+    }
   }
   return (
     <>
@@ -240,14 +244,19 @@ const DashboardNavbar = (props) => {
             icon={<FiSettings />}
             onClick={() => router.push("/profileSettings")}
           /> */}
-          <Tooltip label="Report a Bug or Request a Feature / Enhancement" aria-label="report bug" p={4} borderRadius="lg" hasArrow>
-            <Link href="https://github.com/buidl-labs/miner-marketplace-frontend/issues/new/choose" isExternal alt="report-bug">
-              <Icon
-                color="gray.600"
-                as={BiBug}
-                w={6}
-                h={6}
-              />
+          <Tooltip
+            label="Report a Bug or Request a Feature / Enhancement"
+            aria-label="report bug"
+            p={4}
+            borderRadius="lg"
+            hasArrow
+          >
+            <Link
+              href="https://github.com/buidl-labs/miner-marketplace-frontend/issues/new/choose"
+              isExternal
+              alt="report-bug"
+            >
+              <Icon color="gray.600" as={BiBug} w={6} h={6} />
             </Link>
           </Tooltip>
 
@@ -261,22 +270,22 @@ const DashboardNavbar = (props) => {
               console.log("heyyyy there");
               getAddress();
               track();
-            }
-
-            }
+            }}
           >
             <DisplayButton />
           </Button>
 
           <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
             <ModalOverlay />
+            {/* <Signature /> */}
+            {/* <AuthMode /> */}
             <Authenticate
               minerID={router.asPath.split("/")[2]}
               ledgerAddress={ledgerAddress}
-            // isSignedIn={props.isSignedIn}
-            // isClaimed={props.isClaimed}
-            // onIsSignedInChange={handleIsSignedInChange}
-            // onisClaimedChange={handleIsClaimedChange}
+              // isSignedIn={props.isSignedIn}
+              // isClaimed={props.isClaimed}
+              // onIsSignedInChange={handleIsSignedInChange}
+              // onisClaimedChange={handleIsClaimedChange}
             />
             {/* <LedgerConfirm />
             <AuthSuccess />
