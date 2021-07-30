@@ -135,6 +135,7 @@ const DashboardNavbar = (props) => {
   // } = useDisclosure();
 
   const [isSignedIn, setIsSignedIn] = useGlobalState("isSignedIn");
+  const [authMode, setAuthMode] = useGlobalState("authMode");
 
   // const [isSignedIn, setIsSignedIn] = useState(false);
   // const [isClaimed, setIsClaimed] = useState(miner.claimed);
@@ -268,7 +269,7 @@ const DashboardNavbar = (props) => {
             onClick={() => {
               onOpen();
               console.log("heyyyy there");
-              getAddress();
+              // getAddress();
               track();
             }}
           >
@@ -277,16 +278,35 @@ const DashboardNavbar = (props) => {
 
           <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
             <ModalOverlay />
+            {authMode == "" ? (
+              <AuthMode
+                minerID={router.asPath.split("/")[2]}
+                ledgerAddress={ledgerAddress}
+                onOpen={onOpen}
+                getAddress={getAddress}
+                ownerAddress={props.ownerAddress}
+              />
+            ) : authMode == "ledger" ? (
+              <Authenticate
+                minerID={router.asPath.split("/")[2]}
+                ledgerAddress={ledgerAddress}
+                ownerAddress={props.ownerAddress}
+              />
+            ) : (
+              <Signature
+                minerID={router.asPath.split("/")[2]}
+                ledgerAddress={ledgerAddress}
+                ownerAddress={props.ownerAddress}
+              />
+            )}
             {/* <Signature /> */}
-            {/* <AuthMode /> */}
-            <Authenticate
+            {/*<AuthMode
               minerID={router.asPath.split("/")[2]}
               ledgerAddress={ledgerAddress}
-              // isSignedIn={props.isSignedIn}
-              // isClaimed={props.isClaimed}
-              // onIsSignedInChange={handleIsSignedInChange}
-              // onisClaimedChange={handleIsClaimedChange}
-            />
+              onOpen={onOpen}
+              getAddress={getAddress}
+            />*/}
+
             {/* <LedgerConfirm />
             <AuthSuccess />
             <AuthFail /> */}

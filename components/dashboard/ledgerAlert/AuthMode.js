@@ -16,8 +16,22 @@ import {
   Stack,
   Center,
 } from "@chakra-ui/react";
+import React, { useState, useRef } from "react";
+import { useRouter } from "next/router";
+import { useGlobalState } from "../../../state";
 
-const AuthMode = () => {
+const AuthMode = (props) => {
+  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [authMode, setAuthMode] = useGlobalState("authMode");
+  const [ledgerConnected, setLedgerConnected] = useState(false);
+  const [addressConfirmed, setAddressConfirmed] = useState(false);
+  const [receivedVerificationResult, setReceivedVerificationResult] =
+    useState(false);
+
+  // const [ledgerAddress, setLedgerAddress] = useState("");
+  const [ledgerAddress, setLedgerAddress] = useGlobalState("ledgerAddr");
+
   return (
     <>
       <ModalContent textAlign="center" p="6">
@@ -29,7 +43,7 @@ const AuthMode = () => {
         <ModalCloseButton />
         <ModalBody>
           <Text fontSize="md" fontWeight="normal" color="gray.700" mt="-1.6rem">
-            Choose how you want to authenticate your profile
+            Verify your owner address
           </Text>
           <Center>
             <HStack spacing="8" mt="8">
@@ -40,6 +54,12 @@ const AuthMode = () => {
                 border="solid 2px #fff"
                 _hover={{ bg: "blue.50", border: "solid 2px #90CDF4" }}
                 cursor="pointer"
+                onClick={() => {
+                  console.log("cbox");
+                  // props.onOpen();
+                  props.getAddress();
+                  setAuthMode("ledger");
+                }}
               >
                 <Image
                   src="/images/authmode-wallet.png"
@@ -47,10 +67,10 @@ const AuthMode = () => {
                   mx="auto"
                 />
                 <Text fontWeight="semibold" fontSize="lg">
-                  Wallet
+                  Ledger
                 </Text>
                 <Text size="sm" color="gray.600">
-                  use ledger device to authenticate
+                  plug in your ledger hardware wallet
                 </Text>
               </Box>
               <Box
@@ -60,13 +80,18 @@ const AuthMode = () => {
                 border="solid 2px #fff"
                 _hover={{ bg: "blue.50", border: "solid 2px #90CDF4" }}
                 cursor="pointer"
+                onClick={() => {
+                  console.log("cbox2");
+                  setLedgerAddress(props.ownerAddress);
+                  setAuthMode("lotus");
+                }}
               >
                 <Image src="/images/authmode-sign.png" mx="auto" maxW="8rem" />
                 <Text fontWeight="semibold" fontSize="lg">
                   Signature
                 </Text>
                 <Text size="sm" color="gray.600">
-                  use signature method via lotus node
+                  verify signature using lotus node
                 </Text>
               </Box>
             </HStack>

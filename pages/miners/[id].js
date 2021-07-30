@@ -153,6 +153,7 @@ export default function Miner({ miner }) {
       <DashboardNavbar
         minerID={miner.id}
         isMinerProfile={true}
+        ownerAddress={miner.owner.address}
         // isSignedIn={isSignedIn}
         // isClaimed={isClaimed}
         // onIsSignedInChange={handleIsSignedInChange}
