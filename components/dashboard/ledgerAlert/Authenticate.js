@@ -32,15 +32,19 @@ const Authenticate = (props) => {
   // const [currMinerID, setCurrMinerID] = useState("");
   // const [currLedgerAddress, setCurrLedgerAddress] = useState("");
   const [isSignedIn, setIsSignedIn] = useGlobalState("isSignedIn");
+  const [authMode, setAuthMode] = useGlobalState("authMode");
   return (
     <>
       <ModalContent textAlign="center" p="5">
         <ModalHeader alignItems="center">
           <Heading size="lg" color="gray.900">
-            Authentication {clval}
+            Ledger Authentication {clval}
           </Heading>
         </ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton onClick={()=>{
+          console.log("closeledgerbutton")
+          setAuthMode("");
+        }} />
         <ModalBody>
           <VStack>
             <Image src={clIcon} pb="6" mx="auto" w="20" />

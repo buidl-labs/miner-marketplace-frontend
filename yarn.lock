@@ -1446,6 +1446,21 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@filecoin-shipyard/lotus-client-provider-browser@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@filecoin-shipyard/lotus-client-provider-browser/-/lotus-client-provider-browser-0.0.14.tgz#28268cd1a940627b08e06378527f5f34fea0db75"
+  integrity sha512-rFH2aUA65fa9C+3d8JoKxL/UGYPbEqIjhJ9ZMJS50aKFELMA1FJ/l10Tpgkx0p6KrdygfIytHneITvpgcumR4g==
+
+"@filecoin-shipyard/lotus-client-rpc@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@filecoin-shipyard/lotus-client-rpc/-/lotus-client-rpc-0.2.1.tgz#53761645e801b6b715767944532c4ebb5ad02f01"
+  integrity sha512-qK24g0uPdLsXwobt0kXoquIb45KlFm5/70JkuERLHIu411NQotgLLal5n7639D4aO9w+E2/vjKavwwqK1+EMJA==
+
+"@filecoin-shipyard/lotus-client-schema@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@filecoin-shipyard/lotus-client-schema/-/lotus-client-schema-3.0.1.tgz#0fea0eee8869439fdbf9140d485407f51f1e50ad"
+  integrity sha512-QHXjWIx5DbY4xulwiRNCRMNodWMYIlwi+eq26Ssq4oMuX4SKAr9cRbU3jJbGsl1xH7dMwmfWOkwoKBGMNnNR5A==
+
 "@fontsource/inter@^4.4.2":
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.4.2.tgz#77146e63fe31973360607be46dc664951c3bf1a5"
