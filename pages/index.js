@@ -26,7 +26,9 @@ const IndexPage = (stats) => {
   return (
     <>
       <Head>
-        <title>Explore Miners, Get Financial Stats - Filecoin Miner Marketplace</title>
+        <title>
+          Explore Storage Providers, Get Financial Stats - DataStation
+        </title>
       </Head>
       <Navbar />
 
@@ -59,7 +61,7 @@ const IndexPage = (stats) => {
               featureIcon="/images/secure.svg"
               imgAlt="secure"
               featureTitle="Secure"
-              featureDescription="Miners storing data have to encrypt data which makes storing data on Filecoin more secure"
+              featureDescription="Storage Providers storing data have to encrypt data which makes storing data on Filecoin more secure"
             />
             <Features
               featureIcon="/images/rewards.svg"
@@ -88,13 +90,13 @@ const IndexPage = (stats) => {
           >
             <Stack textAlign="center" spacing="16" my="16">
               <Heading size="2xl" color="white">
-                Filecoin Network in Numbers
+                Filecoin Storage Providers in Numbers
               </Heading>
               <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
                 <FilecoinStats
                   count={stats.stats.activeMinersCount + "+"}
                   countText=""
-                  subtext="Active Miners and counting"
+                  subtext="Active Storage Providers and counting"
                 />
                 <FilecoinStats
                   count={stats.stats.networkStorageCapacity}
@@ -120,18 +122,22 @@ const IndexPage = (stats) => {
               <JoinNetwork
                 cardHeading="Looking to provide Storage Services"
                 cardText="Start your miner journey and become part of global network of
-                fielcoin miners."
-                ctaText="Become a Miner"
+                fielcoin Storage Providers."
+                ctaText="Become a Storage Provider"
                 ctaVariant="solid"
-                ctaRoute={() => { router.push('/minerLanding') }}
+                ctaRoute={() => {
+                  router.push("/minerLanding");
+                }}
               />
               <JoinNetwork
                 cardHeading="Looking to Store Data"
-                cardText="Explore miners according to your needs and start storing your data
+                cardText="Explore storage providers according to your needs and start storing your data
             securely on Filecoin Network."
-                ctaText="Explore Miners"
+                ctaText="Explore Storage Providers"
                 ctaVariant="outline"
-                ctaRoute={() => { router.push('/miners') }}
+                ctaRoute={() => {
+                  router.push("/miners");
+                }}
               />
             </SimpleGrid>
           </Stack>
@@ -143,13 +149,13 @@ const IndexPage = (stats) => {
               <Accordion allowToggle="false">
                 <Faq
                   question="What is filecoin?"
-                  answer="Filecoin is a peer-to-peer network that stores files on the internet, with built-in economic incentives to ensure files are stored reliably over time." />
-                <Faq
-                  question="Is this platform free to use?"
-                  answer="Yes" />
+                  answer="Filecoin is a peer-to-peer network that stores files on the internet, with built-in economic incentives to ensure files are stored reliably over time."
+                />
+                <Faq question="Is this platform free to use?" answer="Yes" />
                 <Faq
                   question="What is the difference between Filecoin & IPFS?"
-                  answer="Filecoin and IPFS are two separate, complementary protocols, both created by Protocol Labs. IPFS allows peers to store, request, and transfer verifiable data with each other, while Filecoin is designed to provide a system of persistent data storage." />
+                  answer="Filecoin and IPFS are two separate, complementary protocols, both created by Protocol Labs. IPFS allows peers to store, request, and transfer verifiable data with each other, while Filecoin is designed to provide a system of persistent data storage."
+                />
               </Accordion>
             </Stack>
           </Stack>

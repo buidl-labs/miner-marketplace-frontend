@@ -46,17 +46,22 @@ import { SearchOutlined } from "@ant-design/icons";
 
 import { useRouter } from "next/router";
 
-import { GetFormattedStorageUnits, GetFormattedFILUnits, GetSimpleFILUnits, GetSimpleUSDUnits } from "../util/util";
+import {
+  GetFormattedStorageUnits,
+  GetFormattedFILUnits,
+  GetSimpleFILUnits,
+  GetSimpleUSDUnits,
+} from "../util/util";
 import { Countries } from "../util/raw";
 import Base from "antd/lib/typography/Base";
-import * as Fathom from "fathom-client"
+import * as Fathom from "fathom-client";
 
 let countries = Countries();
 
 export default function Miners({ miners, href }) {
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
     )
       .then((res) => res.json())
       .then((r) => {
@@ -158,10 +163,10 @@ export default function Miners({ miners, href }) {
           (parseInt(storageAskPrice) / 10 ** 18),
         display: GetSimpleFILUnits(
           storageDuration *
-          30 *
-          2880 *
-          storageAmount *
-          parseInt(storageAskPrice),
+            30 *
+            2880 *
+            storageAmount *
+            parseInt(storageAskPrice)
         ),
         usd:
           storageDuration *
@@ -170,13 +175,14 @@ export default function Miners({ miners, href }) {
           storageAmount *
           (parseInt(storageAskPrice) / 10 ** 18) *
           filecoinUSDRate,
-        displayUSD:
-          GetSimpleUSDUnits(storageDuration *
+        displayUSD: GetSimpleUSDUnits(
+          storageDuration *
             30 *
             2880 *
             storageAmount *
             (parseInt(storageAskPrice) / 10 ** 18) *
-            filecoinUSDRate)
+            filecoinUSDRate
+        ),
       },
       qap: {
         val: fd.qualityAdjustedPower,
@@ -197,14 +203,14 @@ export default function Miners({ miners, href }) {
 
   const columns = [
     {
-      title: "Miner",
+      title: "Storage Providers",
       dataIndex: "miner",
       key: "miner",
       render: (m) => {
         return (
           <div>
             <Link href={`/miners/${m.id}`} key={m.id} isExternal>
-              <Text fontSize="lg" color="blue.700">
+              <Text fontSize="lg" color="blue.700" whiteSpace="nowrap">
                 {m.name}
               </Text>
               <Text
@@ -343,8 +349,8 @@ export default function Miners({ miners, href }) {
         return (
           <div color="gray.600">
             <Text>{countries[l.country]}</Text>
-            {l.region && (<Text fontSize="sm">({l.region})</Text>)}
-            {!l.region && (<Text fontSize="sm">-</Text>)}
+            {l.region && <Text fontSize="sm">({l.region})</Text>}
+            {!l.region && <Text fontSize="sm">-</Text>}
           </div>
         );
       },
@@ -364,9 +370,7 @@ export default function Miners({ miners, href }) {
               {/*{Math.round((l.fil + Number.EPSILON) * 1000) / 1000} FIL*/}
               {l.display}
             </Text>
-            <Text color="gray.500">
-              {l.displayUSD}
-            </Text>
+            <Text color="gray.500">{l.displayUSD}</Text>
           </div>
         );
       },
@@ -379,10 +383,12 @@ export default function Miners({ miners, href }) {
         compare: (a, b) => parseInt(a.qap.val) - parseInt(b.qap.val),
       },
       render: (l) => {
-        return (<>
-          {/* {!l.display && (<p>{l.display}</p>)} */}
-          {l.display == "NaN YB" ? (<p>-</p>) : (<p>{l.display}</p>)}
-        </>);
+        return (
+          <>
+            {/* {!l.display && (<p>{l.display}</p>)} */}
+            {l.display == "NaN YB" ? <p>-</p> : <p>{l.display}</p>}
+          </>
+        );
       },
     },
   ];
@@ -459,7 +465,7 @@ export default function Miners({ miners, href }) {
 
   const [dStorageUnits, setDStorageUnits] = useState(dStorageUnitsArr[1]);
   const [dStorageDurationUnits, setDStorageDurationUnits] = useState(
-    dStorageDurationUnitsArr[0],
+    dStorageDurationUnitsArr[0]
   );
 
   const handleStorageUnitsChange = (event) => {
@@ -518,16 +524,14 @@ export default function Miners({ miners, href }) {
 
   function track() {
     if (typeof window != "undefined") {
-      Fathom.trackGoal('GOXF68VK', 0)
+      Fathom.trackGoal("GOXF68VK", 0);
     }
   }
 
   return (
     <>
       <Head>
-        <title>
-          Dashboard - Filecoin Miner Marketplace
-        </title>
+        <title>Dashboard - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <DashboardNavbar isMinerProfile={false} />
@@ -544,18 +548,18 @@ export default function Miners({ miners, href }) {
           <Flex justifyContent="space-between">
             <Stack spacing="6" w="36rem">
               <Heading color="gray.700" size="lg">
-                Search Miners
+                Search Storage Providers
               </Heading>
               <Stack spacing="4" pb="4">
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="visible"
-                    children={<Search2Icon w={5} h={5} color="gray.500" />}
+                    children={<Search2Icon w={5} h={5} color="gray.400" />}
                   />
                   <Input
                     type="text"
-                    size="lg"
-                    placeholder="Search by Miner Address"
+                    size="md"
+                    placeholder="Search by Storage Provider ID (Miner ID)"
                     value={minerIdQuery}
                     onChange={onChange}
                   />
@@ -563,17 +567,9 @@ export default function Miners({ miners, href }) {
               </Stack>
             </Stack>
 
-            <Stack
-              bg="gray.100"
-              borderRadius="xl"
-              p="6"
-            >
-              <HStack
-                spacing="4"
-                alignItems="flex-end"
-                pb="2"
-              >
-                <Stack spacing="2" >
+            <Stack bg="gray.100" borderRadius="xl" p="6">
+              <HStack spacing="4" alignItems="flex-end" pb="2">
+                <Stack spacing="2">
                   <Heading size="sm" fontWeight="semibold" color="gray.700">
                     Estimated Quote
                   </Heading>
@@ -610,12 +606,12 @@ export default function Miners({ miners, href }) {
                         console.log(
                           "storageAmount",
                           storageAmount,
-                          event.target.value,
+                          event.target.value
                         );
                         console.log("dStorageUnits", dStorageUnits);
                         console.log(
                           "dStorageDurationUnits",
-                          dStorageDurationUnits,
+                          dStorageDurationUnits
                         );
                       }}
                       borderRight="none"
@@ -642,7 +638,9 @@ export default function Miners({ miners, href }) {
                       bg="white"
                       type="number"
                       w="36"
-                      placeholder={"Storage duration in " + dStorageDurationUnits.value}
+                      placeholder={
+                        "Storage duration in " + dStorageDurationUnits.value
+                      }
                       value={storageDurationText}
                       onChange={(event) => {
                         console.log("dur changed");
@@ -657,12 +655,12 @@ export default function Miners({ miners, href }) {
                         console.log(
                           "storageDuration",
                           storageDuration,
-                          event.target.value,
+                          event.target.value
                         );
                         console.log("dStorageUnits", dStorageUnits);
                         console.log(
                           "dStorageDurationUnits",
-                          dStorageDurationUnits,
+                          dStorageDurationUnits
                         );
                       }}
                       borderRight="none"
@@ -687,8 +685,7 @@ export default function Miners({ miners, href }) {
                 onClick={(event) => {
                   filterList(event);
                   track();
-                }
-                }
+                }}
               >
                 Update Estimated Quote
               </Button>
@@ -739,7 +736,6 @@ export default function Miners({ miners, href }) {
                 isMulti
               />
             </VStack> */}
-
           </HStack>
 
           <Stack spacing="8" mt="6">

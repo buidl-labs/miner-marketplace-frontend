@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Box,
   Flex,
   Link,
@@ -8,6 +9,8 @@ import {
   HStack,
   Stack,
   Spacer,
+  Spinner,
+  SpinnerProps,
   Text,
   useDisclosure,
   Drawer,
@@ -22,7 +25,7 @@ import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import * as Fathom from "fathom-client";
-
+import { useState } from "react";
 
 const Navbar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,9 +36,11 @@ const Navbar = (props) => {
 
   function track() {
     if (typeof window != "undefined") {
-      Fathom.trackGoal('R1EOW6X3', 0);
+      Fathom.trackGoal("R1EOW6X3", 0);
     }
   }
+
+  const [btnLoading, setBtnLoading] = useState(false);
 
   return (
     <>
@@ -58,9 +63,9 @@ const Navbar = (props) => {
         <Flex align="center">
           <Link onClick={() => router.push("/")}>
             <Image
-              src="/images/Logo-b.svg"
-              maxW="36"
-              alt="Miner Marketplace Logo"
+              src="/images/Logobeta.svg"
+              maxW="48"
+              alt="Data Station Logo"
             />
           </Link>
         </Flex>
@@ -85,7 +90,11 @@ const Navbar = (props) => {
           <DrawerContent>
             <DrawerCloseButton />
             <DrawerHeader>
-              <Image src="/images/Logo.svg" maxW="36" />
+              <Image
+                src="/images/Logobeta.svg"
+                maxW="36"
+                alt="Data Station Logo"
+              />
             </DrawerHeader>
 
             <DrawerBody>
@@ -97,14 +106,20 @@ const Navbar = (props) => {
                 </Link>
                 <Link onClick={() => router.push("/minerLanding")}>
                   <Text fontSize="xl" fontWeight="medium">
-                    Miners
+                    Storage Providers
                   </Text>
                 </Link>
                 <Box>
                   <Button
                     size="lg"
                     variant="outline"
-                    onClick={() => { router.push("/miners"); track(); }}
+                    isloading={btnLoading}
+                    loadingText="loading"
+                    onClick={() => {
+                      router.push("/miners");
+                      track();
+                      setBtnLoading(true);
+                    }}
                     colorScheme="blue"
                   >
                     Dashboard
@@ -129,7 +144,7 @@ const Navbar = (props) => {
           </Link>
           <Link onClick={() => router.push("/minerLanding")}>
             <Text fontSize="lg" fontWeight="medium">
-              Miners
+              Storage Providers
             </Text>
           </Link>
         </Stack>
@@ -140,9 +155,15 @@ const Navbar = (props) => {
           display={{ base: isOpen ? "block" : "none", md: "flex" }}
         >
           <Button
-            variant="outline"
+            variant="solid"
             colorScheme="blue"
-            onClick={() => { router.push("/miners"); track(); }}
+            isloading={btnLoading}
+            loadingText="loading"
+            onClick={() => {
+              router.push("/miners");
+              track();
+              setBtnLoading(true);
+            }}
           >
             Dashboard
           </Button>

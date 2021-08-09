@@ -44,7 +44,7 @@ import StorageDealStats from "../../components/dashboard/StorageDealStats";
 
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import Head from "next/head";
-import * as Fathom from "fathom-client"
+import * as Fathom from "fathom-client";
 // import getAllMinerIds from "../miners";
 // import { createGlobalState } from "react-hooks-global-state";
 
@@ -145,9 +145,7 @@ export default function Miner({ miner }) {
   return (
     <>
       <Head>
-        <title>
-          Miner {miner.id} - Filecoin Miner Marketplace
-        </title>
+        <title>Storage Provider {miner.id} - Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <DashboardNavbar
@@ -180,7 +178,21 @@ export default function Miner({ miner }) {
         <Alert status="warning" borderRadius="lg">
           <AlertIcon />
           <AlertTitle mr={2}>This is beta version of platform!</AlertTitle>
-          <AlertDescription>Not every Miner's data is in records currently, you can request your data by filling up <Link href="https://forms.gle/DydhKdkjcDxN6agK8" onClick={typeof window != "undefined" && Fathom.trackGoal('UCY2LX9P', 0)} fontWeight="semibold" textDecoration="underline" isExternal >this form.</Link></AlertDescription>
+          <AlertDescription>
+            Not every Miner's data is in records currently, you can request your
+            data by filling up{" "}
+            <Link
+              href="https://forms.gle/DydhKdkjcDxN6agK8"
+              onClick={
+                typeof window != "undefined" && Fathom.trackGoal("UCY2LX9P", 0)
+              }
+              fontWeight="semibold"
+              textDecoration="underline"
+              isExternal
+            >
+              this form.
+            </Link>
+          </AlertDescription>
         </Alert>
       </Box>
       <Button
@@ -192,7 +204,7 @@ export default function Miner({ miner }) {
         onClick={() => router.push("/miners")}
       >
         <ArrowBackIcon w={5} h={5} color="gray.600" mr="1" color="blue.500" />
-        Back to Miner Listings
+        Back to Storage Provider Listings
       </Button>
       <SimpleGrid
         maxH="44rem"
@@ -239,7 +251,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -288,7 +300,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -343,7 +355,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id,
+                    miner.id
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";

@@ -9,7 +9,7 @@ import {
   HStack,
   Stack,
 } from "@chakra-ui/react";
-import { ArrowForwardIcon } from "@chakra-ui/icons"
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Navbar from "../components/Navbar";
 import Hero from "../components/landingPage/Hero";
 import Features from "../components/landingPage/Features";
@@ -28,7 +28,9 @@ const minerLanding = (stats) => {
   const router = useRouter();
   return (
     <>
-      <Head><title>Join Miners across the world - Filecoin Miner Marketplace</title></Head>
+      <Head>
+        <title>Join Storage Providers across the world - DataStation</title>
+      </Head>
       <Navbar />
       <Container maxW="container.xl" mb="16">
         <SimpleGrid gap="12">
@@ -38,7 +40,7 @@ const minerLanding = (stats) => {
             heroAlt="rewards for storage service with Filecoin"
             heroHeading="Provide Storage Services & Earn Rewards"
             heroText="The Filecoin network is designed to reward participants at multiple levels — from large scale data centers to local entrepreneurs with mining rigs that cover the last mile."
-            ctaText="Become a Miner"
+            ctaText="Become a Storage Provider"
             ctaLink="https://filecoin.io/mine/"
           />
 
@@ -83,14 +85,14 @@ const minerLanding = (stats) => {
           >
             <Stack textAlign="center" spacing="16" my="16">
               <Heading size="2xl" color="white">
-                Filecoin Miners in Numbers
+                Storage Providers in Numbers
               </Heading>
 
               <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
                 <FilecoinStats
                   count={stats.stats.activeMinersCount + "+"}
                   countText=""
-                  subtext="Active Miners and counting"
+                  subtext="Active Storage Providers and counting"
                 />
                 <FilecoinStats
                   count={stats.stats.networkStorageCapacity}
@@ -109,22 +111,22 @@ const minerLanding = (stats) => {
           {/*Join Network*/}
           <Stack textAlign="center" spacing="16" my="16">
             <Heading color="gray.900" size="2xl">
-              Start your Miner Journey
+              Start your Storage Provider Journey
             </Heading>
             <SimpleGrid columns={{ lg: 2, md: 2, sm: 1 }} gap="12">
               <JoinNetwork
                 cardHeading="Become a Miner"
                 cardText="Want to join Filecoin network as a miner, click the link below to get started."
-                ctaText="Become a Miner"
+                ctaText="Become a Storage Provider"
                 ctaVariant="link"
                 ctaIcon={<ArrowForwardIcon w={5} h={5} />}
                 ctaLink="https://filecoin.io/mine/"
               />
               <JoinNetwork
-                cardHeading="Already a Miner? Claim Profile"
-                cardText="If you are already a registered miner, claim your profile to see your storage stats and earning details in intuitive way."
+                cardHeading="Already a Storage Provider? Claim Profile"
+                cardText="If you are already a registered storage provider, claim your profile to see your storage stats and earning details in intuitive way."
                 ctaText="Claim Profile"
-                ctaRoute={() => router.push('/miners')}
+                ctaRoute={() => router.push("/miners")}
               />
             </SimpleGrid>
           </Stack>
@@ -136,9 +138,16 @@ const minerLanding = (stats) => {
               <Accordion allowToggle="false">
                 <Faq
                   question="What's the minimum time period for the storage contract between the provider and the buyer?"
-                  answer="The minimum duration for a deal is set in the miner's ask. There's also a practical limitation because sectors have a minimum duration (currently one month)" />
-                <Faq question="What are block rewards?" answer="Block rewards are large sums that are given to the miner credited for a new block. Unlike storage fees, these rewards do not come from an associated client; rather, the network 'prints' new FIL as both an inflationary measure and an incentive to miners advancing the chain. " />
-                <Faq question="What are the minimum hardware requirements to start mining?" answer="at least 8+ Core GPU, 128 Gib RAM with 256 Gib of swap on very fast NVMe SSD" />
+                  answer="The minimum duration for a deal is set in the miner's ask. There's also a practical limitation because sectors have a minimum duration (currently one month)"
+                />
+                <Faq
+                  question="What are block rewards?"
+                  answer="Block rewards are large sums that are given to the miner credited for a new block. Unlike storage fees, these rewards do not come from an associated client; rather, the network 'prints' new FIL as both an inflationary measure and an incentive to miners advancing the chain. "
+                />
+                <Faq
+                  question="What are the minimum hardware requirements to start mining?"
+                  answer="at least 8+ Core GPU, 128 Gib RAM with 256 Gib of swap on very fast NVMe SSD"
+                />
               </Accordion>
             </Stack>
           </Stack>
