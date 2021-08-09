@@ -232,7 +232,7 @@ const DashboardNavbar = (props) => {
         <Link onClick={() => router.push("/")}>
           <Image
             src="/images/Logo-b.svg"
-            maxH="12"
+            maxH="10"
             alt="Miner Marketplace Logo"
           />
         </Link>

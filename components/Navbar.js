@@ -62,11 +62,7 @@ const Navbar = (props) => {
       >
         <Flex align="center">
           <Link onClick={() => router.push("/")}>
-            <Image
-              src="/images/Logobeta.svg"
-              maxW="48"
-              alt="Data Station Logo"
-            />
+            <Image src="/images/Logo-b.svg" maxW="48" alt="Data Station Logo" />
           </Link>
         </Flex>
 
@@ -91,7 +87,7 @@ const Navbar = (props) => {
             <DrawerCloseButton />
             <DrawerHeader>
               <Image
-                src="/images/Logobeta.svg"
+                src="/images/Logo-b.svg"
                 maxW="36"
                 alt="Data Station Logo"
               />
