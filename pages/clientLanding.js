@@ -20,7 +20,7 @@ import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import { gql, InMemoryCache, ApolloClient } from "@apollo/client";
 import { useRouter } from "next/router";
-import Head from "next/head"
+import Head from "next/head";
 
 const clientLanding = (stats) => {
   // console.log(stats);
@@ -30,9 +30,7 @@ const clientLanding = (stats) => {
   return (
     <>
       <Head>
-        <title>
-          Find miners to store your data - Filecoin Miner Marketplace
-        </title>
+        <title>Find Storage Providers to store your data - DataStation</title>
       </Head>
       <Navbar />
       <Container maxW="container.xl" mb="16">
@@ -44,7 +42,7 @@ const clientLanding = (stats) => {
             heroHeading="Powerful Decentralized Storage Network for your Data"
             heroText="The Filecoin network is made up of a large number of diverse storage providers and developers. This creates a robust and reliable service."
             ctaText="Explore Storage Providers"
-            ctaRoute={() => router.push('/miners')}
+            ctaRoute={() => router.push("/miners")}
           />
 
           {/* Features Section */}
@@ -61,7 +59,7 @@ const clientLanding = (stats) => {
               featureIcon="/images/selfhealing.svg"
               imgAlt="self healing"
               featureTitle="Self-healing"
-              featureDescription="The Filecoin blockchain has a built-in self-healing process where if faulty miners are detected, their files are redistributed to reliable miners."
+              featureDescription="The Filecoin blockchain has a built-in self-healing process where if faulty storage providers are detected, their files are redistributed to reliable miners."
             />
             <Features
               featureIcon="/images/prices.svg"
@@ -95,7 +93,7 @@ const clientLanding = (stats) => {
                 <FilecoinStats
                   count={stats.stats.activeMinersCount + "+"}
                   countText=""
-                  subtext="Verified Miners and counting"
+                  subtext="Verified Storage Providers and counting"
                 />
                 <FilecoinStats
                   count={stats.stats.networkStorageCapacity}
@@ -134,7 +132,12 @@ const clientLanding = (stats) => {
                   commons media, historical archives, preservation, and more.
                 </Text>
                 <Box>
-                  <Button colorScheme="blue" onClick={() => router.push('/miners')}>Start Storing Data</Button>
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => router.push("/miners")}
+                  >
+                    Start Storing Data
+                  </Button>
                 </Box>
               </Stack>
             </WrapItem>
@@ -147,13 +150,16 @@ const clientLanding = (stats) => {
               <Accordion allowToggle="false">
                 <Faq
                   question="Will it be cheaper to store data on Filecoin than other centralized cloud services?"
-                  answer="Filecoin creates a hyper-competitive market for data storage. There will be many miners offering many prices, rather than one fixed price on the network." />
+                  answer="Filecoin creates a hyper-competitive market for data storage. There will be many miners offering many prices, rather than one fixed price on the network."
+                />
                 <Faq
                   question="Who are miners?"
-                  answer="Miners in the Filecoin network are in charge of storing, providing content and issuing new blocks." />
+                  answer="Miners in the Filecoin network are in charge of storing, providing content and issuing new blocks."
+                />
                 <Faq
                   question="How do I know that my storage miner will not charge prohibitively high costs for data retrieval?"
-                  answer="To avoid extortion, always ensure you store your data with a fairly decentralized set of miners" />
+                  answer="To avoid extortion, always ensure you store your data with a fairly decentralized set of miners"
+                />
               </Accordion>
             </Stack>
           </Stack>

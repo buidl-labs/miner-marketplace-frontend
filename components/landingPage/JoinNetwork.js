@@ -33,8 +33,18 @@ const JoinNetwork = (props) => {
             {props.cardText}
           </Text>
           <Box>
-            <Link href={props.ctaLink} isExternal colorScheme="blue" textDecoration="none">
-              <Button colorScheme="blue" variant={props.ctaVariant} rightIcon={props.ctaIcon} onClick={props.ctaRoute}>
+            <Link
+              href={props.ctaLink}
+              isExternal
+              colorScheme="blue"
+              textDecoration="none"
+            >
+              <Button
+                colorScheme="blue"
+                variant={props.ctaVariant}
+                rightIcon={props.ctaIcon}
+                onClick={props.ctaRoute}
+              >
                 {props.ctaText}
               </Button>
             </Link>

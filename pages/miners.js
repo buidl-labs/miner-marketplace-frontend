@@ -46,17 +46,22 @@ import { SearchOutlined } from "@ant-design/icons";
 
 import { useRouter } from "next/router";
 
-import { GetFormattedStorageUnits, GetFormattedFILUnits, GetSimpleFILUnits, GetSimpleUSDUnits } from "../util/util";
+import {
+  GetFormattedStorageUnits,
+  GetFormattedFILUnits,
+  GetSimpleFILUnits,
+  GetSimpleUSDUnits,
+} from "../util/util";
 import { Countries } from "../util/raw";
 import Base from "antd/lib/typography/Base";
-import * as Fathom from "fathom-client"
+import * as Fathom from "fathom-client";
 
 let countries = Countries();
 
 export default function Miners({ miners, href }) {
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
     )
       .then((res) => res.json())
       .then((r) => {
@@ -119,7 +124,7 @@ export default function Miners({ miners, href }) {
     }
     let minerName = fd.personalInfo.name;
     if (fd.personalInfo.name == "") {
-      minerName = "Unclaimed Miner";
+      minerName = "Unclaimed profile";
     }
 
     let storageAskPrice = fd.pricing.storageAskPrice;
@@ -158,10 +163,10 @@ export default function Miners({ miners, href }) {
           (parseInt(storageAskPrice) / 10 ** 18),
         display: GetSimpleFILUnits(
           storageDuration *
-          30 *
-          2880 *
-          storageAmount *
-          parseInt(storageAskPrice),
+            30 *
+            2880 *
+            storageAmount *
+            parseInt(storageAskPrice)
         ),
         usd:
           storageDuration *
@@ -170,13 +175,14 @@ export default function Miners({ miners, href }) {
           storageAmount *
           (parseInt(storageAskPrice) / 10 ** 18) *
           filecoinUSDRate,
-        displayUSD:
-          GetSimpleUSDUnits(storageDuration *
+        displayUSD: GetSimpleUSDUnits(
+          storageDuration *
             30 *
             2880 *
             storageAmount *
             (parseInt(storageAskPrice) / 10 ** 18) *
-            filecoinUSDRate)
+            filecoinUSDRate
+        ),
       },
       qap: {
         val: fd.qualityAdjustedPower,
@@ -197,7 +203,7 @@ export default function Miners({ miners, href }) {
 
   const columns = [
     {
-      title: "Miner",
+      title: "Storage Providers",
       dataIndex: "miner",
       key: "miner",
       render: (m) => {
@@ -343,8 +349,8 @@ export default function Miners({ miners, href }) {
         return (
           <div color="gray.600">
             <Text>{countries[l.country]}</Text>
-            {l.region && (<Text fontSize="sm">({l.region})</Text>)}
-            {!l.region && (<Text fontSize="sm">-</Text>)}
+            {l.region && <Text fontSize="sm">({l.region})</Text>}
+            {!l.region && <Text fontSize="sm">-</Text>}
           </div>
         );
       },
@@ -364,9 +370,7 @@ export default function Miners({ miners, href }) {
               {/*{Math.round((l.fil + Number.EPSILON) * 1000) / 1000} FIL*/}
               {l.display}
             </Text>
-            <Text color="gray.500">
-              {l.displayUSD}
-            </Text>
+            <Text color="gray.500">{l.displayUSD}</Text>
           </div>
         );
       },
@@ -379,10 +383,12 @@ export default function Miners({ miners, href }) {
         compare: (a, b) => parseInt(a.qap.val) - parseInt(b.qap.val),
       },
       render: (l) => {
-        return (<>
-          {/* {!l.display && (<p>{l.display}</p>)} */}
-          {l.display == "NaN YB" ? (<p>-</p>) : (<p>{l.display}</p>)}
-        </>);
+        return (
+          <>
+            {/* {!l.display && (<p>{l.display}</p>)} */}
+            {l.display == "NaN YB" ? <p>-</p> : <p>{l.display}</p>}
+          </>
+        );
       },
     },
   ];
@@ -459,7 +465,7 @@ export default function Miners({ miners, href }) {
 
   const [dStorageUnits, setDStorageUnits] = useState(dStorageUnitsArr[1]);
   const [dStorageDurationUnits, setDStorageDurationUnits] = useState(
-    dStorageDurationUnitsArr[0],
+    dStorageDurationUnitsArr[0]
   );
 
   const handleStorageUnitsChange = (event) => {
@@ -518,44 +524,39 @@ export default function Miners({ miners, href }) {
 
   function track() {
     if (typeof window != "undefined") {
-      Fathom.trackGoal('GOXF68VK', 0)
+      Fathom.trackGoal("GOXF68VK", 0);
     }
   }
 
   return (
     <>
       <Head>
-        <title>
-          Dashboard - Filecoin Miner Marketplace
-        </title>
+        <title>Dashboard - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <DashboardNavbar isMinerProfile={false} />
       <Grid
-        h="200px"
-        templateRows="repeat(4, 1fr)"
-        templateColumns="repeat(12, 1fr)"
+        templateColumns={{
+          lg: "repeat(12, 1fr)",
+          md: "repeat(6,1fr)",
+        }}
       >
-        {/* <GridItem rowSpan="8" colSpan="2">
-          <DashboardMenu />
-        </GridItem> */}
-
         <GridItem colSpan="12" pt="28" bg="white" px="8">
           <Flex justifyContent="space-between">
-            <Stack spacing="6" w="36rem">
+            <Stack spacing="8" w="36rem">
               <Heading color="gray.700" size="lg">
-                Search Miners
+                Search Storage Providers
               </Heading>
               <Stack spacing="4" pb="4">
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="visible"
-                    children={<Search2Icon w={5} h={5} color="gray.500" />}
+                    children={<Search2Icon w={5} h={5} color="gray.400" />}
                   />
                   <Input
                     type="text"
-                    size="lg"
-                    placeholder="Search by Miner Address"
+                    size="md"
+                    placeholder="Search by Storage Provider ID (Miner ID)"
                     value={minerIdQuery}
                     onChange={onChange}
                   />
@@ -563,136 +564,131 @@ export default function Miners({ miners, href }) {
               </Stack>
             </Stack>
 
-            <Stack
-              bg="gray.100"
-              borderRadius="xl"
-              p="6"
-            >
-              <HStack
-                spacing="4"
-                alignItems="flex-end"
-                pb="2"
-              >
-                <Stack spacing="2" >
-                  <Heading size="sm" fontWeight="semibold" color="gray.700">
-                    Estimated Quote
-                  </Heading>
-                  <Text fontWeight="medium" color="gray.700">
-                    Storage Amount
-                  </Text>
-                  <InputGroup
-                    height="fit-content"
-                    alignContent="center"
-                    alignItems="center"
-                  >
-                    <Input
-                      bg="white"
-                      type="number"
-                      w="36"
-                      placeholder={"Storage amount in " + dStorageUnits.value}
-                      value={storageAmountText}
-                      onChange={(event) => {
-                        console.log("amt changed");
-                        let finalSA = event.target.value;
-                        setStorageAmountText(event.target.value);
-                        if (dStorageUnits.value == "MB") {
-                          finalSA *= 0.001 * 0.931323;
-                        } else if (dStorageUnits.value == "GB") {
-                          finalSA *= 0.931323;
-                        } else if (dStorageUnits.value == "TB") {
-                          finalSA *= 1000 * 0.931323;
-                        } else if (dStorageUnits.value == "PB") {
-                          finalSA *= 1000000 * 0.931323;
+            <GridItem colSpan="4" bg="white" px="8">
+              <Stack bg="gray.100" borderRadius="xl" p="6">
+                <HStack spacing="4" alignItems="flex-end" pb="2">
+                  <Stack spacing="2">
+                    <Heading size="md" fontWeight="semibold" color="gray.700">
+                      Estimated Quote
+                    </Heading>
+                    <Text fontWeight="medium" color="gray.700">
+                      Storage Amount
+                    </Text>
+                    <InputGroup
+                      height="fit-content"
+                      alignContent="center"
+                      alignItems="center"
+                    >
+                      <Input
+                        bg="white"
+                        type="number"
+                        w="36"
+                        placeholder={"Storage amount in " + dStorageUnits.value}
+                        value={storageAmountText}
+                        onChange={(event) => {
+                          console.log("amt changed");
+                          let finalSA = event.target.value;
+                          setStorageAmountText(event.target.value);
+                          if (dStorageUnits.value == "MB") {
+                            finalSA *= 0.001 * 0.931323;
+                          } else if (dStorageUnits.value == "GB") {
+                            finalSA *= 0.931323;
+                          } else if (dStorageUnits.value == "TB") {
+                            finalSA *= 1000 * 0.931323;
+                          } else if (dStorageUnits.value == "PB") {
+                            finalSA *= 1000000 * 0.931323;
+                          }
+                          console.log("finalSA", finalSA);
+
+                          setStorageAmount(finalSA);
+                          console.log(
+                            "storageAmount",
+                            storageAmount,
+                            event.target.value
+                          );
+                          console.log("dStorageUnits", dStorageUnits);
+                          console.log(
+                            "dStorageDurationUnits",
+                            dStorageDurationUnits
+                          );
+                        }}
+                        borderRight="none"
+                        borderRadius="0.4rem 0rem 0rem 0.4rem"
+                      />
+
+                      <Select
+                        options={dStorageUnitsArr}
+                        value={dStorageUnits}
+                        onChange={handleStorageUnitsChange}
+                        // defaultValue={dStorageUnitsArr[1]}
+                        isClearable={false}
+                        isSearchable={false}
+                        styles={customStyles}
+                      />
+                    </InputGroup>
+                  </Stack>
+                  <Stack spacing="1">
+                    <Text fontWeight="medium" color="gray.700">
+                      Storage Duration
+                    </Text>
+                    <InputGroup>
+                      <Input
+                        bg="white"
+                        type="number"
+                        w="36"
+                        placeholder={
+                          "Storage duration in " + dStorageDurationUnits.value
                         }
-                        console.log("finalSA", finalSA);
+                        value={storageDurationText}
+                        onChange={(event) => {
+                          console.log("dur changed");
+                          let finalSD = event.target.value;
+                          setStorageDurationText(event.target.value);
+                          if (dStorageDurationUnits.value == "Years") {
+                            finalSD *= 12;
+                          }
+                          console.log("finalSD", finalSD);
 
-                        setStorageAmount(finalSA);
-                        console.log(
-                          "storageAmount",
-                          storageAmount,
-                          event.target.value,
-                        );
-                        console.log("dStorageUnits", dStorageUnits);
-                        console.log(
-                          "dStorageDurationUnits",
-                          dStorageDurationUnits,
-                        );
-                      }}
-                      borderRight="none"
-                      borderRadius="0.4rem 0rem 0rem 0.4rem"
-                    />
-
-                    <Select
-                      options={dStorageUnitsArr}
-                      value={dStorageUnits}
-                      onChange={handleStorageUnitsChange}
-                      // defaultValue={dStorageUnitsArr[1]}
-                      isClearable={false}
-                      isSearchable={false}
-                      styles={customStyles}
-                    />
-                  </InputGroup>
-                </Stack>
-                <Stack spacing="1">
-                  <Text fontWeight="medium" color="gray.700">
-                    Storage Duration
-                  </Text>
-                  <InputGroup>
-                    <Input
-                      bg="white"
-                      type="number"
-                      w="36"
-                      placeholder={"Storage duration in " + dStorageDurationUnits.value}
-                      value={storageDurationText}
-                      onChange={(event) => {
-                        console.log("dur changed");
-                        let finalSD = event.target.value;
-                        setStorageDurationText(event.target.value);
-                        if (dStorageDurationUnits.value == "Years") {
-                          finalSD *= 12;
-                        }
-                        console.log("finalSD", finalSD);
-
-                        setStorageDuration(finalSD);
-                        console.log(
-                          "storageDuration",
-                          storageDuration,
-                          event.target.value,
-                        );
-                        console.log("dStorageUnits", dStorageUnits);
-                        console.log(
-                          "dStorageDurationUnits",
-                          dStorageDurationUnits,
-                        );
-                      }}
-                      borderRight="none"
-                      borderRadius="0.4rem 0rem 0rem 0.4rem"
-                    />
-                    <Select
-                      options={dStorageDurationUnitsArr}
-                      value={dStorageDurationUnits}
-                      onChange={handleStorageDurationUnitsChange}
-                      // defaultValue={dStorageDurationUnitsArr[0]}
-                      isClearable={false}
-                      isSearchable={false}
-                      styles={customStyles}
-                    />
-                  </InputGroup>
-                </Stack>
-              </HStack>
-              <Button
-                w="fit-content"
-                colorScheme="blue"
-                variant="solid"
-                onClick={(event) => {
-                  filterList(event);
-                  track();
-                }
-                }
-              >
-                Update Estimated Quote
-              </Button>
-            </Stack>
+                          setStorageDuration(finalSD);
+                          console.log(
+                            "storageDuration",
+                            storageDuration,
+                            event.target.value
+                          );
+                          console.log("dStorageUnits", dStorageUnits);
+                          console.log(
+                            "dStorageDurationUnits",
+                            dStorageDurationUnits
+                          );
+                        }}
+                        borderRight="none"
+                        borderRadius="0.4rem 0rem 0rem 0.4rem"
+                      />
+                      <Select
+                        options={dStorageDurationUnitsArr}
+                        value={dStorageDurationUnits}
+                        onChange={handleStorageDurationUnitsChange}
+                        // defaultValue={dStorageDurationUnitsArr[0]}
+                        isClearable={false}
+                        isSearchable={false}
+                        styles={customStyles}
+                      />
+                    </InputGroup>
+                  </Stack>
+                </HStack>
+                <Button
+                  w="fit-content"
+                  colorScheme="blue"
+                  variant="solid"
+                  onClick={(event) => {
+                    filterList(event);
+                    track();
+                  }}
+                >
+                  Update Estimated Quote
+                </Button>
+              </Stack>
+            </GridItem>
           </Flex>
           <HStack
           //py={8}
@@ -739,9 +735,9 @@ export default function Miners({ miners, href }) {
                 isMulti
               />
             </VStack> */}
-
           </HStack>
-
+        </GridItem>
+        <GridItem colSpan="12" px="8">
           <Stack spacing="8" mt="6">
             <Table
               columns={columns}

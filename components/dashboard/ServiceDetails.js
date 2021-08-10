@@ -8,7 +8,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import { GetFormattedStorageUnits, GetFormattedFILUnits, GetSimpleFILUnits, GetSimpleUSDUnits } from "../../util/util";
+import {
+  GetFormattedStorageUnits,
+  GetFormattedFILUnits,
+  GetSimpleFILUnits,
+  GetSimpleUSDUnits,
+} from "../../util/util";
 import { Countries } from "../../util/raw";
 
 let countries = Countries();
@@ -82,13 +87,16 @@ function ServiceDetails(props) {
             <Wrap>{dataTransferMechanism}</Wrap>
             <Wrap>{serviceType}</Wrap>
             <Wrap>
-              {props.region && (<Text color="blue.600" fontWeight="medium">
-                {countries[props.country]} ({props.region})
-              </Text>)}
-              {!props.region && (<Text color="blue.600" fontWeight="medium">
-                -
-              </Text>)}
-
+              {props.region && (
+                <Text color="blue.600" fontWeight="medium">
+                  {countries[props.country]} ({props.region})
+                </Text>
+              )}
+              {!props.region && (
+                <Text color="blue.600" fontWeight="medium">
+                  -
+                </Text>
+              )}
             </Wrap>
           </Stack>
         </HStack>
@@ -114,7 +122,8 @@ function ServiceDetails(props) {
                 {GetFormattedFILUnits(props.storageAskPrice).split(" ")[0]}
               </Text>
               <Text fontSize="sm" color="gray.500">
-                {GetFormattedFILUnits(props.storageAskPrice).split(" ")[1]}/GiB/epoch
+                {GetFormattedFILUnits(props.storageAskPrice).split(" ")[1]}
+                /GiB/epoch
               </Text>
             </HStack>
             <HStack>
@@ -122,7 +131,8 @@ function ServiceDetails(props) {
                 {props.verifiedAskPrice / 10 ** 18}
               </Text>*/}
               <Text fontSize="sm" color="gray.500">
-                Requirement dependent. Contact miner directly for estimates
+                Requirement dependent. Contact storage provider directly for
+                estimates
               </Text>
             </HStack>
             <HStack>
@@ -130,7 +140,8 @@ function ServiceDetails(props) {
                 {props.retrievalAskPrice}
               </Text>*/}
               <Text fontSize="sm" color="gray.500">
-                Requirement dependent. Contact miner directly for estimates
+                Requirement dependent. Contact storage provider directly for
+                estimates
               </Text>
             </HStack>
           </Stack>
