@@ -153,7 +153,7 @@ const Navbar = (props) => {
           <Button
             variant="solid"
             colorScheme="blue"
-            isloading={btnLoading}
+            isLoading={btnLoading}
             loadingText="loading"
             onClick={() => {
               router.push("/miners");
