@@ -61,7 +61,7 @@ const IndexPage = (stats) => {
               featureIcon="/images/secure.svg"
               imgAlt="secure"
               featureTitle="Secure"
-              featureDescription="Storage Providers storing data have to encrypt data which makes storing data on Filecoin more secure"
+              featureDescription="Cryptographic storage proofs verify data is being stored correctly and securely over time"
             />
             <Features
               featureIcon="/images/rewards.svg"

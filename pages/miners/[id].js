@@ -177,20 +177,26 @@ export default function Miner({ miner }) {
       <Box pt="24" mx="8">
         <Alert status="warning" borderRadius="lg">
           <AlertIcon />
-          <AlertTitle mr={2}>This is beta version of platform!</AlertTitle>
+          <AlertTitle mr={2}>
+            The platform is currently in beta, and may not include every miner’s
+            data.
+          </AlertTitle>
           <AlertDescription>
-            Not every Miner's data is in records currently, you can request your
-            data by filling up{" "}
+            You may request your data by filling up{" "}
             <Link
               href="https://forms.gle/DydhKdkjcDxN6agK8"
               onClick={
                 typeof window != "undefined" && Fathom.trackGoal("UCY2LX9P", 0)
               }
-              fontWeight="semibold"
-              textDecoration="underline"
+              color="orange.800"
+              fontWeight="bold"
               isExternal
+              _hover={{
+                color: "orange.600",
+                textDecoration: "underline",
+              }}
             >
-              this form.
+              this form
             </Link>
           </AlertDescription>
         </Alert>
