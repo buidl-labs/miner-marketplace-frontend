@@ -108,9 +108,9 @@ const Navbar = (props) => {
                 <Box>
                   <Button
                     size="lg"
-                    variant="outline"
-                    isloading={btnLoading}
-                    loadingText="loading"
+                    variant="solid"
+                    isLoading={btnLoading}
+                    loadingText="loading please wait"
                     onClick={() => {
                       router.push("/miners");
                       track();
@@ -154,7 +154,7 @@ const Navbar = (props) => {
             variant="solid"
             colorScheme="blue"
             isLoading={btnLoading}
-            loadingText="loading"
+            loadingText="loading please wait"
             onClick={() => {
               router.push("/miners");
               track();

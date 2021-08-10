@@ -124,7 +124,7 @@ export default function Miners({ miners, href }) {
     }
     let minerName = fd.personalInfo.name;
     if (fd.personalInfo.name == "") {
-      minerName = "Unclaimed Miner";
+      minerName = "Unclaimed profile";
     }
 
     let storageAskPrice = fd.pricing.storageAskPrice;
@@ -210,7 +210,7 @@ export default function Miners({ miners, href }) {
         return (
           <div>
             <Link href={`/miners/${m.id}`} key={m.id} isExternal>
-              <Text fontSize="lg" color="blue.700" whiteSpace="nowrap">
+              <Text fontSize="lg" color="blue.700">
                 {m.name}
               </Text>
               <Text
@@ -536,17 +536,14 @@ export default function Miners({ miners, href }) {
       </Head>
       <DashboardNavbar isMinerProfile={false} />
       <Grid
-        h="200px"
-        templateRows="repeat(4, 1fr)"
-        templateColumns="repeat(12, 1fr)"
+        templateColumns={{
+          lg: "repeat(12, 1fr)",
+          md: "repeat(6,1fr)",
+        }}
       >
-        {/* <GridItem rowSpan="8" colSpan="2">
-          <DashboardMenu />
-        </GridItem> */}
-
         <GridItem colSpan="12" pt="28" bg="white" px="8">
           <Flex justifyContent="space-between">
-            <Stack spacing="6" w="36rem">
+            <Stack spacing="8" w="36rem">
               <Heading color="gray.700" size="lg">
                 Search Storage Providers
               </Heading>
@@ -567,129 +564,131 @@ export default function Miners({ miners, href }) {
               </Stack>
             </Stack>
 
-            <Stack bg="gray.100" borderRadius="xl" p="6">
-              <HStack spacing="4" alignItems="flex-end" pb="2">
-                <Stack spacing="2">
-                  <Heading size="sm" fontWeight="semibold" color="gray.700">
-                    Estimated Quote
-                  </Heading>
-                  <Text fontWeight="medium" color="gray.700">
-                    Storage Amount
-                  </Text>
-                  <InputGroup
-                    height="fit-content"
-                    alignContent="center"
-                    alignItems="center"
-                  >
-                    <Input
-                      bg="white"
-                      type="number"
-                      w="36"
-                      placeholder={"Storage amount in " + dStorageUnits.value}
-                      value={storageAmountText}
-                      onChange={(event) => {
-                        console.log("amt changed");
-                        let finalSA = event.target.value;
-                        setStorageAmountText(event.target.value);
-                        if (dStorageUnits.value == "MB") {
-                          finalSA *= 0.001 * 0.931323;
-                        } else if (dStorageUnits.value == "GB") {
-                          finalSA *= 0.931323;
-                        } else if (dStorageUnits.value == "TB") {
-                          finalSA *= 1000 * 0.931323;
-                        } else if (dStorageUnits.value == "PB") {
-                          finalSA *= 1000000 * 0.931323;
+            <GridItem colSpan="4" bg="white" px="8">
+              <Stack bg="gray.100" borderRadius="xl" p="6">
+                <HStack spacing="4" alignItems="flex-end" pb="2">
+                  <Stack spacing="2">
+                    <Heading size="md" fontWeight="semibold" color="gray.700">
+                      Estimated Quote
+                    </Heading>
+                    <Text fontWeight="medium" color="gray.700">
+                      Storage Amount
+                    </Text>
+                    <InputGroup
+                      height="fit-content"
+                      alignContent="center"
+                      alignItems="center"
+                    >
+                      <Input
+                        bg="white"
+                        type="number"
+                        w="36"
+                        placeholder={"Storage amount in " + dStorageUnits.value}
+                        value={storageAmountText}
+                        onChange={(event) => {
+                          console.log("amt changed");
+                          let finalSA = event.target.value;
+                          setStorageAmountText(event.target.value);
+                          if (dStorageUnits.value == "MB") {
+                            finalSA *= 0.001 * 0.931323;
+                          } else if (dStorageUnits.value == "GB") {
+                            finalSA *= 0.931323;
+                          } else if (dStorageUnits.value == "TB") {
+                            finalSA *= 1000 * 0.931323;
+                          } else if (dStorageUnits.value == "PB") {
+                            finalSA *= 1000000 * 0.931323;
+                          }
+                          console.log("finalSA", finalSA);
+
+                          setStorageAmount(finalSA);
+                          console.log(
+                            "storageAmount",
+                            storageAmount,
+                            event.target.value
+                          );
+                          console.log("dStorageUnits", dStorageUnits);
+                          console.log(
+                            "dStorageDurationUnits",
+                            dStorageDurationUnits
+                          );
+                        }}
+                        borderRight="none"
+                        borderRadius="0.4rem 0rem 0rem 0.4rem"
+                      />
+
+                      <Select
+                        options={dStorageUnitsArr}
+                        value={dStorageUnits}
+                        onChange={handleStorageUnitsChange}
+                        // defaultValue={dStorageUnitsArr[1]}
+                        isClearable={false}
+                        isSearchable={false}
+                        styles={customStyles}
+                      />
+                    </InputGroup>
+                  </Stack>
+                  <Stack spacing="1">
+                    <Text fontWeight="medium" color="gray.700">
+                      Storage Duration
+                    </Text>
+                    <InputGroup>
+                      <Input
+                        bg="white"
+                        type="number"
+                        w="36"
+                        placeholder={
+                          "Storage duration in " + dStorageDurationUnits.value
                         }
-                        console.log("finalSA", finalSA);
+                        value={storageDurationText}
+                        onChange={(event) => {
+                          console.log("dur changed");
+                          let finalSD = event.target.value;
+                          setStorageDurationText(event.target.value);
+                          if (dStorageDurationUnits.value == "Years") {
+                            finalSD *= 12;
+                          }
+                          console.log("finalSD", finalSD);
 
-                        setStorageAmount(finalSA);
-                        console.log(
-                          "storageAmount",
-                          storageAmount,
-                          event.target.value
-                        );
-                        console.log("dStorageUnits", dStorageUnits);
-                        console.log(
-                          "dStorageDurationUnits",
-                          dStorageDurationUnits
-                        );
-                      }}
-                      borderRight="none"
-                      borderRadius="0.4rem 0rem 0rem 0.4rem"
-                    />
-
-                    <Select
-                      options={dStorageUnitsArr}
-                      value={dStorageUnits}
-                      onChange={handleStorageUnitsChange}
-                      // defaultValue={dStorageUnitsArr[1]}
-                      isClearable={false}
-                      isSearchable={false}
-                      styles={customStyles}
-                    />
-                  </InputGroup>
-                </Stack>
-                <Stack spacing="1">
-                  <Text fontWeight="medium" color="gray.700">
-                    Storage Duration
-                  </Text>
-                  <InputGroup>
-                    <Input
-                      bg="white"
-                      type="number"
-                      w="36"
-                      placeholder={
-                        "Storage duration in " + dStorageDurationUnits.value
-                      }
-                      value={storageDurationText}
-                      onChange={(event) => {
-                        console.log("dur changed");
-                        let finalSD = event.target.value;
-                        setStorageDurationText(event.target.value);
-                        if (dStorageDurationUnits.value == "Years") {
-                          finalSD *= 12;
-                        }
-                        console.log("finalSD", finalSD);
-
-                        setStorageDuration(finalSD);
-                        console.log(
-                          "storageDuration",
-                          storageDuration,
-                          event.target.value
-                        );
-                        console.log("dStorageUnits", dStorageUnits);
-                        console.log(
-                          "dStorageDurationUnits",
-                          dStorageDurationUnits
-                        );
-                      }}
-                      borderRight="none"
-                      borderRadius="0.4rem 0rem 0rem 0.4rem"
-                    />
-                    <Select
-                      options={dStorageDurationUnitsArr}
-                      value={dStorageDurationUnits}
-                      onChange={handleStorageDurationUnitsChange}
-                      // defaultValue={dStorageDurationUnitsArr[0]}
-                      isClearable={false}
-                      isSearchable={false}
-                      styles={customStyles}
-                    />
-                  </InputGroup>
-                </Stack>
-              </HStack>
-              <Button
-                w="fit-content"
-                colorScheme="blue"
-                variant="solid"
-                onClick={(event) => {
-                  filterList(event);
-                  track();
-                }}
-              >
-                Update Estimated Quote
-              </Button>
-            </Stack>
+                          setStorageDuration(finalSD);
+                          console.log(
+                            "storageDuration",
+                            storageDuration,
+                            event.target.value
+                          );
+                          console.log("dStorageUnits", dStorageUnits);
+                          console.log(
+                            "dStorageDurationUnits",
+                            dStorageDurationUnits
+                          );
+                        }}
+                        borderRight="none"
+                        borderRadius="0.4rem 0rem 0rem 0.4rem"
+                      />
+                      <Select
+                        options={dStorageDurationUnitsArr}
+                        value={dStorageDurationUnits}
+                        onChange={handleStorageDurationUnitsChange}
+                        // defaultValue={dStorageDurationUnitsArr[0]}
+                        isClearable={false}
+                        isSearchable={false}
+                        styles={customStyles}
+                      />
+                    </InputGroup>
+                  </Stack>
+                </HStack>
+                <Button
+                  w="fit-content"
+                  colorScheme="blue"
+                  variant="solid"
+                  onClick={(event) => {
+                    filterList(event);
+                    track();
+                  }}
+                >
+                  Update Estimated Quote
+                </Button>
+              </Stack>
+            </GridItem>
           </Flex>
           <HStack
           //py={8}
@@ -737,7 +736,8 @@ export default function Miners({ miners, href }) {
               />
             </VStack> */}
           </HStack>
-
+        </GridItem>
+        <GridItem colSpan="12" px="8">
           <Stack spacing="8" mt="6">
             <Table
               columns={columns}
