@@ -744,7 +744,7 @@ export default function Miners({ miners, href }) {
               dataSource={filteredMiners}
               // onChange={handleTableChange}
               // pagination={pagination}
-              pagination={{ pageSize: 50 }}
+              pagination={{defaultPageSize:50}}
               scroll={{ y: 480 }}
             />
           </Stack>
@@ -764,7 +764,7 @@ export async function getServerSideProps() {
   const { data: fmmData } = await client.query({
     query: gql`
       query {
-        miners(first: 3000) {
+        miners(first: 10000) {
           id
           claimed
           personalInfo {
