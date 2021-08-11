@@ -50,7 +50,7 @@ const about = () => {
           </Text>
         </Stack>
         <Stack alignItems="center" textAlign="center">
-          <Heading size="xl" color="gray.900" textAlign="center" py="8">
+          <Heading size="xl" color="gray.900" textAlign="center" pt="8" pb="12">
             Core Team
           </Heading>
           {/* Team member Card */}
@@ -161,13 +161,26 @@ const about = () => {
           </Grid>
         </Stack>
 
-        <Stack pt="44" textAlign="center" alignItems="center" spacing="4">
+        <Stack pt="32" textAlign="center" alignItems="center" spacing="4">
           <Heading>We are backed by the Best</Heading>
-          <Text pb="4">
-            DataStation is funded by Filecoin.org under Wave 5 of the Open
-            Grants Program.
+          <Text pb="4" maxW="36rem">
+            DataStation is funded by Filecoin.org under Wave 5 of the Filecoin
+            Dev Grants Program.{" "}
+            <Link
+              href="https://filecoin.io/blog/posts/filecoin-dev-grants-waves-4-5-and-gitcoin-grants/"
+              isExternal
+              color="blue.600"
+            >
+              See official announcement
+            </Link>
           </Text>
-          <Image src="/images/Filecoin-logo.svg" w="12rem" />
+          <Link href="https://fil.org" isExternal alt="Filecoin org website">
+            <Image
+              src="/images/Filecoin-logo.svg"
+              w="12rem"
+              alt="Filecoin Logo"
+            />
+          </Link>
         </Stack>
       </Container>
       <Footer />
