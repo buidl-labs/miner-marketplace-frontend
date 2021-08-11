@@ -20,9 +20,7 @@ const Error = () => {
   return (
     <>
       <Head>
-        <title>
-          Page not found
-        </title>
+        <title>Page not found</title>
       </Head>
       <Navbar />
       <Container
@@ -51,7 +49,7 @@ const Error = () => {
               <Button
                 colorScheme="blue"
                 variant="outline"
-                onClick={() => router.push("/minerLanding")}
+                onClick={() => router.push("/")}
               >
                 Go to Homepage
               </Button>

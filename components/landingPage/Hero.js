@@ -22,10 +22,9 @@ import * as Fathom from "fathom-client";
 import { trackGoal } from "../../util/analytics";
 
 const Hero = (props) => {
-
   function track() {
     if (typeof window != "undefined") {
-      Fathom.trackGoal('HNOIHGME', 0)
+      Fathom.trackGoal("RLIXEEKF", 0);
     }
   }
   return (
@@ -47,7 +46,8 @@ const Hero = (props) => {
               onClick={track()}
             >
               <Link href={props.ctaLink} onClick={props.ctaRoute} isExternal>
-                {props.ctaText} <ArrowForwardIcon h={6} w={6} marginLeft={2} /></Link>
+                {props.ctaText} <ArrowForwardIcon h={6} w={6} marginLeft={2} />
+              </Link>
             </Button>
           </Box>
         </Stack>
@@ -58,7 +58,7 @@ const Hero = (props) => {
           display={{ base: "none", md: "block" }}
         />
       </HStack>
-    </Stack >
+    </Stack>
   );
 };
 

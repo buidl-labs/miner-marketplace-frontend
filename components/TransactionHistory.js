@@ -102,6 +102,9 @@ export default function TransactionHistory(props) {
               id="transactionView"
               onChange={handleTxnToggle}
               isChecked={toggle}
+              onClick={() => {
+                typeof window != "undefined" && Fathom.trackGoal("ZV5EW6GM", 0);
+              }}
             />
             <Text fontSize="lg" fontWeight="medium" color="gray.600">
               Advanced view

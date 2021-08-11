@@ -524,14 +524,14 @@ export default function Miners({ miners, href }) {
 
   function track() {
     if (typeof window != "undefined") {
-      Fathom.trackGoal("GOXF68VK", 0);
+      Fathom.trackGoal("HACMMY00", 0);
     }
   }
 
   return (
     <>
       <Head>
-        <title>Dashboard - DataStation</title>
+        <title>Storage Provider Listings - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <DashboardNavbar isMinerProfile={false} />

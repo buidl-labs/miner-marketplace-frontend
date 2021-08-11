@@ -3,8 +3,8 @@ import ReactDom from "react-dom";
 import { ChakraProvider, extendTheme, ColorModeScript } from "@chakra-ui/react";
 import "@fontsource/inter/variable-full.css";
 import "antd/dist/antd.css";
-import { useRouter } from "next/router"
-import * as Fathom from "fathom-client"
+import { useRouter } from "next/router";
+import * as Fathom from "fathom-client";
 
 const config = {
   initialColorMode: "light",
@@ -25,18 +25,18 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
-    Fathom.load('HNOIHGME', {
-      includedDomains: ['filecoin-miner-marketplace.onrender.com'],
+    Fathom.load("RLIXEEKF", {
+      includedDomains: ["datastation.app"],
     });
 
     function onRouteChangeComplete() {
       Fathom.trackPageview();
     }
-    router.events.on('routeChangeComplete', onRouteChangeComplete);
+    router.events.on("routeChangeComplete", onRouteChangeComplete);
     return () => {
-      router.events.off('routeChangeComplete', onRouteChangeComplete);
-    }
-  }, [])
+      router.events.off("routeChangeComplete", onRouteChangeComplete);
+    };
+  }, []);
 
   return (
     <ChakraProvider theme={theme}>

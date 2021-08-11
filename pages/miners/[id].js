@@ -186,7 +186,7 @@ export default function Miner({ miner }) {
             <Link
               href="https://forms.gle/DydhKdkjcDxN6agK8"
               onClick={
-                typeof window != "undefined" && Fathom.trackGoal("UCY2LX9P", 0)
+                typeof window != "undefined" && Fathom.trackGoal("YIQ23HLD", 0)
               }
               color="orange.800"
               fontWeight="bold"
@@ -253,6 +253,9 @@ export default function Miner({ miner }) {
               {/*<Tab>Profile Settings</Tab>*/}
               <Tab
                 onClick={() => {
+                  typeof window != "undefined" &&
+                    Fathom.trackGoal("AAPJSSFC", 0);
+
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
@@ -302,6 +305,9 @@ export default function Miner({ miner }) {
               </Tab>
               <Tab
                 onClick={() => {
+                  typeof window != "undefined" &&
+                    Fathom.trackGoal("HQOJJAY9", 0);
+
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
@@ -357,6 +363,9 @@ export default function Miner({ miner }) {
               </Tab>
               <Tab
                 onClick={() => {
+                  typeof window != "undefined" &&
+                    Fathom.trackGoal("XRMRVWRE", 0);
+
                   console.log(
                     "osccmcmcm",
                     process.env.BACKEND_URL,
@@ -418,7 +427,14 @@ export default function Miner({ miner }) {
               >
                 Predicted Earnings
               </Tab>
-              <Tab>Transaction History</Tab>
+              <Tab
+                onClick={() => {
+                  typeof window != "undefined" &&
+                    Fathom.trackGoal("4N9IWHLW", 0);
+                }}
+              >
+                Transaction History
+              </Tab>
             </TabList>
 
             <TabPanels>
@@ -490,8 +506,14 @@ export default function Miner({ miner }) {
                 ) : (
                   <>
                     <Center>
-                      {/**<Spinner size="xl" color="red.500" /> */}
-                      <Spinner marginTop="16" color="blue.900" size="lg" />
+                      <Spinner
+                        marginTop="16"
+                        color="blue.600"
+                        speed="0.5s"
+                        emptyColor="gray.200"
+                        size="xl"
+                        thickness="4px"
+                      />
                     </Center>
                   </>
                 )}
@@ -537,8 +559,14 @@ export default function Miner({ miner }) {
                 ) : (
                   <>
                     <Center>
-                      {/**<Spinner size="xl" color="red.500" /> */}
-                      <Spinner marginTop="16" color="blue.900" size="lg" />
+                      <Spinner
+                        marginTop="16"
+                        color="blue.600"
+                        speed="0.5s"
+                        emptyColor="gray.200"
+                        size="xl"
+                        thickness="4px"
+                      />
                     </Center>
                   </>
                 )}
@@ -591,8 +619,14 @@ export default function Miner({ miner }) {
                 ) : (
                   <>
                     <Center>
-                      {/**<Spinner size="xl" color="red.500" /> */}
-                      <Spinner marginTop="16" color="blue.900" size="lg" />
+                      <Spinner
+                        marginTop="16"
+                        color="blue.600"
+                        speed="0.5s"
+                        emptyColor="gray.200"
+                        size="xl"
+                        thickness="4px"
+                      />
                     </Center>
                   </>
                 )}
@@ -609,8 +643,14 @@ export default function Miner({ miner }) {
                 ) : (
                   <>
                     <Center>
-                      {/**<Spinner size="xl" color="red.500" /> */}
-                      <Spinner marginTop="16" color="blue.900" size="lg" />
+                      <Spinner
+                        marginTop="16"
+                        color="blue.600"
+                        speed="0.5s"
+                        emptyColor="gray.200"
+                        size="xl"
+                        thickness="4px"
+                      />
                     </Center>
                   </>
                 )}
