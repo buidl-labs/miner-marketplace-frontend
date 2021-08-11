@@ -55,18 +55,20 @@ const Footer = () => {
           alignItems={{ base: "left", md: "center" }}
           textAlign="right"
         >
+          <Link onClick={() => router.push("/about")}>About Us</Link>
+
           <Link onClick={() => router.push("/privacy")}>Privacy</Link>
 
           <Link onClick={() => router.push("/terms")}>Terms</Link>
 
           <Link onClick={() => router.push("/disclaimer")}>Disclaimer</Link>
 
-          {/* <Link href="#" isExternal>
-            Contact
-          </Link> */}
-          <Link href="https://github.com/buidl-labs/miner-marketplace-frontend/issues/new/choose" isExternal>
+          {/* <Link
+            href="https://github.com/buidl-labs/miner-marketplace-frontend/issues/new/choose"
+            isExternal
+          >
             Report Bug
-          </Link>
+          </Link> */}
         </HStack>
       </SimpleGrid>
     </Flex>

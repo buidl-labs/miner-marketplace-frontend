@@ -213,11 +213,13 @@ const DashboardNavbar = (props) => {
       );
     return "Connect Wallet";
   }
+
   function track() {
     if (typeof window != "undefined") {
-      Fathom.trackGoal("OZHGANFZ", 0);
+      Fathom.trackGoal("XVQ91EFR", 0);
     }
   }
+
   return (
     <>
       <Flex

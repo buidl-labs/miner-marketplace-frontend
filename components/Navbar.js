@@ -36,7 +36,7 @@ const Navbar = (props) => {
 
   function track() {
     if (typeof window != "undefined") {
-      Fathom.trackGoal("R1EOW6X3", 0);
+      Fathom.trackGoal("5O1PTUCW", 0);
     }
   }
 

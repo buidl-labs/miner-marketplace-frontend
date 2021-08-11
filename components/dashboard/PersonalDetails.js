@@ -16,7 +16,6 @@ import {
 import React from "react";
 
 import { CopyIcon, Icon, IconProps, QuestionIcon } from "@chakra-ui/icons";
-import {} from "react-icons";
 import { FaSlack, FaTwitter, FaGlobe } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { FiExternalLink } from "react-icons/fi";
