@@ -80,7 +80,7 @@ function AdvanceView(props) {
       query {
         miner(id: "${props.minerID}") {
           id
-          transactions (orderBy: { param: timestamp, sort: DESC }) {
+          transactions (first: 1000, orderBy: { param: timestamp, sort: DESC }) {
             id
             value
             methodName
@@ -356,7 +356,7 @@ function AdvanceView(props) {
         <Table
           columns={columns}
           dataSource={dataSource}
-          pagination={{ pageSize: 50 }}
+          pagination={{defaultPageSize:50}}
           scroll={{ y: 480 }}
         />
       </Box>
