@@ -9,16 +9,16 @@ import React from "react";
 
 const Faq = (props) => {
   return (
-    <AccordionItem p="2">
+    <AccordionItem>
       <h2>
-        <AccordionButton>
-          <Box flex="1" textAlign="left">
+        <AccordionButton py="4">
+          <Box flex="1" textAlign="left" mx="1">
             {props.question}
           </Box>
           <AccordionIcon />
         </AccordionButton>
       </h2>
-      <AccordionPanel pb={4}>{props.answer}</AccordionPanel>
+      <AccordionPanel mb={2}>{props.answer}</AccordionPanel>
     </AccordionItem>
   );
 };

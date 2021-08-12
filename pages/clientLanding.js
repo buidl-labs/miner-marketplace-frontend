@@ -10,6 +10,9 @@ import {
   Stack,
   SimpleGrid,
   WrapItem,
+  UnorderedList,
+  OrderedList,
+  ListItem,
 } from "@chakra-ui/react";
 import React from "react";
 import Navbar from "../components/Navbar";
@@ -113,7 +116,7 @@ const clientLanding = (stats) => {
           <Stack textAlign="center" spacing="16" my={{ base: 4, md: 16 }}>
             <WrapItem
               textAlign="left"
-              borderRadius="xl"
+              borderRadius="2xl"
               px={{ base: 8, md: 24 }}
               py={{ base: 8, md: 14 }}
               bg="gray.100"
@@ -124,19 +127,37 @@ const clientLanding = (stats) => {
                 </Heading>
                 <Text
                   size="lg"
-                  maxW={{ base: "auto", md: "36rem" }}
+                  maxW={{ base: "auto", md: "38rem" }}
                   color="gray.700"
                 >
                   Filecoin provides the foundation for critically important
                   public data, such as open access scientific data, creative
                   commons media, historical archives, preservation, and more.
                 </Text>
+                <Text fontWeight="medium" pt="2">
+                  To Start Storing data with Filecoin Network:
+                </Text>
+                <Text>
+                  <OrderedList pt="-2" mt="-2">
+                    <ListItem>
+                      Sort & filter Storage Providers from the table
+                    </ListItem>
+                    <ListItem>
+                      Use Estimated Quote Calculator to choose Storage Providers
+                      according to your budget.
+                    </ListItem>
+                    <ListItem>
+                      Open profile of Storage Provider and contact them through
+                      their social links
+                    </ListItem>
+                  </OrderedList>
+                </Text>
                 <Box>
                   <Button
                     colorScheme="blue"
                     onClick={() => router.push("/miners")}
                   >
-                    Start Storing Data
+                    Search Storage Providers
                   </Button>
                 </Box>
               </Stack>
