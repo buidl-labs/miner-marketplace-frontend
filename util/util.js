@@ -64,7 +64,7 @@ export function GetSimpleFILUnits(amountInAttoFIL) {
     return `0 FIL`;
   } else if (Math.abs(amountInFIL) < 1000) {
     if (sign == "-") return sign + `${Math.abs(amountInFIL).toFixed(2)} FIL`;
-    return `${amountInFIL.toFixed(2)} FIL`;
+    return `${(amountInFIL / 1).toFixed(2)} FIL`;
   } else if (Math.abs(amountInFIL) < 1000000) {
     if (sign == "-")
       return sign + `${Math.abs(amountInFIL / 1000).toFixed(2)} FIL`;
@@ -85,7 +85,7 @@ export function GetSimpleUSDUnits(amountInUSD) {
   if (amountInUSD < 0.01) {
     return `$0`;
   } else if (amountInUSD < 1000) {
-    return `$${amountInUSD.toFixed(2)}`;
+    return `$${(amountInUSD / 1).toFixed(2)}`;
   } else if (amountInUSD < 1000000) {
     return `$${(amountInUSD / 1000).toFixed(2)}K`;
   } else if (amountInUSD < 1000000000) {

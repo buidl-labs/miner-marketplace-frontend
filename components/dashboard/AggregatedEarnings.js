@@ -14,6 +14,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
+import * as Fathom from "fathom-client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { GetFormattedFILUnits, GetSimpleFILUnits } from "../../util/util";

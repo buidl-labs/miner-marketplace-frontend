@@ -145,7 +145,7 @@ export default function Miner({ miner }) {
   return (
     <>
       <Head>
-        <title>Storage Provider {miner.id} - Dashboard</title>
+        <title>Storage Provider {miner.id} - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <DashboardNavbar
@@ -173,16 +173,17 @@ export default function Miner({ miner }) {
         online={miner.service.dataTransferMechanism.online}
         offline={miner.service.dataTransferMechanism.offline}
         transparencyScore={miner.transparencyScore}
+        onboarded={miner.onboarded}
       />
       <Box pt="24" mx="8">
         <Alert status="warning" borderRadius="lg">
           <AlertIcon />
           <AlertTitle mr={2}>
-            The platform is currently in beta, and may not include every miner’s
-            data.
+            The platform is currently in beta, and may not include every storage
+            provider’s data.
           </AlertTitle>
           <AlertDescription>
-            You may request your data by filling up{" "}
+            You can request your data by filling up{" "}
             <Link
               href="https://forms.gle/DydhKdkjcDxN6agK8"
               onClick={
@@ -210,7 +211,7 @@ export default function Miner({ miner }) {
         onClick={() => router.push("/miners")}
       >
         <ArrowBackIcon w={5} h={5} color="gray.600" mr="1" color="blue.500" />
-        Back to Storage Provider Listings
+        Back to Storage Provider Listing
       </Button>
       <SimpleGrid
         maxH="44rem"
@@ -260,7 +261,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id
+                    miner.id,
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -312,7 +313,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id
+                    miner.id,
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -370,7 +371,7 @@ export default function Miner({ miner }) {
                     "osccmcmcm",
                     process.env.BACKEND_URL,
                     "mid",
-                    miner.id
+                    miner.id,
                   );
                   const BACKEND_URL =
                     "https://miner-marketplace-backend-2.onrender.com/query";
@@ -519,8 +520,42 @@ export default function Miner({ miner }) {
                 )}
               </TabPanel>
               <TabPanel>
+                {!miner.onboarded && (
+                  <Alert
+                    marginLeft="16px"
+                    status="warning"
+                    colorScheme="gray"
+                    borderRadius="lg"
+                    maxW={{ md: "60vw", base: "full" }}
+                  >
+                    <AlertIcon />
+                    <AlertTitle mr={2}>
+                      Aggregated Earnings might be wrong due to incomplete data!
+                    </AlertTitle>
+                    <AlertDescription>
+                      You can request your data by filling up{" "}
+                      <Link
+                        href="https://forms.gle/DydhKdkjcDxN6agK8"
+                        onClick={
+                          typeof window != "undefined" &&
+                          Fathom.trackGoal("YIQ23HLD", 0)
+                        }
+                        color="blue.600"
+                        fontWeight="bold"
+                        isExternal
+                        _hover={{
+                          color: "blue.600",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        this form
+                      </Link>
+                    </AlertDescription>
+                  </Alert>
+                )}
                 {aggregateEarningsIsLoaded ? (
                   <AggregatedEarnings
+                    onboarded={miner.onboarded}
                     qap={aggregateEarnings.miner.qualityAdjustedPower}
                     totalIncome={
                       aggregateEarnings.miner.aggregateEarnings.income.total
@@ -572,8 +607,42 @@ export default function Miner({ miner }) {
                 )}
               </TabPanel>
               <TabPanel>
+                {!miner.onboarded && (
+                  <Alert
+                    marginLeft="16px"
+                    status="warning"
+                    colorScheme="gray"
+                    borderRadius="lg"
+                    maxW={{ md: "60vw", base: "full" }}
+                  >
+                    <AlertIcon />
+                    <AlertTitle mr={2}>
+                      Predicted Earnings might be wrong due to incomplete data!
+                    </AlertTitle>
+                    <AlertDescription>
+                      You can request your data by filling up{" "}
+                      <Link
+                        href="https://forms.gle/DydhKdkjcDxN6agK8"
+                        onClick={
+                          typeof window != "undefined" &&
+                          Fathom.trackGoal("YIQ23HLD", 0)
+                        }
+                        color="blue.600"
+                        fontWeight="bold"
+                        isExternal
+                        _hover={{
+                          color: "blue.600",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        this form
+                      </Link>
+                    </AlertDescription>
+                  </Alert>
+                )}
                 {predictedEarningsIsLoaded ? (
                   <PredictedEarnings
+                    onboarded={miner.onboarded}
                     totalIncome={
                       estimatedEarnings.miner.estimatedEarnings.income.total
                     }
@@ -632,8 +701,43 @@ export default function Miner({ miner }) {
                 )}
               </TabPanel>
               <TabPanel>
+                {!miner.onboarded && (
+                  <Alert
+                    marginLeft="16px"
+                    // marginBottom="8px"
+                    status="warning"
+                    colorScheme="gray"
+                    borderRadius="lg"
+                    maxW={{ md: "60vw", base: "full" }}
+                  >
+                    <AlertIcon />
+                    <AlertTitle mr={2}>
+                      Transaction history might be incomplete!
+                    </AlertTitle>
+                    <AlertDescription>
+                      You can request your data by filling up{" "}
+                      <Link
+                        href="https://forms.gle/DydhKdkjcDxN6agK8"
+                        onClick={
+                          typeof window != "undefined" &&
+                          Fathom.trackGoal("YIQ23HLD", 0)
+                        }
+                        color="blue.600"
+                        fontWeight="bold"
+                        isExternal
+                        _hover={{
+                          color: "blue.600",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        this form
+                      </Link>
+                    </AlertDescription>
+                  </Alert>
+                )}
                 {transactionHistoryIsLoaded ? (
                   <TransactionHistory
+                    onboarded={miner.onboarded}
                     minerID={miner.id}
                     transactions={transactions}
                     finalFromArr={finalFromArr}
@@ -677,6 +781,7 @@ export async function getServerSideProps({ params }) {
         miner(id: "${params.id}") {
           id
           claimed
+          onboarded
           location {
             region
             country

@@ -531,7 +531,7 @@ export default function Miners({ miners, href }) {
   return (
     <>
       <Head>
-        <title>Storage Provider Listings - DataStation</title>
+        <title>Storage Provider Listing - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <DashboardNavbar isMinerProfile={false} />
