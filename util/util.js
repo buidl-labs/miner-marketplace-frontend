@@ -1,7 +1,7 @@
 export function GetFormattedStorageUnits(amountInBytes) {
   let amountInBytesInt = parseInt(amountInBytes);
   if (amountInBytesInt < 10 ** 3) {
-    return `${amountInBytesInt.toFixed(2)} B`;
+    return `${(amountInBytesInt / 10 ** 0).toFixed(2)} B`;
   } else if (amountInBytesInt < 10 ** 6) {
     return `${(amountInBytesInt / 10 ** 3).toFixed(2)} KB`;
   } else if (amountInBytesInt < 10 ** 9) {
@@ -26,11 +26,12 @@ export function GetFormattedFILUnits(amountInAttoFIL) {
   // 1attoFIL=10^-18FIL
   //console.log("amountInAttoFIL", amountInAttoFIL);
   let amountInAttoFILInt = amountInAttoFIL; // parseInt(amountInAttoFIL);
+  console.log("amountInAttoFILInt", amountInAttoFILInt);
   if (amountInAttoFILInt == 0) {
     return `0 FIL`;
   }
   if (amountInAttoFILInt < 10 ** 3) {
-    return `${amountInAttoFILInt.toFixed(2)} attoFIL`; // <=999attoFIL
+    return `${(amountInAttoFILInt / 10 ** 0).toFixed(2)} attoFIL`; // <=999attoFIL
   } else if (amountInAttoFILInt < 10 ** 6) {
     return `${(amountInAttoFILInt / 10 ** 3).toFixed(2)} femtoFIL`; // 1femtoFIL to 999femtoFIL
   } else if (amountInAttoFILInt < 10 ** 9) {
@@ -63,9 +64,10 @@ export function GetSimpleFILUnits(amountInAttoFIL) {
     return `0 FIL`;
   } else if (Math.abs(amountInFIL) < 1000) {
     if (sign == "-") return sign + `${Math.abs(amountInFIL).toFixed(2)} FIL`;
-    return `${amountInFIL.toFixed(2)} FIL`;
+    return `${(amountInFIL / 1).toFixed(2)} FIL`;
   } else if (Math.abs(amountInFIL) < 1000000) {
-    if (sign == "-") return sign + `${Math.abs(amountInFIL / 1000).toFixed(2)} FIL`;
+    if (sign == "-")
+      return sign + `${Math.abs(amountInFIL / 1000).toFixed(2)} FIL`;
     return `${(amountInFIL / 1000).toFixed(2)}K FIL`;
   } else if (Math.abs(amountInFIL) < 1000000000) {
     if (sign == "-")
@@ -83,7 +85,7 @@ export function GetSimpleUSDUnits(amountInUSD) {
   if (amountInUSD < 0.01) {
     return `$0`;
   } else if (amountInUSD < 1000) {
-    return `$${amountInUSD.toFixed(2)}`;
+    return `$${(amountInUSD / 1).toFixed(2)}`;
   } else if (amountInUSD < 1000000) {
     return `$${(amountInUSD / 1000).toFixed(2)}K`;
   } else if (amountInUSD < 1000000000) {
