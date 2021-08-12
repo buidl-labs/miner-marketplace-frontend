@@ -42,6 +42,7 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
 } from "@chakra-ui/icons";
+import * as Fathom from "fathom-client";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { createHttpLink } from "apollo-link-http";
 import { TableProps } from "antd/lib/table";
@@ -113,7 +114,7 @@ export default function TransactionHistory(props) {
         </HStack>
         {toggle && (
           <>
-            <Alert
+            {/*<Alert
               status="warning"
               borderRadius="lg"
               maxW={{ md: "60vw", base: "full" }}
@@ -123,11 +124,15 @@ export default function TransactionHistory(props) {
               <AlertDescription>
                 Performance may not be optimal
               </AlertDescription>
-            </Alert>
+            </Alert>*/}
             <AdvanceView minerID={props.minerID} />
           </>
         )}
-        {!toggle && <BasicView minerID={props.minerID} />}
+        {!toggle && (
+          <>
+            <BasicView minerID={props.minerID} />
+          </>
+        )}
       </Stack>
     </>
   );
