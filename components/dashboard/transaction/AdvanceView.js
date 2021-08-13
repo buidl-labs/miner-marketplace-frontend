@@ -68,6 +68,7 @@ function AdvanceView(props) {
   const [finalFromArr, setFinalFromArr] = useState([]);
   const [finalToArr, setFinalToArr] = useState([]);
 
+  useEffect(() => {
   const BACKEND_URL = "https://miner-marketplace-backend-2.onrender.com/query";
   const client = new ApolloClient({
     uri: BACKEND_URL,
@@ -122,7 +123,8 @@ function AdvanceView(props) {
       setFinalFromArr(fromArr);
       setFinalToArr(toArr);
     });
-
+    return () => {};
+  }, []);
 
   const dataSource = transactions.map((txn) => {
     let txntype = "message";
