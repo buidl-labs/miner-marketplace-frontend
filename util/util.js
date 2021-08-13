@@ -81,7 +81,7 @@ export function GetSimpleFILUnits(amountInAttoFIL) {
 }
 
 export function GetSimpleUSDUnits(amountInUSD) {
-  console.log("amountInUSD", amountInUSD);
+  // console.log("amountInUSD", amountInUSD);
   if (amountInUSD < 0.01) {
     return `$0`;
   } else if (amountInUSD < 1000) {

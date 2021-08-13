@@ -58,18 +58,18 @@ import * as Fathom from "fathom-client";
 
 let countries = Countries();
 
-export default function Miners({ miners, href }) {
-  useEffect(() => {
-    fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
-    )
-      .then((res) => res.json())
-      .then((r) => {
-        // console.log(r.filecoin.usd);
-        setFilecoinUSDRate(r.filecoin.usd);
-      });
-  }, []);
-  const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
+export default function Miners({ filecoinToUSDRate, miners, href }) {
+  // useEffect(() => {
+  //   fetch(
+  //     "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+  //   )
+  //     .then((res) => res.json())
+  //     .then((r) => {
+  //       // console.log(r.filecoin.usd);
+  //       setFilecoinUSDRate(r.filecoin.usd);
+  //     });
+  // }, []);
+  const [filecoinUSDRate, setFilecoinUSDRate] = useState(filecoinToUSDRate);
 
   const router = useRouter();
   const handleClick = (e) => {
@@ -239,6 +239,7 @@ export default function Miners({ miners, href }) {
       title: "Reputation Score",
       dataIndex: "reputationScore",
       key: "reputationScore",
+      defaultSortOrder: 'descend',
       sorter: {
         compare: (a, b) =>
           parseInt(a.reputationScore) - parseInt(b.reputationScore),
@@ -796,8 +797,22 @@ export async function getServerSideProps() {
     `,
   });
 
+  let res1 = await fetch(
+    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+  )
+  console.log("ressssS", res1)
+  const res2 = await res1.json()
+  console.log("rjsoon", res2)
+  console.log("fusd", res2.filecoin.usd)
+    // .then((res) => res.json())
+    // .then((r) => {
+    //   // console.log(r.filecoin.usd);
+    //   setFilecoinUSDRate(r.filecoin.usd);
+    // });
+
   return {
     props: {
+      filecoinToUSDRate: res2.filecoin.usd,
       miners: fmmData.miners,
     },
   };
