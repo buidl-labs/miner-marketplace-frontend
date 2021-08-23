@@ -1,4 +1,8 @@
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
   Button,
   Heading,
   Stack,
@@ -239,7 +243,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       title: "Reputation Score",
       dataIndex: "reputationScore",
       key: "reputationScore",
-      defaultSortOrder: 'descend',
+      defaultSortOrder: "descend",
       sorter: {
         compare: (a, b) =>
           parseInt(a.reputationScore) - parseInt(b.reputationScore),
@@ -529,6 +533,8 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     }
   }
 
+  const [quoteAlert, showQuoteAlert] = useState("none");
+
   return (
     <>
       <Head>
@@ -541,6 +547,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
           lg: "repeat(12, 1fr)",
           md: "repeat(6,1fr)",
         }}
+        // mx="24"
       >
         <GridItem colSpan="12" pt="28" bg="white" px="8">
           <Flex justifyContent="space-between">
@@ -681,13 +688,29 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                   w="fit-content"
                   colorScheme="blue"
                   variant="solid"
+                  borderRadius="full"
+                  px="6"
                   onClick={(event) => {
                     filterList(event);
                     track();
+                    showQuoteAlert("visible");
                   }}
                 >
                   Update Estimated Quote
                 </Button>
+                <Alert
+                  status="info"
+                  borderRadius="lg"
+                  bg="none"
+                  display={quoteAlert}
+                >
+                  <HStack>
+                    <AlertIcon color="gray.600" />
+                    <AlertDescription fontWeight="medium">
+                      See updated Quote in the Estimated Quote column below
+                    </AlertDescription>
+                  </HStack>
+                </Alert>
               </Stack>
             </GridItem>
           </Flex>
@@ -745,7 +768,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
               dataSource={filteredMiners}
               // onChange={handleTableChange}
               // pagination={pagination}
-              pagination={{defaultPageSize:50}}
+              pagination={{ defaultPageSize: 50 }}
               scroll={{ y: 480 }}
             />
           </Stack>
@@ -799,16 +822,16 @@ export async function getServerSideProps() {
 
   let res1 = await fetch(
     "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
-  )
-  console.log("ressssS", res1)
-  const res2 = await res1.json()
-  console.log("rjsoon", res2)
-  console.log("fusd", res2.filecoin.usd)
-    // .then((res) => res.json())
-    // .then((r) => {
-    //   // console.log(r.filecoin.usd);
-    //   setFilecoinUSDRate(r.filecoin.usd);
-    // });
+  );
+  console.log("ressssS", res1);
+  const res2 = await res1.json();
+  console.log("rjsoon", res2);
+  console.log("fusd", res2.filecoin.usd);
+  // .then((res) => res.json())
+  // .then((r) => {
+  //   // console.log(r.filecoin.usd);
+  //   setFilecoinUSDRate(r.filecoin.usd);
+  // });
 
   return {
     props: {

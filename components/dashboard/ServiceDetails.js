@@ -67,7 +67,7 @@ function ServiceDetails(props) {
 
   return (
     <>
-      <Stack alignItems="flex-start" spacing="8" my="8">
+      <Stack alignItems="flex-start" spacing="8" my="8" ml="-3">
         <Heading size="lg" color="blue.700">
           Service Offering
         </Heading>

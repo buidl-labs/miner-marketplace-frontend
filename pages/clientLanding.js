@@ -21,69 +21,41 @@ import Features from "../components/landingPage/Features";
 import FilecoinStats from "../components/landingPage/FilecoinStats";
 import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
+import JoinNetwork from "../components/landingPage/JoinNetwork";
 import { gql, InMemoryCache, ApolloClient } from "@apollo/client";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useState } from "react";
 
 const clientLanding = (stats) => {
   // console.log(stats);
   // console.log("active", stats.stats.activeMinersCount);
   // console.log("dataS", stats.stats.dataStored);
   const router = useRouter();
+
+  const [btnLoading, setBtnLoading] = useState(false);
+
   return (
     <>
       <Head>
         <title>Find Storage Providers to store your data - DataStation</title>
       </Head>
       <Navbar />
-      <Container maxW="container.xl" mb="16">
-        <SimpleGrid gap="12">
+      <Container maxW={{ lg: "container.xl" }} mb="16">
+        <SimpleGrid gap="28">
           {/* Hero Section */}
           <Hero
-            heroImg="/images/clientHero.svg"
-            heroAlt="decentralised storage solution"
-            heroHeading="Powerful Decentralized Storage Network for your Data"
-            heroText="The Filecoin network is made up of a large number of diverse storage providers and developers. This creates a robust and reliable service."
+            heroHeading="Find Storage Providers with ease"
+            heroText="Get quantitative and qualitative data about Storage Providers in a more enhanced and jargon-free way"
             ctaText="Explore Storage Providers"
-            ctaRoute={() => router.push("/miners")}
           />
-
-          {/* Features Section */}
-          <Stack textAlign="center" alignItems="center">
-            <Heading color="gray.900" size="2xl">
-              Why Filecoin?
-            </Heading>
-          </Stack>
-          <SimpleGrid
-            columns={{ md: 3, lg: 3, sm: 1 }}
-            gap={{ lg: "28", md: "12", sm: "4" }}
-          >
-            <Features
-              featureIcon="/images/selfhealing.svg"
-              imgAlt="self healing"
-              featureTitle="Self-healing"
-              featureDescription="The Filecoin blockchain has a built-in self-healing process where if faulty storage providers are detected, their files are redistributed to reliable miners."
-            />
-            <Features
-              featureIcon="/images/prices.svg"
-              imgAlt="competitive prices"
-              featureTitle="Competitive prices"
-              featureDescription="Prices for storage and retrieval are determined by supply and demand, not corporate pricing departments. Filecoin makes reliable storage available at hyper-competitive prices"
-            />
-            <Features
-              featureIcon="/images/tracker.svg"
-              imgAlt="verifiable traces"
-              featureTitle="Verifiable traces"
-              featureDescription="Filecoin generates verifiable traces that files have been stored correctly over time. Clients can efficiently scan these traces to confirm that their files have been stored correctly."
-            />
-          </SimpleGrid>
 
           {/*Filecoin Stats*/}
           <Box
             bgColor="blue.600"
             py="6"
             px="12"
-            borderRadius="2xl"
+            borderRadius="3xl"
             color="white"
             my="16"
           >
@@ -91,78 +63,58 @@ const clientLanding = (stats) => {
               <Heading size="2xl" color="white">
                 Filecoin Network in Numbers
               </Heading>
-
               <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
                 <FilecoinStats
-                  count={stats.stats.activeMinersCount + "+"}
+                  count="$24.7k"
                   countText=""
-                  subtext="Verified Storage Providers and counting"
+                  subtext="Average Storage Price for 100Gb/month"
                 />
                 <FilecoinStats
-                  count={stats.stats.networkStorageCapacity}
+                  count="2.96k"
                   countText=""
-                  subtext="Network Storage Capacity"
+                  subtext="TB Data Stored till Now"
                 />
                 <FilecoinStats
-                  count={stats.stats.dataStored}
+                  count="3.4k"
                   countText=""
-                  subtext="Securely Stored data"
+                  subtext="Storage Providers to choose from"
                 />
               </SimpleGrid>
             </Stack>
           </Box>
 
-          {/*Join Network*/}
-          <Stack textAlign="center" spacing="16" my={{ base: 4, md: 16 }}>
-            <WrapItem
-              textAlign="left"
-              borderRadius="2xl"
-              px={{ base: 8, md: 24 }}
-              py={{ base: 8, md: 14 }}
-              bg="gray.100"
-            >
-              <Stack alignItems="left" spacing="4">
-                <Heading size="lg" color="blue.900">
-                  Start Storing your data on Filecoin
-                </Heading>
-                <Text
-                  size="lg"
-                  maxW={{ base: "auto", md: "38rem" }}
-                  color="gray.700"
-                >
-                  Filecoin provides the foundation for critically important
-                  public data, such as open access scientific data, creative
-                  commons media, historical archives, preservation, and more.
-                </Text>
-                <Text fontWeight="medium" pt="2">
-                  To Start Storing data with Filecoin Network:
-                </Text>
-                <Text>
-                  <OrderedList pt="-2" mt="-2">
-                    <ListItem>
-                      Sort & filter Storage Providers from the table
-                    </ListItem>
-                    <ListItem>
-                      Use Estimated Quote Calculator to choose Storage Providers
-                      according to your budget.
-                    </ListItem>
-                    <ListItem>
-                      Open profile of Storage Provider and contact them through
-                      their social links
-                    </ListItem>
-                  </OrderedList>
-                </Text>
-                <Box>
-                  <Button
-                    colorScheme="blue"
-                    onClick={() => router.push("/miners")}
-                  >
-                    Search Storage Providers
-                  </Button>
-                </Box>
-              </Stack>
-            </WrapItem>
+          {/* Features Section */}
+          <Stack textAlign="center">
+            <Heading size="2xl">
+              Get Most out of DataStation <br /> with these Features
+            </Heading>
+            <Features
+              featureImg="\images\gif\quote-calc.gif"
+              featureTitle="Find Storage Providers according to your Budget"
+              featureDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames vie rra id tellus interdum bibendum aliquet faucibus nullam consequat. Purus, non sed in viverra."
+            />
+            <Features
+              featureImg="\images\gif\scores.gif"
+              featureTitle="Find Trustable Storage Providers"
+              featureDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames vie rra id tellus interdum bibendum aliquet faucibus nullam consequat. Purus, non sed in viverra."
+            />
+            <Features
+              featureImg="\images\gif\storage-deal-stats.gif"
+              featureTitle="See Previous Storage Deal Stats find Reliable Storage Providers"
+              featureDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames vie rra id tellus interdum bibendum aliquet faucibus nullam consequat. Purus, non sed in viverra."
+            />
           </Stack>
+
+          {/*Join Network*/}
+
+          <JoinNetwork
+            cardHeading="Find trustable Storager Providers according to your needs"
+            ctaText="Explore Storage Providers"
+            ctaRoute={() => {
+              router.push("/miners");
+              setBtnLoading(true);
+            }}
+          />
 
           {/*FAQ*/}
           <Stack textAlign="center" alignItems="center" spacing="16">
@@ -170,16 +122,13 @@ const clientLanding = (stats) => {
             <Stack w={{ base: "80vw", md: "48rem" }} textAlign="left">
               <Accordion allowToggle="false">
                 <Faq
-                  question="Will it be cheaper to store data on Filecoin than other centralized cloud services?"
-                  answer="Filecoin creates a hyper-competitive market for data storage. There will be many miners offering many prices, rather than one fixed price on the network."
+                  question="What is filecoin?"
+                  answer="Filecoin is a peer-to-peer network that stores files on the internet, with built-in economic incentives to ensure files are stored reliably over time."
                 />
+                <Faq question="Is this platform free to use?" answer="Yes" />
                 <Faq
-                  question="Who are miners?"
-                  answer="Miners in the Filecoin network are in charge of storing, providing content and issuing new blocks."
-                />
-                <Faq
-                  question="How do I know that my storage miner will not charge prohibitively high costs for data retrieval?"
-                  answer="To avoid extortion, always ensure you store your data with a fairly decentralized set of miners"
+                  question="What is the difference between Filecoin & IPFS?"
+                  answer="Filecoin and IPFS are two separate, complementary protocols, both created by Protocol Labs. IPFS allows peers to store, request, and transfer verifiable data with each other, while Filecoin is designed to provide a system of persistent data storage."
                 />
               </Accordion>
             </Stack>

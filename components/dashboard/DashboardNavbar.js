@@ -224,12 +224,14 @@ const DashboardNavbar = (props) => {
     <>
       <Flex
         bg="white"
-        borderBottom="solid 1px #E2E8F0"
+        borderBottom="solid 1px #F5F5F5"
         p="4"
-        w="full"
+        w="83%"
         overflow="hidden"
         position="fixed"
         zIndex="20"
+        bg="whiteAlpha.800"
+        backdropFilter="blur(16px)"
       >
         <Link onClick={() => router.push("/")}>
           <Image
@@ -268,6 +270,8 @@ const DashboardNavbar = (props) => {
             colorScheme="blue"
             size="md"
             variant="solid"
+            borderRadius="full"
+            px="6"
             onClick={() => {
               onOpen();
               console.log("heyyyy there");

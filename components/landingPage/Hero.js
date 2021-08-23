@@ -20,44 +20,56 @@ import React from "react";
 import { Icon, IconProps, ArrowForwardIcon } from "@chakra-ui/icons";
 import * as Fathom from "fathom-client";
 import { trackGoal } from "../../util/analytics";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Hero = (props) => {
+  const router = useRouter();
+
   function track() {
     if (typeof window != "undefined") {
       Fathom.trackGoal("RLIXEEKF", 0);
     }
   }
+
+  const [btnLoading, setBtnLoading] = useState(false);
+
   return (
-    <Stack pt="36" pb={{ base: 16, md: 0 }}>
-      <HStack>
-        <Stack spacing="4">
-          <Heading size="3xl" lineHeight="1.2" color="gray.900">
-            {props.heroHeading}
-          </Heading>
-          <Text maxW={{ base: "full", md: "75%" }} color="gray.700">
-            {props.heroText}
-          </Text>
-          <Box>
-            <Button
-              size="lg"
-              variant="link"
-              colorScheme="blue"
-              textDecoration="underline"
-              onClick={track()}
-            >
-              <Link href={props.ctaLink} onClick={props.ctaRoute} isExternal>
-                {props.ctaText} <ArrowForwardIcon h={6} w={6} marginLeft={2} />
-              </Link>
-            </Button>
-          </Box>
-        </Stack>
-        <Image
-          src={props.heroImg}
-          alt={props.heroAlt}
-          width={{ base: "0%", md: "50%" }}
-          display={{ base: "none", md: "block" }}
-        />
-      </HStack>
+    <Stack
+      pt="44"
+      pb={{ base: 16, md: 0 }}
+      textAlign="center"
+      alignItems="center"
+      mx="auto"
+      maxW="80%"
+      spacing="6"
+    >
+      <Heading size="4xl" lineHeight="1.2" color="gray.900">
+        {props.heroHeading}
+      </Heading>
+      <Text
+        maxW={{ base: "full", md: "60%" }}
+        fontSize="1.2rem"
+        color="gray.700"
+      >
+        {props.heroText}
+      </Text>
+      <Box>
+        <Button
+          size="lg"
+          variant="solid"
+          borderRadius="full"
+          px="6"
+          colorScheme="blue"
+          onClick={() => {
+            router.push("/miners");
+            track();
+            setBtnLoading(true);
+          }}
+        >
+          {props.ctaText}
+        </Button>
+      </Box>
     </Stack>
   );
 };

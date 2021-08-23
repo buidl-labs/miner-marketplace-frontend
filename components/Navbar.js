@@ -97,18 +97,18 @@ const Navbar = (props) => {
               <Stack spacing="8" mt="8">
                 <Link onClick={() => router.push("/clientLanding")}>
                   <Text fontSize="xl" fontWeight="medium">
-                    Clients
+                    Want to Store Data?
                   </Text>
                 </Link>
-                <Link onClick={() => router.push("/minerLanding")}>
+                {/* <Link onClick={() => router.push("/minerLanding")}>
                   <Text fontSize="xl" fontWeight="medium">
                     Storage Providers
                   </Text>
-                </Link>
+                </Link> */}
                 <Box>
                   <Button
-                    size="lg"
-                    variant="solid"
+                    size="md"
+                    variant="outline"
                     isLoading={btnLoading}
                     loadingText="loading please wait"
                     onClick={() => {
@@ -118,7 +118,7 @@ const Navbar = (props) => {
                     }}
                     colorScheme="blue"
                   >
-                    Dashboard
+                    Explore Storage Providers
                   </Button>
                 </Box>
               </Stack>
@@ -135,14 +135,14 @@ const Navbar = (props) => {
         >
           <Link onClick={() => router.push("/clientLanding")}>
             <Text fontSize="lg" fontWeight="medium">
-              Clients
+              Want to Store Data?
             </Text>
           </Link>
-          <Link onClick={() => router.push("/minerLanding")}>
+          {/* <Link onClick={() => router.push("/minerLanding")}>
             <Text fontSize="lg" fontWeight="medium">
               Storage Providers
             </Text>
-          </Link>
+          </Link> */}
         </Stack>
 
         <Box
@@ -151,8 +151,10 @@ const Navbar = (props) => {
           display={{ base: isOpen ? "block" : "none", md: "flex" }}
         >
           <Button
-            variant="solid"
+            variant="outline"
             colorScheme="blue"
+            borderRadius="full"
+            px="6"
             isLoading={btnLoading}
             loadingText="loading please wait"
             onClick={() => {
@@ -161,7 +163,7 @@ const Navbar = (props) => {
               setBtnLoading(true);
             }}
           >
-            Dashboard
+            Explore Storage Providers
           </Button>
         </Box>
       </Flex>

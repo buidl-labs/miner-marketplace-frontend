@@ -21,33 +21,29 @@ const JoinNetwork = (props) => {
   return (
     <>
       <Center
-        textAlign="left"
-        border="solid 1px #CBD5E0"
-        borderRadius="xl"
+        textAlign="center"
+        borderRadius="2xl"
         px="10"
         py="12"
+        bg="gray.100"
+        maxW="80%"
+        mx="auto"
       >
-        <Stack alignItems="left" spacing="2">
-          <Heading size="lg">{props.cardHeading}</Heading>
+        <Stack alignItems="center" spacing="2" maxW="75%">
+          <Heading size="xl">{props.cardHeading}</Heading>
           <Text size="lg" maxW="30rem">
             {props.cardText}
           </Text>
           <Box>
-            <Link
-              href={props.ctaLink}
-              isExternal
+            <Button
               colorScheme="blue"
-              textDecoration="none"
+              variant="solid"
+              borderRadius="full"
+              px="6"
+              onClick={props.ctaRoute}
             >
-              <Button
-                colorScheme="blue"
-                variant={props.ctaVariant}
-                rightIcon={props.ctaIcon}
-                onClick={props.ctaRoute}
-              >
-                {props.ctaText}
-              </Button>
-            </Link>
+              {props.ctaText}
+            </Button>
           </Box>
         </Stack>
       </Center>

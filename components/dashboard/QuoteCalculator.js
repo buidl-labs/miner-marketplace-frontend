@@ -33,7 +33,7 @@ function QuoteCalculator(props) {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
     )
       .then((res) => res.json())
       .then((r) => {
@@ -60,7 +60,7 @@ function QuoteCalculator(props) {
 
   const [dStorageUnits, setDStorageUnits] = useState(dStorageUnitsArr[1]);
   const [dStorageDurationUnits, setDStorageDurationUnits] = useState(
-    dStorageDurationUnitsArr[0],
+    dStorageDurationUnitsArr[0]
   );
 
   const handleStorageUnitsChange = (event) => {
@@ -113,6 +113,7 @@ function QuoteCalculator(props) {
         bg="gray.100"
         borderRadius="2xl"
         p="10"
+        mr="-3"
         w={{ base: "auto", lg: "30vw" }}
       >
         <Heading size="lg" color="blue.700">
@@ -126,7 +127,7 @@ function QuoteCalculator(props) {
                   30 *
                   2880 *
                   storageAmount *
-                  parseInt(storageAskPrice),
+                  parseInt(storageAskPrice)
               ).split(" ")[0]
             }
             {/*{Math.round(
@@ -147,24 +148,26 @@ function QuoteCalculator(props) {
                   30 *
                   2880 *
                   storageAmount *
-                  parseInt(storageAskPrice),
+                  parseInt(storageAskPrice)
               ).split(" ")[1]
             }
           </Text>
         </HStack>
         <Stack color="gray.600" size="md">
           <Text fontSize="xl">
-            {GetSimpleUSDUnits(Math.round(
-              ((storageDuration *
-                30 *
-                2880 *
-                storageAmount *
-                props.storageAskPrice *
-                filecoinUSDRate) /
-                10 ** 18 +
-                Number.EPSILON) *
-                100,
-            ) / 100)}
+            {GetSimpleUSDUnits(
+              Math.round(
+                ((storageDuration *
+                  30 *
+                  2880 *
+                  storageAmount *
+                  props.storageAskPrice *
+                  filecoinUSDRate) /
+                  10 ** 18 +
+                  Number.EPSILON) *
+                  100
+              ) / 100
+            )}
           </Text>
           {/*<Text>Estimated Quote</Text>*/}
         </Stack>
@@ -201,7 +204,7 @@ function QuoteCalculator(props) {
                   console.log(
                     "storageAmount",
                     storageAmount,
-                    event.target.value,
+                    event.target.value
                   );
                   console.log("dStorageUnits", dStorageUnits);
                   console.log("dStorageDurationUnits", dStorageDurationUnits);
@@ -231,7 +234,9 @@ function QuoteCalculator(props) {
                 bg="white"
                 type="number"
                 size="lg"
-                placeholder={"Storage duration in " + dStorageDurationUnits.value}
+                placeholder={
+                  "Storage duration in " + dStorageDurationUnits.value
+                }
                 value={storageDurationText}
                 onChange={(event) => {
                   console.log("dur changed");
@@ -246,7 +251,7 @@ function QuoteCalculator(props) {
                   console.log(
                     "storageDuration",
                     storageDuration,
-                    event.target.value,
+                    event.target.value
                   );
                   console.log("dStorageUnits", dStorageUnits);
                   console.log("dStorageDurationUnits", dStorageDurationUnits);
