@@ -75,7 +75,7 @@ export default function TransactionHistory(props) {
 
   return (
     <>
-      <Stack>
+      <Stack pb="16">
         <IconButton
           icon={<ArrowUpIcon h={8} w={8} />}
           aria-label="go to top"

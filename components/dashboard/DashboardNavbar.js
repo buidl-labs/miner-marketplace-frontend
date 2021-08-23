@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { Icon, SettingsIcon } from "@chakra-ui/icons";
 import { FiSettings } from "react-icons/fi";
-import { BiBug } from "react-icons/bi";
+import { BiBug, BiHelpCircle } from "react-icons/bi";
 
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
@@ -263,6 +263,16 @@ const DashboardNavbar = (props) => {
             >
               <Icon color="gray.600" as={BiBug} w={6} h={6} />
             </Link>
+          </Tooltip>
+
+          <Tooltip
+            label="Get a quick tour of dashboard"
+            aria-label="report bug"
+            p={4}
+            borderRadius="lg"
+            hasArrow
+          >
+            <Icon as={BiHelpCircle} w={6} h={6} />
           </Tooltip>
 
           {DisplaySettings()}

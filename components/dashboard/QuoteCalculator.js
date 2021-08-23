@@ -115,6 +115,7 @@ function QuoteCalculator(props) {
         p="10"
         mr="-3"
         w={{ base: "auto", lg: "30vw" }}
+        mb="24"
       >
         <Heading size="lg" color="blue.700">
           Estimated Quote

@@ -262,6 +262,7 @@ function BasicView(props) {
                               >
                                 {txn.value.display}
                               </StatNumber>
+                              <StatHelpText>($100)</StatHelpText>
                             </Stat>
                           </GridItem>
 
@@ -299,6 +300,7 @@ function BasicView(props) {
                                     )
                                   : "0"}
                               </StatNumber>
+                              <StatHelpText>($100)</StatHelpText>
                             </Stat>
                           </GridItem>
 
@@ -478,6 +480,7 @@ function BasicView(props) {
                                   ? txn.minerFee.display
                                   : "0"}
                               </Text>
+                              <Text>($100)</Text>
                             </Stack>
                           </GridItem>
 
@@ -515,6 +518,7 @@ function BasicView(props) {
                                   <p>0</p>
                                 )}
                               </Text>
+                              <Text>($100)</Text>
                             </Stack>
                           </GridItem>
                         </Grid>
