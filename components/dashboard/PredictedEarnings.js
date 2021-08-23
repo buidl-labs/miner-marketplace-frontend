@@ -57,7 +57,7 @@ function PredictedEarnings(props) {
                       >
                         {GetSimpleFILUnits(props.totalIncome)}
                       </StatNumber>
-                      <StatHelpText>($100)</StatHelpText>
+                      <StatHelpText>$filecoinToUSDRate</StatHelpText>
                     </Stat>
                     <AccordionIcon />
                   </AccordionButton>
@@ -75,7 +75,7 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.existing)}
                       </Text>
-                      <Text color="gray.600">($100)</Text>
+                      <Text color="gray.600">$filecoinToUSDRate</Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -84,7 +84,7 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.potential)}
                       </Text>
-                      <Text color="gray.600">($100)</Text>
+                      <Text color="gray.600">$filecoinToUSDRate</Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -93,7 +93,7 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.blockRewards)}
                       </Text>
-                      <Text color="gray.600">($100)</Text>
+                      <Text color="gray.600">$filecoinToUSDRate</Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -120,7 +120,7 @@ function PredictedEarnings(props) {
                       >
                         {GetSimpleFILUnits(props.totalExpenditure)}
                       </StatNumber>
-                      <StatHelpText>($100)</StatHelpText>
+                      <StatHelpText>$filecoinToUSDRate</StatHelpText>
                     </Stat>
                     <AccordionIcon />
                   </AccordionButton>
@@ -138,7 +138,7 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.deposits)}
                       </Text>
-                      <Text color="gray.600">($100)</Text>
+                      <Text color="gray.600">$filecoinToUSDRate</Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -147,7 +147,7 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.gas)}
                       </Text>
-                      <Text color="gray.600">($100)</Text>
+                      <Text color="gray.600">$filecoinToUSDRate</Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -156,7 +156,7 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.penalty)}
                       </Text>
-                      <Text color="gray.600">($100)</Text>
+                      <Text color="gray.600">$filecoinToUSDRate</Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -165,7 +165,7 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.others)}
                       </Text>
-                      <Text color="gray.600">($100)</Text>
+                      <Text color="gray.600">$filecoinToUSDRate</Text>
                     </Stack>
                   </HStack>
                 </AccordionPanel>
@@ -179,7 +179,7 @@ function PredictedEarnings(props) {
               <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
                 {GetSimpleFILUnits(props.netEarnings)}
               </StatNumber>
-              <StatHelpText>($100)</StatHelpText>
+              <StatHelpText>$filecoinToUSDRate</StatHelpText>
             </Stat>
           </VStack>
         </Stack>

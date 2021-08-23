@@ -46,7 +46,7 @@ function StorageDealStats(props) {
           templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(3, 1fr)" }}
           gap={1}
         >
-          <GridItem colSpan="2" pb={{ base: 8, lg: 4 }}>
+          <GridItem colSpan="3" pb={{ base: 8, lg: 4 }}>
             <HStack textAlign="left" alignItems="left" spacing="7">
               <Stat>
                 <StatLabel fontSize="lg" fontWeight="medium" color="gray.700">
@@ -55,8 +55,8 @@ function StorageDealStats(props) {
                 <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
                   {GetFormattedFILUnits(props.averagePrice)}
                 </StatNumber>
-                <StatHelpText color="gray.600" fontSize="lg">
-                  {GetSimpleUSDUnits(props.averagePrice * filecoinUSDRate)}
+                <StatHelpText color="gray.600" fontSize="lg" pt="2">
+                  $filecoinToUSDRate
                 </StatHelpText>
               </Stat>
               <Stat>
@@ -66,6 +66,9 @@ function StorageDealStats(props) {
                 <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
                   {GetFormattedStorageUnits(props.dataStored)}
                 </StatNumber>
+                <StatHelpText color="gray.600" fontSize="lg" pt="2">
+                  / "QAP"
+                </StatHelpText>
               </Stat>
               <Stat>
                 <StatLabel fontSize="lg" color="gray.600">
@@ -91,7 +94,7 @@ function StorageDealStats(props) {
               </StatLabel>
               <StatNumber color="blue.700">{props.faultTerminated}</StatNumber>
             </Stat>*/}
-          <GridItem colSpan="2" pt="8">
+          <GridItem colSpan="3" pt="8">
             <HStack textAlign="left" alignItems="left" spacing="4" pb="6">
               <Stat>
                 <StatLabel fontSize="md" color="gray.600">

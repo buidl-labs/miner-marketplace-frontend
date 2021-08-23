@@ -130,7 +130,7 @@ function ServiceDetails(props) {
               {/*<Text fontSize="2xl" color="gray.700">
                 {props.verifiedAskPrice / 10 ** 18}
               </Text>*/}
-              <Text fontSize="sm" color="gray.500">
+              <Text fontSize="sm" color="gray.500" textAlign="left">
                 Requirement dependent. Contact storage provider directly for
                 estimates
               </Text>
@@ -139,7 +139,7 @@ function ServiceDetails(props) {
               {/*<Text fontSize="2xl" color="gray.700">
                 {props.retrievalAskPrice}
               </Text>*/}
-              <Text fontSize="sm" color="gray.500">
+              <Text fontSize="sm" color="gray.500" textAlign="left">
                 Requirement dependent. Contact storage provider directly for
                 estimates
               </Text>

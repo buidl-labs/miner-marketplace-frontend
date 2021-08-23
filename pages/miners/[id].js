@@ -17,6 +17,7 @@ import {
   Spinner,
   Stack,
   Text,
+  Tooltip,
   Tabs,
   TabList,
   TabPanels,
@@ -27,6 +28,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
+import { BiHelpCircle } from "react-icons/bi";
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -45,7 +47,11 @@ import StorageDealStats from "../../components/dashboard/StorageDealStats";
 
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import * as Fathom from "fathom-client";
+
+const Tour = dynamic(() => import("reactour"), { ssr: false });
+
 // import getAllMinerIds from "../miners";
 // import { createGlobalState } from "react-hooks-global-state";
 
@@ -143,8 +149,23 @@ export default function Miner({ miner }) {
   //const [offsetValue, setOffsetValue] = useState(10);
   let offsetValue = 0;
 
+  const [isTourOpen, setIsTourOpen] = useState(false);
+
+  const steps = [
+    {
+      selector: ".first-step",
+      content: "This is my first Step",
+    },
+  ];
+
   return (
     <>
+      <Tour
+        steps={steps}
+        isOpen={isTourOpen}
+        onRequestClose={() => setIsTourOpen(false)}
+      />
+
       <Head>
         <title>Storage Provider {miner.id} - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -205,16 +226,38 @@ export default function Miner({ miner }) {
             </AlertDescription>
           </Alert> */}
         </Box>
-        <Button
-          mt="4"
-          colorScheme="blue"
-          variant="link"
-          textDecoration="underline"
-          onClick={() => router.push("/miners")}
-        >
-          <ArrowBackIcon w={5} h={5} color="gray.600" mr="1" color="blue.500" />
-          Back to Storage Provider Listing
-        </Button>
+        <Stack flexDir="row" justify="space-between">
+          <Button
+            mt="4"
+            colorScheme="blue"
+            variant="link"
+            onClick={() => router.push("/miners")}
+            leftIcon={<ArrowBackIcon w={5} h={5} />}
+            _hover={{
+              textDecoration: "underline",
+              color: "blue.600",
+            }}
+          >
+            Back to Storage Provider Listing
+          </Button>
+          <Tooltip
+            label="Get a quick tour of dashboard"
+            aria-label="report bug"
+            p={4}
+            borderRadius="lg"
+            hasArrow
+          >
+            <Button
+              leftIcon={<BiHelpCircle size="1.4rem" />}
+              variant="outline"
+              colorScheme="gray"
+              borderRadius="full"
+            >
+              Get Help
+            </Button>
+          </Tooltip>
+        </Stack>
+
         <SimpleGrid
           maxH="44rem"
           templateColumns={{ base: "repeat(1,1fr)", lg: "repeat(12, 1fr)" }}
