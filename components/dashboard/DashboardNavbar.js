@@ -284,6 +284,7 @@ const DashboardNavbar = (props) => {
 
           {DisplaySettings()}
           <Button
+            data-tour="reactour__auth"
             colorScheme="blue"
             size="md"
             variant="solid"

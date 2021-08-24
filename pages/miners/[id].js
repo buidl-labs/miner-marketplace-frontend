@@ -26,6 +26,8 @@ import {
   VStack,
   VisuallyHidden,
   Container,
+  UnorderedList,
+  ListItem,
 } from "@chakra-ui/react";
 import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
 import { BiHelpCircle } from "react-icons/bi";
@@ -149,12 +151,91 @@ export default function Miner({ miner }) {
   //const [offsetValue, setOffsetValue] = useState(10);
   let offsetValue = 0;
 
-  const [isTourOpen, setIsTourOpen] = useState(false);
+  const [isTourOpen, setIsTourOpen] = useState(true);
 
   const steps = [
     {
       selector: ".first-step",
-      content: "This is my first Step",
+      content: (
+        <div>
+          <Heading size="md" fontWeight="bold" color="blue.800">
+            Welcome to DataStation!
+          </Heading>
+          <Text fontSize="md">Let’s get your started with the basics</Text>
+        </div>
+      ),
+      style: {
+        minWidth: "28rem",
+      },
+    },
+    {
+      selector: '[data-tour="reactour__auth"]',
+      content: (
+        <div>
+          <Heading size="md" fontWeight="bold" color="blue.800">
+            Authenticate your Profile
+          </Heading>
+          <Text fontSize="md">
+            Authenticate your profile by connecting ledger or by signature
+            method. <br />
+            You can change some off chain attributes and also increase your
+            transparency score.
+          </Text>
+        </div>
+      ),
+
+      style: {
+        minWidth: "28rem",
+      },
+    },
+    {
+      selector: '[data-tut="reactour__scores"]',
+      content: (
+        <div>
+          <Heading size="md" fontWeight="bold" color="blue.800">
+            Transparency & Reputation Scores
+          </Heading>
+          <Text fontSize="md">
+            You can improve your transparency score by editing some offchain
+            attributes via profile settings
+          </Text>
+        </div>
+      ),
+      style: {
+        minWidth: "28rem",
+      },
+    },
+    {
+      selector: '[data-tour="reactour__tabs"]',
+      content: (
+        <div>
+          <Heading size="md" fontWeight="bold" color="blue.800">
+            Explore data in simplified way
+          </Heading>
+          <Text fontSize="md">
+            See simplified stats through the following tabs
+          </Text>
+        </div>
+      ),
+      style: {
+        minWidth: "28rem",
+      },
+    },
+    {
+      selector: '[data-tour="reactour__tour"]',
+      content: (
+        <div>
+          <Heading size="md" fontWeight="bold" color="blue.800">
+            Quick tour & Request feature
+          </Heading>
+          <Text fontSize="md">
+            Access this quick tour anytime by clicking on Quick Tour Button.
+          </Text>
+        </div>
+      ),
+      style: {
+        minWidth: "28rem",
+      },
     },
   ];
 
@@ -164,6 +245,17 @@ export default function Miner({ miner }) {
         steps={steps}
         isOpen={isTourOpen}
         onRequestClose={() => setIsTourOpen(false)}
+        badgeContent={(curr, tot) => `${curr} of ${tot}`}
+        closeWithMask
+        lastStepNextButton={
+          <Button variant="link" onClick={() => setIsTourOpen(false)}>
+            Got it!
+          </Button>
+        }
+        rounded={8}
+        showNumber={false}
+        disableFocusLock
+        startAt={0}
       />
 
       <Head>
@@ -252,8 +344,10 @@ export default function Miner({ miner }) {
               variant="outline"
               colorScheme="gray"
               borderRadius="full"
+              onClick={() => setIsTourOpen(true)}
+              data-tour="reactour__tour"
             >
-              Get Help
+              Quick Tour
             </Button>
           </Tooltip>
         </Stack>
@@ -281,7 +375,7 @@ export default function Miner({ miner }) {
               minerBio={miner.personalInfo.bio}
             />
           </GridItem>
-          <GridItem colSpan={{ base: 1, md: 5 }}>
+          <GridItem colSpan={{ base: 1, md: 5 }} data-tut="reactour__scores">
             <Scores
               reputationScore={miner.reputationScore}
               transparencyScore={miner.transparencyScore}
@@ -293,7 +387,7 @@ export default function Miner({ miner }) {
             overflow={{ base: "scroll", lg: "unset" }}
           >
             <Tabs overflow={{ base: "scroll", lg: "unset" }}>
-              <TabList whiteSpace="nowrap">
+              <TabList whiteSpace="nowrap" data-tour="reactour__tabs">
                 <Tab>Service Details</Tab>
                 {/*<Tab>Profile Settings</Tab>*/}
                 <Tab
