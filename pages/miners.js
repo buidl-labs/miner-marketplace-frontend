@@ -9,6 +9,7 @@ import {
   Flex,
   Grid,
   GridItem,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
@@ -34,9 +35,11 @@ import {
 import React, { useEffect, useState, useRef } from "react";
 import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
 import Select from "react-select";
+import { isMobile } from "react-device-detect";
 
 import DashboardMenu from "../components/dashboard/DashboardMenu";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
+import MinerListingNavbar from "../components/dashboard/MinerListingNavbar";
 
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { createHttpLink } from "apollo-link-http";
@@ -535,13 +538,31 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
 
   const [quoteAlert, showQuoteAlert] = useState("none");
 
+  if (isMobile) {
+    return (
+      <>
+        <Stack textAlign="center" alignItems="center" mt="24" p="4">
+          <Image src="/images/Logo-b.svg" alt="datastation logo" maxW="60vw" />
+          <Heading size="xl" color="blue.800" pt="12">
+            Device Not Supported
+          </Heading>
+          <Text size="md" color="gray.700" maxW="80%">
+            Please visit DataStation via a personal Computer or a Laptop device
+          </Text>
+        </Stack>
+      </>
+    );
+  }
+
   return (
     <>
       <Head>
         <title>Storage Provider Listing - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <DashboardNavbar isMinerProfile={false} />
+      {/* <DashboardNavbar isMinerProfile={false} /> */}
+
+      <MinerListingNavbar />
       <Grid
         templateColumns={{
           lg: "repeat(12, 1fr)",

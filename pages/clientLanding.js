@@ -91,17 +91,17 @@ const clientLanding = (stats) => {
             <Features
               featureImg="\images\gif\quote-calc.gif"
               featureTitle="Find Storage Providers according to your Budget"
-              featureDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames vie rra id tellus interdum bibendum aliquet faucibus nullam consequat. Purus, non sed in viverra."
+              featureDescription="With our quote calculator you can get a quick estimate of the final price you would be paying to a storage provider for a range of different storage requirements."
             />
             <Features
               featureImg="\images\gif\scores.gif"
               featureTitle="Find Trustable Storage Providers"
-              featureDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames vie rra id tellus interdum bibendum aliquet faucibus nullam consequat. Purus, non sed in viverra."
+              featureDescription="Each Storage provider is assigned a Reputation Score — which is based on their past activity and a Transparency Score — which is based on the public information they provide; this ensures transparency & helps you in choosing reliable Storage Providers."
             />
             <Features
               featureImg="\images\gif\storage-deal-stats.gif"
               featureTitle="See Previous Storage Deal Stats find Reliable Storage Providers"
-              featureDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames vie rra id tellus interdum bibendum aliquet faucibus nullam consequat. Purus, non sed in viverra."
+              featureDescription="You can also check existing Storage Deal statistics of a storage provider to get more insights about their services and past performance in the network."
             />
           </Stack>
 

@@ -13,12 +13,21 @@ const Features = (props) => {
   return (
     <>
       <Center py="12">
-        <HStack alignItems="center" textAlign="center" spacing="24" maxW="80%">
+        <HStack
+          alignItems="center"
+          textAlign="center"
+          spacing="24"
+          maxW={{ lg: "80%", md: "50%" }}
+        >
           <Stack textAlign="left">
             <Heading size="lg">{props.featureTitle}</Heading>
             <Text size="xs">{props.featureDescription}</Text>
           </Stack>
-          <Box maxW="64rem" w="64rem" alignItems="center">
+          <Box
+            maxW="64rem"
+            w={{ lg: "64rem", md: "36rem" }}
+            alignItems="center"
+          >
             <Image src={props.featureImg} alt="feature GIF" />
           </Box>
         </HStack>

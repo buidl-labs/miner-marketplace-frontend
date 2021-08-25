@@ -59,6 +59,8 @@ const Hero = (props) => {
           size="lg"
           variant="solid"
           borderRadius="full"
+          isLoading={btnLoading}
+          loadingText="Loading Please Wait"
           px="6"
           colorScheme="blue"
           onClick={() => {

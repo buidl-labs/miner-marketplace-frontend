@@ -13,7 +13,9 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Tooltip,
 } from "@chakra-ui/react";
+import { Icon, IconProps, InfoIcon } from "@chakra-ui/icons";
 import * as Fathom from "fathom-client";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
@@ -110,7 +112,10 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
                   >
                     <Stack>
                       <Text fontSize="md" color="gray.600">
-                        Collateral Deposit:
+                        Collateral Deposit: &nbsp;
+                        <Tooltip label="Not to be confused with pledge value">
+                          <InfoIcon w={4} h={4} color="gray.500" />
+                        </Tooltip>
                       </Text>
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.deposits)}

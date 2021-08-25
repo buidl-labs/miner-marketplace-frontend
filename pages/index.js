@@ -85,17 +85,17 @@ const IndexPage = (stats) => {
             <Features
               featureImg="\images\gif\agg-earn.gif"
               featureTitle="Get Aggregated & Predicted Earning Stats"
-              featureDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames vie rra id tellus interdum bibendum aliquet faucibus nullam consequat. Purus, non sed in viverra."
+              featureDescription="As a Storage Provider it’s useful to have a track of your past and future earnings. At DataStation you can check your current net aggregated earnings and net estimated earnings along with your estimated expenditures & estimated income."
             />
             <Features
               featureImg="\images\gif\txn.gif"
               featureTitle="Simplified Transaction History"
-              featureDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames vie rra id tellus interdum bibendum aliquet faucibus nullam consequat. Purus, non sed in viverra."
+              featureDescription="With a more simplified view of Transaction history you can quickly scroll through your recent transactions. Want more details? We got you covered with the advanced view of transaction history for the advanced data analysis purposes."
             />
             <Features
               featureImg="\images\gif\scores.gif"
               featureTitle="Stand out from other Storage Providers by improving your Scores"
-              featureDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames vie rra id tellus interdum bibendum aliquet faucibus nullam consequat. Purus, non sed in viverra."
+              featureDescription="Improve your Transparency & Reputation scores by adding off chain attributes. This helps to build trust amongst potential clients."
             />
           </Stack>
 

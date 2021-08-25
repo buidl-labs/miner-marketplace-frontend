@@ -93,6 +93,11 @@ function BasicView(props) {
   const [firstValue, setFirstValue] = useState(20);
   const [offsetValue, setOffsetValue] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isTxnLoading, setIsTxnLoading] = useState(false);
+
+  // function isTransactionLoading() {
+  //   isTxnLoading ? setIsTxnLoading(false) : setIsTxnLoading(false);
+  // }
 
   useEffect(() => {
     const BACKEND_URL =
@@ -262,7 +267,7 @@ function BasicView(props) {
                               >
                                 {txn.value.display}
                               </StatNumber>
-                              <StatHelpText>($100)</StatHelpText>
+                              <StatHelpText>$filecoinUSDRate</StatHelpText>
                             </Stat>
                           </GridItem>
 
@@ -300,7 +305,7 @@ function BasicView(props) {
                                     )
                                   : "0"}
                               </StatNumber>
-                              <StatHelpText>($100)</StatHelpText>
+                              <StatHelpText>$filecoinUSDRate</StatHelpText>
                             </Stat>
                           </GridItem>
 
@@ -480,7 +485,7 @@ function BasicView(props) {
                                   ? txn.minerFee.display
                                   : "0"}
                               </Text>
-                              <Text>($100)</Text>
+                              <Text>$filecoinUSDRate</Text>
                             </Stack>
                           </GridItem>
 
@@ -518,7 +523,7 @@ function BasicView(props) {
                                   <p>0</p>
                                 )}
                               </Text>
-                              <Text>($100)</Text>
+                              <Text>$filecoinUSDRate</Text>
                             </Stack>
                           </GridItem>
                         </Grid>
@@ -531,10 +536,14 @@ function BasicView(props) {
                 <Center>
                   <Button
                     mt="6"
-                    w="36"
+                    borderRadius="full"
+                    w="fit-content"
+                    isLoading={isTxnLoading}
+                    loadingText="Getting Transactions"
                     colorScheme="blue"
                     variant="outline"
                     onClick={() => {
+                      setIsTxnLoading(true);
                       console.log("NOWWWWW", firstValue);
                       const BACKEND_URL =
                         "https://miner-marketplace-backend-2.onrender.com/query";
@@ -573,6 +582,7 @@ function BasicView(props) {
                           return d.miner;
                         })
                         .then((m) => {
+                          setIsTxnLoading(false);
                           const dsrc = m.transactions.map((txn) => {
                             let txntype = "message";
                             if (txn.methodName == "ApplyRewards") {
