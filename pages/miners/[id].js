@@ -51,6 +51,7 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import * as Fathom from "fathom-client";
+import createCache from "swr";
 
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
@@ -239,6 +240,31 @@ export default function Miner({ miner }) {
     },
   ];
 
+  if (typeof window != "undefined") {
+    function createProvider() {
+      const map = new Map(
+        JSON.parse(window.localStorage.getItem("app-cache")) || []
+      );
+      console.log("CACHE");
+      window.addEventListener("beforeunload", () => {
+        const appCache = JSON.stringify(Array.from(map.entries()));
+        window.localStorage.setItem("app-cache", appCache);
+      });
+      return map;
+    }
+    const provider = createProvider();
+    const { cache, mutate } = createCache(provider);
+
+    var firstTime = window.localStorage.getItem("app-cache");
+
+    if (!firstTime) {
+      // first time loaded!
+      window.localStorage.setItem("app-cache", "1");
+      console.log("NOOOOOO");
+      setIsTourOpen(false);
+    }
+  }
+
   return (
     <>
       <Tour
@@ -248,7 +274,12 @@ export default function Miner({ miner }) {
         badgeContent={(curr, tot) => `${curr} of ${tot}`}
         closeWithMask
         lastStepNextButton={
-          <Button variant="link" onClick={() => setIsTourOpen(false)}>
+          <Button
+            variant="link"
+            onClick={() => {
+              setIsTourOpen(false);
+            }}
+          >
             Got it!
           </Button>
         }
@@ -257,6 +288,28 @@ export default function Miner({ miner }) {
         disableFocusLock
         startAt={0}
       />
+
+      {/* <Tour
+        steps={steps}
+        isOpen={isTourOpen}
+        onRequestClose={() => setIsTourOpen(false)}
+        badgeContent={(curr, tot) => `${curr} of ${tot}`}
+        closeWithMask
+        lastStepNextButton={
+          <Button
+            variant="link"
+            onClick={() => {
+              setIsTourOpen(false);
+            }}
+          >
+            Got it!
+          </Button>
+        }
+        rounded={8}
+        showNumber={false}
+        disableFocusLock
+        startAt={0}
+      /> */}
 
       <Head>
         <title>Storage Provider {miner.id} - DataStation</title>
