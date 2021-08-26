@@ -20,14 +20,27 @@ import * as Fathom from "fathom-client";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import {
+  GetFormattedStorageUnits,
   GetFormattedFILUnits,
   GetSimpleFILUnits,
   GetSimpleUSDUnits,
 } from "../../util/util";
+
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
-function AggregatedEarnings(props, { filecoinToUSDRate }) {
-  const [filecoinUSDRate, setFilecoinUSDRate] = useState(filecoinToUSDRate);
+function AggregatedEarnings(props) {
+  const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
+
+  useEffect(() => {
+    fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+    )
+      .then((res) => res.json())
+      .then((r) => {
+        console.log("PEEEES", r);
+        setFilecoinUSDRate(r.filecoin.usd);
+      });
+  }, []);
 
   return (
     <>
@@ -56,7 +69,15 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
                       >
                         {GetSimpleFILUnits(props.totalIncome)}
                       </StatNumber>
-                      <StatHelpText>$filecoinToUSDRate</StatHelpText>
+                      <StatHelpText>
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.totalIncome * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </StatHelpText>
                     </Stat>
                     <AccordionIcon />
                   </AccordionButton>
@@ -70,7 +91,15 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.storageDeal)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.storageDeal * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -79,7 +108,15 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.blockRewards)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.blockRewards * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                   </HStack>
                 </AccordionPanel>
@@ -98,7 +135,16 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
                       >
                         {GetSimpleFILUnits(props.totalExpenditure)}
                       </StatNumber>
-                      <StatHelpText>$filecoinToUSDRate</StatHelpText>
+                      <StatHelpText>
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.totalExpenditure * filecoinUSDRate) /
+                              10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </StatHelpText>
                     </Stat>
                     <AccordionIcon />
                   </AccordionButton>
@@ -120,7 +166,15 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.deposits)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.deposits * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -129,7 +183,15 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.gas)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.gas * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -138,7 +200,15 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.penalty)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.penalty * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -147,7 +217,15 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.others)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.others * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                   </HStack>
                 </AccordionPanel>
@@ -161,7 +239,15 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
               <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
                 {GetSimpleFILUnits(props.netEarnings)}
               </StatNumber>
-              <StatHelpText>$filecoinToUSDRate</StatHelpText>
+              <StatHelpText>
+                {GetSimpleUSDUnits(
+                  Math.round(
+                    ((props.netEarnings * filecoinUSDRate) / 10 ** 18 +
+                      Number.EPSILON) *
+                      100,
+                  ) / 100,
+                )}
+              </StatHelpText>
             </Stat>
           </VStack>
         </Stack>
@@ -171,29 +257,3 @@ function AggregatedEarnings(props, { filecoinToUSDRate }) {
 }
 
 export default AggregatedEarnings;
-
-export async function getServerSideProps() {
-  console.log(process.env.BACKEND_URL);
-  const client = new ApolloClient({
-    uri: process.env.BACKEND_URL,
-    cache: new InMemoryCache(),
-  });
-  let res1 = await fetch(
-    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
-  );
-  console.log("ressssS", res1);
-  const res2 = await res1.json();
-  console.log("rjsoon", res2);
-  console.log("fusd", res2.filecoin.usd);
-  // .then((res) => res.json())
-  // .then((r) => {
-  //   // console.log(r.filecoin.usd);
-  //   setFilecoinUSDRate(r.filecoin.usd);
-  // });
-
-  return {
-    props: {
-      filecoinToUSDRate: res2.filecoin.usd,
-    },
-  };
-}

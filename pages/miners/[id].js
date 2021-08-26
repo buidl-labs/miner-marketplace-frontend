@@ -678,6 +678,7 @@ export default function Miner({ miner }) {
                 <TabPanel>
                   {storageDealStatsIsLoaded ? (
                     <StorageDealStats
+                      qap={miner.qualityAdjustedPower}
                       averagePrice={storageDealStats.averagePrice}
                       dataStored={storageDealStats.dataStored}
                       faultTerminated={storageDealStats.faultTerminated}
@@ -970,6 +971,7 @@ export async function getServerSideProps({ params }) {
           id
           claimed
           onboarded
+          qualityAdjustedPower
           location {
             region
             country

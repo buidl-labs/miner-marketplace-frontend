@@ -17,18 +17,23 @@ import {
 import * as Fathom from "fathom-client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { GetFormattedFILUnits, GetSimpleFILUnits } from "../../util/util";
+import {
+  GetFormattedStorageUnits,
+  GetFormattedFILUnits,
+  GetSimpleFILUnits,
+  GetSimpleUSDUnits,
+} from "../../util/util";
 
 function PredictedEarnings(props) {
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
-        //console.log(r.filecoin.usd);
+        console.log("PEEEES", r);
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);
@@ -57,7 +62,15 @@ function PredictedEarnings(props) {
                       >
                         {GetSimpleFILUnits(props.totalIncome)}
                       </StatNumber>
-                      <StatHelpText>$filecoinToUSDRate</StatHelpText>
+                      <StatHelpText>
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.totalIncome * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </StatHelpText>
                     </Stat>
                     <AccordionIcon />
                   </AccordionButton>
@@ -75,7 +88,15 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.existing)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.existing * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -84,7 +105,15 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.potential)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.potential * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -93,7 +122,15 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.blockRewards)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.blockRewards * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -120,7 +157,16 @@ function PredictedEarnings(props) {
                       >
                         {GetSimpleFILUnits(props.totalExpenditure)}
                       </StatNumber>
-                      <StatHelpText>$filecoinToUSDRate</StatHelpText>
+                      <StatHelpText>
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.totalExpenditure * filecoinUSDRate) /
+                              10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </StatHelpText>
                     </Stat>
                     <AccordionIcon />
                   </AccordionButton>
@@ -138,7 +184,15 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.deposits)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.deposits * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -147,7 +201,15 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.gas)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.gas * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -156,7 +218,15 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.penalty)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.penalty * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                     <Stack>
                       <Text fontSize="md" color="gray.600">
@@ -165,7 +235,15 @@ function PredictedEarnings(props) {
                       <Text color="gray.700" fontWeight="medium" fontSize="lg">
                         {GetSimpleFILUnits(props.others)}
                       </Text>
-                      <Text color="gray.600">$filecoinToUSDRate</Text>
+                      <Text color="gray.600">
+                        {GetSimpleUSDUnits(
+                          Math.round(
+                            ((props.others * filecoinUSDRate) / 10 ** 18 +
+                              Number.EPSILON) *
+                              100,
+                          ) / 100,
+                        )}
+                      </Text>
                     </Stack>
                   </HStack>
                 </AccordionPanel>
@@ -179,7 +257,15 @@ function PredictedEarnings(props) {
               <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
                 {GetSimpleFILUnits(props.netEarnings)}
               </StatNumber>
-              <StatHelpText>$filecoinToUSDRate</StatHelpText>
+              <StatHelpText>
+                {GetSimpleUSDUnits(
+                  Math.round(
+                    ((props.netEarnings * filecoinUSDRate) / 10 ** 18 +
+                      Number.EPSILON) *
+                      100,
+                  ) / 100,
+                )}
+              </StatHelpText>
             </Stat>
           </VStack>
         </Stack>

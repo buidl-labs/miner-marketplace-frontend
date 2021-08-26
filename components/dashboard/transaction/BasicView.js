@@ -41,8 +41,10 @@ import { BiTransfer } from "react-icons/bi";
 import { FiExternalLink } from "react-icons/fi";
 
 import {
-  GetFormattedStorageUnits,
+  GetSimpleFILUnits,
   GetFormattedFILUnits,
+  GetFormattedStorageUnits,
+  GetSimpleUSDUnits,
 } from "../../../util/util";
 import { trackGoal } from "../../../util/analytics";
 import * as Fathom from "fathom-client";
@@ -94,12 +96,22 @@ function BasicView(props) {
   const [offsetValue, setOffsetValue] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isTxnLoading, setIsTxnLoading] = useState(false);
+  const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   // function isTransactionLoading() {
   //   isTxnLoading ? setIsTxnLoading(false) : setIsTxnLoading(false);
   // }
 
   useEffect(() => {
+    fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+    )
+      .then((res) => res.json())
+      .then((r) => {
+        //console.log(r.filecoin.usd);
+        setFilecoinUSDRate(r.filecoin.usd);
+      });
+
     const BACKEND_URL =
       "https://miner-marketplace-backend-2.onrender.com/query";
     const client = new ApolloClient({
@@ -267,7 +279,16 @@ function BasicView(props) {
                               >
                                 {txn.value.display}
                               </StatNumber>
-                              <StatHelpText>$filecoinUSDRate</StatHelpText>
+                              <StatHelpText>
+                                {GetSimpleUSDUnits(
+                                  Math.round(
+                                    ((txn.value.val * filecoinUSDRate) /
+                                      10 ** 18 +
+                                      Number.EPSILON) *
+                                      100,
+                                  ) / 100,
+                                )}
+                              </StatHelpText>
                             </Stat>
                           </GridItem>
 
@@ -301,11 +322,21 @@ function BasicView(props) {
                                 "DeclareFaultsRecovered" ||
                                 "ExtendSectorExpiration"
                                   ? GetFormattedFILUnits(
-                                      txn.minerFee.val + txn.burnFee.val
+                                      txn.minerFee.val + txn.burnFee.val,
                                     )
                                   : "0"}
                               </StatNumber>
-                              <StatHelpText>$filecoinUSDRate</StatHelpText>
+                              <StatHelpText>
+                                {GetSimpleUSDUnits(
+                                  Math.round(
+                                    (((txn.minerFee.val + txn.burnFee.val) *
+                                      filecoinUSDRate) /
+                                      10 ** 18 +
+                                      Number.EPSILON) *
+                                      100,
+                                  ) / 100,
+                                )}
+                              </StatHelpText>
                             </Stat>
                           </GridItem>
 
@@ -381,7 +412,7 @@ function BasicView(props) {
                                     "..." +
                                     txn.id.mid.substr(
                                       txn.id.mid.length - 12,
-                                      txn.id.mid.length
+                                      txn.id.mid.length,
                                     )
                                   : txn.id.mid}
                               </Link>
@@ -412,7 +443,7 @@ function BasicView(props) {
                                     "..." +
                                     txn.from.substr(
                                       txn.from.length - 12,
-                                      txn.from.length
+                                      txn.from.length,
                                     )
                                   : txn.from}
                               </Link>
@@ -444,7 +475,7 @@ function BasicView(props) {
                                     "..." +
                                     txn.to.substr(
                                       txn.to.length - 12,
-                                      txn.to.length
+                                      txn.to.length,
                                     )
                                   : txn.to}
                               </Link>
@@ -485,7 +516,31 @@ function BasicView(props) {
                                   ? txn.minerFee.display
                                   : "0"}
                               </Text>
-                              <Text>$filecoinUSDRate</Text>
+                              {/* <Text>
+                                {txn.methodName === "PreCommitSector" ||
+                                "ProveCommitSector" ||
+                                "PublishStorageDeals" ||
+                                "TerminateSectors" ||
+                                "RepayDebt" ||
+                                "WithdrawBalance (miner)" ||
+                                "WithdrawBalance (market)" ||
+                                "AddBalance" ||
+                                "ChangeWorkerAddress" ||
+                                "ChangeOwnerAddress" ||
+                                "ChangePeerID" ||
+                                "DeclareFaults" ||
+                                "DeclareFaultsRecovered" ||
+                                "ExtendSectorExpiration"
+                                  ? GetSimpleUSDUnits(
+                                      Math.round(
+                                        ((txn.minerFee.val * filecoinUSDRate) /
+                                          10 ** 18 +
+                                          Number.EPSILON) *
+                                          100,
+                                      ) / 100,
+                                    )
+                                  : "$0"}
+                              </Text> */}
                             </Stack>
                           </GridItem>
 
@@ -523,7 +578,33 @@ function BasicView(props) {
                                   <p>0</p>
                                 )}
                               </Text>
-                              <Text>$filecoinUSDRate</Text>
+                              {/* <Text>
+                                {txn.methodName === "PreCommitSector" ||
+                                "ProveCommitSector" ||
+                                "PublishStorageDeals" ||
+                                "TerminateSectors" ||
+                                "RepayDebt" ||
+                                "WithdrawBalance (miner)" ||
+                                "WithdrawBalance (market)" ||
+                                "AddBalance" ||
+                                "ChangeWorkerAddress" ||
+                                "ChangeOwnerAddress" ||
+                                "ChangePeerID" ||
+                                "DeclareFaults" ||
+                                "DeclareFaultsRecovered" ||
+                                "ExtendSectorExpiration" ? (
+                                  GetSimpleUSDUnits(
+                                    Math.round(
+                                      ((txn.burnFee.val * filecoinUSDRate) /
+                                        10 ** 18 +
+                                        Number.EPSILON) *
+                                        100,
+                                    ) / 100,
+                                  )
+                                ) : (
+                                  <p>$0</p>
+                                )}
+                              </Text> */}
                             </Stack>
                           </GridItem>
                         </Grid>
@@ -597,7 +678,7 @@ function BasicView(props) {
                               value: {
                                 val: Number(txn.value),
                                 display: GetFormattedFILUnits(
-                                  Number(txn.value)
+                                  Number(txn.value),
                                 ),
                               },
                               methodName: txn.methodName,
@@ -606,13 +687,13 @@ function BasicView(props) {
                               minerFee: {
                                 val: Number(txn.minerFee),
                                 display: GetFormattedFILUnits(
-                                  Number(txn.minerFee)
+                                  Number(txn.minerFee),
                                 ),
                               },
                               burnFee: {
                                 val: Number(txn.burnFee),
                                 display: GetFormattedFILUnits(
-                                  Number(txn.burnFee)
+                                  Number(txn.burnFee),
                                 ),
                               },
                               transactionType: txn.transactionType,

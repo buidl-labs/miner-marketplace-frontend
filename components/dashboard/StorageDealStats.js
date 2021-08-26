@@ -24,7 +24,7 @@ import {
 function StorageDealStats(props) {
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
@@ -56,7 +56,13 @@ function StorageDealStats(props) {
                   {GetFormattedFILUnits(props.averagePrice)}
                 </StatNumber>
                 <StatHelpText color="gray.600" fontSize="lg" pt="2">
-                  $filecoinToUSDRate
+                  {GetSimpleUSDUnits(
+                    Math.round(
+                      ((props.averagePrice * filecoinUSDRate) / 10 ** 18 +
+                        Number.EPSILON) *
+                        100,
+                    ) / 100,
+                  )}
                 </StatHelpText>
               </Stat>
               <Stat>
@@ -67,7 +73,7 @@ function StorageDealStats(props) {
                   {GetFormattedStorageUnits(props.dataStored)}
                 </StatNumber>
                 <StatHelpText color="gray.600" fontSize="lg" pt="2">
-                  / "QAP"
+                  / {GetFormattedStorageUnits(props.qap)}
                 </StatHelpText>
               </Stat>
               <Stat>
