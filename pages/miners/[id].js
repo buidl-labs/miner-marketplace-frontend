@@ -154,6 +154,23 @@ export default function Miner({ miner }) {
 
   const [isTourOpen, setIsTourOpen] = useState(true);
 
+  useEffect(() => {
+    if (typeof window != "undefined") {
+      console.log("nundefined window")
+      console.log("wls", window.localStorage)
+
+      var visited = window.localStorage.getItem(`${miner.id}_visited`);
+      if (!visited) {
+        console.log("not visited")
+        window.localStorage.setItem(`${miner.id}_visited`, "1");
+        setIsTourOpen(true)
+      } else {
+        console.log("visited already")
+        setIsTourOpen(false)
+      }
+    }
+  }, [])
+
   const steps = [
     {
       selector: ".first-step",
@@ -239,31 +256,6 @@ export default function Miner({ miner }) {
       },
     },
   ];
-
-  if (typeof window != "undefined") {
-    function createProvider() {
-      const map = new Map(
-        JSON.parse(window.localStorage.getItem("app-cache")) || []
-      );
-      console.log("CACHE");
-      window.addEventListener("beforeunload", () => {
-        const appCache = JSON.stringify(Array.from(map.entries()));
-        window.localStorage.setItem("app-cache", appCache);
-      });
-      return map;
-    }
-    const provider = createProvider();
-    const { cache, mutate } = createCache(provider);
-
-    var firstTime = window.localStorage.getItem("app-cache");
-
-    if (!firstTime) {
-      // first time loaded!
-      window.localStorage.setItem("app-cache", "1");
-      console.log("NOOOOOO");
-      setIsTourOpen(false);
-    }
-  }
 
   return (
     <>
@@ -448,12 +440,12 @@ export default function Miner({ miner }) {
                     typeof window != "undefined" &&
                       Fathom.trackGoal("AAPJSSFC", 0);
 
-                    console.log(
-                      "osccmcmcm",
-                      process.env.BACKEND_URL,
-                      "mid",
-                      miner.id
-                    );
+                    // console.log(
+                    //   "osccmcmcm",
+                    //   process.env.BACKEND_URL,
+                    //   "mid",
+                    //   miner.id
+                    // );
                     const BACKEND_URL =
                       "https://miner-marketplace-backend-2.onrender.com/query";
                     const client = new ApolloClient({
@@ -500,12 +492,12 @@ export default function Miner({ miner }) {
                     typeof window != "undefined" &&
                       Fathom.trackGoal("HQOJJAY9", 0);
 
-                    console.log(
-                      "osccmcmcm",
-                      process.env.BACKEND_URL,
-                      "mid",
-                      miner.id
-                    );
+                    // console.log(
+                    //   "osccmcmcm",
+                    //   process.env.BACKEND_URL,
+                    //   "mid",
+                    //   miner.id
+                    // );
                     const BACKEND_URL =
                       "https://miner-marketplace-backend-2.onrender.com/query";
                     const client = new ApolloClient({
@@ -558,12 +550,12 @@ export default function Miner({ miner }) {
                     typeof window != "undefined" &&
                       Fathom.trackGoal("XRMRVWRE", 0);
 
-                    console.log(
-                      "osccmcmcm",
-                      process.env.BACKEND_URL,
-                      "mid",
-                      miner.id
-                    );
+                    // console.log(
+                    //   "osccmcmcm",
+                    //   process.env.BACKEND_URL,
+                    //   "mid",
+                    //   miner.id
+                    // );
                     const BACKEND_URL =
                       "https://miner-marketplace-backend-2.onrender.com/query";
                     const client = new ApolloClient({

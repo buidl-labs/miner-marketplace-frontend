@@ -26,7 +26,7 @@ export function GetFormattedFILUnits(amountInAttoFIL) {
   // 1attoFIL=10^-18FIL
   //console.log("amountInAttoFIL", amountInAttoFIL);
   let amountInAttoFILInt = amountInAttoFIL; // parseInt(amountInAttoFIL);
-  console.log("amountInAttoFILInt", amountInAttoFILInt);
+  // console.log("amountInAttoFILInt", amountInAttoFILInt);
   if (amountInAttoFILInt == 0) {
     return `0 FIL`;
   }
