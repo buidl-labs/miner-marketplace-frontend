@@ -18,7 +18,6 @@ import {
   HStack,
   Link,
   Tag,
-  // Table,
   Thead,
   Tbody,
   Tfoot,
@@ -33,7 +32,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
-import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
+import { Icon, IconProps, Search2Icon, InfoIcon } from "@chakra-ui/icons";
 import Select from "react-select";
 import { isMobile } from "react-device-detect";
 
@@ -47,7 +46,7 @@ import { TableProps } from "antd/lib/table";
 import "antd/dist/antd.css";
 import Head from "next/head";
 import NxLink from "next/link";
-import { Table, Space } from "antd";
+import { Table, Space, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 
@@ -243,7 +242,18 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       },
     },
     {
-      title: "Reputation Score",
+      // title: "Reputation Score",
+      title: () => (
+        <>
+          <Text>
+            Reputation Score
+            <Tooltip title="Reputation Scores are based on Storage Provider's past performance and deals">
+              <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+            </Tooltip>
+          </Text>
+        </>
+      ),
+
       dataIndex: "reputationScore",
       key: "reputationScore",
       defaultSortOrder: "descend",
@@ -261,7 +271,16 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       },
     },
     {
-      title: "Transparency Score",
+      title: () => (
+        <>
+          <Text>
+            Transparency Score
+            <Tooltip title="Transparency Scores are based on offchain attributes provided by Storage Provider. Improve this score by authenticating your profile.">
+              <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+            </Tooltip>
+          </Text>
+        </>
+      ),
       dataIndex: "transparencyScore",
       key: "transparencyScore",
       sorter: {
@@ -364,7 +383,16 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       },
     },
     {
-      title: "Estimated Quote",
+      title: () => (
+        <>
+          <Text>
+            Estimmated Quote
+            <Tooltip title="This is the Estimated Quote for the mentioned storage and duration in the quote calculator above">
+              <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+            </Tooltip>
+          </Text>
+        </>
+      ),
       dataIndex: "estimatedQuote",
       key: "estimatedQuote",
       sorter: {
@@ -384,7 +412,16 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       },
     },
     {
-      title: "QAP",
+      title: () => (
+        <>
+          <Text>
+            QAP
+            <Tooltip title="Quality adjusted Power">
+              <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+            </Tooltip>
+          </Text>
+        </>
+      ),
       dataIndex: "qap",
       key: "qap",
       sorter: {
