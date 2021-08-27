@@ -1,5 +1,10 @@
 import {
   Accordion,
+  Center,
+  HStack,
+  VStack,
+  Image,
+  Text,
   Box,
   Container,
   Heading,
@@ -60,7 +65,7 @@ const IndexPage = ({ stats, filecoinUSDRate }) => {
                 <FilecoinStats
                   count={GetSimpleUSDUnits(
                     (parseInt(stats.totalBlockRewards24H, 10) / 10 ** 18) *
-                      filecoinUSDRate,
+                      filecoinUSDRate
                   )}
                   countText=""
                   subtext="Block Rewards earned in the past 24 hrs"
@@ -68,7 +73,7 @@ const IndexPage = ({ stats, filecoinUSDRate }) => {
                 <FilecoinStats
                   count={GetSimpleUSDUnits(
                     (parseInt(stats.topMinerBlockRewards24H, 10) / 10 ** 18) *
-                      filecoinUSDRate,
+                      filecoinUSDRate
                   )}
                   countText=""
                   subtext="Earned by top storage provider in the past 24 hrs"
@@ -88,7 +93,7 @@ const IndexPage = ({ stats, filecoinUSDRate }) => {
               Get Most out of DataStation <br /> with these Features
             </Heading>
             <Features
-              featureImg="\images\gif\agg-earn.gif"
+              featureImg="\images\gif\Earnings.gif"
               featureTitle="Get Aggregated & Predicted Earning Stats"
               featureDescription="As a Storage Provider it’s useful to have a track of your past and future earnings. At DataStation you can check your current net aggregated earnings and net estimated earnings along with your estimated expenditures & estimated income."
             />
@@ -97,11 +102,40 @@ const IndexPage = ({ stats, filecoinUSDRate }) => {
               featureTitle="Simplified Transaction History"
               featureDescription="With a more simplified view of Transaction history you can quickly scroll through your recent transactions. Want more details? We got you covered with the advanced view of transaction history for the advanced data analysis purposes."
             />
-            <Features
-              featureImg="\images\gif\scores.gif"
+            {/* <Features
+              featureImg="\images\gif\TRscores.gif"
               featureTitle="Stand out from other Storage Providers by improving your Scores"
               featureDescription="Improve your Transparency & Reputation scores by adding off chain attributes. This helps to build trust amongst potential clients."
             />
+             */}
+            <Center py="12">
+              <HStack
+                alignItems="center"
+                textAlign="center"
+                spacing="24"
+                maxW={{ lg: "80%", md: "50%" }}
+              >
+                <Stack textAlign="left">
+                  <Heading size="lg">
+                    Stand out from other Storage Providers by improving your
+                    Scores
+                  </Heading>
+                  <Text size="xs">
+                    Improve your Transparency & Reputation scores by adding off
+                    chain attributes. This helps to build trust amongst
+                    potential clients.
+                  </Text>
+                </Stack>
+                <Box>
+                  <Image
+                    src="\images\gif\TRscores.gif"
+                    w="56rem"
+                    objectFit="cover"
+                    alt="feature GIF"
+                  />
+                </Box>
+              </HStack>
+            </Center>
           </Stack>
 
           {/* Join Network */}
@@ -168,7 +202,7 @@ export async function getServerSideProps() {
   });
 
   const res1 = await fetch(
-    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
   );
   const res2 = await res1.json();
 

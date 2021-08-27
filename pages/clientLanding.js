@@ -57,7 +57,7 @@ export default function ClientLanding({ stats, filecoinUSDRate }) {
                 <FilecoinStats
                   count={GetSimpleUSDUnits(
                     (parseInt(stats.averageDealPrice, 10) / 10 ** 18) *
-                      filecoinUSDRate,
+                      filecoinUSDRate
                   )}
                   countText=""
                   subtext="Average Storage Deal Price"
@@ -160,7 +160,7 @@ export async function getServerSideProps() {
   });
 
   const res1 = await fetch(
-    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
   );
   const res2 = await res1.json();
 

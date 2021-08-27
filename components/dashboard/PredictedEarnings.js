@@ -22,13 +22,21 @@ function PredictedEarnings(props) {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
     )
       .then((res) => res.json())
       .then((r) => {
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);
+
+  function earningColor() {
+    if (props.netEarnings >= 0) {
+      return "green.600";
+    } else {
+      return "red.600";
+    }
+  }
 
   return (
     <>
@@ -59,8 +67,8 @@ function PredictedEarnings(props) {
                           Math.round(
                             ((props.totalIncome * filecoinUSDRate) / 10 ** 18 +
                               Number.EPSILON) *
-                              100,
-                          ) / 100,
+                              100
+                          ) / 100
                         )}
                       </StatHelpText>
                     </Stat>
@@ -85,8 +93,8 @@ function PredictedEarnings(props) {
                           Math.round(
                             ((props.existing * filecoinUSDRate) / 10 ** 18 +
                               Number.EPSILON) *
-                              100,
-                          ) / 100,
+                              100
+                          ) / 100
                         )}
                       </Text>
                     </Stack>
@@ -102,8 +110,8 @@ function PredictedEarnings(props) {
                           Math.round(
                             ((props.potential * filecoinUSDRate) / 10 ** 18 +
                               Number.EPSILON) *
-                              100,
-                          ) / 100,
+                              100
+                          ) / 100
                         )}
                       </Text>
                     </Stack>
@@ -119,8 +127,8 @@ function PredictedEarnings(props) {
                           Math.round(
                             ((props.blockRewards * filecoinUSDRate) / 10 ** 18 +
                               Number.EPSILON) *
-                              100,
-                          ) / 100,
+                              100
+                          ) / 100
                         )}
                       </Text>
                     </Stack>
@@ -155,8 +163,8 @@ function PredictedEarnings(props) {
                             ((props.totalExpenditure * filecoinUSDRate) /
                               10 ** 18 +
                               Number.EPSILON) *
-                              100,
-                          ) / 100,
+                              100
+                          ) / 100
                         )}
                       </StatHelpText>
                     </Stat>
@@ -181,8 +189,8 @@ function PredictedEarnings(props) {
                           Math.round(
                             ((props.deposits * filecoinUSDRate) / 10 ** 18 +
                               Number.EPSILON) *
-                              100,
-                          ) / 100,
+                              100
+                          ) / 100
                         )}
                       </Text>
                     </Stack>
@@ -198,8 +206,8 @@ function PredictedEarnings(props) {
                           Math.round(
                             ((props.gas * filecoinUSDRate) / 10 ** 18 +
                               Number.EPSILON) *
-                              100,
-                          ) / 100,
+                              100
+                          ) / 100
                         )}
                       </Text>
                     </Stack>
@@ -215,8 +223,8 @@ function PredictedEarnings(props) {
                           Math.round(
                             ((props.penalty * filecoinUSDRate) / 10 ** 18 +
                               Number.EPSILON) *
-                              100,
-                          ) / 100,
+                              100
+                          ) / 100
                         )}
                       </Text>
                     </Stack>
@@ -232,8 +240,8 @@ function PredictedEarnings(props) {
                           Math.round(
                             ((props.others * filecoinUSDRate) / 10 ** 18 +
                               Number.EPSILON) *
-                              100,
-                          ) / 100,
+                              100
+                          ) / 100
                         )}
                       </Text>
                     </Stack>
@@ -246,7 +254,11 @@ function PredictedEarnings(props) {
               <StatLabel fontSize="md" color="gray.600" mb="2">
                 Net Estimated Earnings (next 60 days)
               </StatLabel>
-              <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
+              <StatNumber
+                color={earningColor()}
+                fontWeight="normal"
+                fontSize="3xl"
+              >
                 {GetSimpleFILUnits(props.netEarnings)}
               </StatNumber>
               <StatHelpText>
@@ -254,8 +266,8 @@ function PredictedEarnings(props) {
                   Math.round(
                     ((props.netEarnings * filecoinUSDRate) / 10 ** 18 +
                       Number.EPSILON) *
-                      100,
-                  ) / 100,
+                      100
+                  ) / 100
                 )}
               </StatHelpText>
             </Stat>

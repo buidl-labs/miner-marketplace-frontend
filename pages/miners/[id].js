@@ -242,28 +242,6 @@ export default function Miner({ miner }) {
         startAt={0}
       />
 
-      {/* <Tour
-        steps={steps}
-        isOpen={isTourOpen}
-        onRequestClose={() => setIsTourOpen(false)}
-        badgeContent={(curr, tot) => `${curr} of ${tot}`}
-        closeWithMask
-        lastStepNextButton={
-          <Button
-            variant="link"
-            onClick={() => {
-              setIsTourOpen(false);
-            }}
-          >
-            Got it!
-          </Button>
-        }
-        rounded={8}
-        showNumber={false}
-        disableFocusLock
-        startAt={0}
-      /> */}
-
       <Head>
         <title>Storage Provider {miner.id} - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -292,7 +270,7 @@ export default function Miner({ miner }) {
           transparencyScore={miner.transparencyScore}
           onboarded={miner.onboarded}
         />
-        <Stack flexDir="row" justify="space-between">
+        <Stack flexDir="row" justify="space-between" pt="24">
           <Button
             mt="4"
             colorScheme="blue"
