@@ -26,7 +26,7 @@ export function GetFormattedFILUnits(amountInAttoFIL) {
   // 1attoFIL=10^-18FIL
   //console.log("amountInAttoFIL", amountInAttoFIL);
   let amountInAttoFILInt = amountInAttoFIL; // parseInt(amountInAttoFIL);
-  console.log("amountInAttoFILInt", amountInAttoFILInt);
+  // console.log("amountInAttoFILInt", amountInAttoFILInt);
   if (amountInAttoFILInt == 0) {
     return `0 FIL`;
   }
@@ -60,6 +60,14 @@ export function GetSimpleFILUnits(amountInAttoFIL) {
   if (amountInFIL < 0) {
     sign = "-";
   }
+  console.log(
+    "a",
+    amountInAttoFIL,
+    "b",
+    amountInFIL,
+    "MYFILVAL",
+    Math.abs(amountInFIL),
+  );
   if (Math.abs(amountInFIL) < 0.0001) {
     return `0 FIL`;
   } else if (Math.abs(amountInFIL) < 1000) {
@@ -67,32 +75,45 @@ export function GetSimpleFILUnits(amountInAttoFIL) {
     return `${(amountInFIL / 1).toFixed(2)} FIL`;
   } else if (Math.abs(amountInFIL) < 1000000) {
     if (sign == "-")
-      return sign + `${Math.abs(amountInFIL / 1000).toFixed(2)} FIL`;
+      return sign + `${Math.abs(amountInFIL / 1000).toFixed(2)}K FIL`;
     return `${(amountInFIL / 1000).toFixed(2)}K FIL`;
   } else if (Math.abs(amountInFIL) < 1000000000) {
     if (sign == "-")
-      return sign + `${Math.abs(amountInFIL / 1000000).toFixed(2)} FIL`;
+      return sign + `${Math.abs(amountInFIL / 1000000).toFixed(2)}M FIL`;
     return `${(amountInFIL / 1000000).toFixed(2)}M FIL`;
   } else {
     if (sign == "-")
-      return sign + `${Math.abs(amountInFIL / 1000000000).toFixed(2)} FIL`;
+      return sign + `${Math.abs(amountInFIL / 1000000000).toFixed(2)}B FIL`;
     return `${(amountInFIL / 1000000000).toFixed(2)}B FIL`;
   }
 }
 
 export function GetSimpleUSDUnits(amountInUSD) {
   // console.log("amountInUSD", amountInUSD);
-  if (amountInUSD < 0.01) {
+  let sign = "";
+  if (amountInUSD < 0) {
+    sign = "-";
+  }
+  if (Math.abs(amountInUSD) < 0.01) {
     return `$0`;
-  } else if (amountInUSD < 1000) {
+  } else if (Math.abs(amountInUSD) < 1000) {
+    if (sign == "-") return sign + `$${Math.abs(amountInUSD).toFixed(2)}`;
     return `$${(amountInUSD / 1).toFixed(2)}`;
-  } else if (amountInUSD < 1000000) {
+  } else if (Math.abs(amountInUSD) < 1000000) {
+    if (sign == "-")
+      return sign + `$${Math.abs(amountInUSD / 1000).toFixed(2)}K`;
     return `$${(amountInUSD / 1000).toFixed(2)}K`;
-  } else if (amountInUSD < 1000000000) {
+  } else if (Math.abs(amountInUSD) < 1000000000) {
+    if (sign == "-")
+      return sign + `$${Math.abs(amountInUSD / 1000000).toFixed(2)}M`;
     return `$${(amountInUSD / 1000000).toFixed(2)}M`;
-  } else if (amountInUSD < 1000000000000) {
+  } else if (Math.abs(amountInUSD) < 1000000000000) {
+    if (sign == "-")
+      return sign + `$${Math.abs(amountInUSD / 1000000000).toFixed(2)}B`;
     return `$${(amountInUSD / 1000000000).toFixed(2)}B`;
   } else {
+    if (sign == "-")
+      return sign + `$${Math.abs(amountInUSD / 1000000000000).toFixed(2)}T`;
     return `$${(amountInUSD / 1000000000000).toFixed(2)}T`;
   }
 }

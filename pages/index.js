@@ -16,12 +16,15 @@ import Faq from "../components/Faq";
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useState } from "react";
 
 const IndexPage = (stats) => {
   //console.log(stats);
   // console.log("active", stats.stats.activeMinersCount);
   // console.log("dataS", stats.stats.dataStored);
   const router = useRouter();
+
+  const [btnLoading, setBtnLoading] = useState(false);
 
   return (
     <>
@@ -33,114 +36,79 @@ const IndexPage = (stats) => {
       <Navbar />
 
       <Container maxW={{ lg: "container.xl" }} mb="16">
-        <SimpleGrid gap="12">
+        <SimpleGrid gap="28">
           {/* Hero Section */}
           <Hero
-            heroImg="/images/heroGlobe.svg"
-            heroAlt="Global Filecoin network"
-            heroHeading="Decentralised Storage Solution for all your needs"
-            heroText="Filecoin is a decentralised storage network designed to store
-            humanity’s most important information. Sounds interesting? head over
-            to link below to learn more."
-            ctaText="Learn more about Filecoin Network"
-            ctaLink={"https://filecoin.io"}
+            heroHeading="Simplified Stats for Filecoin Storage Providers"
+            heroText="Get quantitative and qualitative data about Storage Providers in a more enhanced and jargon-free way"
+            ctaText="Get Started"
           />
-
-          {/* Features Section */}
-          <Stack textAlign="center" alignItems="center">
-            <Heading color="gray.900" size="2xl">
-              Why Filecoin?
-            </Heading>
-          </Stack>
-
-          <SimpleGrid
-            columns={{ md: 3, lg: 3, sm: 1 }}
-            gap={{ lg: "28", md: "12", sm: "4" }}
-          >
-            <Features
-              featureIcon="/images/secure.svg"
-              imgAlt="secure"
-              featureTitle="Secure"
-              featureDescription="Cryptographic storage proofs verify data is being stored correctly and securely over time"
-            />
-            <Features
-              featureIcon="/images/rewards.svg"
-              imgAlt="rewards"
-              featureTitle="Rewards"
-              featureDescription="Rewards are directly proportional to amount of storage you provide,
-            hence more storage means more rewards"
-            />
-            <Features
-              featureIcon="/images/decentralised.svg"
-              imgAlt="decentralised"
-              featureTitle="Decentralised"
-              featureDescription="It all is decentralised hence, no single point of control, no middle
-            man"
-            />
-          </SimpleGrid>
 
           {/*Filecoin Stats*/}
           <Box
             bgColor="blue.600"
             py="6"
             px="12"
-            borderRadius="2xl"
+            borderRadius="3xl"
             color="white"
             my="16"
           >
             <Stack textAlign="center" spacing="16" my="16">
               <Heading size="2xl" color="white">
-                Filecoin Storage Providers in Numbers
+                Filecoin Network in Numbers
               </Heading>
               <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
                 <FilecoinStats
-                  count={stats.stats.activeMinersCount + "+"}
+                  count="$24.7k"
                   countText=""
-                  subtext="Active Storage Providers and counting"
+                  subtext="Given as Block Reward last month"
                 />
                 <FilecoinStats
-                  count={stats.stats.networkStorageCapacity}
+                  count="$4.9k"
                   countText=""
-                  subtext="Network Storage Capacity"
+                  subtext="Earned in past 24hrs by Top Miner"
                 />
                 <FilecoinStats
-                  count={stats.stats.dataStored}
+                  count="2.96k"
                   countText=""
-                  subtext="Data Stored till now"
+                  subtext="TB Data Stored till Now"
                 />
               </SimpleGrid>
             </Stack>
           </Box>
 
-          {/*Join Network*/}
-          <Stack textAlign="center" spacing="16" my="16">
-            <Heading color="gray.900" size="2xl">
-              Join the Filecoin Network
+          {/* Features Section */}
+          <Stack textAlign="center">
+            <Heading size="2xl">
+              Get Most out of DataStation <br /> with these Features
             </Heading>
-
-            <SimpleGrid columns={{ lg: 2, md: 2, sm: 1 }} gap="12">
-              <JoinNetwork
-                cardHeading="Looking to provide Storage Services"
-                cardText="Start your miner journey and become part of global network of
-                fielcoin Storage Providers."
-                ctaText="Become a Storage Provider"
-                ctaVariant="solid"
-                ctaRoute={() => {
-                  router.push("/minerLanding");
-                }}
-              />
-              <JoinNetwork
-                cardHeading="Looking to Store Data"
-                cardText="Explore storage providers according to your needs and start storing your data
-            securely on Filecoin Network."
-                ctaText="Explore Storage Providers"
-                ctaVariant="outline"
-                ctaRoute={() => {
-                  router.push("/miners");
-                }}
-              />
-            </SimpleGrid>
+            <Features
+              featureImg="\images\gif\agg-earn.gif"
+              featureTitle="Get Aggregated & Predicted Earning Stats"
+              featureDescription="As a Storage Provider it’s useful to have a track of your past and future earnings. At DataStation you can check your current net aggregated earnings and net estimated earnings along with your estimated expenditures & estimated income."
+            />
+            <Features
+              featureImg="\images\gif\txn.gif"
+              featureTitle="Simplified Transaction History"
+              featureDescription="With a more simplified view of Transaction history you can quickly scroll through your recent transactions. Want more details? We got you covered with the advanced view of transaction history for the advanced data analysis purposes."
+            />
+            <Features
+              featureImg="\images\gif\scores.gif"
+              featureTitle="Stand out from other Storage Providers by improving your Scores"
+              featureDescription="Improve your Transparency & Reputation scores by adding off chain attributes. This helps to build trust amongst potential clients."
+            />
           </Stack>
+
+          {/*Join Network*/}
+
+          <JoinNetwork
+            cardHeading="Storage Provider Stats, made simple. Get Started with DataStation"
+            ctaText="Setup Profile"
+            ctaRoute={() => {
+              router.push("/miners");
+              setBtnLoading(true);
+            }}
+          />
 
           {/*FAQ*/}
           <Stack textAlign="center" alignItems="center" spacing="16">

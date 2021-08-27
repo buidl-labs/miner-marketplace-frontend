@@ -61,7 +61,7 @@ function Scores(props) {
             </Stack>
             <Stack alignItems="center" color="gray.600">
               <Tooltip
-                label="Transparency scores are based on your public information like email, social media handle, service details etc."
+                label="Transparency scores are based on your public information like email, social media handle, service details etc. You can edit these attributes by clicking on Authenticate button"
                 aria-label="Transparency Scores"
                 px="4"
                 py="2"

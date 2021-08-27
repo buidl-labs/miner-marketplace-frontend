@@ -1,10 +1,15 @@
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
   Button,
   Heading,
   Stack,
   Flex,
   Grid,
   GridItem,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
@@ -13,7 +18,6 @@ import {
   HStack,
   Link,
   Tag,
-  // Table,
   Thead,
   Tbody,
   Tfoot,
@@ -28,11 +32,13 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
-import { Icon, IconProps, Search2Icon } from "@chakra-ui/icons";
+import { Icon, IconProps, Search2Icon, InfoIcon } from "@chakra-ui/icons";
 import Select from "react-select";
+import { isMobile } from "react-device-detect";
 
 import DashboardMenu from "../components/dashboard/DashboardMenu";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
+import MinerListingNavbar from "../components/dashboard/MinerListingNavbar";
 
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { createHttpLink } from "apollo-link-http";
@@ -40,7 +46,7 @@ import { TableProps } from "antd/lib/table";
 import "antd/dist/antd.css";
 import Head from "next/head";
 import NxLink from "next/link";
-import { Table, Space } from "antd";
+import { Table, Space, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 
@@ -166,7 +172,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
             30 *
             2880 *
             storageAmount *
-            parseInt(storageAskPrice)
+            parseInt(storageAskPrice),
         ),
         usd:
           storageDuration *
@@ -181,7 +187,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
             2880 *
             storageAmount *
             (parseInt(storageAskPrice) / 10 ** 18) *
-            filecoinUSDRate
+            filecoinUSDRate,
         ),
       },
       qap: {
@@ -237,9 +243,22 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     },
     {
       title: "Reputation Score",
+      // title: () => (
+      //   <>
+      //     <Text>
+      //       Reputation Score
+      //       <Tooltip
+      //         placement="topLeft"
+      //         title="Reputation Scores are based on Storage Provider's past performance and deals"
+      //       >
+      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+      //       </Tooltip>
+      //     </Text>
+      //   </>
+      // ),
       dataIndex: "reputationScore",
       key: "reputationScore",
-      defaultSortOrder: 'descend',
+      defaultSortOrder: "descend",
       sorter: {
         compare: (a, b) =>
           parseInt(a.reputationScore) - parseInt(b.reputationScore),
@@ -255,6 +274,16 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     },
     {
       title: "Transparency Score",
+      // title: () => (
+      //   <>
+      //     <Text>
+      //       Transparency Score
+      //       <Tooltip title="Transparency Scores are based on offchain attributes provided by Storage Provider. Improve this score by authenticating your profile.">
+      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+      //       </Tooltip>
+      //     </Text>
+      //   </>
+      // ),
       dataIndex: "transparencyScore",
       key: "transparencyScore",
       sorter: {
@@ -358,6 +387,16 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     },
     {
       title: "Estimated Quote",
+      // title: () => (
+      //   <>
+      //     <Text>
+      //       Estimated Quote
+      //       <Tooltip title="This is the Estimated Quote for the mentioned storage and duration in the quote calculator above">
+      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+      //       </Tooltip>
+      //     </Text>
+      //   </>
+      // ),
       dataIndex: "estimatedQuote",
       key: "estimatedQuote",
       sorter: {
@@ -377,7 +416,17 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       },
     },
     {
-      title: "QAP",
+      title: "Total Storage Capacity",
+      // title: () => (
+      //   <>
+      //     <Text>
+      //       Total Storage Capacity
+      //       <Tooltip title="Quality adjusted Power">
+      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+      //       </Tooltip>
+      //     </Text>
+      //   </>
+      // ),
       dataIndex: "qap",
       key: "qap",
       sorter: {
@@ -466,7 +515,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
 
   const [dStorageUnits, setDStorageUnits] = useState(dStorageUnitsArr[1]);
   const [dStorageDurationUnits, setDStorageDurationUnits] = useState(
-    dStorageDurationUnitsArr[0]
+    dStorageDurationUnitsArr[0],
   );
 
   const handleStorageUnitsChange = (event) => {
@@ -529,18 +578,39 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     }
   }
 
+  const [quoteAlert, showQuoteAlert] = useState("none");
+
+  if (isMobile) {
+    return (
+      <>
+        <Stack textAlign="center" alignItems="center" mt="24" p="4">
+          <Image src="/images/Logo-b.svg" alt="datastation logo" maxW="60vw" />
+          <Heading size="xl" color="blue.800" pt="12">
+            Device Not Supported
+          </Heading>
+          <Text size="md" color="gray.700" maxW="80%">
+            Please visit DataStation via a personal Computer or a Laptop device
+          </Text>
+        </Stack>
+      </>
+    );
+  }
+
   return (
     <>
       <Head>
         <title>Storage Provider Listing - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <DashboardNavbar isMinerProfile={false} />
+      {/* <DashboardNavbar isMinerProfile={false} /> */}
+
+      <MinerListingNavbar />
       <Grid
         templateColumns={{
           lg: "repeat(12, 1fr)",
           md: "repeat(6,1fr)",
         }}
+        // mx="24"
       >
         <GridItem colSpan="12" pt="28" bg="white" px="8">
           <Flex justifyContent="space-between">
@@ -605,12 +675,12 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                           console.log(
                             "storageAmount",
                             storageAmount,
-                            event.target.value
+                            event.target.value,
                           );
                           console.log("dStorageUnits", dStorageUnits);
                           console.log(
                             "dStorageDurationUnits",
-                            dStorageDurationUnits
+                            dStorageDurationUnits,
                           );
                         }}
                         borderRight="none"
@@ -654,12 +724,12 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                           console.log(
                             "storageDuration",
                             storageDuration,
-                            event.target.value
+                            event.target.value,
                           );
                           console.log("dStorageUnits", dStorageUnits);
                           console.log(
                             "dStorageDurationUnits",
-                            dStorageDurationUnits
+                            dStorageDurationUnits,
                           );
                         }}
                         borderRight="none"
@@ -681,13 +751,29 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                   w="fit-content"
                   colorScheme="blue"
                   variant="solid"
+                  borderRadius="full"
+                  px="6"
                   onClick={(event) => {
                     filterList(event);
                     track();
+                    showQuoteAlert("visible");
                   }}
                 >
                   Update Estimated Quote
                 </Button>
+                <Alert
+                  status="info"
+                  borderRadius="lg"
+                  bg="none"
+                  display={quoteAlert}
+                >
+                  <HStack>
+                    <AlertIcon color="gray.600" />
+                    <AlertDescription fontWeight="medium">
+                      See updated Quote in the Estimated Quote column below
+                    </AlertDescription>
+                  </HStack>
+                </Alert>
               </Stack>
             </GridItem>
           </Flex>
@@ -745,8 +831,9 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
               dataSource={filteredMiners}
               // onChange={handleTableChange}
               // pagination={pagination}
-              pagination={{defaultPageSize:50}}
+              pagination={{ defaultPageSize: 50 }}
               scroll={{ y: 480 }}
+              // showSorterTooltip={false}
             />
           </Stack>
         </GridItem>
@@ -798,17 +885,17 @@ export async function getServerSideProps() {
   });
 
   let res1 = await fetch(
-    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
-  )
-  console.log("ressssS", res1)
-  const res2 = await res1.json()
-  console.log("rjsoon", res2)
-  console.log("fusd", res2.filecoin.usd)
-    // .then((res) => res.json())
-    // .then((r) => {
-    //   // console.log(r.filecoin.usd);
-    //   setFilecoinUSDRate(r.filecoin.usd);
-    // });
+    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+  );
+  console.log("ressssS", res1);
+  const res2 = await res1.json();
+  console.log("rjsoon", res2);
+  console.log("fusd", res2.filecoin.usd);
+  // .then((res) => res.json())
+  // .then((r) => {
+  //   // console.log(r.filecoin.usd);
+  //   setFilecoinUSDRate(r.filecoin.usd);
+  // });
 
   return {
     props: {

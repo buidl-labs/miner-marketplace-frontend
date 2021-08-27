@@ -67,7 +67,7 @@ function ServiceDetails(props) {
 
   return (
     <>
-      <Stack alignItems="flex-start" spacing="8" my="8">
+      <Stack alignItems="flex-start" spacing="8" my="8" ml="-3" pb="24">
         <Heading size="lg" color="blue.700">
           Service Offering
         </Heading>
@@ -130,7 +130,7 @@ function ServiceDetails(props) {
               {/*<Text fontSize="2xl" color="gray.700">
                 {props.verifiedAskPrice / 10 ** 18}
               </Text>*/}
-              <Text fontSize="sm" color="gray.500">
+              <Text fontSize="sm" color="gray.500" textAlign="left">
                 Requirement dependent. Contact storage provider directly for
                 estimates
               </Text>
@@ -139,7 +139,7 @@ function ServiceDetails(props) {
               {/*<Text fontSize="2xl" color="gray.700">
                 {props.retrievalAskPrice}
               </Text>*/}
-              <Text fontSize="sm" color="gray.500">
+              <Text fontSize="sm" color="gray.500" textAlign="left">
                 Requirement dependent. Contact storage provider directly for
                 estimates
               </Text>

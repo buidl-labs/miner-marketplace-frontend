@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { Icon, SettingsIcon } from "@chakra-ui/icons";
 import { FiSettings } from "react-icons/fi";
-import { BiBug } from "react-icons/bi";
+import { BiBug, BiHelpCircle } from "react-icons/bi";
 
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
@@ -224,12 +224,17 @@ const DashboardNavbar = (props) => {
     <>
       <Flex
         bg="white"
-        borderBottom="solid 1px #E2E8F0"
+        borderBottom="solid 1px #F5F5F5"
         p="4"
-        w="full"
-        overflow="hidden"
+        pr="2rem"
+        w={{ lg: "container.xl", md: "80vw" }}
+        maxW="full"
+        // w="83%"
+        // overflow="hidden"
         position="fixed"
         zIndex="20"
+        bg="whiteAlpha.800"
+        backdropFilter="blur(12px)"
       >
         <Link onClick={() => router.push("/")}>
           <Image
@@ -263,11 +268,28 @@ const DashboardNavbar = (props) => {
             </Link>
           </Tooltip>
 
+          {/* <Tooltip
+            label="Get a quick tour of dashboard"
+            aria-label="report bug"
+            p={4}
+            borderRadius="lg"
+            hasArrow
+          >
+            <IconButton
+              icon={<BiHelpCircle size="1.6rem" />}
+              bg="none"
+              _hover={{ bg: "none" }}
+            />
+          </Tooltip> */}
+
           {DisplaySettings()}
           <Button
+            data-tour="reactour__auth"
             colorScheme="blue"
             size="md"
             variant="solid"
+            borderRadius="full"
+            px="6"
             onClick={() => {
               onOpen();
               console.log("heyyyy there");

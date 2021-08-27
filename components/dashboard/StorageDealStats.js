@@ -10,15 +10,34 @@ import {
   StatHelpText,
   HStack,
   Text,
+  Spacer,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { GetSimpleFILUnits, GetFormattedFILUnits, GetFormattedStorageUnits } from "../../util/util"
+import {
+  GetSimpleFILUnits,
+  GetFormattedFILUnits,
+  GetFormattedStorageUnits,
+  GetSimpleUSDUnits,
+} from "../../util/util";
 
 function StorageDealStats(props) {
+  useEffect(() => {
+    fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+    )
+      .then((res) => res.json())
+      .then((r) => {
+        //console.log(r.filecoin.usd);
+        setFilecoinUSDRate(r.filecoin.usd);
+      });
+  }, []);
+
+  const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
+
   return (
     <>
-      <VStack textAlign="left" alignItems="left">
+      <VStack textAlign="left" alignItems="left" pb="24">
         <Heading size="lg" color="blue.700" my={6}>
           Storage Deal Stats
         </Heading>
@@ -27,8 +46,8 @@ function StorageDealStats(props) {
           templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(3, 1fr)" }}
           gap={1}
         >
-          <GridItem colSpan="1" pb={{ base: 8, lg: 2 }}>
-            <VStack textAlign="left" alignItems="left" spacing="7">
+          <GridItem colSpan="3" pb={{ base: 8, lg: 4 }}>
+            <HStack textAlign="left" alignItems="left" spacing="7">
               <Stat>
                 <StatLabel fontSize="lg" fontWeight="medium" color="gray.700">
                   Average Deal Price
@@ -36,6 +55,15 @@ function StorageDealStats(props) {
                 <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
                   {GetFormattedFILUnits(props.averagePrice)}
                 </StatNumber>
+                <StatHelpText color="gray.600" fontSize="lg" pt="2">
+                  {GetSimpleUSDUnits(
+                    Math.round(
+                      ((props.averagePrice * filecoinUSDRate) / 10 ** 18 +
+                        Number.EPSILON) *
+                        100,
+                    ) / 100,
+                  )}
+                </StatHelpText>
               </Stat>
               <Stat>
                 <StatLabel fontSize="lg" color="gray.600">
@@ -44,6 +72,9 @@ function StorageDealStats(props) {
                 <StatNumber color="blue.700" fontWeight="normal" fontSize="3xl">
                   {GetFormattedStorageUnits(props.dataStored)}
                 </StatNumber>
+                <StatHelpText color="gray.600" fontSize="lg" pt="2">
+                  / {GetFormattedStorageUnits(props.qap)}
+                </StatHelpText>
               </Stat>
               <Stat>
                 <StatLabel fontSize="lg" color="gray.600">
@@ -57,7 +88,11 @@ function StorageDealStats(props) {
                   {(parseFloat(props.successRate) * 100).toFixed(2)}%
                 </StatNumber>
               </Stat>
-            </VStack>
+            </HStack>
+          </GridItem>
+
+          <GridItem colSpan="2">
+            <hr />
           </GridItem>
           {/*<Stat pl="4">
               <StatLabel fontSize="md" color="gray.600" >
@@ -65,14 +100,14 @@ function StorageDealStats(props) {
               </StatLabel>
               <StatNumber color="blue.700">{props.faultTerminated}</StatNumber>
             </Stat>*/}
-          <GridItem>
-            <VStack textAlign="left" alignItems="left" spacing="4">
+          <GridItem colSpan="3" pt="8">
+            <HStack textAlign="left" alignItems="left" spacing="4" pb="6">
               <Stat>
                 <StatLabel fontSize="md" color="gray.600">
-                  Number of Times Slashed
+                  Total Number of Storage Deals
                 </StatLabel>
                 <StatNumber color="gray.700" fontWeight="medium" fontSize="lg">
-                  {props.slashed}
+                  {props.total}
                 </StatNumber>
               </Stat>
               <Stat>
@@ -83,6 +118,17 @@ function StorageDealStats(props) {
                   {props.noPenalties}
                 </StatNumber>
               </Stat>
+            </HStack>
+
+            <HStack textAlign="left" alignItems="left" spacing="4">
+              <Stat>
+                <StatLabel fontSize="md" color="gray.600">
+                  Number of Times Slashed
+                </StatLabel>
+                <StatNumber color="gray.700" fontWeight="medium" fontSize="lg">
+                  {props.slashed}
+                </StatNumber>
+              </Stat>
               <Stat>
                 <StatLabel fontSize="md" color="gray.600">
                   Number of Terminated Deals
@@ -91,15 +137,7 @@ function StorageDealStats(props) {
                   {props.terminated}
                 </StatNumber>
               </Stat>
-              <Stat>
-                <StatLabel fontSize="md" color="gray.600">
-                  Total Number of Storage Deals
-                </StatLabel>
-                <StatNumber color="gray.700" fontWeight="medium" fontSize="lg">
-                  {props.total}
-                </StatNumber>
-              </Stat>
-            </VStack>
+            </HStack>
           </GridItem>
         </Grid>
       </VStack>
