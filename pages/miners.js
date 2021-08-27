@@ -172,7 +172,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
             30 *
             2880 *
             storageAmount *
-            parseInt(storageAskPrice)
+            parseInt(storageAskPrice),
         ),
         usd:
           storageDuration *
@@ -187,7 +187,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
             2880 *
             storageAmount *
             (parseInt(storageAskPrice) / 10 ** 18) *
-            filecoinUSDRate
+            filecoinUSDRate,
         ),
       },
       qap: {
@@ -242,18 +242,20 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       },
     },
     {
-      // title: "Reputation Score",
-      title: () => (
-        <>
-          <Text>
-            Reputation Score
-            <Tooltip title="Reputation Scores are based on Storage Provider's past performance and deals">
-              <InfoIcon ml="1" h={4} w={4} color="gray.500" />
-            </Tooltip>
-          </Text>
-        </>
-      ),
-
+      title: "Reputation Score",
+      // title: () => (
+      //   <>
+      //     <Text>
+      //       Reputation Score
+      //       <Tooltip
+      //         placement="topLeft"
+      //         title="Reputation Scores are based on Storage Provider's past performance and deals"
+      //       >
+      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+      //       </Tooltip>
+      //     </Text>
+      //   </>
+      // ),
       dataIndex: "reputationScore",
       key: "reputationScore",
       defaultSortOrder: "descend",
@@ -271,16 +273,17 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       },
     },
     {
-      title: () => (
-        <>
-          <Text>
-            Transparency Score
-            <Tooltip title="Transparency Scores are based on offchain attributes provided by Storage Provider. Improve this score by authenticating your profile.">
-              <InfoIcon ml="1" h={4} w={4} color="gray.500" />
-            </Tooltip>
-          </Text>
-        </>
-      ),
+      title: "Transparency Score",
+      // title: () => (
+      //   <>
+      //     <Text>
+      //       Transparency Score
+      //       <Tooltip title="Transparency Scores are based on offchain attributes provided by Storage Provider. Improve this score by authenticating your profile.">
+      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+      //       </Tooltip>
+      //     </Text>
+      //   </>
+      // ),
       dataIndex: "transparencyScore",
       key: "transparencyScore",
       sorter: {
@@ -383,16 +386,17 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       },
     },
     {
-      title: () => (
-        <>
-          <Text>
-            Estimmated Quote
-            <Tooltip title="This is the Estimated Quote for the mentioned storage and duration in the quote calculator above">
-              <InfoIcon ml="1" h={4} w={4} color="gray.500" />
-            </Tooltip>
-          </Text>
-        </>
-      ),
+      title: "Estimated Quote",
+      // title: () => (
+      //   <>
+      //     <Text>
+      //       Estimated Quote
+      //       <Tooltip title="This is the Estimated Quote for the mentioned storage and duration in the quote calculator above">
+      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+      //       </Tooltip>
+      //     </Text>
+      //   </>
+      // ),
       dataIndex: "estimatedQuote",
       key: "estimatedQuote",
       sorter: {
@@ -412,16 +416,17 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       },
     },
     {
-      title: () => (
-        <>
-          <Text>
-            QAP
-            <Tooltip title="Quality adjusted Power">
-              <InfoIcon ml="1" h={4} w={4} color="gray.500" />
-            </Tooltip>
-          </Text>
-        </>
-      ),
+      title: "Total Storage Capacity",
+      // title: () => (
+      //   <>
+      //     <Text>
+      //       Total Storage Capacity
+      //       <Tooltip title="Quality adjusted Power">
+      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
+      //       </Tooltip>
+      //     </Text>
+      //   </>
+      // ),
       dataIndex: "qap",
       key: "qap",
       sorter: {
@@ -510,7 +515,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
 
   const [dStorageUnits, setDStorageUnits] = useState(dStorageUnitsArr[1]);
   const [dStorageDurationUnits, setDStorageDurationUnits] = useState(
-    dStorageDurationUnitsArr[0]
+    dStorageDurationUnitsArr[0],
   );
 
   const handleStorageUnitsChange = (event) => {
@@ -670,12 +675,12 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                           console.log(
                             "storageAmount",
                             storageAmount,
-                            event.target.value
+                            event.target.value,
                           );
                           console.log("dStorageUnits", dStorageUnits);
                           console.log(
                             "dStorageDurationUnits",
-                            dStorageDurationUnits
+                            dStorageDurationUnits,
                           );
                         }}
                         borderRight="none"
@@ -719,12 +724,12 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                           console.log(
                             "storageDuration",
                             storageDuration,
-                            event.target.value
+                            event.target.value,
                           );
                           console.log("dStorageUnits", dStorageUnits);
                           console.log(
                             "dStorageDurationUnits",
-                            dStorageDurationUnits
+                            dStorageDurationUnits,
                           );
                         }}
                         borderRight="none"
@@ -828,6 +833,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
               // pagination={pagination}
               pagination={{ defaultPageSize: 50 }}
               scroll={{ y: 480 }}
+              // showSorterTooltip={false}
             />
           </Stack>
         </GridItem>
@@ -879,7 +885,7 @@ export async function getServerSideProps() {
   });
 
   let res1 = await fetch(
-    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
+    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
   );
   console.log("ressssS", res1);
   const res2 = await res1.json();
