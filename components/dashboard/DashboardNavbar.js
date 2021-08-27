@@ -23,6 +23,12 @@ import { BiBug, BiHelpCircle } from "react-icons/bi";
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
 
+import * as wasm from "@zondax/filecoin-signing-tools/js";
+import * as bip39 from "bip39";
+import FilecoinApp from "@zondax/ledger-filecoin";
+import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
+import { mapSeries } from "bluebird";
+import * as Fathom from "fathom-client";
 import Authenticate from "./ledgerAlert/Authenticate";
 import AuthFail from "./ledgerAlert/AuthFail";
 import AuthSuccess from "./ledgerAlert/AuthSuccess";
@@ -30,14 +36,8 @@ import LedgerConfirm from "./ledgerAlert/LedgerConfirm";
 import AuthMode from "./ledgerAlert/AuthMode";
 
 import createTransport from "./ledger/ct";
-import * as wasm from "@zondax/filecoin-signing-tools/js";
-import * as bip39 from "bip39";
-import FilecoinApp from "@zondax/ledger-filecoin";
-import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
-import { mapSeries } from "bluebird";
 import { useGlobalState } from "../../state";
 import ProfileSettings from "../../pages/profileSettings";
-import * as Fathom from "fathom-client";
 import { trackGoal } from "../../util/analytics";
 import Signature from "./ledgerAlert/Signature";
 
@@ -106,7 +106,7 @@ const CustomModal = ({
             />
           </ModalBody>
 
-          {/*<ModalFooter>
+          {/* <ModalFooter>
             <Button variant="ghost" mr={3} onClick={onClose}>
               Discard
             </Button>
@@ -118,7 +118,7 @@ const CustomModal = ({
             >
               Save Changes
             </Button>
-            </ModalFooter>*/}
+            </ModalFooter> */}
         </ModalContent>
       </Modal>
     </>
@@ -215,7 +215,7 @@ const DashboardNavbar = (props) => {
   }
 
   function track() {
-    if (typeof window != "undefined") {
+    if (typeof window !== "undefined") {
       Fathom.trackGoal("XVQ91EFR", 0);
     }
   }
@@ -324,12 +324,12 @@ const DashboardNavbar = (props) => {
               />
             )}
             {/* <Signature /> */}
-            {/*<AuthMode
+            {/* <AuthMode
               minerID={router.asPath.split("/")[2]}
               ledgerAddress={ledgerAddress}
               onOpen={onOpen}
               getAddress={getAddress}
-            />*/}
+            /> */}
 
             {/* <LedgerConfirm />
             <AuthSuccess />
@@ -337,7 +337,7 @@ const DashboardNavbar = (props) => {
           </Modal>
         </HStack>
       </Flex>
-      {/*<Modal isOpen={isOpen} onClose={onClose}>
+      {/* <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Modal Title</ModalHeader>
@@ -353,7 +353,7 @@ const DashboardNavbar = (props) => {
             <Button variant="ghost">Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
-          </Modal>*/}
+          </Modal> */}
     </>
   );
 };

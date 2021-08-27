@@ -1,31 +1,25 @@
 import {
   Button,
-  ButtonGroup,
   Box,
   Flex,
   Link,
   Image,
   Icon,
-  HStack,
   Stack,
   Spacer,
-  Spinner,
-  SpinnerProps,
   Text,
   useDisclosure,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-import { HiMenuAlt3, HiX } from "react-icons/hi";
+import { HiMenuAlt3 } from "react-icons/hi";
 import { useRouter } from "next/router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as Fathom from "fathom-client";
-import { useState } from "react";
 
 const Navbar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,7 +29,7 @@ const Navbar = (props) => {
   const router = useRouter();
 
   function track() {
-    if (typeof window != "undefined") {
+    if (typeof window !== "undefined") {
       Fathom.trackGoal("5O1PTUCW", 0);
     }
   }
@@ -73,7 +67,7 @@ const Navbar = (props) => {
           onClick={handleToggle}
           mr={4}
         >
-          <Icon as={HiMenuAlt3} color={"blue.800"} w={8} h={8} />
+          <Icon as={HiMenuAlt3} color="blue.800" w={8} h={8} />
         </Box>
         <Drawer
           size="xs"
@@ -100,11 +94,6 @@ const Navbar = (props) => {
                     Want to Store Data?
                   </Text>
                 </Link>
-                {/* <Link onClick={() => router.push("/minerLanding")}>
-                  <Text fontSize="xl" fontWeight="medium">
-                    Storage Providers
-                  </Text>
-                </Link> */}
                 <Box>
                   <Button
                     size="md"
@@ -138,11 +127,6 @@ const Navbar = (props) => {
               Want to Store Data?
             </Text>
           </Link>
-          {/* <Link onClick={() => router.push("/minerLanding")}>
-            <Text fontSize="lg" fontWeight="medium">
-              Storage Providers
-            </Text>
-          </Link> */}
         </Stack>
 
         <Box

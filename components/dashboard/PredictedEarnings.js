@@ -14,15 +14,8 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
-import * as Fathom from "fathom-client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import {
-  GetFormattedStorageUnits,
-  GetFormattedFILUnits,
-  GetSimpleFILUnits,
-  GetSimpleUSDUnits,
-} from "../../util/util";
+import { GetSimpleFILUnits, GetSimpleUSDUnits } from "../../util/util";
 
 function PredictedEarnings(props) {
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
@@ -33,7 +26,6 @@ function PredictedEarnings(props) {
     )
       .then((res) => res.json())
       .then((r) => {
-        console.log("PEEEES", r);
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);

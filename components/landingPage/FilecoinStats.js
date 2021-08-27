@@ -10,8 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const FilecoinStats = (props) => {
-  return (
+const FilecoinStats = (props) => (
     <>
       <Center>
         <Stack alignItems="center">
@@ -30,6 +29,5 @@ const FilecoinStats = (props) => {
       </Center>
     </>
   );
-};
 
 export default FilecoinStats;

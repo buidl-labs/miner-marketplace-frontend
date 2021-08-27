@@ -1,30 +1,8 @@
-import {
-  Button,
-  ButtonGroup,
-  Box,
-  Flex,
-  Link,
-  Image,
-  Icon,
-  HStack,
-  Stack,
-  Spacer,
-  Spinner,
-  SpinnerProps,
-  Text,
-  useDisclosure,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-} from "@chakra-ui/react";
+import { Flex, Link, Image } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
 
-const MinerListingNavbar = (props) => {
+const MinerListingNavbar = () => {
   const router = useRouter();
 
   return (

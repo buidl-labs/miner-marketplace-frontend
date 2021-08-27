@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import {
   Accordion,
   AccordionItem,
@@ -5,54 +6,33 @@ import {
   AccordionButton,
   AccordionIcon,
   Button,
-  Box,
   Center,
   Heading,
   Spinner,
-  Image,
   Stack,
   Grid,
   GridItem,
-  IconButton,
-  Select,
-  VStack,
   HStack,
   Link,
   Tag,
   Text,
-  Spacer,
   Stat,
-  Switch,
   StatLabel,
   StatNumber,
   StatHelpText,
 } from "@chakra-ui/react";
-import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
-import {
-  Icon,
-  IconProps,
-  Search2Icon,
-  ArrowDownIcon,
-  ArrowUpIcon,
-} from "@chakra-ui/icons";
+import React, { useEffect, useState } from "react";
+import { Icon, ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import { useRouter } from "next/router";
 import { BiTransfer } from "react-icons/bi";
-import { FiExternalLink } from "react-icons/fi";
 
-import {
-  GetSimpleFILUnits,
-  GetFormattedFILUnits,
-  GetFormattedStorageUnits,
-  GetSimpleUSDUnits,
-} from "../../../util/util";
-import { trackGoal } from "../../../util/analytics";
 import * as Fathom from "fathom-client";
+import PropTypes from "prop-types";
+import { GetFormattedFILUnits, GetSimpleUSDUnits } from "../../../util/util";
 
 function dateOfTransaction(dateProps) {
   const miliseconds = dateProps * 1000;
   const dateObject = new Date(miliseconds);
-  const txnDate = dateObject.toLocaleDateString();
   const date = dateObject.getDate();
   const monthNames = [
     "January",
@@ -72,7 +52,7 @@ function dateOfTransaction(dateProps) {
   const year = dateObject.getFullYear();
   return (
     <Text fontSize="sm" fontWeight="normal" color="gray.600">
-      {month + " " + date + ", " + year}
+      {`${month} ${date}, ${year}`}
     </Text>
   );
 }
@@ -85,7 +65,7 @@ function timeOfTransaction(mytimestamp) {
     .substring(0, txnTime.split(" ")[0].length - 3);
   return (
     <Text fontSize="sm" fontWeight="normal" color="gray.600">
-      {hoursmins + " " + amorpm}
+      {`${hoursmins} ${amorpm}`}
     </Text>
   );
 }
@@ -93,14 +73,10 @@ function timeOfTransaction(mytimestamp) {
 function BasicView(props) {
   const [basicTransactions, setBasicTransactions] = useState([]);
   const [firstValue, setFirstValue] = useState(20);
-  const [offsetValue, setOffsetValue] = useState(0);
+  const offsetValue = 0;
   const [isLoaded, setIsLoaded] = useState(false);
   const [isTxnLoading, setIsTxnLoading] = useState(false);
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
-
-  // function isTransactionLoading() {
-  //   isTxnLoading ? setIsTxnLoading(false) : setIsTxnLoading(false);
-  // }
 
   useEffect(() => {
     fetch(
@@ -108,14 +84,11 @@ function BasicView(props) {
     )
       .then((res) => res.json())
       .then((r) => {
-        //console.log(r.filecoin.usd);
         setFilecoinUSDRate(r.filecoin.usd);
       });
 
-    const BACKEND_URL =
-      "https://miner-marketplace-backend-2.onrender.com/query";
     const client = new ApolloClient({
-      uri: BACKEND_URL,
+      uri: "https://miner-marketplace-backend-2.onrender.com/query",
       cache: new InMemoryCache(),
     });
 
@@ -142,23 +115,19 @@ function BasicView(props) {
           }
         `,
       })
-      .then((data) => {
-        return data.data;
-      })
-      .then((d) => {
-        return d.miner;
-      })
+      .then((data) => data.data)
+      .then((d) => d.miner)
       .then((m) => {
         const dsrc = m.transactions.map((txn) => {
           let txntype = "message";
-          if (txn.methodName == "ApplyRewards") {
+          if (txn.methodName === "ApplyRewards") {
             txntype = "block";
           }
           return {
             key: txn.id,
             id: {
               mid: txn.id,
-              txntype: txntype,
+              txntype,
             },
             value: {
               val: Number(txn.value),
@@ -189,334 +158,325 @@ function BasicView(props) {
   }, []);
 
   function track() {
-    if (typeof window != "undefined") {
+    if (typeof window !== "undefined") {
       Fathom.trackGoal("40EP4VDN", 0);
     }
   }
 
-  if (true) {
-    console.log("wowwwwwwww");
-    return (
+  return (
+    <>
       <>
-        <>
-          {isLoaded ? (
-            <Stack>
-              {/*<Heading size="md" color="gray.700" fontWeight="semibold" pl="4">
-              dateGoesHere
-            </Heading>*/}
-              <Accordion allowMultiple w="fit-content" maxW="96vw">
-                {basicTransactions.map((txn) => (
-                  <AccordionItem py="3">
-                    <AccordionButton alignItems="center">
-                      <HStack textAlign="left" alignItems="center">
-                        <Grid
-                          templateColumns="repeat(8, 1fr)"
-                          gap={{ base: 12 }}
-                        >
-                          <GridItem colSpan="3">
-                            <HStack>
-                              {txn.transactionType === "Block Reward" ? (
-                                <ArrowDownIcon
-                                  h={10}
-                                  w={10}
-                                  p="2"
-                                  mr="2"
-                                  borderRadius="full"
-                                  bg="green.100"
-                                  color="green.600"
-                                />
-                              ) : txn.transactionType ===
-                                "Collateral Deposit" ? (
-                                <ArrowUpIcon
-                                  h={10}
-                                  w={10}
-                                  p="2"
-                                  mr="2"
-                                  borderRadius="full"
-                                  bg="red.100"
-                                  color="red.600"
-                                />
-                              ) : (
-                                <Icon
-                                  as={BiTransfer}
-                                  h={10}
-                                  w={10}
-                                  p="2"
-                                  mr="2"
-                                  borderRadius="full"
-                                  bg="gray.100"
-                                  color="gray.600"
-                                />
-                              )}
-                              <Stat>
-                                <StatLabel
-                                  fontSize="xl"
-                                  color="gray.700"
-                                  whiteSpace="nowrap"
-                                >
-                                  {txn.transactionType}
-                                </StatLabel>
-                                <StatNumber
-                                  fontSize="sm"
-                                  fontWeight="normal"
-                                  color="gray.600"
-                                >
-                                  {dateOfTransaction(txn.timestamp)}
-                                  {timeOfTransaction(txn.timestamp)}
-                                </StatNumber>
-                              </Stat>
-                            </HStack>
-                          </GridItem>
-
-                          <GridItem colSpan="2">
-                            <Stat>
-                              <StatLabel color="gray.600">Value</StatLabel>
-                              <StatNumber
-                                whiteSpace="nowrap"
-                                fontSize="2xl"
-                                color="blue.900"
-                                fontWeight="normal"
-                              >
-                                {txn.value.display}
-                              </StatNumber>
-                              <StatHelpText>
-                                {GetSimpleUSDUnits(
-                                  Math.round(
-                                    ((txn.value.val * filecoinUSDRate) /
-                                      10 ** 18 +
-                                      Number.EPSILON) *
-                                      100,
-                                  ) / 100,
-                                )}
-                              </StatHelpText>
-                            </Stat>
-                          </GridItem>
-
-                          <GridItem colSpan="2">
+        {isLoaded ? (
+          <Stack>
+            <Accordion allowMultiple w="fit-content" maxW="96vw">
+              {basicTransactions.map((txn) => (
+                <AccordionItem key={txn.id} py="3">
+                  <AccordionButton alignItems="center">
+                    <HStack textAlign="left" alignItems="center">
+                      <Grid templateColumns="repeat(8, 1fr)" gap={{ base: 12 }}>
+                        <GridItem colSpan="3">
+                          <HStack>
+                            {txn.transactionType === "Block Reward" ? (
+                              <ArrowDownIcon
+                                h={10}
+                                w={10}
+                                p="2"
+                                mr="2"
+                                borderRadius="full"
+                                bg="green.100"
+                                color="green.600"
+                              />
+                            ) : txn.transactionType === "Collateral Deposit" ? (
+                              <ArrowUpIcon
+                                h={10}
+                                w={10}
+                                p="2"
+                                mr="2"
+                                borderRadius="full"
+                                bg="red.100"
+                                color="red.600"
+                              />
+                            ) : (
+                              <Icon
+                                as={BiTransfer}
+                                h={10}
+                                w={10}
+                                p="2"
+                                mr="2"
+                                borderRadius="full"
+                                bg="gray.100"
+                                color="gray.600"
+                              />
+                            )}
                             <Stat>
                               <StatLabel
-                                fontSize="sm"
-                                color="gray.600"
-                                marginBottom="8px"
+                                fontSize="xl"
+                                color="gray.700"
+                                whiteSpace="nowrap"
                               >
-                                Total Gas
+                                {txn.transactionType}
                               </StatLabel>
                               <StatNumber
-                                fontSize="md"
+                                fontSize="sm"
                                 fontWeight="normal"
-                                color="red.600"
-                                whiteSpace="nowrap"
+                                color="gray.600"
                               >
-                                {txn.methodName === "PreCommitSector" ||
-                                "ProveCommitSector" ||
-                                "PublishStorageDeals" ||
-                                "TerminateSectors" ||
-                                "RepayDebt" ||
-                                "WithdrawBalance (miner)" ||
-                                "WithdrawBalance (market)" ||
-                                "AddBalance" ||
-                                "ChangeWorkerAddress" ||
-                                "ChangeOwnerAddress" ||
-                                "ChangePeerID" ||
-                                "DeclareFaults" ||
-                                "DeclareFaultsRecovered" ||
-                                "ExtendSectorExpiration"
-                                  ? GetFormattedFILUnits(
-                                      txn.minerFee.val + txn.burnFee.val,
-                                    )
-                                  : "0"}
+                                {dateOfTransaction(txn.timestamp)}
+                                {timeOfTransaction(txn.timestamp)}
                               </StatNumber>
-                              <StatHelpText>
-                                {GetSimpleUSDUnits(
-                                  Math.round(
-                                    (((txn.minerFee.val + txn.burnFee.val) *
-                                      filecoinUSDRate) /
-                                      10 ** 18 +
-                                      Number.EPSILON) *
-                                      100,
-                                  ) / 100,
-                                )}
-                              </StatHelpText>
                             </Stat>
-                          </GridItem>
+                          </HStack>
+                        </GridItem>
 
-                          <GridItem colSpan="1" pr="8">
-                            <Stat>
-                              <StatLabel fontSize="sm" color="gray.600">
-                                Status
-                              </StatLabel>
-
-                              {txn.exitCode === 0 ? (
-                                <Tag colorScheme="green" borderRadius="full">
-                                  Success
-                                </Tag>
-                              ) : (
-                                <Tag colorScheme="red" borderRadius="full">
-                                  Faliure
-                                </Tag>
+                        <GridItem colSpan="2">
+                          <Stat>
+                            <StatLabel color="gray.600">Value</StatLabel>
+                            <StatNumber
+                              whiteSpace="nowrap"
+                              fontSize="2xl"
+                              color="blue.900"
+                              fontWeight="normal"
+                            >
+                              {txn.value.display}
+                            </StatNumber>
+                            <StatHelpText>
+                              {GetSimpleUSDUnits(
+                                Math.round(
+                                  ((txn.value.val * filecoinUSDRate) /
+                                    10 ** 18 +
+                                    Number.EPSILON) *
+                                    100,
+                                ) / 100,
                               )}
-                            </Stat>
-                          </GridItem>
-                        </Grid>
-                      </HStack>
+                            </StatHelpText>
+                          </Stat>
+                        </GridItem>
 
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel py="4">
-                      <Stack spacing="8">
-                        <Grid templateColumns="repeat(8, 1fr)" gap={16}>
-                          <GridItem colSpan="2">
-                            <Stack>
-                              <Heading
-                                size="sm"
-                                fontWeight="medium"
-                                color="gray.700"
-                                lineHeight="80%"
-                                whiteSpace="nowrap"
-                              >
-                                Method Name
-                              </Heading>
-                              <Text
-                                size="md"
-                                fontWeight="normal"
-                                color="gray.600"
-                              >
-                                {txn.methodName}
-                              </Text>
-                            </Stack>
-                          </GridItem>
+                        <GridItem colSpan="2">
+                          <Stat>
+                            <StatLabel
+                              fontSize="sm"
+                              color="gray.600"
+                              marginBottom="8px"
+                            >
+                              Total Gas
+                            </StatLabel>
+                            <StatNumber
+                              fontSize="md"
+                              fontWeight="normal"
+                              color="red.600"
+                              whiteSpace="nowrap"
+                            >
+                              {txn.methodName === "PreCommitSector" ||
+                              txn.methodName === "ProveCommitSector" ||
+                              txn.methodName === "PublishStorageDeals" ||
+                              txn.methodName === "TerminateSectors" ||
+                              txn.methodName === "RepayDebt" ||
+                              txn.methodName === "WithdrawBalance (miner)" ||
+                              txn.methodName === "WithdrawBalance (market)" ||
+                              txn.methodName === "AddBalance" ||
+                              txn.methodName === "ChangeWorkerAddress" ||
+                              txn.methodName === "ChangeOwnerAddress" ||
+                              txn.methodName === "ChangePeerID" ||
+                              txn.methodName === "DeclareFaults" ||
+                              txn.methodName === "DeclareFaultsRecovered" ||
+                              txn.methodName === "ExtendSectorExpiration"
+                                ? GetFormattedFILUnits(
+                                    txn.minerFee.val + txn.burnFee.val,
+                                  )
+                                : "0"}
+                            </StatNumber>
+                            <StatHelpText>
+                              {GetSimpleUSDUnits(
+                                Math.round(
+                                  (((txn.minerFee.val + txn.burnFee.val) *
+                                    filecoinUSDRate) /
+                                    10 ** 18 +
+                                    Number.EPSILON) *
+                                    100,
+                                ) / 100,
+                              )}
+                            </StatHelpText>
+                          </Stat>
+                        </GridItem>
 
-                          <GridItem colSpan="2">
-                            <Stack>
-                              <Heading
-                                size="sm"
-                                fontWeight="medium"
-                                color="gray.700"
-                                lineHeight="80%"
-                                whiteSpace="nowrap"
-                              >
-                                Transaction ID
-                              </Heading>
+                        <GridItem colSpan="1" pr="8">
+                          <Stat>
+                            <StatLabel fontSize="sm" color="gray.600">
+                              Status
+                            </StatLabel>
 
-                              <Link
-                                href={`https://filfox.info/en/${txn.id.txntype}/${txn.id.mid}`}
-                                isExternal
-                                alt="transaction id link"
-                                size="md"
-                                fontWeight="normal"
-                                color="gray.600"
-                                onClick={track()}
-                              >
-                                {txn.id.mid.length > 25
-                                  ? txn.id.mid.substr(0, 12) +
-                                    "..." +
-                                    txn.id.mid.substr(
-                                      txn.id.mid.length - 12,
-                                      txn.id.mid.length,
-                                    )
-                                  : txn.id.mid}
-                              </Link>
-                            </Stack>
-                          </GridItem>
+                            {txn.exitCode === 0 ? (
+                              <Tag colorScheme="green" borderRadius="full">
+                                Success
+                              </Tag>
+                            ) : (
+                              <Tag colorScheme="red" borderRadius="full">
+                                Faliure
+                              </Tag>
+                            )}
+                          </Stat>
+                        </GridItem>
+                      </Grid>
+                    </HStack>
 
-                          <GridItem colSpan="2">
-                            <Stack>
-                              <Heading
-                                size="sm"
-                                fontWeight="medium"
-                                color="gray.700"
-                                lineHeight="80%"
-                              >
-                                From
-                              </Heading>
-                              <Link
-                                href={`https://filfox.info/en/address/${txn.from}`}
-                                isExternal
-                                alt="transaction id link"
-                                size="md"
-                                fontWeight="normal"
-                                color="gray.600"
-                                onClick={track()}
-                              >
-                                {txn.from.length > 25
-                                  ? txn.from.substr(0, 12) +
-                                    "..." +
-                                    txn.from.substr(
-                                      txn.from.length - 12,
-                                      txn.from.length,
-                                    )
-                                  : txn.from}
-                              </Link>
-                            </Stack>
-                          </GridItem>
+                    <AccordionIcon />
+                  </AccordionButton>
+                  <AccordionPanel py="4">
+                    <Stack spacing="8">
+                      <Grid templateColumns="repeat(8, 1fr)" gap={16}>
+                        <GridItem colSpan="2">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                              whiteSpace="nowrap"
+                            >
+                              Method Name
+                            </Heading>
+                            <Text
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                            >
+                              {txn.methodName}
+                            </Text>
+                          </Stack>
+                        </GridItem>
 
-                          <GridItem colSpan="1">
-                            <Stack>
-                              <Heading
-                                size="sm"
-                                fontWeight="medium"
-                                color="gray.700"
-                                lineHeight="80%"
-                              >
-                                To
-                              </Heading>
+                        <GridItem colSpan="2">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                              whiteSpace="nowrap"
+                            >
+                              Transaction ID
+                            </Heading>
 
-                              <Link
-                                href={`https://filfox.info/en/address/${txn.to}`}
-                                isExternal
-                                alt="transaction id link"
-                                size="md"
-                                fontWeight="normal"
-                                color="gray.600"
-                                onClick={track()}
-                              >
-                                {txn.to.length > 25
-                                  ? txn.to.substr(0, 12) +
-                                    "..." +
-                                    txn.to.substr(
-                                      txn.to.length - 12,
-                                      txn.to.length,
-                                    )
-                                  : txn.to}
-                              </Link>
-                            </Stack>
-                          </GridItem>
-                        </Grid>
+                            <Link
+                              href={`https://filfox.info/en/${txn.id.txntype}/${txn.id.mid}`}
+                              isExternal
+                              alt="transaction id link"
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                              onClick={track()}
+                            >
+                              {txn.id.mid.length > 25
+                                ? `${txn.id.mid.substr(
+                                    0,
+                                    12,
+                                  )}...${txn.id.mid.substr(
+                                    txn.id.mid.length - 12,
+                                    txn.id.mid.length,
+                                  )}`
+                                : txn.id.mid}
+                            </Link>
+                          </Stack>
+                        </GridItem>
 
-                        <Grid templateColumns="repeat(8, 1fr)" gap={16}>
-                          <GridItem colSpan="2">
-                            <Stack>
-                              <Heading
-                                size="sm"
-                                fontWeight="medium"
-                                color="gray.700"
-                                lineHeight="80%"
-                              >
-                                Miner Fee
-                              </Heading>
-                              <Text
-                                size="md"
-                                fontWeight="normal"
-                                color="gray.600"
-                              >
-                                {txn.methodName === "PreCommitSector" ||
-                                "ProveCommitSector" ||
-                                "PublishStorageDeals" ||
-                                "TerminateSectors" ||
-                                "RepayDebt" ||
-                                "WithdrawBalance (miner)" ||
-                                "WithdrawBalance (market)" ||
-                                "AddBalance" ||
-                                "ChangeWorkerAddress" ||
-                                "ChangeOwnerAddress" ||
-                                "ChangePeerID" ||
-                                "DeclareFaults" ||
-                                "DeclareFaultsRecovered" ||
-                                "ExtendSectorExpiration"
-                                  ? txn.minerFee.display
-                                  : "0"}
-                              </Text>
-                              {/* <Text>
+                        <GridItem colSpan="2">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                            >
+                              From
+                            </Heading>
+                            <Link
+                              href={`https://filfox.info/en/address/${txn.from}`}
+                              isExternal
+                              alt="transaction id link"
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                              onClick={track()}
+                            >
+                              {txn.from.length > 25
+                                ? `${txn.from.substr(
+                                    0,
+                                    12,
+                                  )}...${txn.from.substr(
+                                    txn.from.length - 12,
+                                    txn.from.length,
+                                  )}`
+                                : txn.from}
+                            </Link>
+                          </Stack>
+                        </GridItem>
+
+                        <GridItem colSpan="1">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                            >
+                              To
+                            </Heading>
+
+                            <Link
+                              href={`https://filfox.info/en/address/${txn.to}`}
+                              isExternal
+                              alt="transaction id link"
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                              onClick={track()}
+                            >
+                              {txn.to.length > 25
+                                ? `${txn.to.substr(0, 12)}...${txn.to.substr(
+                                    txn.to.length - 12,
+                                    txn.to.length,
+                                  )}`
+                                : txn.to}
+                            </Link>
+                          </Stack>
+                        </GridItem>
+                      </Grid>
+
+                      <Grid templateColumns="repeat(8, 1fr)" gap={16}>
+                        <GridItem colSpan="2">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                            >
+                              Miner Fee
+                            </Heading>
+                            <Text
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                            >
+                              {txn.methodName === "PreCommitSector" ||
+                              txn.methodName === "ProveCommitSector" ||
+                              txn.methodName === "PublishStorageDeals" ||
+                              txn.methodName === "TerminateSectors" ||
+                              txn.methodName === "RepayDebt" ||
+                              txn.methodName === "WithdrawBalance (miner)" ||
+                              txn.methodName === "WithdrawBalance (market)" ||
+                              txn.methodName === "AddBalance" ||
+                              txn.methodName === "ChangeWorkerAddress" ||
+                              txn.methodName === "ChangeOwnerAddress" ||
+                              txn.methodName === "ChangePeerID" ||
+                              txn.methodName === "DeclareFaults" ||
+                              txn.methodName === "DeclareFaultsRecovered" ||
+                              txn.methodName === "ExtendSectorExpiration"
+                                ? txn.minerFee.display
+                                : "0"}
+                            </Text>
+                            {/* <Text>
                                 {txn.methodName === "PreCommitSector" ||
                                 "ProveCommitSector" ||
                                 "PublishStorageDeals" ||
@@ -541,44 +501,44 @@ function BasicView(props) {
                                     )
                                   : "$0"}
                               </Text> */}
-                            </Stack>
-                          </GridItem>
+                          </Stack>
+                        </GridItem>
 
-                          <GridItem colSpan="2">
-                            <Stack>
-                              <Heading
-                                size="sm"
-                                fontWeight="medium"
-                                color="gray.700"
-                                lineHeight="80%"
-                              >
-                                Burn Fee
-                              </Heading>
-                              <Text
-                                size="md"
-                                fontWeight="normal"
-                                color="gray.600"
-                              >
-                                {txn.methodName === "PreCommitSector" ||
-                                "ProveCommitSector" ||
-                                "PublishStorageDeals" ||
-                                "TerminateSectors" ||
-                                "RepayDebt" ||
-                                "WithdrawBalance (miner)" ||
-                                "WithdrawBalance (market)" ||
-                                "AddBalance" ||
-                                "ChangeWorkerAddress" ||
-                                "ChangeOwnerAddress" ||
-                                "ChangePeerID" ||
-                                "DeclareFaults" ||
-                                "DeclareFaultsRecovered" ||
-                                "ExtendSectorExpiration" ? (
-                                  txn.burnFee.display
-                                ) : (
-                                  <p>0</p>
-                                )}
-                              </Text>
-                              {/* <Text>
+                        <GridItem colSpan="2">
+                          <Stack>
+                            <Heading
+                              size="sm"
+                              fontWeight="medium"
+                              color="gray.700"
+                              lineHeight="80%"
+                            >
+                              Burn Fee
+                            </Heading>
+                            <Text
+                              size="md"
+                              fontWeight="normal"
+                              color="gray.600"
+                            >
+                              {txn.methodName === "PreCommitSector" ||
+                              txn.methodName === "ProveCommitSector" ||
+                              txn.methodName === "PublishStorageDeals" ||
+                              txn.methodName === "TerminateSectors" ||
+                              txn.methodName === "RepayDebt" ||
+                              txn.methodName === "WithdrawBalance (miner)" ||
+                              txn.methodName === "WithdrawBalance (market)" ||
+                              txn.methodName === "AddBalance" ||
+                              txn.methodName === "ChangeWorkerAddress" ||
+                              txn.methodName === "ChangeOwnerAddress" ||
+                              txn.methodName === "ChangePeerID" ||
+                              txn.methodName === "DeclareFaults" ||
+                              txn.methodName === "DeclareFaultsRecovered" ||
+                              txn.methodName === "ExtendSectorExpiration" ? (
+                                txn.burnFee.display
+                              ) : (
+                                <p>0</p>
+                              )}
+                            </Text>
+                            {/* <Text>
                                 {txn.methodName === "PreCommitSector" ||
                                 "ProveCommitSector" ||
                                 "PublishStorageDeals" ||
@@ -605,37 +565,34 @@ function BasicView(props) {
                                   <p>$0</p>
                                 )}
                               </Text> */}
-                            </Stack>
-                          </GridItem>
-                        </Grid>
-                      </Stack>
-                    </AccordionPanel>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-              {basicTransactions.length > 0 ? (
-                <Center>
-                  <Button
-                    mt="6"
-                    borderRadius="full"
-                    w="fit-content"
-                    isLoading={isTxnLoading}
-                    loadingText="Getting Transactions"
-                    colorScheme="blue"
-                    variant="outline"
-                    onClick={() => {
-                      setIsTxnLoading(true);
-                      console.log("NOWWWWW", firstValue);
-                      const BACKEND_URL =
-                        "https://miner-marketplace-backend-2.onrender.com/query";
-                      const client = new ApolloClient({
-                        uri: BACKEND_URL,
-                        cache: new InMemoryCache(),
-                      });
+                          </Stack>
+                        </GridItem>
+                      </Grid>
+                    </Stack>
+                  </AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+            {basicTransactions.length > 0 ? (
+              <Center>
+                <Button
+                  mt="6"
+                  borderRadius="full"
+                  w="fit-content"
+                  isLoading={isTxnLoading}
+                  loadingText="Getting Transactions"
+                  colorScheme="blue"
+                  variant="outline"
+                  onClick={() => {
+                    setIsTxnLoading(true);
+                    const client = new ApolloClient({
+                      uri: "https://miner-marketplace-backend-2.onrender.com/query",
+                      cache: new InMemoryCache(),
+                    });
 
-                      client
-                        .query({
-                          query: gql`
+                    client
+                      .query({
+                        query: gql`
                         query {
                           miner(id: "${props.minerID}") {
                             id
@@ -655,81 +612,76 @@ function BasicView(props) {
                           }
                         }
                       `,
-                        })
-                        .then((data) => {
-                          return data.data;
-                        })
-                        .then((d) => {
-                          return d.miner;
-                        })
-                        .then((m) => {
-                          setIsTxnLoading(false);
-                          const dsrc = m.transactions.map((txn) => {
-                            let txntype = "message";
-                            if (txn.methodName == "ApplyRewards") {
-                              txntype = "block";
-                            }
-                            return {
-                              key: txn.id,
-                              id: {
-                                mid: txn.id,
-                                txntype: txntype,
-                              },
-                              value: {
-                                val: Number(txn.value),
-                                display: GetFormattedFILUnits(
-                                  Number(txn.value),
-                                ),
-                              },
-                              methodName: txn.methodName,
-                              from: txn.from,
-                              to: txn.to,
-                              minerFee: {
-                                val: Number(txn.minerFee),
-                                display: GetFormattedFILUnits(
-                                  Number(txn.minerFee),
-                                ),
-                              },
-                              burnFee: {
-                                val: Number(txn.burnFee),
-                                display: GetFormattedFILUnits(
-                                  Number(txn.burnFee),
-                                ),
-                              },
-                              transactionType: txn.transactionType,
-                              exitCode: txn.exitCode,
-                              height: txn.height,
-                              timestamp: txn.timestamp,
-                            };
-                          });
-                          setBasicTransactions(dsrc);
-                          setFirstValue(firstValue + 20);
+                      })
+                      .then((data) => data.data)
+                      .then((d) => d.miner)
+                      .then((m) => {
+                        setIsTxnLoading(false);
+                        const dsrc = m.transactions.map((txn) => {
+                          let txntype = "message";
+                          if (txn.methodName === "ApplyRewards") {
+                            txntype = "block";
+                          }
+                          return {
+                            key: txn.id,
+                            id: {
+                              mid: txn.id,
+                              txntype,
+                            },
+                            value: {
+                              val: Number(txn.value),
+                              display: GetFormattedFILUnits(Number(txn.value)),
+                            },
+                            methodName: txn.methodName,
+                            from: txn.from,
+                            to: txn.to,
+                            minerFee: {
+                              val: Number(txn.minerFee),
+                              display: GetFormattedFILUnits(
+                                Number(txn.minerFee),
+                              ),
+                            },
+                            burnFee: {
+                              val: Number(txn.burnFee),
+                              display: GetFormattedFILUnits(
+                                Number(txn.burnFee),
+                              ),
+                            },
+                            transactionType: txn.transactionType,
+                            exitCode: txn.exitCode,
+                            height: txn.height,
+                            timestamp: txn.timestamp,
+                          };
                         });
-                    }}
-                  >
-                    View more
-                  </Button>
-                </Center>
-              ) : (
-                <Center>
-                  <br />
-                  <p>...</p>
-                </Center>
-              )}
-            </Stack>
-          ) : (
-            <>
-              <Center>
-                <Spinner marginTop="16" color="blue.900" size="lg" />
+                        setBasicTransactions(dsrc);
+                        setFirstValue(firstValue + 20);
+                      });
+                  }}
+                >
+                  View more
+                </Button>
               </Center>
-            </>
-          )}
-        </>
+            ) : (
+              <Center>
+                <br />
+                <p>...</p>
+              </Center>
+            )}
+          </Stack>
+        ) : (
+          <>
+            <Center>
+              <Spinner marginTop="16" color="blue.900" size="lg" />
+            </Center>
+          </>
+        )}
       </>
-    );
-  } else {
-    return <p>...</p>;
-  }
+    </>
+  );
 }
+
+BasicView.propTypes = {
+  minerID: PropTypes.string.isRequired,
+};
 
 export default BasicView;

@@ -1,20 +1,16 @@
 import {
   Accordion,
-  Button,
   Box,
   Container,
-  Link,
   Heading,
-  Text,
-  HStack,
   Stack,
   SimpleGrid,
-  WrapItem,
-  UnorderedList,
-  OrderedList,
-  ListItem,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { gql, InMemoryCache, ApolloClient } from "@apollo/client";
+import { useRouter } from "next/router";
+import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Hero from "../components/landingPage/Hero";
 import Features from "../components/landingPage/Features";
@@ -22,15 +18,9 @@ import FilecoinStats from "../components/landingPage/FilecoinStats";
 import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
 import JoinNetwork from "../components/landingPage/JoinNetwork";
-import { gql, InMemoryCache, ApolloClient } from "@apollo/client";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import { useState } from "react";
+import { GetSimpleUSDUnits } from "../util/util";
 
-const clientLanding = (stats) => {
-  // console.log(stats);
-  // console.log("active", stats.stats.activeMinersCount);
-  // console.log("dataS", stats.stats.dataStored);
+export default function ClientLanding({ stats, filecoinUSDRate }) {
   const router = useRouter();
 
   const [btnLoading, setBtnLoading] = useState(false);
@@ -50,7 +40,7 @@ const clientLanding = (stats) => {
             ctaText="Explore Storage Providers"
           />
 
-          {/*Filecoin Stats*/}
+          {/* Filecoin Stats */}
           <Box
             bgColor="blue.600"
             py="6"
@@ -65,17 +55,20 @@ const clientLanding = (stats) => {
               </Heading>
               <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
                 <FilecoinStats
-                  count="$24.7k"
+                  count={GetSimpleUSDUnits(
+                    (parseInt(stats.averageDealPrice, 10) / 10 ** 18) *
+                      filecoinUSDRate,
+                  )}
                   countText=""
-                  subtext="Average Storage Price for 100Gb/month"
+                  subtext="Average Storage Deal Price"
                 />
                 <FilecoinStats
-                  count="2.96k"
+                  count={stats.dataStored}
                   countText=""
-                  subtext="TB Data Stored till Now"
+                  subtext="Data Stored so far"
                 />
                 <FilecoinStats
-                  count="3.4k"
+                  count={`${stats.activeMinersCount}`}
                   countText=""
                   subtext="Storage Providers to choose from"
                 />
@@ -105,7 +98,7 @@ const clientLanding = (stats) => {
             />
           </Stack>
 
-          {/*Join Network*/}
+          {/* Join Network */}
 
           <JoinNetwork
             cardHeading="Find trustable Storager Providers according to your needs"
@@ -116,13 +109,13 @@ const clientLanding = (stats) => {
             }}
           />
 
-          {/*FAQ*/}
+          {/* FAQ */}
           <Stack textAlign="center" alignItems="center" spacing="16">
             <Heading size="lg">Frequently Asked Questions</Heading>
             <Stack w={{ base: "80vw", md: "48rem" }} textAlign="left">
               <Accordion allowToggle="false">
                 <Faq
-                  question="What is filecoin?"
+                  question="What is Filecoin?"
                   answer="Filecoin is a peer-to-peer network that stores files on the internet, with built-in economic incentives to ensure files are stored reliably over time."
                 />
                 <Faq question="Is this platform free to use?" answer="Yes" />
@@ -138,9 +131,12 @@ const clientLanding = (stats) => {
       <Footer />
     </>
   );
-};
+}
 
-export default clientLanding;
+ClientLanding.propTypes = {
+  stats: PropTypes.instanceOf(Object).isRequired,
+  filecoinUSDRate: PropTypes.number.isRequired,
+};
 
 export async function getServerSideProps() {
   const client = new ApolloClient({
@@ -155,14 +151,23 @@ export async function getServerSideProps() {
           activeMinersCount
           networkStorageCapacity
           dataStored
+          topMinerBlockRewards24H
+          totalBlockRewards24H
+          averageDealPrice
         }
       }
     `,
   });
 
+  const res1 = await fetch(
+    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+  );
+  const res2 = await res1.json();
+
   return {
     props: {
       stats: data.networkStats,
+      filecoinUSDRate: res2.filecoin.usd,
     },
   };
 }

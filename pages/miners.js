@@ -1,7 +1,7 @@
+/* eslint-disable react/destructuring-assignment */
 import {
   Alert,
   AlertIcon,
-  AlertTitle,
   AlertDescription,
   Button,
   Heading,
@@ -12,106 +12,41 @@ import {
   Image,
   Input,
   InputGroup,
-  InputRightElement,
   InputLeftElement,
-  VStack,
   HStack,
   Link,
   Tag,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
   Text,
-  CheckboxGroup,
-  Checkbox,
-  Circle,
-  Spacer,
 } from "@chakra-ui/react";
-import React, { useEffect, useState, useRef } from "react";
-import { Icon, IconProps, Search2Icon, InfoIcon } from "@chakra-ui/icons";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Search2Icon } from "@chakra-ui/icons";
 import Select from "react-select";
 import { isMobile } from "react-device-detect";
-
-import DashboardMenu from "../components/dashboard/DashboardMenu";
-import DashboardNavbar from "../components/dashboard/DashboardNavbar";
-import MinerListingNavbar from "../components/dashboard/MinerListingNavbar";
-
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import { createHttpLink } from "apollo-link-http";
-import { TableProps } from "antd/lib/table";
 import "antd/dist/antd.css";
 import Head from "next/head";
-import NxLink from "next/link";
-import { Table, Space, Tooltip } from "antd";
-import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
+import { Table } from "antd";
 
-import { useRouter } from "next/router";
-
+import * as Fathom from "fathom-client";
 import {
   GetFormattedStorageUnits,
-  GetFormattedFILUnits,
   GetSimpleFILUnits,
   GetSimpleUSDUnits,
 } from "../util/util";
 import { Countries } from "../util/raw";
-import Base from "antd/lib/typography/Base";
-import * as Fathom from "fathom-client";
+import MinerListingNavbar from "../components/dashboard/MinerListingNavbar";
 
-let countries = Countries();
+const countries = Countries();
 
-export default function Miners({ filecoinToUSDRate, miners, href }) {
-  // useEffect(() => {
-  //   fetch(
-  //     "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd"
-  //   )
-  //     .then((res) => res.json())
-  //     .then((r) => {
-  //       // console.log(r.filecoin.usd);
-  //       setFilecoinUSDRate(r.filecoin.usd);
-  //     });
-  // }, []);
-  const [filecoinUSDRate, setFilecoinUSDRate] = useState(filecoinToUSDRate);
-
-  const router = useRouter();
-  const handleClick = (e) => {
-    e.preventDefault();
-    router.push(href);
-  };
-
+export default function Miners({ filecoinUSDRate, miners }) {
   const [storageDuration, setStorageDuration] = useState(6);
   const [storageAmount, setStorageAmount] = useState(10);
   const [storageDurationText, setStorageDurationText] = useState(6);
   const [storageAmountText, setStorageAmountText] = useState(10);
 
-  const [pagination, setPagination] = useState({});
-  // const [filteredInfo, setFilteredInfo] = useState({});
-  // const [sortedInfo, setSortedInfo] = useState(null);
-
-  // const handleTableChange = (pagination, filters, sorter) => {
-  //   setPagination(pagination);
-  // };
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const searchInput = useRef(null);
-
-  function handleSearch(selectedKeys, confirm, dataIndex) {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  }
-
-  function handleReset(clearFilters) {
-    clearFilters();
-    setSearchText("");
-  }
-
   const dataSource = miners.map((fd) => {
-    let serviceTypeArr = [];
+    const serviceTypeArr = [];
     if (fd.service.serviceTypes.storage) {
       serviceTypeArr.push("Storage");
     }
@@ -121,7 +56,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     if (fd.service.serviceTypes.repair) {
       serviceTypeArr.push("Repair");
     }
-    let dataTransferMechanismArr = [];
+    const dataTransferMechanismArr = [];
     if (fd.service.dataTransferMechanism.online) {
       dataTransferMechanismArr.push("Online");
     }
@@ -129,25 +64,20 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       dataTransferMechanismArr.push("Offline");
     }
     let minerName = fd.personalInfo.name;
-    if (fd.personalInfo.name == "") {
+    if (fd.personalInfo.name === "") {
       minerName = "Unclaimed profile";
     }
 
-    let storageAskPrice = fd.pricing.storageAskPrice;
+    let { storageAskPrice } = fd.pricing;
     if (
-      isNaN(fd.pricing.storageAskPrice) ||
+      Number.isNaN(fd.pricing.storageAskPrice) ||
       fd.pricing.storageAskPrice == null ||
-      fd.pricing.storageAskPrice == ""
+      fd.pricing.storageAskPrice === ""
     ) {
-      // console.log(
-      //   "fd.pricing.storageAskPrice invalid",
-      //   fd.pricing.storageAskPrice
-      // );
       storageAskPrice = 0; // show zero for miners who haven't mentioned askPrice
     }
     return {
       key: fd.id,
-      // sno: 1,
       miner: {
         id: fd.id,
         name: minerName,
@@ -166,27 +96,27 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
           30 *
           2880 *
           storageAmount *
-          (parseInt(storageAskPrice) / 10 ** 18),
+          (parseInt(storageAskPrice, 10) / 10 ** 18),
         display: GetSimpleFILUnits(
           storageDuration *
             30 *
             2880 *
             storageAmount *
-            parseInt(storageAskPrice),
+            parseInt(storageAskPrice, 10),
         ),
         usd:
           storageDuration *
           30 *
           2880 *
           storageAmount *
-          (parseInt(storageAskPrice) / 10 ** 18) *
+          (parseInt(storageAskPrice, 10) / 10 ** 18) *
           filecoinUSDRate,
         displayUSD: GetSimpleUSDUnits(
           storageDuration *
             30 *
             2880 *
             storageAmount *
-            (parseInt(storageAskPrice) / 10 ** 18) *
+            (parseInt(storageAskPrice, 10) / 10 ** 18) *
             filecoinUSDRate,
         ),
       },
@@ -212,7 +142,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       title: "Storage Providers",
       dataIndex: "miner",
       key: "miner",
-      render: (m) => {
+      render(m) {
         return (
           <div>
             <Link href={`/miners/${m.id}`} key={m.id} isExternal>
@@ -227,44 +157,21 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                 {m.id}
               </Text>
             </Link>
-            {/*<a
-              onClick={() => {
-                router.push({
-                  pathname: "/miners/[id]",
-                  query: { minerId: m.id },
-                });
-              }}
-            >
-              <b>{m.id}</b>
-            </a>*/}
           </div>
         );
       },
     },
     {
       title: "Reputation Score",
-      // title: () => (
-      //   <>
-      //     <Text>
-      //       Reputation Score
-      //       <Tooltip
-      //         placement="topLeft"
-      //         title="Reputation Scores are based on Storage Provider's past performance and deals"
-      //       >
-      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
-      //       </Tooltip>
-      //     </Text>
-      //   </>
-      // ),
       dataIndex: "reputationScore",
       key: "reputationScore",
       defaultSortOrder: "descend",
       sorter: {
         compare: (a, b) =>
-          parseInt(a.reputationScore) - parseInt(b.reputationScore),
+          parseInt(a.reputationScore, 10) - parseInt(b.reputationScore, 10),
       },
-      render: (reputationScore) => {
-        var color = reputationScore < 50 ? "gray.500" : "blue.600";
+      render(reputationScore) {
+        const color = reputationScore < 50 ? "gray.500" : "blue.600";
         return (
           <Text color={color} fontSize="lg">
             {reputationScore}
@@ -274,24 +181,14 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     },
     {
       title: "Transparency Score",
-      // title: () => (
-      //   <>
-      //     <Text>
-      //       Transparency Score
-      //       <Tooltip title="Transparency Scores are based on offchain attributes provided by Storage Provider. Improve this score by authenticating your profile.">
-      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
-      //       </Tooltip>
-      //     </Text>
-      //   </>
-      // ),
       dataIndex: "transparencyScore",
       key: "transparencyScore",
       sorter: {
         compare: (a, b) =>
-          parseInt(a.transparencyScore) - parseInt(b.transparencyScore),
+          parseInt(a.transparencyScore, 10) - parseInt(b.transparencyScore, 10),
       },
-      render: (transparencyScore) => {
-        var color = transparencyScore < 50 ? "orange.600" : "blue.700";
+      render(transparencyScore) {
+        const color = transparencyScore < 50 ? "orange.600" : "blue.700";
         return (
           <Text color={color} fontSize="lg">
             {transparencyScore}
@@ -308,30 +205,31 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
         { text: "Retrieval", value: "Retrieval" },
         { text: "Repair", value: "Repair" },
       ],
-      onFilter: (value, record) => {
-        //console.log("VR", value, record);
-        return record.serviceType.includes(value);
+      onFilter: (value, record) => record.serviceType.includes(value),
+      render(serviceTypes) {
+        return (
+          <HStack spacing="2">
+            {serviceTypes.map((service, i) => {
+              let tagColor = "gray.700";
+              let tagBg = "gray.100";
+              if (service === "Storage") {
+                tagColor = "blue.700";
+                // const tagBg = "blue.50";
+                tagBg = "blue.50";
+              } else if (service === "Retrieval") {
+                tagColor = "purple.700";
+                tagBg = "purple.50";
+              }
+              return (
+                // eslint-disable-next-line react/no-array-index-key
+                <Tag key={i} color={tagColor} bg={tagBg} borderRadius="full">
+                  {service}
+                </Tag>
+              );
+            })}
+          </HStack>
+        );
       },
-      render: (serviceTypes) => (
-        <HStack spacing="2">
-          {serviceTypes.map((service) => {
-            let tagColor = "gray.700";
-            let tagBg = "gray.100";
-            if (service === "Storage") {
-              tagColor = "blue.700";
-              let tagBg = "blue.50";
-            } else if (service === "Retrieval") {
-              tagColor = "purple.700";
-              tagBg = "purple.50";
-            }
-            return (
-              <Tag color={tagColor} bg={tagBg} borderRadius="full">
-                {service}
-              </Tag>
-            );
-          })}
-        </HStack>
-      ),
     },
     {
       title: "Data Transfer Mechanism",
@@ -343,14 +241,14 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       ],
       onFilter: (value, record) => record.dataTransferMechanism.includes(value),
       render: (dataTransferMechanism) =>
-        dataTransferMechanism.map((datatype) => {
+        dataTransferMechanism.map((datatype, i) => {
           let color = "gray.500";
           if (datatype === "Online") {
             color = "green.500";
           }
           return (
-            <HStack>
-              {/* <Circle size="0.8rem" bg={color} /> */}
+            // eslint-disable-next-line react/no-array-index-key
+            <HStack key={i}>
               <Text color={color}>{datatype}</Text>
             </HStack>
           );
@@ -361,21 +259,10 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
       dataIndex: "location",
       key: "location",
       filters: mLocations,
-      // https://gist.githubusercontent.com/ssskip/5a94bfcd2835bf1dea52/raw/3b2e5355eb49336f0c6bc0060c05d927c2d1e004/ISO3166-1.alpha2.json
-      // filters: [
-      //   { text: "SG", value: "SG" },
-      //   { text: "IN", value: "IN" },
-      //   { text: "CN", value: "CN" },
-      //   { text: "NL", value: "NL" },
-      //   { text: "CA", value: "CA" },
-      // ],
-      onFilter: (value, record) => {
-        return (
-          record.location.country.includes(value) ||
-          record.location.region.includes(value)
-        );
-      },
-      render: (l) => {
+      onFilter: (value, record) =>
+        record.location.country.includes(value) ||
+        record.location.region.includes(value),
+      render(l) {
         return (
           <div color="gray.600">
             <Text>{countries[l.country]}</Text>
@@ -387,27 +274,15 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     },
     {
       title: "Estimated Quote",
-      // title: () => (
-      //   <>
-      //     <Text>
-      //       Estimated Quote
-      //       <Tooltip title="This is the Estimated Quote for the mentioned storage and duration in the quote calculator above">
-      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
-      //       </Tooltip>
-      //     </Text>
-      //   </>
-      // ),
       dataIndex: "estimatedQuote",
       key: "estimatedQuote",
       sorter: {
         compare: (a, b) => a.estimatedQuote.fil - b.estimatedQuote.fil,
-        // parseInt(a.estimatedQuote.fil) - parseInt(b.estimatedQuote.fil),
       },
-      render: (l) => {
+      render(l) {
         return (
           <div>
             <Text fontSize="larger" fontWeight="medium" color="gray.600">
-              {/*{Math.round((l.fil + Number.EPSILON) * 1000) / 1000} FIL*/}
               {l.display}
             </Text>
             <Text color="gray.500">{l.displayUSD}</Text>
@@ -417,91 +292,33 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     },
     {
       title: "Total Storage Capacity",
-      // title: () => (
-      //   <>
-      //     <Text>
-      //       Total Storage Capacity
-      //       <Tooltip title="Quality adjusted Power">
-      //         <InfoIcon ml="1" h={4} w={4} color="gray.500" />
-      //       </Tooltip>
-      //     </Text>
-      //   </>
-      // ),
       dataIndex: "qap",
       key: "qap",
       sorter: {
-        compare: (a, b) => parseInt(a.qap.val) - parseInt(b.qap.val),
+        compare: (a, b) => parseInt(a.qap.val, 10) - parseInt(b.qap.val, 10),
       },
-      render: (l) => {
-        return (
-          <>
-            {/* {!l.display && (<p>{l.display}</p>)} */}
-            {l.display == "NaN YB" ? <p>-</p> : <p>{l.display}</p>}
-          </>
-        );
+      render(l) {
+        return <>{l.display === "NaN YB" ? <p>-</p> : <p>{l.display}</p>}</>;
       },
     },
   ];
 
   const [minerIdQuery, setMinerIdQuery] = useState("");
   const [filteredMiners, setFilteredMiners] = useState(dataSource);
-  const filterList = (event) => {
+  const filterList = () => {
     let mminers = dataSource;
-    let q = minerIdQuery;
-    if (q == "") {
-      // console.log("");
-    }
-    mminers = mminers.filter(function (m) {
-      // console.log("m", m.miner.id, "ido", m.miner.id.indexOf(q), "q", q);
-      return m.miner.id.toLowerCase().indexOf(q) != -1; // returns true or false
-      // return m.miner.id.includes(q);
-    });
-
-    // console.log("MMiners", mminers);
+    const q = minerIdQuery;
+    mminers = mminers.filter(
+      (m) => m.miner.id.toLowerCase().indexOf(q) !== -1, // returns true or false
+    );
     setFilteredMiners(mminers);
   };
   const onChange = (event) => {
-    // console.log(
-    //   "qupdated",
-    //   minerIdQuery,
-    //   "q",
-    //   event.target.value,
-    //   "qlc",
-    //   event.target.value.toLowerCase()
-    // );
-
-    const q = event.target.value.toLowerCase();
-    // if (q == "") {
-    //   console.log("qempty");
-    //   setFilteredMiners(miners);
-    // } else {
     setMinerIdQuery(event.target.value);
-    filterList(event);
-    // }
+    filterList();
   };
 
   /* Options for Select Component */
-  const mServices = [
-    { label: "Storage", value: "Storage" },
-    { label: "Retrieval", value: "Retrieval" },
-    { label: "Repair", value: "Repair" },
-  ];
-
-  const mDataMechanism = [
-    { label: "Online", value: "Online" },
-    { label: "Offline", value: "Offline" },
-  ];
-
-  const mLocationSelect = [
-    { label: "Asia", value: "Asia" },
-    { label: "Europe", value: "Europe" },
-    { label: "Africa", value: "Africa" },
-    { label: "Oceania", value: "Oceania" },
-    { label: "South America", value: "South America" },
-    { label: "Central America", value: "Central America" },
-    { label: "North America", value: "North America" },
-  ];
-
   const dStorageUnitsArr = [
     { label: "MB", value: "MB" },
     { label: "GB", value: "GB" },
@@ -519,34 +336,28 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
   );
 
   const handleStorageUnitsChange = (event) => {
-    console.log("setDStorageUnits", dStorageUnits, event);
     setDStorageUnits(event);
-
     let finalSA = storageAmountText;
-    console.log("storageAmountText", storageAmountText);
-    if (event.value == "MB") {
+
+    if (event.value === "MB") {
       finalSA *= 0.001 * 0.931323;
-    } else if (event.value == "GB") {
+    } else if (event.value === "GB") {
       finalSA *= 0.931323;
-    } else if (event.value == "TB") {
+    } else if (event.value === "TB") {
       finalSA *= 1000 * 0.931323;
-    } else if (event.value == "PB") {
+    } else if (event.value === "PB") {
       finalSA *= 1000000 * 0.931323;
     }
-    console.log("finalSA", finalSA);
     setStorageAmount(finalSA);
   };
-  const handleStorageDurationUnitsChange = (event) => {
-    console.log("setDStorageDurationUnits", dStorageDurationUnits, event);
-    setDStorageDurationUnits(event);
 
+  const handleStorageDurationUnitsChange = (event) => {
+    setDStorageDurationUnits(event);
     let finalSD = storageDurationText;
-    console.log("storageDurationText", storageDurationText);
-    if (event.value == "Years") {
-      // && dStorageDurationUnits.value != "Years") {
+
+    if (event.value === "Years") {
       finalSD *= 12;
     }
-    console.log("finalSD", finalSD);
     setStorageDuration(finalSD);
   };
 
@@ -562,18 +373,8 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     }),
   };
 
-  const customStylesAlt = {
-    control: (Base) => ({
-      ...Base,
-      height: "2rem",
-      borderRadius: "0.4rem",
-
-      borderColor: "#E2E8F0",
-    }),
-  };
-
   function track() {
-    if (typeof window != "undefined") {
+    if (typeof window !== "undefined") {
       Fathom.trackGoal("HACMMY00", 0);
     }
   }
@@ -602,7 +403,6 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
         <title>Storage Provider Listing - DataStation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      {/* <DashboardNavbar isMinerProfile={false} /> */}
 
       <MinerListingNavbar />
       <Grid
@@ -610,7 +410,6 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
           lg: "repeat(12, 1fr)",
           md: "repeat(6,1fr)",
         }}
-        // mx="24"
       >
         <GridItem colSpan="12" pt="28" bg="white" px="8">
           <Flex justifyContent="space-between">
@@ -622,6 +421,7 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="visible"
+                    // eslint-disable-next-line react/no-children-prop
                     children={<Search2Icon w={5} h={5} color="gray.400" />}
                   />
                   <Input
@@ -654,34 +454,21 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                         bg="white"
                         type="number"
                         w="36"
-                        placeholder={"Storage amount in " + dStorageUnits.value}
+                        placeholder={`Storage amount in ${dStorageUnits.value}`}
                         value={storageAmountText}
                         onChange={(event) => {
-                          console.log("amt changed");
                           let finalSA = event.target.value;
                           setStorageAmountText(event.target.value);
-                          if (dStorageUnits.value == "MB") {
+                          if (dStorageUnits.value === "MB") {
                             finalSA *= 0.001 * 0.931323;
-                          } else if (dStorageUnits.value == "GB") {
+                          } else if (dStorageUnits.value === "GB") {
                             finalSA *= 0.931323;
-                          } else if (dStorageUnits.value == "TB") {
+                          } else if (dStorageUnits.value === "TB") {
                             finalSA *= 1000 * 0.931323;
-                          } else if (dStorageUnits.value == "PB") {
+                          } else if (dStorageUnits.value === "PB") {
                             finalSA *= 1000000 * 0.931323;
                           }
-                          console.log("finalSA", finalSA);
-
                           setStorageAmount(finalSA);
-                          console.log(
-                            "storageAmount",
-                            storageAmount,
-                            event.target.value,
-                          );
-                          console.log("dStorageUnits", dStorageUnits);
-                          console.log(
-                            "dStorageDurationUnits",
-                            dStorageDurationUnits,
-                          );
                         }}
                         borderRight="none"
                         borderRadius="0.4rem 0rem 0rem 0.4rem"
@@ -691,7 +478,6 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                         options={dStorageUnitsArr}
                         value={dStorageUnits}
                         onChange={handleStorageUnitsChange}
-                        // defaultValue={dStorageUnitsArr[1]}
                         isClearable={false}
                         isSearchable={false}
                         styles={customStyles}
@@ -707,30 +493,15 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                         bg="white"
                         type="number"
                         w="36"
-                        placeholder={
-                          "Storage duration in " + dStorageDurationUnits.value
-                        }
+                        placeholder={`Storage duration in ${dStorageDurationUnits.value}`}
                         value={storageDurationText}
                         onChange={(event) => {
-                          console.log("dur changed");
                           let finalSD = event.target.value;
                           setStorageDurationText(event.target.value);
-                          if (dStorageDurationUnits.value == "Years") {
+                          if (dStorageDurationUnits.value === "Years") {
                             finalSD *= 12;
                           }
-                          console.log("finalSD", finalSD);
-
                           setStorageDuration(finalSD);
-                          console.log(
-                            "storageDuration",
-                            storageDuration,
-                            event.target.value,
-                          );
-                          console.log("dStorageUnits", dStorageUnits);
-                          console.log(
-                            "dStorageDurationUnits",
-                            dStorageDurationUnits,
-                          );
                         }}
                         borderRight="none"
                         borderRadius="0.4rem 0rem 0rem 0.4rem"
@@ -739,7 +510,6 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                         options={dStorageDurationUnitsArr}
                         value={dStorageDurationUnits}
                         onChange={handleStorageDurationUnitsChange}
-                        // defaultValue={dStorageDurationUnitsArr[0]}
                         isClearable={false}
                         isSearchable={false}
                         styles={customStyles}
@@ -753,8 +523,8 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
                   variant="solid"
                   borderRadius="full"
                   px="6"
-                  onClick={(event) => {
-                    filterList(event);
+                  onClick={() => {
+                    filterList();
                     track();
                     showQuoteAlert("visible");
                   }}
@@ -777,63 +547,14 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
               </Stack>
             </GridItem>
           </Flex>
-          <HStack
-          //py={8}
-          //w="full"
-          //justifyContent="space-between"
-          //alignItems="top"
-          >
-            {/* <VStack alignItems="left" w="20rem">
-              <Heading size="sm" fontWeight="medium" color="gray.700">
-                Type of Service
-              </Heading>
-              <Select
-                closeMenuOnSelect={true}
-                options={mServices}
-                styles={customStylesAlt}
-                isMulti
-              />
-            </VStack> */}
-
-            {/* <VStack alignItems="left" w="20rem">
-              <Heading size="sm" fontWeight="medium" color="gray.700">
-                Data Transfer Mechanism
-              </Heading>
-              <Select
-                options={mDataMechanism}
-                styles={customStylesAlt}
-                isMulti
-              />
-            </VStack> */}
-
-            {/* <VStack alignItems="left" w="20rem">
-              <Heading size="sm" fontWeight="medium" color="gray.700">
-                Location
-              </Heading>
-              <Select
-                options={mLocationSelect}
-                onInputChange={(event) => {
-                  // console.log("inputchange", event)
-                }}
-                onChange={(event) => {
-                  console.log("justchange", event);
-                }}
-                styles={customStylesAlt}
-                isMulti
-              />
-            </VStack> */}
-          </HStack>
         </GridItem>
         <GridItem colSpan="12" px="8">
           <Stack spacing="8" mt="6">
             <Table
               columns={columns}
               dataSource={filteredMiners}
-              // onChange={handleTableChange}
-              // pagination={pagination}
               pagination={{ defaultPageSize: 50 }}
               scroll={{ y: 480 }}
-              // showSorterTooltip={false}
             />
           </Stack>
         </GridItem>
@@ -841,10 +562,8 @@ export default function Miners({ filecoinToUSDRate, miners, href }) {
     </>
   );
 }
-// getServerSideProps
-// getStaticProps
+
 export async function getServerSideProps() {
-  console.log(process.env.BACKEND_URL);
   const client = new ApolloClient({
     uri: process.env.BACKEND_URL,
     cache: new InMemoryCache(),
@@ -884,23 +603,20 @@ export async function getServerSideProps() {
     `,
   });
 
-  let res1 = await fetch(
+  const res1 = await fetch(
     "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
   );
-  console.log("ressssS", res1);
   const res2 = await res1.json();
-  console.log("rjsoon", res2);
-  console.log("fusd", res2.filecoin.usd);
-  // .then((res) => res.json())
-  // .then((r) => {
-  //   // console.log(r.filecoin.usd);
-  //   setFilecoinUSDRate(r.filecoin.usd);
-  // });
 
   return {
     props: {
-      filecoinToUSDRate: res2.filecoin.usd,
+      filecoinUSDRate: res2.filecoin.usd,
       miners: fmmData.miners,
     },
   };
 }
+
+Miners.propTypes = {
+  filecoinUSDRate: PropTypes.number.isRequired,
+  miners: PropTypes.instanceOf(Array).isRequired,
+};

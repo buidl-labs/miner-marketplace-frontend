@@ -55,19 +55,19 @@ function ContactInfo(props) {
       color="gray.600"
       spacing="6"
     >
-      <a href={"mailto:" + props.minerMail} color="gray.500">
+      <a href={`mailto:${  props.minerMail}`} color="gray.500">
         <Icon as={IoMdMail} h={6} w={6} viewBox="0 0 24 24" />
       </a>
-      <a href={props.minerWebsite} color="gray.500" target="_blank">
+      <a href={props.minerWebsite} color="gray.500" target="_blank" rel="noreferrer">
         <Icon as={FaGlobe} h={6} w={6} viewBox="0 0 24 24" />
       </a>
-      <a href={props.minerSlack} color="gray.500" target="_blank">
+      <a href={props.minerSlack} color="gray.500" target="_blank" rel="noreferrer">
         <Icon as={FaSlack} h={6} w={6} viewBox="0 0 24 24" />
       </a>
       <a
-        href={"https://twitter.com/" + props.minerTwitter}
+        href={`https://twitter.com/${  props.minerTwitter}`}
         color="gray.500"
-        target="_blank"
+        target="_blank" rel="noreferrer"
       >
         <Icon as={FaTwitter} h={6} w={6} viewBox="0 0 24 24" />
       </a>
@@ -85,16 +85,16 @@ function ConditionalDetails(props) {
         minerTwitter={props.minerTwitter}
       />
     );
-  } else {
+  } 
     return <ClaimButton />;
-  }
+  
 }
 
 const PersonalDetails = (props) => {
   const ownerAddressLink =
-    "https://filfox.info/en/address/" + props.ownerAddress.toString();
+    `https://filfox.info/en/address/${  props.ownerAddress.toString()}`;
   const workerAddressLink =
-    "https://filfox.info/en/address/" + props.workerAddress.toString();
+    `https://filfox.info/en/address/${  props.workerAddress.toString()}`;
 
   return (
     <>
@@ -113,7 +113,7 @@ const PersonalDetails = (props) => {
             size="lg"
             bg="gray.100"
             mr="4"
-          ></Avatar>
+           />
           <VStack alignItems="baseline" textAlign="left" textOverflow="false">
             <Heading size="md" color="blue.900">
               {props.minerName}
@@ -139,19 +139,19 @@ const PersonalDetails = (props) => {
             <Link
               href={workerAddressLink}
               onClick={
-                typeof window != "undefined" && Fathom.trackGoal("NK6DSDVI", 0)
+                typeof window !== "undefined" && Fathom.trackGoal("NK6DSDVI", 0)
               }
               isExternal
             >
               <HStack>
                 <Text color="gray.600" maxW="72">
                   {props.workerAddress.length > 25
-                    ? props.workerAddress.substr(0, 12) +
-                      "..." +
+                    ? `${props.workerAddress.substr(0, 12) 
+                      }...${ 
                       props.workerAddress.substr(
                         props.workerAddress.length - 12,
                         props.workerAddress.length
-                      )
+                      )}`
                     : props.workerAddress}
                 </Text>
                 <Icon as={FiExternalLink} w={5} h={5} color="gray.600" />
@@ -165,19 +165,19 @@ const PersonalDetails = (props) => {
             <Link
               href={ownerAddressLink}
               onClick={
-                typeof window != "undefined" && Fathom.trackGoal("NK6DSDVI", 0)
+                typeof window !== "undefined" && Fathom.trackGoal("NK6DSDVI", 0)
               }
               isExternal
             >
               <HStack>
                 <Text color="gray.600" maxW="72">
                   {props.ownerAddress.length > 25
-                    ? props.ownerAddress.substr(0, 12) +
-                      "..." +
+                    ? `${props.ownerAddress.substr(0, 12) 
+                      }...${ 
                       props.ownerAddress.substr(
                         props.ownerAddress.length - 12,
                         props.ownerAddress.length
-                      )
+                      )}`
                     : props.ownerAddress}
                 </Text>
                 <Icon as={FiExternalLink} w={5} h={5} color="gray.600" />

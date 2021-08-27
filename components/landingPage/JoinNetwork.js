@@ -15,15 +15,14 @@ import {
   Link,
 } from "@chakra-ui/react";
 import router, { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import * as Fathom from "fathom-client";
-import { useState } from "react";
 
 const JoinNetwork = (props) => {
   const router = useRouter();
 
   function track() {
-    if (typeof window != "undefined") {
+    if (typeof window !== "undefined") {
       Fathom.trackGoal("RLIXEEKF", 0);
     }
   }

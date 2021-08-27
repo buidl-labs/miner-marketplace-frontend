@@ -9,8 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const Features = (props) => {
-  return (
+const Features = (props) => (
     <>
       <Center py="12">
         <HStack
@@ -34,6 +33,5 @@ const Features = (props) => {
       </Center>
     </>
   );
-};
 
 export default Features;

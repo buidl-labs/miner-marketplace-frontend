@@ -6,6 +6,11 @@ import {
   Stack,
   SimpleGrid,
 } from "@chakra-ui/react";
+import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
+import PropTypes from "prop-types";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/landingPage/Hero";
 import Features from "../components/landingPage/Features";
@@ -13,15 +18,9 @@ import FilecoinStats from "../components/landingPage/FilecoinStats";
 import JoinNetwork from "../components/landingPage/JoinNetwork";
 import Footer from "../components/landingPage/Footer";
 import Faq from "../components/Faq";
-import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import { useState } from "react";
+import { GetSimpleUSDUnits } from "../util/util";
 
-const IndexPage = (stats) => {
-  //console.log(stats);
-  // console.log("active", stats.stats.activeMinersCount);
-  // console.log("dataS", stats.stats.dataStored);
+const IndexPage = ({ stats, filecoinUSDRate }) => {
   const router = useRouter();
 
   const [btnLoading, setBtnLoading] = useState(false);
@@ -44,7 +43,7 @@ const IndexPage = (stats) => {
             ctaText="Get Started"
           />
 
-          {/*Filecoin Stats*/}
+          {/* Filecoin Stats */}
           <Box
             bgColor="blue.600"
             py="6"
@@ -59,19 +58,25 @@ const IndexPage = (stats) => {
               </Heading>
               <SimpleGrid columns={{ sm: 1, md: 3, lg: 3 }} gap="16">
                 <FilecoinStats
-                  count="$24.7k"
+                  count={GetSimpleUSDUnits(
+                    (parseInt(stats.totalBlockRewards24H, 10) / 10 ** 18) *
+                      filecoinUSDRate,
+                  )}
                   countText=""
-                  subtext="Given as Block Reward last month"
+                  subtext="Block Rewards earned in the past 24 hrs"
                 />
                 <FilecoinStats
-                  count="$4.9k"
+                  count={GetSimpleUSDUnits(
+                    (parseInt(stats.topMinerBlockRewards24H, 10) / 10 ** 18) *
+                      filecoinUSDRate,
+                  )}
                   countText=""
-                  subtext="Earned in past 24hrs by Top Miner"
+                  subtext="Earned by top storage provider in the past 24 hrs"
                 />
                 <FilecoinStats
-                  count="2.96k"
+                  count={stats.dataStored}
                   countText=""
-                  subtext="TB Data Stored till Now"
+                  subtext="Total Data Stored so far"
                 />
               </SimpleGrid>
             </Stack>
@@ -99,7 +104,7 @@ const IndexPage = (stats) => {
             />
           </Stack>
 
-          {/*Join Network*/}
+          {/* Join Network */}
 
           <JoinNetwork
             cardHeading="Storage Provider Stats, made simple. Get Started with DataStation"
@@ -110,13 +115,13 @@ const IndexPage = (stats) => {
             }}
           />
 
-          {/*FAQ*/}
+          {/* FAQ */}
           <Stack textAlign="center" alignItems="center" spacing="16">
             <Heading size="lg">Frequently Asked Questions</Heading>
             <Stack w={{ base: "80vw", md: "48rem" }} textAlign="left">
               <Accordion allowToggle="false">
                 <Faq
-                  question="What is filecoin?"
+                  question="What is Filecoin?"
                   answer="Filecoin is a peer-to-peer network that stores files on the internet, with built-in economic incentives to ensure files are stored reliably over time."
                 />
                 <Faq question="Is this platform free to use?" answer="Yes" />
@@ -134,6 +139,11 @@ const IndexPage = (stats) => {
   );
 };
 
+IndexPage.propTypes = {
+  stats: PropTypes.instanceOf(Object).isRequired,
+  filecoinUSDRate: PropTypes.number.isRequired,
+};
+
 export default IndexPage;
 
 export async function getServerSideProps() {
@@ -149,14 +159,23 @@ export async function getServerSideProps() {
           activeMinersCount
           networkStorageCapacity
           dataStored
+          topMinerBlockRewards24H
+          totalBlockRewards24H
+          averageDealPrice
         }
       }
     `,
   });
 
+  const res1 = await fetch(
+    "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
+  );
+  const res2 = await res1.json();
+
   return {
     props: {
       stats: data.networkStats,
+      filecoinUSDRate: res2.filecoin.usd,
     },
   };
 }

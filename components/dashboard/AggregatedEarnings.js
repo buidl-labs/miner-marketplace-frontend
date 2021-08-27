@@ -15,18 +15,9 @@ import {
   AccordionIcon,
   Tooltip,
 } from "@chakra-ui/react";
-import { Icon, IconProps, InfoIcon } from "@chakra-ui/icons";
-import * as Fathom from "fathom-client";
-import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
-import {
-  GetFormattedStorageUnits,
-  GetFormattedFILUnits,
-  GetSimpleFILUnits,
-  GetSimpleUSDUnits,
-} from "../../util/util";
-
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { InfoIcon } from "@chakra-ui/icons";
+import React, { useState, useEffect } from "react";
+import { GetSimpleFILUnits, GetSimpleUSDUnits } from "../../util/util";
 
 function AggregatedEarnings(props) {
   const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
@@ -37,7 +28,6 @@ function AggregatedEarnings(props) {
     )
       .then((res) => res.json())
       .then((r) => {
-        console.log("PEEEES", r);
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);
@@ -48,9 +38,6 @@ function AggregatedEarnings(props) {
         <Heading size="lg" color="blue.700" my={6} pl="4">
           Aggregated Earnings
         </Heading>
-
-        {/* <Text>Quality Adjusted Power</Text>
-        <Text>{props.qap}</Text> */}
 
         <Stack>
           <VStack alignItems="left">

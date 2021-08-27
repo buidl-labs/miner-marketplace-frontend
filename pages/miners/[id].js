@@ -6,9 +6,7 @@ import {
   Box,
   Button,
   Flex,
-  Grid,
   GridItem,
-  HStack,
   Heading,
   Center,
   Link,
@@ -23,20 +21,19 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  VStack,
-  VisuallyHidden,
   Container,
-  UnorderedList,
-  ListItem,
 } from "@chakra-ui/react";
-import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 import { BiHelpCircle } from "react-icons/bi";
+import PropTypes from "prop-types";
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-import ProfileSettings from "../profileSettings";
-import DashboardMenu from "../../components/dashboard/DashboardMenu";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import Head from "next/head";
+import dynamic from "next/dynamic";
+import * as Fathom from "fathom-client";
 import DashboardNavbar from "../../components/dashboard/DashboardNavbar";
 import PersonalDetails from "../../components/dashboard/PersonalDetails";
 import QuoteCalculator from "../../components/dashboard/QuoteCalculator";
@@ -47,27 +44,9 @@ import PredictedEarnings from "../../components/dashboard/PredictedEarnings";
 import AggregatedEarnings from "../../components/dashboard/AggregatedEarnings";
 import StorageDealStats from "../../components/dashboard/StorageDealStats";
 
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import Head from "next/head";
-import dynamic from "next/dynamic";
-import * as Fathom from "fathom-client";
-import createCache from "swr";
-
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
-// import getAllMinerIds from "../miners";
-// import { createGlobalState } from "react-hooks-global-state";
-
-// const initialState = { isSignedIn: false, isClaimed: false };
-// export default const { useGlobalState } = createGlobalState(initialState);
-
 export default function Miner({ miner }) {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [isClaimed, setIsClaimed] = useState(miner.claimed);
-  // const [isSignedIn, setisSignedIn] = useGlobalState("isSignedIn");
-  // const [isClaimed, setIsClaimed] = useGlobalState("isClaimed");
-  // setIsClaimed(miner.claimed);
-
   const [storageDealStatsIsLoaded, setStorageDealStatsIsLoaded] =
     useState(false);
   const [aggregateEarningsIsLoaded, setAggregateEarningsIsLoaded] =
@@ -87,7 +66,7 @@ export default function Miner({ miner }) {
     terminated: 0,
     total: 0,
   });
-  //state for estimated & aggregated earnings' query, keeping initital state as static to avoid errors
+  // state for estimated & aggregated earnings' query, keeping initital state as static to avoid errors
   const [estimatedEarnings, setEstimatedEarnings] = useState({
     miner: {
       qualityAdjustedPower: 0,
@@ -139,37 +118,19 @@ export default function Miner({ miner }) {
 
   const router = useRouter();
 
-  function handleIsSignedInChange(newValue) {
-    setIsSignedIn(newValue);
-  }
-  function handleIsClaimedChange(newValue) {
-    setIsClaimed(newValue);
-  }
-
-  const [transactions, setTransactions] = useState([]);
-  const [finalFromArr, setFinalFromArr] = useState([]);
-  const [finalToArr, setFinalToArr] = useState([]);
-  //const [offsetValue, setOffsetValue] = useState(10);
-  let offsetValue = 0;
-
   const [isTourOpen, setIsTourOpen] = useState(true);
 
   useEffect(() => {
-    if (typeof window != "undefined") {
-      console.log("nundefined window")
-      console.log("wls", window.localStorage)
-
-      var visited = window.localStorage.getItem(`${miner.id}_visited`);
+    if (typeof window !== "undefined") {
+      const visited = window.localStorage.getItem(`${miner.id}_visited`);
       if (!visited) {
-        console.log("not visited")
         window.localStorage.setItem(`${miner.id}_visited`, "1");
-        setIsTourOpen(true)
+        setIsTourOpen(true);
       } else {
-        console.log("visited already")
-        setIsTourOpen(false)
+        setIsTourOpen(false);
       }
     }
-  }, [])
+  }, []);
 
   const steps = [
     {
@@ -310,12 +271,8 @@ export default function Miner({ miner }) {
       <Container maxW="container.xl">
         <DashboardNavbar
           minerID={miner.id}
-          isMinerProfile={true}
+          isMinerProfile
           ownerAddress={miner.owner.address}
-          // isSignedIn={isSignedIn}
-          // isClaimed={isClaimed}
-          // onIsSignedInChange={handleIsSignedInChange}
-          // onisClaimedChange={handleIsClaimedChange}
           minerName={miner.personalInfo.name}
           minerMail={miner.personalInfo.email}
           minerWebsite={miner.personalInfo.website}
@@ -335,34 +292,6 @@ export default function Miner({ miner }) {
           transparencyScore={miner.transparencyScore}
           onboarded={miner.onboarded}
         />
-        <Box pt="24" mx="8">
-          {/* <Alert status="warning" borderRadius="lg">
-            <AlertIcon />
-            <AlertTitle mr={2}>
-              The platform is currently in beta, and may not include every
-              storage provider’s data.
-            </AlertTitle>
-            <AlertDescription>
-              You can request your data by filling up{" "}
-              <Link
-                href="https://forms.gle/DydhKdkjcDxN6agK8"
-                onClick={
-                  typeof window != "undefined" &&
-                  Fathom.trackGoal("YIQ23HLD", 0)
-                }
-                color="orange.800"
-                fontWeight="bold"
-                isExternal
-                _hover={{
-                  color: "orange.600",
-                  textDecoration: "underline",
-                }}
-              >
-                this form
-              </Link>
-            </AlertDescription>
-          </Alert> */}
-        </Box>
         <Stack flexDir="row" justify="space-between">
           <Button
             mt="4"
@@ -403,9 +332,6 @@ export default function Miner({ miner }) {
           gap="12"
           my="8"
         >
-          {/* <GridItem rowSpan="8" colSpan="2">
-          <DashboardMenu />
-        </GridItem> */}
           <GridItem colSpan={{ base: 1, lg: 7 }}>
             <PersonalDetails
               minerClaimed={miner.claimed}
@@ -434,22 +360,15 @@ export default function Miner({ miner }) {
             <Tabs overflow={{ base: "scroll", lg: "unset" }}>
               <TabList whiteSpace="nowrap" data-tour="reactour__tabs">
                 <Tab>Service Details</Tab>
-                {/*<Tab>Profile Settings</Tab>*/}
+                {/* <Tab>Profile Settings</Tab> */}
                 <Tab
                   onClick={() => {
-                    typeof window != "undefined" &&
+                    if (typeof window !== "undefined") {
                       Fathom.trackGoal("AAPJSSFC", 0);
+                    }
 
-                    // console.log(
-                    //   "osccmcmcm",
-                    //   process.env.BACKEND_URL,
-                    //   "mid",
-                    //   miner.id
-                    // );
-                    const BACKEND_URL =
-                      "https://miner-marketplace-backend-2.onrender.com/query";
                     const client = new ApolloClient({
-                      uri: BACKEND_URL,
+                      uri: "https://miner-marketplace-backend-2.onrender.com/query",
                       cache: new InMemoryCache(),
                     });
 
@@ -473,9 +392,7 @@ export default function Miner({ miner }) {
                         }
                     `,
                       })
-                      .then((data) => {
-                        return data.data;
-                      })
+                      .then((data) => data.data)
                       .then((g) => {
                         setStorageDealStats(g.miner.storageDealStats);
                         setStorageDealStatsIsLoaded(true);
@@ -489,19 +406,12 @@ export default function Miner({ miner }) {
                 </Tab>
                 <Tab
                   onClick={() => {
-                    typeof window != "undefined" &&
+                    if (typeof window !== "undefined") {
                       Fathom.trackGoal("HQOJJAY9", 0);
+                    }
 
-                    // console.log(
-                    //   "osccmcmcm",
-                    //   process.env.BACKEND_URL,
-                    //   "mid",
-                    //   miner.id
-                    // );
-                    const BACKEND_URL =
-                      "https://miner-marketplace-backend-2.onrender.com/query";
                     const client = new ApolloClient({
-                      uri: BACKEND_URL,
+                      uri: "https://miner-marketplace-backend-2.onrender.com/query",
                       cache: new InMemoryCache(),
                     });
 
@@ -534,9 +444,7 @@ export default function Miner({ miner }) {
                         }
                       `,
                       })
-                      .then((data) => {
-                        return data.data;
-                      })
+                      .then((data) => data.data)
                       .then((g) => {
                         setAggregateEarnings(g);
                         setAggregateEarningsIsLoaded(true);
@@ -547,19 +455,12 @@ export default function Miner({ miner }) {
                 </Tab>
                 <Tab
                   onClick={() => {
-                    typeof window != "undefined" &&
+                    if (typeof window !== "undefined") {
                       Fathom.trackGoal("XRMRVWRE", 0);
+                    }
 
-                    // console.log(
-                    //   "osccmcmcm",
-                    //   process.env.BACKEND_URL,
-                    //   "mid",
-                    //   miner.id
-                    // );
-                    const BACKEND_URL =
-                      "https://miner-marketplace-backend-2.onrender.com/query";
                     const client = new ApolloClient({
-                      uri: BACKEND_URL,
+                      uri: "https://miner-marketplace-backend-2.onrender.com/query",
                       cache: new InMemoryCache(),
                     });
 
@@ -597,9 +498,7 @@ export default function Miner({ miner }) {
                       }
                     `,
                       })
-                      .then((data) => {
-                        return data.data;
-                      })
+                      .then((data) => data.data)
                       .then((g) => {
                         setEstimatedEarnings(g);
                         setPredictedEarningsIsLoaded(true);
@@ -613,8 +512,9 @@ export default function Miner({ miner }) {
                 </Tab>
                 <Tab
                   onClick={() => {
-                    typeof window != "undefined" &&
+                    if (typeof window !== "undefined") {
                       Fathom.trackGoal("4N9IWHLW", 0);
+                    }
                   }}
                 >
                   Transaction History
@@ -628,12 +528,7 @@ export default function Miner({ miner }) {
                     flexDirection={{ md: "row", base: "column" }}
                   >
                     <ServiceDetails
-                      serviceLocation={
-                        miner.location.country +
-                        " (" +
-                        miner.location.region +
-                        ")"
-                      }
+                      serviceLocation={`${miner.location.country} (${miner.location.region})`}
                       country={miner.location.country}
                       region={miner.location.region}
                       storageAskPrice={miner.pricing.storageAskPrice}
@@ -653,28 +548,6 @@ export default function Miner({ miner }) {
                     />
                   </Flex>
                 </TabPanel>
-                {/*<TabPanel>
-                <ProfileSettings
-                  minerID={miner.id}
-                  minerName={miner.personalInfo.name}
-                  minerMail={miner.personalInfo.email}
-                  minerWebsite={miner.personalInfo.website}
-                  minerSlack={miner.personalInfo.slack}
-                  minerTwitter={miner.personalInfo.twitter}
-                  minerBio={miner.personalInfo.bio}
-                  country={miner.location.country}
-                  region={miner.location.region}
-                  storageAskPrice={miner.pricing.storageAskPrice}
-                  verifiedAskPrice={miner.pricing.verifiedAskPrice}
-                  retrievalAskPrice={miner.pricing.retrievalAskPrice}
-                  storage={miner.service.serviceTypes.storage}
-                  retrieval={miner.service.serviceTypes.retrieval}
-                  repair={miner.service.serviceTypes.repair}
-                  online={miner.service.dataTransferMechanism.online}
-                  offline={miner.service.dataTransferMechanism.offline}
-                  transparencyScore={miner.transparencyScore}
-                />
-              </TabPanel>*/}
                 <TabPanel>
                   {storageDealStatsIsLoaded ? (
                     <StorageDealStats
@@ -722,7 +595,7 @@ export default function Miner({ miner }) {
                         <Link
                           href="https://forms.gle/DydhKdkjcDxN6agK8"
                           onClick={
-                            typeof window != "undefined" &&
+                            typeof window !== "undefined" &&
                             Fathom.trackGoal("YIQ23HLD", 0)
                           }
                           color="blue.600"
@@ -811,7 +684,7 @@ export default function Miner({ miner }) {
                         <Link
                           href="https://forms.gle/DydhKdkjcDxN6agK8"
                           onClick={
-                            typeof window != "undefined" &&
+                            typeof window !== "undefined" &&
                             Fathom.trackGoal("YIQ23HLD", 0)
                           }
                           color="blue.600"
@@ -907,7 +780,7 @@ export default function Miner({ miner }) {
                         <Link
                           href="https://forms.gle/DydhKdkjcDxN6agK8"
                           onClick={
-                            typeof window != "undefined" &&
+                            typeof window !== "undefined" &&
                             Fathom.trackGoal("YIQ23HLD", 0)
                           }
                           color="blue.600"
@@ -924,14 +797,7 @@ export default function Miner({ miner }) {
                     </Alert>
                   )}
                   {transactionHistoryIsLoaded ? (
-                    <TransactionHistory
-                      onboarded={miner.onboarded}
-                      minerID={miner.id}
-                      transactions={transactions}
-                      finalFromArr={finalFromArr}
-                      finalToArr={finalToArr}
-                      offsetValue={offsetValue}
-                    />
+                    <TransactionHistory minerID={miner.id} />
                   ) : (
                     <>
                       <Center>
@@ -950,9 +816,6 @@ export default function Miner({ miner }) {
               </TabPanels>
             </Tabs>
           </GridItem>
-          {/* <GridItem colSpan={{ base: 1, lg: 4 }} mt={{ base: 0, lg: 16 }}>
-          <QuoteCalculator storageAskPrice={miner.pricing.storageAskPrice} />
-        </GridItem> */}
         </SimpleGrid>
       </Container>
     </>
@@ -1020,7 +883,7 @@ export async function getServerSideProps({ params }) {
   };
 }
 
-async function getAllMinerIds() {
+export async function getAllMinerIds() {
   const client = new ApolloClient({
     uri: process.env.BACKEND_URL,
     cache: new InMemoryCache(),
@@ -1035,19 +898,13 @@ async function getAllMinerIds() {
       }
     `,
   });
-  return data.miners.map((m) => {
-    return {
-      params: {
-        id: m.id,
-      },
-    };
-  });
+  return data.miners.map((m) => ({
+    params: {
+      id: m.id,
+    },
+  }));
 }
 
-// export async function getStaticPaths() {
-//   const paths = await getAllMinerIds();
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }
+Miner.propTypes = {
+  miner: PropTypes.instanceOf(Object).isRequired,
+};

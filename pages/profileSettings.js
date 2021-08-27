@@ -35,11 +35,11 @@ import {
 } from "@chakra-ui/react";
 import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
+import { Search } from "react-feather";
+import { useRouter } from "next/router";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
 import DashboardMenu from "../components/dashboard/DashboardMenu";
-import { Search } from "react-feather";
 import { useGlobalState } from "../state";
-import { useRouter } from "next/router";
 import TransparencyScore from "../components/dashboard/TransparencyScore";
 
 function ProfileSettings(props) {
@@ -102,7 +102,7 @@ function ProfileSettings(props) {
         gap="0.5"
         pr="8"
       >
-        {/*<GridItem colSpan="8">
+        {/* <GridItem colSpan="8">
           <Button
             mt="28"
             colorScheme="blue"
@@ -131,7 +131,7 @@ function ProfileSettings(props) {
             <AlertIcon color="blue.400" />
             You will need to connect wallet to edit.
           </Alert>
-  </GridItem>*/}
+  </GridItem> */}
         <GridItem colSpan="15">
           <TransparencyScore
             transparencyScore={props.transparencyScore}
@@ -151,13 +151,13 @@ function ProfileSettings(props) {
 
         <GridItem colSpan="10" mt={8}>
           <VStack alignItems="flex-start" spacing="8">
-            {/*<VStack alignItems="flex-start">
+            {/* <VStack alignItems="flex-start">
               <Heading size="lg" color="gray.700" alignContent="center">
                 {props.minerID}
               </Heading>
-            </VStack>*/}
+            </VStack> */}
 
-            {/*Basic Settings */}
+            {/* Basic Settings */}
             <VStack alignItems="left" spacing="4" w="24rem">
               <Heading size="lg" color="gray.700">
                 Personal Details
@@ -223,7 +223,7 @@ function ProfileSettings(props) {
               </FormControl>
             </VStack>
 
-            {/*Service Settings*/}
+            {/* Service Settings */}
             <VStack alignItems="left" spacing="8">
               <Heading size="lg" color="gray.700">
                 Service Details
@@ -318,7 +318,7 @@ function ProfileSettings(props) {
                   onChange={handleRegionChange}
                 />
               </Stack> */}
-              {/*<Stack spacing="4">
+              {/* <Stack spacing="4">
                 <Text fontSize="lg" fontWeight="medium" color="blue.900">
                   Ask Price
                 </Text>
@@ -370,7 +370,7 @@ function ProfileSettings(props) {
                     attoFIL/B
                   </Text>
                 </HStack>
-              </Stack>*/}
+              </Stack> */}
             </VStack>
           </VStack>
         </GridItem>

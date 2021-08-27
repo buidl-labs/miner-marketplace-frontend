@@ -15,10 +15,10 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/landingPage/Footer";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Navbar from "../components/Navbar";
+import Footer from "../components/landingPage/Footer";
 
 const terms = () => {
   const router = useRouter();

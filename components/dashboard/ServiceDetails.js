@@ -16,10 +16,10 @@ import {
 } from "../../util/util";
 import { Countries } from "../../util/raw";
 
-let countries = Countries();
+const countries = Countries();
 
 function ServiceDetails(props) {
-  let serviceType = [];
+  const serviceType = [];
   if (props.storage)
     serviceType.push(
       <Tag
@@ -51,7 +51,7 @@ function ServiceDetails(props) {
       </Tag>
     );
 
-  let dataTransferMechanism = [];
+  const dataTransferMechanism = [];
   if (props.online)
     dataTransferMechanism.push(
       <Tag key="online" size="lg" borderRadius="full" colorScheme="green">
@@ -127,18 +127,18 @@ function ServiceDetails(props) {
               </Text>
             </HStack>
             <HStack>
-              {/*<Text fontSize="2xl" color="gray.700">
+              {/* <Text fontSize="2xl" color="gray.700">
                 {props.verifiedAskPrice / 10 ** 18}
-              </Text>*/}
+              </Text> */}
               <Text fontSize="sm" color="gray.500" textAlign="left">
                 Requirement dependent. Contact storage provider directly for
                 estimates
               </Text>
             </HStack>
             <HStack>
-              {/*<Text fontSize="2xl" color="gray.700">
+              {/* <Text fontSize="2xl" color="gray.700">
                 {props.retrievalAskPrice}
-              </Text>*/}
+              </Text> */}
               <Text fontSize="sm" color="gray.500" textAlign="left">
                 Requirement dependent. Contact storage provider directly for
                 estimates

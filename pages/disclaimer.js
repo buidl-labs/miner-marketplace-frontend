@@ -15,10 +15,10 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/landingPage/Footer";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Navbar from "../components/Navbar";
+import Footer from "../components/landingPage/Footer";
 
 const disclaimer = () => {
   const router = useRouter();
@@ -115,7 +115,7 @@ const disclaimer = () => {
               information published on the Website cannot guarantee that the
               investors in cryptocurrencies would not lose money.
             </Text>
-            <Text></Text>
+            <Text />
             <Heading color="gray.600" size="sm" pt="2">
               Protocol specific risks
             </Heading>

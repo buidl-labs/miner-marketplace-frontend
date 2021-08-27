@@ -18,7 +18,7 @@ const theme = extendTheme(
       heading: "Inter, sans-serif",
       body: "Inter, sans-serif",
     },
-  }
+  },
 );
 
 function MyApp({ Component, pageProps }) {

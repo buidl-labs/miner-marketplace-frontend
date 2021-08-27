@@ -1,33 +1,13 @@
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  HStack,
-  Image,
-  Link,
-  VStack,
-  Stack,
-  Heading,
-  Text,
-  Spacer,
-  SimpleGrid,
-  WrapItem,
-  Center,
-  GridItem,
-} from "@chakra-ui/react";
-import React from "react";
-import { Icon, IconProps, ArrowForwardIcon } from "@chakra-ui/icons";
+import { Box, Button, Stack, Heading, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
 import * as Fathom from "fathom-client";
-import { trackGoal } from "../../util/analytics";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 const Hero = (props) => {
   const router = useRouter();
 
   function track() {
-    if (typeof window != "undefined") {
+    if (typeof window !== "undefined") {
       Fathom.trackGoal("RLIXEEKF", 0);
     }
   }

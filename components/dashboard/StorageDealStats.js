@@ -2,38 +2,32 @@ import {
   Grid,
   GridItem,
   Heading,
-  Stack,
   VStack,
   Stat,
   StatLabel,
   StatNumber,
   StatHelpText,
   HStack,
-  Text,
-  Spacer,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import {
-  GetSimpleFILUnits,
   GetFormattedFILUnits,
   GetFormattedStorageUnits,
   GetSimpleUSDUnits,
 } from "../../util/util";
 
 function StorageDealStats(props) {
+  const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
+
   useEffect(() => {
     fetch(
       "https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd",
     )
       .then((res) => res.json())
       .then((r) => {
-        //console.log(r.filecoin.usd);
         setFilecoinUSDRate(r.filecoin.usd);
       });
   }, []);
-
-  const [filecoinUSDRate, setFilecoinUSDRate] = useState(0);
 
   return (
     <>
@@ -94,12 +88,7 @@ function StorageDealStats(props) {
           <GridItem colSpan="2">
             <hr />
           </GridItem>
-          {/*<Stat pl="4">
-              <StatLabel fontSize="md" color="gray.600" >
-                faultTerminated
-              </StatLabel>
-              <StatNumber color="blue.700">{props.faultTerminated}</StatNumber>
-            </Stat>*/}
+
           <GridItem colSpan="3" pt="8">
             <HStack textAlign="left" alignItems="left" spacing="4" pb="6">
               <Stat>

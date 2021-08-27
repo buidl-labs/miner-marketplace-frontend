@@ -73,7 +73,7 @@ const Authenticate = (props) => {
           {/* <Button onClick={onClose} w="36">
             Discard
           </Button> 
-          <Spacer />*/}
+          <Spacer /> */}
           <Button
             colorScheme="blue"
             w="50vw"

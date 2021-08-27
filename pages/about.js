@@ -1,32 +1,23 @@
 import {
   Image,
-  Center,
   Container,
-  Box,
-  Flex,
   Text,
   Heading,
   Link,
   Stack,
   VStack,
   HStack,
-  Spacer,
-  SimpleGrid,
   GridItem,
-  VisuallyHidden,
   Grid,
 } from "@chakra-ui/react";
 import React from "react";
-import { useRouter } from "next/router";
-import Navbar from "../components/Navbar";
-import Footer from "../components/landingPage/Footer";
 import Head from "next/head";
-import { CopyIcon, Icon, IconProps, QuestionIcon } from "@chakra-ui/icons";
+import { Icon } from "@chakra-ui/icons";
 import { FaLinkedinIn, FaTwitter, FaGlobe, FaGithub } from "react-icons/fa";
+import Footer from "../components/landingPage/Footer";
+import Navbar from "../components/Navbar";
 
-const about = () => {
-  const router = useRouter();
-
+export default function About() {
   return (
     <>
       <Head>
@@ -237,6 +228,4 @@ const about = () => {
       <Footer />
     </>
   );
-};
-
-export default about;
+}

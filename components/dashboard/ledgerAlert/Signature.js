@@ -27,21 +27,21 @@ import { IconProps, Icon } from "@chakra-ui/icon";
 import { MdContentCopy } from "react-icons/md";
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { useGlobalState } from "../../../state";
 
 import { mainnet } from "@filecoin-shipyard/lotus-client-schema";
 import { BrowserProvider } from "@filecoin-shipyard/lotus-client-provider-browser";
 import { LotusRPC } from "@filecoin-shipyard/lotus-client-rpc";
 import * as wasm from "@zondax/filecoin-signing-tools/js";
+import { useGlobalState } from "../../../state";
 
 const Signature = (props) => {
   String.prototype.hexEncode = function () {
-    var hex, i;
-    var result = "";
+    let hex; let i;
+    let result = "";
     for (i = 0; i < this.length; i++) {
       hex = this.charCodeAt(i).toString(16);
       // result += (hex).slice(-4);
-      result += ("0" + hex).slice(-2);
+      result += (`0${  hex}`).slice(-2);
       // result += ("000"+hex).slice(-4);
       // result += " ";
     }
@@ -101,8 +101,8 @@ const Signature = (props) => {
                   setMessageText(event.target.value);
                 }}
               />
-              {/*Hello world!
-                </Text>*/}
+              {/* Hello world!
+                </Text> */}
             </Stack>
             <Stack>
               <Text fontWeight="medium">Sign Code</Text>

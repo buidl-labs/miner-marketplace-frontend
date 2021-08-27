@@ -1,69 +1,26 @@
 import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Button,
-  Box,
-  Center,
   Heading,
-  Image,
   Stack,
-  Grid,
-  GridItem,
   IconButton,
   VStack,
   HStack,
-  Link,
-  Tag,
-  // Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  Wrap,
-  WrapItem,
   Text,
-  Spacer,
-  Stat,
   Switch,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
 } from "@chakra-ui/react";
-import React, { useEffect, useState, useRef } from "react";
-import {
-  Icon,
-  IconProps,
-  Search2Icon,
-  ArrowDownIcon,
-  ArrowUpIcon,
-} from "@chakra-ui/icons";
+import React, { useState } from "react";
+import { ArrowUpIcon } from "@chakra-ui/icons";
 import * as Fathom from "fathom-client";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import { createHttpLink } from "apollo-link-http";
-import { TableProps } from "antd/lib/table";
 import "antd/dist/antd.css";
-import NxLink from "next/link";
-import { Table, Space } from "antd";
-import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
-import { useRouter } from "next/router";
-import { useDisclosure } from "@chakra-ui/hooks";
-import { BiTransfer } from "react-icons/bi";
+import PropTypes from "prop-types";
 
-import { GetFormattedStorageUnits, GetFormattedFILUnits } from "../util/util";
 import BasicView from "./dashboard/transaction/BasicView";
 import AdvanceView from "./dashboard/transaction/AdvanceView";
 
-export default function TransactionHistory(props) {
+export default function TransactionHistory({ minerID }) {
   const [toggle, setToggle] = useState(false);
 
   function handleTxnToggle() {
-    toggle ? setToggle(false) : setToggle(true);
+    return toggle ? setToggle(false) : setToggle(true);
   }
 
   function scrollToTop() {
@@ -104,7 +61,9 @@ export default function TransactionHistory(props) {
               onChange={handleTxnToggle}
               isChecked={toggle}
               onClick={() => {
-                typeof window != "undefined" && Fathom.trackGoal("ZV5EW6GM", 0);
+                if (typeof window !== "undefined") {
+                  Fathom.trackGoal("ZV5EW6GM", 0);
+                }
               }}
             />
             <Text fontSize="lg" fontWeight="medium" color="gray.600">
@@ -114,26 +73,19 @@ export default function TransactionHistory(props) {
         </HStack>
         {toggle && (
           <>
-            {/*<Alert
-              status="warning"
-              borderRadius="lg"
-              maxW={{ md: "60vw", base: "full" }}
-            >
-              <AlertIcon />
-              <AlertTitle mr={2}>This feature is currently in beta!</AlertTitle>
-              <AlertDescription>
-                Performance may not be optimal
-              </AlertDescription>
-            </Alert>*/}
-            <AdvanceView minerID={props.minerID} />
+            <AdvanceView minerID={minerID} />
           </>
         )}
         {!toggle && (
           <>
-            <BasicView minerID={props.minerID} />
+            <BasicView minerID={minerID} />
           </>
         )}
       </Stack>
     </>
   );
 }
+
+TransactionHistory.propTypes = {
+  minerID: PropTypes.string.isRequired,
+};
