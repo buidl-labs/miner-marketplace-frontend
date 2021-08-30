@@ -18,7 +18,11 @@ import React, { useState } from "react";
 import { ApolloClient, InMemoryCache, gql, useMutation } from "@apollo/client";
 import { request } from "graphql-request";
 import useSwr, { mutate, trigger } from "swr";
+import getConfig from "next/config";
 import { useGlobalState } from "../../../state";
+
+const { publicRuntimeConfig } = getConfig();
+const { TOKEN_ID, TOKEN_SECRET, BACKEND_URL } = publicRuntimeConfig;
 
 const Authenticate = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,10 +45,12 @@ const Authenticate = (props) => {
             Ledger Authentication {clval}
           </Heading>
         </ModalHeader>
-        <ModalCloseButton onClick={()=>{
-          console.log("closeledgerbutton")
-          setAuthMode("");
-        }} />
+        <ModalCloseButton
+          onClick={() => {
+            console.log("closeledgerbutton");
+            setAuthMode("");
+          }}
+        />
         <ModalBody>
           <VStack>
             <Image src={clIcon} pb="6" mx="auto" w="20" />
@@ -78,7 +84,7 @@ const Authenticate = (props) => {
             colorScheme="blue"
             w="50vw"
             onClick={() => {
-              console.log("props", props, "url", process.env.BACKEND_URL);
+              console.log("props", props, "url", BACKEND_URL);
               fetch("https://miner-marketplace-backend-2.onrender.com/query", {
                 method: "POST",
                 headers: {
@@ -87,7 +93,7 @@ const Authenticate = (props) => {
                 body: JSON.stringify({
                   query: `mutation {
                     claimProfile (
-                      input: { minerID: "${props.minerID}", ledgerAddress: "${props.ledgerAddress}" }
+                      input: { minerID: "${props.minerID}", ledgerAddress: "${props.ledgerAddress}", tokenID: "${TOKEN_ID}", tokenSecret: "${TOKEN_SECRET}" }
                     )
                   }`,
                 }),
@@ -101,26 +107,20 @@ const Authenticate = (props) => {
                   const reqClaim = data.data.claimProfile;
                   if (reqClaim) {
                     setClval(" successful");
-                    setClText(
-                      "Owner authentication successful!",
-                    );
+                    setClText("Owner authentication successful!");
                     setClIcon("/images/AuthSuccess.svg");
                     setIsSignedIn(true);
                   } else {
                     setClval(" failed");
                     setClIcon("/images/AuthFail.svg");
-                    setClText(
-                      "Owner authentication failed.",
-                    );
+                    setClText("Owner authentication failed.");
                   }
                 })
                 .catch((e) => {
                   console.log(e);
                   setClval(" failed");
                   setClIcon("/images/AuthFail.svg");
-                  setClText(
-                    "Owner authentication failed.",
-                  );
+                  setClText("Owner authentication failed.");
                 });
             }}
             type="submit"
