@@ -36,6 +36,29 @@ const IndexPage = ({ stats, filecoinUSDRate }) => {
         <title>
           Explore Storage Providers, Get Financial Stats - DataStation
         </title>
+        <meta
+          name="title"
+          content="Explore Storage Providers, Get Financial Stats - DataStation"
+        />
+        <meta
+          name="description"
+          content="Enhancing the Experience of Decentralised Storage on Filecoin."
+        />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://datastation.app/" />
+        <meta
+          property="twitter:title"
+          content="Explore Storage Providers, Get Financial Stats - DataStation"
+        />
+        <meta
+          property="twitter:description"
+          content="Enhancing the Experience of Decentralised Storage on Filecoin."
+        />
+        <meta property="twitter:image" content="images/thumbnail.jpg" />
+        <title>
+          Explore Storage Providers, Get Financial Stats - DataStation
+        </title>
       </Head>
       <Navbar />
 
