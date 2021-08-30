@@ -33,13 +33,18 @@ import {
   ModalCloseButton,
   Flex,
 } from "@chakra-ui/react";
+import getConfig from "next/config";
 import { Icon, IconProps, ArrowBackIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import { Search } from "react-feather";
 import { useRouter } from "next/router";
-import DashboardNavbar from "../components/dashboard/DashboardNavbar";
-import DashboardMenu from "../components/dashboard/DashboardMenu";
+// import DashboardNavbar from "../components/dashboard/DashboardNavbar";
+// import DashboardMenu from "../components/dashboard/DashboardMenu";
 import { useGlobalState } from "../state";
+
+const { publicRuntimeConfig } = getConfig();
+const { TOKEN_ID, TOKEN_SECRET, BACKEND_URL } = publicRuntimeConfig;
+
 import TransparencyScore from "../components/dashboard/TransparencyScore";
 
 function ProfileSettings(props) {
@@ -398,7 +403,7 @@ function ProfileSettings(props) {
                 retrieval,
                 minerTwitter,
               );
-              console.log("props", props, "url", process.env.BACKEND_URL);
+              console.log("props", props, "url", BACKEND_URL);
               fetch("https://miner-marketplace-backend-2.onrender.com/query", {
                 method: "POST",
                 headers: {
@@ -421,7 +426,9 @@ function ProfileSettings(props) {
                           repair: ${repair}
                           online: ${online}
                           offline: ${offline}
-                        }
+                        },
+                        tokenID: "${TOKEN_ID}",
+                        tokenSecret: "${TOKEN_SECRET}"
                       )
                     }`,
                 }),

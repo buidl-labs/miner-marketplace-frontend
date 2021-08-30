@@ -32,16 +32,21 @@ import { mainnet } from "@filecoin-shipyard/lotus-client-schema";
 import { BrowserProvider } from "@filecoin-shipyard/lotus-client-provider-browser";
 import { LotusRPC } from "@filecoin-shipyard/lotus-client-rpc";
 import * as wasm from "@zondax/filecoin-signing-tools/js";
+import getConfig from "next/config";
 import { useGlobalState } from "../../../state";
+
+const { publicRuntimeConfig } = getConfig();
+const { TOKEN_ID, TOKEN_SECRET, BACKEND_URL } = publicRuntimeConfig;
 
 const Signature = (props) => {
   String.prototype.hexEncode = function () {
-    let hex; let i;
+    let hex;
+    let i;
     let result = "";
     for (i = 0; i < this.length; i++) {
       hex = this.charCodeAt(i).toString(16);
       // result += (hex).slice(-4);
-      result += (`0${  hex}`).slice(-2);
+      result += `0${hex}`.slice(-2);
       // result += ("000"+hex).slice(-4);
       // result += " ";
     }
@@ -170,7 +175,7 @@ const Signature = (props) => {
                 //   )
                 // }`;
                 // console.log("myquery", myquery);
-                console.log("props", props, "url", process.env.BACKEND_URL);
+                console.log("props", props, "url", BACKEND_URL);
                 fetch(
                   "https://miner-marketplace-backend-2.onrender.com/query",
                   {
@@ -185,6 +190,8 @@ const Signature = (props) => {
                           walletAddress: "${props.ownerAddress}"
                           hexMessage: "${messageText.hexEncode()}"
                           signature: "${signature}"
+                          tokenID: "${TOKEN_ID}"
+                          tokenSecret: "${TOKEN_SECRET}"
                         )
                       }`,
                     }),

@@ -18,7 +18,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
+import getConfig from "next/config";
 import { useGlobalState } from "../../../state";
+
+const { publicRuntimeConfig } = getConfig();
+const { TOKEN_ID, TOKEN_SECRET } = publicRuntimeConfig;
 
 const AuthMode = (props) => {
   const router = useRouter();
