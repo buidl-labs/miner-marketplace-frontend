@@ -169,6 +169,7 @@ export default function Miners({ filecoinUSDRate, miners }) {
       sorter: {
         compare: (a, b) =>
           parseInt(a.reputationScore, 10) - parseInt(b.reputationScore, 10),
+        multiple: 3,
       },
       render(reputationScore) {
         const color = reputationScore < 50 ? "gray.500" : "blue.600";
@@ -183,9 +184,11 @@ export default function Miners({ filecoinUSDRate, miners }) {
       title: "Transparency Score",
       dataIndex: "transparencyScore",
       key: "transparencyScore",
+      defaultSortOrder: "descend",
       sorter: {
         compare: (a, b) =>
           parseInt(a.transparencyScore, 10) - parseInt(b.transparencyScore, 10),
+        multiple: 4,
       },
       render(transparencyScore) {
         const color = transparencyScore < 50 ? "orange.600" : "blue.700";
@@ -276,8 +279,10 @@ export default function Miners({ filecoinUSDRate, miners }) {
       title: "Estimated Quote",
       dataIndex: "estimatedQuote",
       key: "estimatedQuote",
+      defaultSortOrder: "ascend",
       sorter: {
         compare: (a, b) => a.estimatedQuote.fil - b.estimatedQuote.fil,
+        multiple: 2,
       },
       render(l) {
         return (
@@ -294,8 +299,10 @@ export default function Miners({ filecoinUSDRate, miners }) {
       title: "Total Storage Capacity",
       dataIndex: "qap",
       key: "qap",
+      defaultSortOrder: "descend",
       sorter: {
         compare: (a, b) => parseInt(a.qap.val, 10) - parseInt(b.qap.val, 10),
+        multiple: 1,
       },
       render(l) {
         return <>{l.display === "NaN YB" ? <p>-</p> : <p>{l.display}</p>}</>;
